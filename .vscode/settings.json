@@ -1,0 +1,38 @@
+{
+    "[javascript]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+    },
+    "editor.formatOnSave": true,
+    "editor.detectIndentation": false,
+    "todohighlight.defaultStyle": {
+        "color": "#eee",
+        "backgroundColor": "#ffab00",
+        "border": "1px solid #eee",
+        "borderRadius": "2px",
+    },
+    "todohighlight.keywords": [
+        " ATTENTION: ",
+        " UPDATE: ",
+        {
+            "text": " EXAMPLE: ",
+            "color": "#000000d9",
+            "backgroundColor": "#b7eb8f",
+            "border": "1px solid #b7eb8f",
+        },
+        {
+            "text": " NOTE: ",
+            "color": "#000000d9",
+            "backgroundColor": "#91d5ff",
+            "border": "1px solid #91d5ff",
+        },
+    ],
+    "todohighlight.include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.html",
+        "**/*.css",
+        "**/*.scss",
+        "**/*.less"
+    ],
+}

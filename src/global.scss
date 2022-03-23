@@ -1,0 +1,9 @@
+// tailwindcss css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// local css
+@import 'components/kit/styles.scss';
+
+// external css

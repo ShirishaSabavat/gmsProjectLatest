@@ -1,0 +1,19 @@
+//  NOTE:  Avoid using color names such as white/black
+// use HEX COLOR CODES instead such as #ffffff/#000000
+//  NOTE:  Avoid using specific namings such as $input-shadow-light
+// instead use global naming type such as $shadow-light for scss variables
+$font-10: 10px;
+$font-12: 12px;
+$font-14: 14px;
+$font-16: 16px;
+$font-18: 18px;
+$font-20: 20px;
+$font-28: 28px;
+$font-38: 38px;
+
+$mulish-extra-bold: 'Mulish, Extra-Bold';
+$mulish-bold: 'Mulish, Bold';
+$mulish-semi-bold: 'Mulish, Semi-Bold';
+$mulish-medium: 'Mulish, Medium';
+$mulish-regular: 'Mulish, Regular';
+$mulish-light: 'Mulish, Light';
