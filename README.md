@@ -1,26 +1,43 @@
 ### Getting Started with Auth Boiler Plate
+
 ##### This repository was created using [create-react-app](https://github.com/facebook/create-react-app) and runs on [Apollo client](https://www.apollographql.com/docs/react/) and [GraphQL](https://graphql.org/)
+
 ---
+
 #### Description
+
 ##### This repository provides a basic user authorization and authentication functionality using redux along side antd and tailwindcss to facilitates premium and easy to customize UI. And to maintain a common practice amongst the team, repo is laced with eslint.
+
 ---
+
 #### In the project directory, you can run:
+
 > #### npm start
+>
 > ##### Default port has been set to 4000.
+>
 > Runs the app in the development mode. Open [http://localhost:4000](http://localhost:4000) to view it in your browser. The page will reload when you make changes. You may also see any lint errors in the console.
 
 <!-- -->
+
 > #### npm run build
+>
 > Builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
 > Your app is ready to be deployed!. See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+>
 > ##### Environment Builds
+>
 > - Development `build:development`
 > - Testing `build:testing`
 > - Staging `build:staging`
 > - Production `build:production`
+
 ---
+
 #### Attention
+
 ##### Vs-code extensions to help enhance the coding experience
+
 - TODO Highlight
 - Tailwind CSS IntelliSense
 - Reactjs code snippets
@@ -28,24 +45,25 @@
 - Auto Rename Tag
 - Code Spell Checker
 - ESLint
-##### Wherever UPDATE flag by TODO Highlight is encountered please update the file accordingly
----
-#### Basic git to get you up and running
-- Copy the command `git clone https://Shakti-49@bitbucket.org/Shakti-49/auth-boiler-plate.git` and run it in the cmd of that targeted folder
-      - git add . ( for all files ) or git add file_name.extension ( for single file ). ( adding files to the staging phase )
-      - git commit -m "concise description" -m "in depth description" ( committing the files )
-      - git push ( will push the commits to the respective branch )
 
-- Or as first commit from local to remote repository
-      - git init ( initializing the folder as git repository )
-      - git add . ( for all files ) or git add file_name.extension ( for single file ). ( adding files to the staging phase )
-      - git commit -m "concise description" -m "in depth description" ( committing the files )
-      - git remote add origin repo_link
-      - git push -u origin master ( setting upstream branch for the local branch while pushing for the first time )
-##### and TADA DONE!
+##### Wherever UPDATE flag by TODO Highlight is encountered please update the file accordingly
+
 ---
+
+#### Basic git to get you up and running
+
+- Copy the command `git clone https://Shakti-49@bitbucket.org/Shakti-49/auth-boiler-plate.git` and run it in the cmd of that targeted folder - git add . ( for all files ) or git add file_name.extension ( for single file ). ( adding files to the staging phase ) - git commit -m "concise description" -m "in depth description" ( committing the files ) - git push ( will push the commits to the respective branch )
+
+- Or as first commit from local to remote repository - git init ( initializing the folder as git repository ) - git add . ( for all files ) or git add file_name.extension ( for single file ). ( adding files to the staging phase ) - git commit -m "concise description" -m "in depth description" ( committing the files ) - git remote add origin repo_link - git push -u origin master ( setting upstream branch for the local branch while pushing for the first time )
+
+##### and TADA DONE!
+
+---
+
 #### Packages
+
 ##### Dependencies:
+
 - @ant-design/icons
 - @apollo/client
 - antd
@@ -69,6 +87,7 @@
 - yup
 
 ##### Dev-Dependencies:
+
 - autoprefixer
 - css-loader
 - eslint
@@ -83,8 +102,11 @@
 - react-app-rewired
 - style-loader
 - tailwindcss
+
 ---
+
 #### Languages and Tools used
+
 ![vs code](https://bitbucket.org/Shakti-49/auth-boiler-plate/downloads/vs-code.svg)&nbsp;&nbsp;&nbsp;
 ![react](https://bitbucket.org/Shakti-49/auth-boiler-plate/downloads/react.svg)&nbsp;&nbsp;&nbsp;
 ![apollo client](https://bitbucket.org/Shakti-49/auth-boiler-plate/downloads/apollo-client.svg)&nbsp;&nbsp;&nbsp;
