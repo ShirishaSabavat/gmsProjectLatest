@@ -30,25 +30,28 @@ const MainLayout = ({
 
   return (
     <Layout>
-      <Sider
-        collapsible
-        collapsed={sideBarLayout}
-        width={270}
-        defaultCollapsed={false}
-        className="h-screen sticky top-0 font-mulish-semi-bold text-xs border-r-4 border-gray-100"
-        trigger={(
-          <div className="border-t border-r-4 border-gray-100">
-            {sideBarLayout ? 'Expand' : 'Collapse'}
-          </div>
-        )}
-        onCollapse={() => setSideBarLayout((prevState) => !prevState)}
+      <Header style={{
+        padding: 0, backgroundColor: 'rgba(255,255,255,1)', borderRadius: '0 0 16px 16px', boxShadow: '0 4px 16px #eef4f7',
+      }}
       >
-        <Sidebar />
-      </Sider>
-      <Layout className="px-10 bg-gray-50">
-        <Header style={{ padding: 0, backgroundColor: 'transparent' }}>
-          <AppHeader />
-        </Header>
+        <AppHeader />
+      </Header>
+      <Layout>
+        <Sider
+          collapsible
+          collapsed={sideBarLayout}
+          width={270}
+          defaultCollapsed={false}
+          className="h-screen sticky top-0 font-mulish-semi-bold text-xs border-r-4 border-gray-100"
+          trigger={(
+            <div className="border-t border-r-4 border-gray-100">
+              {sideBarLayout ? 'Expand' : 'Collapse'}
+            </div>
+          )}
+          onCollapse={() => setSideBarLayout((prevState) => !prevState)}
+        >
+          <Sidebar />
+        </Sider>
         <Content className="py-6">
           {children}
         </Content>

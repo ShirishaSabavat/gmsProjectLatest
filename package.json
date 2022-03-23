@@ -10,7 +10,10 @@
         "@testing-library/user-event": "^13.5.0",
         "antd": "^4.17.3",
         "apollo-upload-client": "^17.0.0",
+        "axios": "^0.24.0",
+        "bootstrap": "^5.1.3",
         "connected-react-router": "^6.9.2",
+        "cors": "^2.8.5",
         "graphql": "^16.2.0",
         "graphql-tag": "^2.12.6",
         "history": "^4.10.1",
@@ -18,15 +21,20 @@
         "lodash": "^4.17.21",
         "node-sass": "^7.0.0",
         "react": "^17.0.2",
+        "react-bootstrap": "^2.1.1",
+        "react-data-table-component": "^7.4.6",
         "react-dom": "^17.0.2",
         "react-helmet": "^6.1.0",
+        "react-icons": "^4.3.1",
         "react-redux": "^7.2.6",
         "react-router-dom": "^5.2.0",
         "react-scripts": "5.0.0",
         "react-transition-group": "^4.4.2",
+        "reactstrap": "^9.0.1",
         "redux": "^4.1.2",
         "redux-logger": "^3.0.6",
         "redux-saga": "^1.1.3",
+        "styled-components": "^5.3.3",
         "uuid": "^8.3.2",
         "web-vitals": "^2.1.2",
         "yup": "^0.32.11"
@@ -59,7 +67,7 @@
     },
     "eslintIgnore": [],
     "devDependencies": {
-        "autoprefixer": "^10.4.0",
+        "autoprefixer": "^10.4.2",
         "css-loader": "^6.5.1",
         "env-cmd": "^10.1.0",
         "eslint": "^8.4.1",
@@ -73,6 +81,7 @@
         "postcss": "^8.4.5",
         "react-app-rewired": "^2.1.8",
         "style-loader": "^3.3.1",
-        "tailwindcss": "^3.0.6"
-    }
+        "tailwindcss": "^3.0.18"
+    },
+    "proxy": "https://staging.everestfleet.com"
 }

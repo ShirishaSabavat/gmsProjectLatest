@@ -17,6 +17,10 @@ const sidebarMenu = [
         key: '/home/dashboard',
         label: 'Dashboard',
       },
+      {
+        key: '/partner/partner',
+        label: 'Partner',
+      },
     ],
   },
 ];
