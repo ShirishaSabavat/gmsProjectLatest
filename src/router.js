@@ -42,6 +42,12 @@ const routes = [
     exact: true,
     Component: lazy(() => import('pages/home/dashboard')),
   },
+  {
+    path: '/cities/citieslist',
+    key: 'HOME',
+    exact: true,
+    Component: lazy(() => import('pages/cities/citieslist')),
+  },
 ];
 
 const Router = ({ history }) => (

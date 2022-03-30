@@ -12,12 +12,24 @@ const sidebarMenu = [
   {
     title: 'Home',
     icon: HomeOutlined,
-    subMenu: [
-      {
-        key: '/home/dashboard',
-        label: 'Dashboard',
-      },
-    ],
+    key: '/home/dashboard'
+    // subMenu: [
+    //   {
+    //     key: '/home/dashboard',
+    //     label: 'Dashboard',
+    //   },
+    // ],
+  },
+  {
+    title: 'Cities',
+    icon: HomeOutlined,
+    key: '/cities/citieslist'
+    // subMenu: [
+    //   {
+    //     key: '/home/dashboard',
+    //     label: 'Dashboard',
+    //   },
+    // ],
   },
 ];
 
