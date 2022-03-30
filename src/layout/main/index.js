@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Layout } from 'antd';
 import AppHeader from 'components/layouts/AppHeader';
 import Sidebar from 'components/layouts/sidebar';
@@ -12,15 +12,15 @@ const {
 const MainLayout = ({
   children,
 }) => {
-  const [sideBarLayout, setSideBarLayout] = useState(false);
+  // const [sideBarLayout, setSideBarLayout] = useState(false);
 
   useEffect(() => {
     let timeout = null;
     const onHandleResize = () => {
       if (timeout) clearTimeout(timeout);
       timeout = setTimeout(() => {
-        if (window.innerWidth < 1580) setSideBarLayout(true);
-        if (window.innerWidth > 1580) setSideBarLayout(false);
+        // if (window.innerWidth < 1580) setSideBarLayout(true);
+        // if (window.innerWidth > 1580) setSideBarLayout(false);
       }, 150);
     };
 
@@ -30,25 +30,19 @@ const MainLayout = ({
 
   return (
     <Layout>
-      <Sider
-        collapsible
-        collapsed={sideBarLayout}
-        width={270}
-        defaultCollapsed={false}
-        className="h-screen sticky top-0 font-mulish-semi-bold text-xs border-r-4 border-gray-100"
-        trigger={(
-          <div className="border-t border-r-4 border-gray-100">
-            {sideBarLayout ? 'Expand' : 'Collapse'}
-          </div>
-        )}
-        onCollapse={() => setSideBarLayout((prevState) => !prevState)}
+      <Header style={{
+        padding: 0, backgroundColor: 'rgba(255,255,255,1)', borderRadius: '0 0 16px 16px', boxShadow: '0 4px 16px #eef4f7',
+      }}
       >
-        <Sidebar />
-      </Sider>
-      <Layout className="px-10 bg-gray-50">
-        <Header style={{ padding: 0, backgroundColor: 'transparent' }}>
-          <AppHeader />
-        </Header>
+        <AppHeader />
+      </Header>
+      <Layout>
+        <Sider
+          width={270}
+          className="h-screen sticky top-0 font-mulish-semi-bold text-xs border-r-4 border-gray-100"
+        >
+          <Sidebar />
+        </Sider>
         <Content className="py-6">
           {children}
         </Content>

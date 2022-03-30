@@ -12,6 +12,9 @@ module.exports = {
       backgroundColor: {
         primary: '#e6f7ff',
       },
+      width: {
+        100: '19rem',
+      },
     },
   },
   plugins: [],
