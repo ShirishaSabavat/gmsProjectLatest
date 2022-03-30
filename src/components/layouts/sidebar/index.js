@@ -47,6 +47,8 @@ const Sidebar = ({
       </div>
       <Menu
         style={{ borderRight: 'none' }}
+        selectedKeys={[pathname]}
+        onClick={({ key }) => history.push(key)}
         mode="inline"
       >
         {sidebarMenu.map(({
@@ -74,7 +76,7 @@ const Sidebar = ({
         style={{ borderRight: 'none', marginTop: '95%' }}
         mode="inline"
         selectedKeys={[pathname]}
-        onClick={({ key }) => history.push(key)}
+        onClick={({ settingPath = '/setting' }) => history.push(settingPath)}
       >
         <Item
           icon={<img style={{ paddingBottom: '0.22rem' }} src="/assets/images/logo/sidebarLogo/settings.svg" alt="settings" />}
