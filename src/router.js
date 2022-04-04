@@ -43,10 +43,40 @@ const routes = [
     Component: lazy(() => import('pages/home/dashboard')),
   },
   {
-    path: '/partner/partner',
+    path: '/cities/citieslist',
     key: 'PARTNER',
     exact: true,
-    Component: lazy(() => import('pages/partner/partner')),
+    Component: lazy(() => import('pages/cities/citieslist')),
+  },
+  {
+    path: '/cities/addcity',
+    key: 'Add City',
+    exact: true,
+    Component: lazy(() => import('pages/cities/addcity')),
+  },
+  {
+    path: '/garage/garagelist',
+    key: 'GARAGE',
+    exact: true,
+    Component: lazy(() => import('pages/garage/garagelist')),
+  },
+  {
+    path: '/garage/addgarage',
+    key: 'GARAGE',
+    exact: true,
+    Component: lazy(() => import('pages/garage/addgarage')),
+  },
+  {
+    path: '/userroles/userroleslist',
+    key: 'USER ROLE',
+    exact: true,
+    Component: lazy(() => import('pages/userroles/userroleslist')),
+  },
+  {
+    path: '/userroles/addrole',
+    key: 'GARAGE',
+    exact: true,
+    Component: lazy(() => import('pages/userroles/addrole')),
   },
 ];
 

@@ -21,17 +21,17 @@ const Sidebar = ({
     {
       title: 'Cities',
       icon: '/assets/images/logo/sidebarLogo/cities.svg',
-      key: '/partner/partner',
+      key: '/cities/citieslist',
     },
     {
       title: 'Garage',
       icon: '/assets/images/logo/sidebarLogo/garage.svg',
-      key: '/home/garage',
+      key: '/garage/garagelist',
     },
     {
       title: 'People',
       icon: '/assets/images/logo/sidebarLogo/people.svg',
-      key: '/partner/people',
+      key: '/userroles/userroleslist',
     },
   ];
 
@@ -60,7 +60,7 @@ const Sidebar = ({
           // main menu
           // permission wise rendering for sub menu
           if (!permission.includes(mainPermission)
-          && mainPermission) return null;
+            && mainPermission) return null;
           return (
             <Item
               icon={<img style={{ paddingBottom: '0.22rem' }} src={icon} alt={icon} />}
