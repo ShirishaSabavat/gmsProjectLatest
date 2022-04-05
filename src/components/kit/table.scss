@@ -1,0 +1,63 @@
+@import 'mixins';
+
+.ant-table {
+    background-color: '#fff';//$bg-white-color;
+    
+    .ant-table-thead {
+        font-family: 'Quicksand SemiBold', sans-serif;
+        font-size: 16px;
+        color: $Color-Dark-Blue0;
+    };
+    .ant-table-row {
+        font-family: 'Quicksand Medium', sans-serif;
+        font-size: 14px;
+    };
+
+    &-title, &-footer {
+        border-bottom: 5px solid $bg-white-color;
+        background-color: $white-color;
+        box-shadow: 0px 0px 32px $form-card-color;
+        border-radius: 8px;
+    }
+
+    &-footer {
+        cursor: pointer;
+    }
+
+    &-container {
+        .ant-table-content {
+            table {
+                border-spacing: 1px;
+
+                .ant-table-thead {
+                    > tr {
+                        th:not(:last-child) {
+                            border: 1px solid $border-thin-color;                            
+                        }
+                        th {
+                            border: 1px solid $border-thin-color;
+                            background-color: $white-color;
+                            box-shadow: 0px 0px 32px $form-card-color;
+                            padding: 16px 16px;
+
+                        }
+                    }
+                }
+                .ant-table-tbody {
+                    > tr {
+                        td:not(:last-child) {
+                            border: 1px solid $border-thin-color;
+                            
+                        }
+                        td {
+                            border: 1px solid $bg-white-color;
+                            background-color: $white-color;
+                            box-shadow: 0px 0px 32px $form-card-color;
+                            padding: 5px 16px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

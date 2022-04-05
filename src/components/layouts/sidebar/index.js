@@ -31,7 +31,7 @@ const Sidebar = ({
     {
       title: 'People',
       icon: '/assets/images/logo/sidebarLogo/people.svg',
-      key: '/partner/people',
+      key: '/userProfiles/userProfiles',
     },
   ];
 
@@ -65,7 +65,7 @@ const Sidebar = ({
             <Item
               icon={<img style={{ paddingBottom: '0.22rem' }} src={icon} alt={icon} />}
               key={menuKey}
-              className="text-xs"
+              className="text-xs font-quicksand-semi-bold"
             >
               {title}
             </Item>
@@ -80,7 +80,7 @@ const Sidebar = ({
       >
         <Item
           icon={<img style={{ paddingBottom: '0.22rem' }} src="/assets/images/logo/sidebarLogo/settings.svg" alt="settings" />}
-          className="text-xs"
+          className="text-xs font-quicksand-semi-bold"
         >
           Settings
         </Item>
