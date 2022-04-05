@@ -1,58 +1,88 @@
-import { lazy, Suspense } from 'react';
-import { ConnectedRouter } from 'connected-react-router';
+import { lazy, Suspense } from "react";
+import { ConnectedRouter } from "connected-react-router";
 import {
   Route,
   Redirect,
   Switch,
-} from 'react-router-dom';
-import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import AuthLayout from './layout';
+} from "react-router-dom";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
+import AuthLayout from "./layout";
 
 const routes = [
   // AUTH RELATED ROUTES
   {
-    path: '/auth/sign-in',
-    key: 'SIGN-IN',
+    path: "/auth/sign-in",
+    key: "SIGN-IN",
     exact: true,
-    Component: lazy(() => import('pages/auth/sign-in')),
+    Component: lazy(() => import("pages/auth/sign-in")),
   },
   {
-    path: '/auth/sign-up',
-    key: 'SIGN-UP',
+    path: "/auth/sign-up",
+    key: "SIGN-UP",
     exact: true,
-    Component: lazy(() => import('pages/auth/sign-up')),
+    Component: lazy(() => import("pages/auth/sign-up")),
   },
   {
-    path: '/auth/page-not-found',
-    key: 'PAGE-NOT-FOUND',
+    path: "/auth/page-not-found",
+    key: "PAGE-NOT-FOUND",
     exact: true,
-    Component: lazy(() => import('pages/auth/page-not-found')),
+    Component: lazy(() => import("pages/auth/page-not-found")),
   },
   {
-    path: '/auth/unauthorized',
-    key: 'UNAUTHORIZED',
+    path: "/auth/unauthorized",
+    key: "UNAUTHORIZED",
     exact: true,
-    Component: lazy(() => import('pages/auth/unauthorized')),
+    Component: lazy(() => import("pages/auth/unauthorized")),
   },
 
   // APP RELATED ROUTES
   {
-    path: '/home/dashboard',
-    key: 'HOME',
+    path: "/home/dashboard",
+    key: "HOME",
     exact: true,
-    Component: lazy(() => import('pages/home/dashboard')),
+    Component: lazy(() => import("pages/home/dashboard")),
   },
   {
-    path: '/partner/partner',
-    key: 'PARTNER',
+    path: "/cities/citieslist",
+    key: "PARTNER",
     exact: true,
-    Component: lazy(() => import('pages/partner/partner')),
+    Component: lazy(() => import("pages/cities/citieslist")),
   },
   {
-    path: '/userProfiles/userProfiles',
-    key: 'USER PROFILES',
+    path: "/cities/addcity",
+    key: "Add City",
     exact: true,
-    Component: lazy(() => import('pages/userProfiles/userProfiles')),
+    Component: lazy(() => import("pages/cities/addcity")),
+  },
+  {
+    path: "/garage/garagelist",
+    key: "GARAGE",
+    exact: true,
+    Component: lazy(() => import("pages/garage/garagelist")),
+  },
+  {
+    path: "/garage/addgarage",
+    key: "GARAGE",
+    exact: true,
+    Component: lazy(() => import("pages/garage/addgarage")),
+  },
+  {
+    path: "/userroles/userroleslist",
+    key: "USER ROLE",
+    exact: true,
+    Component: lazy(() => import("pages/userroles/userroleslist")),
+  },
+  {
+    path: "/userroles/addrole",
+    key: "GARAGE",
+    exact: true,
+    Component: lazy(() => import("pages/userroles/addrole")),
+  },
+  {
+    path: "/userProfiles/userProfiles",
+    key: "USER PROFILES",
+    exact: true,
+    Component: lazy(() => import("pages/userProfiles/userProfiles")),
   },
 ];
 
@@ -97,4 +127,4 @@ const Router = ({ history }) => (
 );
 
 export default Router;
-Router.displayName = 'Router Page';
+Router.displayName = "Router Page";

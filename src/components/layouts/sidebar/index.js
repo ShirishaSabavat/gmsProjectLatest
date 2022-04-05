@@ -1,7 +1,7 @@
-import { Menu } from 'antd';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { history } from 'redux/store';
+import { Menu } from "antd";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { history } from "redux/store";
 
 const { Item } = Menu;
 
@@ -14,31 +14,36 @@ const Sidebar = ({
 }) => {
   const sidebarMenu = [
     {
-      title: 'Home',
-      icon: '/assets/images/logo/sidebarLogo/home.svg',
-      key: '/home/dashboard',
+      title: "Home",
+      icon: "/assets/images/logo/sidebarLogo/home.svg",
+      key: "/home/dashboard",
     },
     {
-      title: 'Cities',
-      icon: '/assets/images/logo/sidebarLogo/cities.svg',
-      key: '/partner/partner',
+      title: "Cities",
+      icon: "/assets/images/logo/sidebarLogo/cities.svg",
+      key: "/cities/citieslist",
     },
     {
-      title: 'Garage',
-      icon: '/assets/images/logo/sidebarLogo/garage.svg',
-      key: '/home/garage',
+      title: "Garage",
+      icon: "/assets/images/logo/sidebarLogo/garage.svg",
+      key: "/garage/garagelist",
     },
     {
-      title: 'People',
-      icon: '/assets/images/logo/sidebarLogo/people.svg',
-      key: '/userProfiles/userProfiles',
+      title: "People",
+      icon: "/assets/images/logo/sidebarLogo/people.svg",
+      key: "/userProfiles/userProfiles",
+    },
+    {
+      title: "People",
+      icon: "/assets/images/logo/sidebarLogo/people.svg",
+      key: "/userroles/userroleslist",
     },
   ];
 
   // const settingPath = '/setting';
   return (
     <>
-      <div className={`py-3 px-6 flex items-center border-b border-gray-100 ${sideBarLayout ? 'justify-center' : ''}`}>
+      <div className={`py-3 px-6 flex items-center border-b border-gray-100 ${sideBarLayout ? "justify-center" : ""}`}>
         <img
           src="/assets/images/logo/app-logo.svg"
           alt="app-logo"
@@ -46,7 +51,7 @@ const Sidebar = ({
         />
       </div>
       <Menu
-        style={{ borderRight: 'none' }}
+        style={{ borderRight: "none" }}
         selectedKeys={[pathname]}
         onClick={({ key }) => history.push(key)}
         mode="inline"
@@ -60,10 +65,10 @@ const Sidebar = ({
           // main menu
           // permission wise rendering for sub menu
           if (!permission.includes(mainPermission)
-          && mainPermission) return null;
+            && mainPermission) return null;
           return (
             <Item
-              icon={<img style={{ paddingBottom: '0.22rem' }} src={icon} alt={icon} />}
+              icon={<img style={{ paddingBottom: "0.22rem" }} src={icon} alt={icon} />}
               key={menuKey}
               className="text-xs font-quicksand-semi-bold"
             >
@@ -73,13 +78,13 @@ const Sidebar = ({
         })}
       </Menu>
       <Menu
-        style={{ borderRight: 'none', marginTop: '95%' }}
+        style={{ borderRight: "none", marginTop: "95%" }}
         mode="inline"
         selectedKeys={[pathname]}
-        onClick={({ settingPath = '/setting' }) => history.push(settingPath)}
+        onClick={({ settingPath = "/setting" }) => history.push(settingPath)}
       >
         <Item
-          icon={<img style={{ paddingBottom: '0.22rem' }} src="/assets/images/logo/sidebarLogo/settings.svg" alt="settings" />}
+          icon={<img style={{ paddingBottom: "0.22rem" }} src="/assets/images/logo/sidebarLogo/settings.svg" alt="settings" />}
           className="text-xs font-quicksand-semi-bold"
         >
           Settings
