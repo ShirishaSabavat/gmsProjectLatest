@@ -18,12 +18,12 @@ const ModulesPage = () => {
   };
   return (
     <>
-      <Helmet title="Dashboard" />
+      <Helmet title="Modules" />
       <div style={{ fontFamily: "Quicksand" }} className="row space-y-4">
         <div className="col-12">
           <div className="row pl-8">
             <div className="col-6">
-              <span className="font-montserrat-medium text-2xl font-semibold text-[#3D3D3D]">
+              <span className="font-quicksand-semi-bold text-2xl font-semi-bold text-[#3D3D3D]">
                 Modules
               </span>
               <Breadcrumb nestedPath={nestedPath} />
@@ -32,7 +32,7 @@ const ModulesPage = () => {
               <Button
                 onClick={createModule}
                 style={{
-                  marginRight: "20px", borderRadius: "4px", fontWeight: "500", backgroundColor: "#013453", color: "#FFFFFF", fontSize: "16px", width: "160px", height: "40px", boxShadow: "0px 8px 16px #005B923D",
+                  marginRight: "20px", borderRadius: "4px", fontWeight: "500", backgroundColor: "#013453", color: "#FFFFFF", fontSize: "16px", width: "160px", height: "52px", boxShadow: "0px 8px 16px #005B923D",
                 }}
               >
                 Create Module +
