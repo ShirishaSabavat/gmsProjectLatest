@@ -1,6 +1,6 @@
 // validate form function
-import qs from 'qs';
-import { history } from 'redux/store';
+import qs from "qs";
+import { history } from "redux/store";
 
 const onFormValidation = async (schema, form) => {
   try {

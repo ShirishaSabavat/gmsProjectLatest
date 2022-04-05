@@ -1,10 +1,10 @@
-import { Button } from 'antd';
-import { history } from 'redux/store';
+import { Button } from "antd";
+import { history } from "redux/store";
 
 const Error401 = () => (
   <div
     className="flex flex-col items-center justify-center space-y-4"
-    style={{ height: 'calc(100vh - 70px)', minHeight: 450 }}
+    style={{ height: "calc(100vh - 70px)", minHeight: 450 }}
   >
     <img
       src="assets/images/page/access-denied-page-1.svg"
@@ -16,7 +16,7 @@ const Error401 = () => (
     </span>
     <Button
       type="primary"
-      onClick={() => history.push('/home/dashboard')}
+      onClick={() => history.push("/home/dashboard")}
     >
       Dashboard
     </Button>

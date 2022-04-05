@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Input, Popover, Button } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
-import { connect } from 'react-redux';
-import { userLogout } from 'redux/user/actions';
-import './styles.css';
+import { useState } from "react";
+import { Input, Popover, Button } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { connect } from "react-redux";
+import { userLogout } from "redux/user/actions";
+import "./styles.css";
 
 const Header = ({ logout }) => {
   const [searchLoading, setSearchLoading] = useState(false);
@@ -17,12 +17,12 @@ const Header = ({ logout }) => {
   const showUserProfile = () => { };
 
   return (
-    <div className="flex justify-between" style={{ margin: 'auto', height: 64 }}>
+    <div className="flex justify-between" style={{ margin: "auto", height: 64 }}>
       <img
         src="/assets/images/logo/Web-Logo.png"
         alt="app-logo"
         className="h-8"
-        style={{ margin: '1% 0 0 3%' }}
+        style={{ margin: "1% 0 0 3%" }}
       />
       <Input
         size="medium"
@@ -36,7 +36,7 @@ const Header = ({ logout }) => {
           />
         )}
         style={{
-          marginLeft: '-11px', marginBottom: '8px', marginTop: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '42%',
+          marginLeft: "-11px", marginBottom: "8px", marginTop: "8px", backgroundColor: "rgba(245,248,252,1)", width: "42%",
         }}
         suffix={searchLoading && <LoadingOutlined />}
         bordered={false}
@@ -84,12 +84,12 @@ const Header = ({ logout }) => {
         >
           <img
             style={{
-              cursor: 'pointer',
-              width: '32px',
-              height: '32px',
-              left: '122px',
-              top: '0px',
-              overflow: 'visible',
+              cursor: "pointer",
+              width: "32px",
+              height: "32px",
+              left: "122px",
+              top: "0px",
+              overflow: "visible",
             }}
             onClick={showUserProfile}
             src="/assets/images/logo/profile.png"

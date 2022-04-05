@@ -1,6 +1,6 @@
-import { Input, Space } from 'antd';
-import lodash from 'lodash';
-import { forwardRef } from 'react';
+import { Input, Space } from "antd";
+import lodash from "lodash";
+import { forwardRef } from "react";
 
 const InputTypes = {
   Input,
@@ -14,7 +14,7 @@ const InputWrapper = forwardRef(({
   limit,
   mandatory,
   error,
-  inputType = 'Input',
+  inputType = "Input",
   number,
   placeholder,
   value,
@@ -23,7 +23,7 @@ const InputWrapper = forwardRef(({
   onChange,
   ...keys
 }, ref) => {
-  const InputType = InputTypes[lodash.has(InputTypes, [inputType]) ? inputType : 'Input'];
+  const InputType = InputTypes[lodash.has(InputTypes, [inputType]) ? inputType : "Input"];
 
   // function supporting input type --> string/number
   const onInputType = (event) => {
@@ -34,7 +34,7 @@ const InputWrapper = forwardRef(({
     }
     // number input
     const { target: { value: input } } = event;
-    if ((!Number.isNaN(input) && reg.test(input)) || input === '' || input === '-') {
+    if ((!Number.isNaN(input) && reg.test(input)) || input === "" || input === "-") {
       onChange(event);
     }
   };
@@ -45,7 +45,7 @@ const InputWrapper = forwardRef(({
   else limitError = false;
   return (
     <div
-      className={`space-y-2 ${className || ''}`}
+      className={`space-y-2 ${className || ""}`}
       style={style}
     >
 
@@ -60,12 +60,12 @@ const InputWrapper = forwardRef(({
 
       {/* INPUT */}
       <InputType
-        className={`custom-input ${((error && mandatory) || limitError) ? 'input-error' : ''}`}
+        className={`custom-input ${((error && mandatory) || limitError) ? "input-error" : ""}`}
         {...keys}
         value={value}
         onChange={(event) => onInputType?.(event)}
         ref={ref}
-        placeholder={placeholder || label || ''}
+        placeholder={placeholder || label || ""}
       />
 
       {/* LIMIT */}
@@ -75,8 +75,8 @@ const InputWrapper = forwardRef(({
           {value && (
             <Space>
               (
-              <span>{limit >= value.length ? 'Remaining:' : 'Exceeded By:'}</span>
-              <span className={value.length > limit ? 'text-red-500' : ''}>
+              <span>{limit >= value.length ? "Remaining:" : "Exceeded By:"}</span>
+              <span className={value.length > limit ? "text-red-500" : ""}>
                 {limit >= value.length ? limit - value.length : value.length - limit}
               </span>
               )

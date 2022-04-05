@@ -1,8 +1,8 @@
-import actions from './actionTypes';
+import actions from "./actionTypes";
 
 const initialState = {
   loading: false,
-  error: '',
+  error: "",
   authorized: false,
   organizationId: null,
   teamId: [],

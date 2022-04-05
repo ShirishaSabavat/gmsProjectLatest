@@ -1,44 +1,44 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
-import { Input } from 'antd';
-import { Link } from 'react-router-dom';
-import ListitemModules from 'components/layouts/ListModules';
+import React from "react";
+import { Helmet } from "react-helmet";
+import Breadcrumb from "components/layouts/breadcrumb";
+import { Input } from "antd";
+import { Link } from "react-router-dom";
+import ListitemModules from "components/layouts/ListModules";
 
 const nestedPath = [
-  'Home',
-  'User Roles',
-  'Create New Role',
+  "Home",
+  "User Roles",
+  "Create New Role",
 ];
 
 const ModuleDetails = [
   {
-    Module_ID: '1',
-    Module_Name: 'Module 1',
-    Process1: 'Process 1',
-    Process2: 'Process 2',
-    Process3: 'Process 3',
+    Module_ID: "1",
+    Module_Name: "Module 1",
+    Process1: "Process 1",
+    Process2: "Process 2",
+    Process3: "Process 3",
   },
   {
-    Module_ID: '1',
-    Module_Name: 'Module 2',
-    Process1: 'Process 1',
-    Process2: 'Process 2',
-    Process3: 'Process 3',
+    Module_ID: "1",
+    Module_Name: "Module 2",
+    Process1: "Process 1",
+    Process2: "Process 2",
+    Process3: "Process 3",
   },
   {
-    Module_ID: '1',
-    Module_Name: 'Module 3',
-    Process1: 'Process 1',
-    Process2: 'Process 2',
-    Process3: 'Process 3',
+    Module_ID: "1",
+    Module_Name: "Module 3",
+    Process1: "Process 1",
+    Process2: "Process 2",
+    Process3: "Process 3",
   },
   {
-    Module_ID: '1',
-    Module_Name: 'Module 4',
-    Process1: 'Process 1',
-    Process2: 'Process 2',
-    Process3: 'Process 3',
+    Module_ID: "1",
+    Module_Name: "Module 4",
+    Process1: "Process 1",
+    Process2: "Process 2",
+    Process3: "Process 3",
   },
 ];
 
@@ -71,7 +71,7 @@ const addrole = () => (
             size="medium"
             placeholder="Enter Name Here..."
             style={{
-              padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '150%',
+              padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%",
             }}
 
           />

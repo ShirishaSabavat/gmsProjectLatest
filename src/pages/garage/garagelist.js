@@ -1,37 +1,37 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
-import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
-import Listitemgarage from 'components/layouts/Listitemgarage';
-import { Pagination } from 'react-headless-pagination';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Helmet } from "react-helmet";
+import Breadcrumb from "components/layouts/breadcrumb";
+import HorizontalSearchHeader from "components/layouts/HorizontalSearchHeader";
+import Listitemgarage from "components/layouts/Listitemgarage";
+import { Pagination } from "react-headless-pagination";
+import { Link } from "react-router-dom";
 
 const nestedPath = [
-  'Home',
-  'Garages',
+  "Home",
+  "Garages",
 ];
 
 const GarageDetails = [
   {
-    garage_id: '1',
-    garage_name: 'Mumbai',
-    garage_manager: 'John Doe',
-    garage_members: '2054',
-    status: 'Active',
+    garage_id: "1",
+    garage_name: "Mumbai",
+    garage_manager: "John Doe",
+    garage_members: "2054",
+    status: "Active",
   },
   {
-    garage_id: '1',
-    garage_name: 'Mumbai',
-    garage_manager: 'John Doe',
-    garage_members: '2054',
-    status: 'Active',
+    garage_id: "1",
+    garage_name: "Mumbai",
+    garage_manager: "John Doe",
+    garage_members: "2054",
+    status: "Active",
   },
   {
-    garage_id: '1',
-    garage_name: 'Mumbai',
-    garage_manager: 'John Doe',
-    garage_members: '2054',
-    status: 'Active',
+    garage_id: "1",
+    garage_name: "Mumbai",
+    garage_manager: "John Doe",
+    garage_members: "2054",
+    status: "Active",
   },
 ];
 
@@ -89,13 +89,13 @@ const garagelist = () => (
         truncableClassName="mt-5 mx-5"
       >
         <div className="flex items-center justify-center flex-grow mt-5">
-          <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{'<'}</Pagination.PrevButton>
+          <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{"<"}</Pagination.PrevButton>
           <Pagination.PageButton
             activeClassName="bg-teal-400 text-white"
             inactiveClassName="bg-white"
             className="p-3 mx-4 mt-5 rounded"
           />
-          <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{'>'}</Pagination.NextButton>
+          <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{">"}</Pagination.NextButton>
         </div>
       </Pagination>
       {/* <Items currentItems={currentItems} /> */}

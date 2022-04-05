@@ -1,40 +1,40 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
-import { Input } from 'antd';
-import Listitemuserroles from 'components/layouts/Listitemuserroles';
-import { Pagination } from 'react-headless-pagination';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Helmet } from "react-helmet";
+import Breadcrumb from "components/layouts/breadcrumb";
+import { Input } from "antd";
+import Listitemuserroles from "components/layouts/Listitemuserroles";
+import { Pagination } from "react-headless-pagination";
+import { Link } from "react-router-dom";
 
 const nestedPath = [
-  'Home',
-  'User Roles',
+  "Home",
+  "User Roles",
 ];
 
 const RoleDetails = [
   {
-    role_id: '1',
-    role_title: 'Mumbai',
-    assigned_to: 'John Doe',
-    total_modules: '2054',
-    created_on: '2022-03-12',
-    status: 'Active',
+    role_id: "1",
+    role_title: "Mumbai",
+    assigned_to: "John Doe",
+    total_modules: "2054",
+    created_on: "2022-03-12",
+    status: "Active",
   },
   {
-    role_id: '1',
-    role_title: 'Mumbai',
-    assigned_to: 'John Doe',
-    total_modules: '2054',
-    created_on: '2022-03-12',
-    status: 'Active',
+    role_id: "1",
+    role_title: "Mumbai",
+    assigned_to: "John Doe",
+    total_modules: "2054",
+    created_on: "2022-03-12",
+    status: "Active",
   },
   {
-    role_id: '1',
-    role_title: 'Mumbai',
-    assigned_to: 'John Doe',
-    total_modules: '2054',
-    created_on: '2022-03-12',
-    status: 'Active',
+    role_id: "1",
+    role_title: "Mumbai",
+    assigned_to: "John Doe",
+    total_modules: "2054",
+    created_on: "2022-03-12",
+    status: "Active",
   },
 ];
 
@@ -67,7 +67,7 @@ const userroleslist = () => (
             User Roles
           </span>
           <Breadcrumb nestedPath={nestedPath} />
-          <div className="basis-1/2">{'  '}</div>
+          <div className="basis-1/2">{"  "}</div>
           <div className="basis-1/3 flex flex-row flex-nonwrap bg-white mt-5">
             <Input
               size="medium"
@@ -81,7 +81,7 @@ const userroleslist = () => (
                 />
               )}
               style={{
-                padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '30%',
+                padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "30%",
               }}
 
             />
@@ -113,13 +113,13 @@ const userroleslist = () => (
         truncableClassName="mt-5 mx-5"
       >
         <div className="flex items-center justify-center flex-grow mt-5">
-          <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{'<'}</Pagination.PrevButton>
+          <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{"<"}</Pagination.PrevButton>
           <Pagination.PageButton
             activeClassName="bg-teal-400 text-white"
             inactiveClassName="bg-white"
             className="p-3 mx-4 mt-5 rounded"
           />
-          <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{'>'}</Pagination.NextButton>
+          <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{">"}</Pagination.NextButton>
         </div>
       </Pagination>
       {/* <Items currentItems={currentItems} /> */}

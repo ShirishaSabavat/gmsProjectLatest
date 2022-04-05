@@ -1,4 +1,4 @@
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from "react-router-dom";
 
 const Header = () => {
   const history = useHistory();
@@ -15,23 +15,23 @@ const Header = () => {
           App Name
         </span>
       </div>
-      {pathname === '/auth/sign-in' && (
+      {pathname === "/auth/sign-in" && (
         <span>
           <span>Don&apos;t have a account, </span>
           <span
             className="text-blue-500 cursor-pointer hover:underline"
-            onClick={() => history.push('/auth/sign-up')}
+            onClick={() => history.push("/auth/sign-up")}
           >
             Create one.
           </span>
         </span>
       )}
-      {pathname === '/auth/sign-up' && (
+      {pathname === "/auth/sign-up" && (
         <span>
           <span>Already have a account, </span>
           <span
             className="text-blue-500 cursor-pointer hover:underline"
-            onClick={() => history.push('/auth/sign-in')}
+            onClick={() => history.push("/auth/sign-in")}
           >
             Sign in.
           </span>

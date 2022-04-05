@@ -1,5 +1,5 @@
-import { Space } from 'antd';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { Space } from "antd";
+import { CloseCircleOutlined } from "@ant-design/icons";
 
 const Card = ({
   style,
@@ -12,11 +12,11 @@ const Card = ({
   children,
 }) => (
   <div
-    className={`bg-gray-50 font-mulish-semi-bold w-full space-y-1 shadow-1 ${className || ''}`}
+    className={`bg-gray-50 font-mulish-semi-bold w-full space-y-1 shadow-1 ${className || ""}`}
     style={style}
   >
     {/* HEADER */}
-    <div className={`bg-white p-6 rounded-t-lg ${Icon ? 'flex space-x-3 items-center' : ''}`}>
+    <div className={`bg-white p-6 rounded-t-lg ${Icon ? "flex space-x-3 items-center" : ""}`}>
 
       {/* ICON */}
       {Icon && (
@@ -27,7 +27,7 @@ const Card = ({
           <Icon className="text-lg text-white flex" />
         </div>
       )}
-      <div className={`flex flex-col w-full ${description ? '' : 'justify-center'}`}>
+      <div className={`flex flex-col w-full ${description ? "" : "justify-center"}`}>
         <div className="flex justify-between items-center">
 
           {/* TITLE */}

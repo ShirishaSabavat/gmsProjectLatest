@@ -3,12 +3,12 @@ import {
   put,
   all,
   takeEvery,
-} from 'redux-saga/effects';
-import { createHashHistory } from 'history';
-import { notification } from 'antd';
+} from "redux-saga/effects";
+import { createHashHistory } from "history";
+import { notification } from "antd";
 
-import { login, currentAccountLoad, logout } from 'services/authorization';
-import actions from './actionTypes';
+import { login, currentAccountLoad, logout } from "services/authorization";
+import actions from "./actionTypes";
 
 const history = createHashHistory();
 
@@ -25,20 +25,20 @@ function* LOGIN(userAction) {
 
   if (success) {
     yield put({
-      type: 'user/LOAD_CURRENT_ACCOUNT',
+      type: "user/LOAD_CURRENT_ACCOUNT",
     });
 
-    yield history.push('/home/dashboard');
+    yield history.push("/home/dashboard");
     notification.success({
-      message: 'Logged In',
-      description: 'You have successfully logged in!',
+      message: "Logged In",
+      description: "You have successfully logged in!",
     });
   }
 
   if (!success) {
     notification.error({
-      message: 'Authentication failed',
-      description: 'Unable to login!',
+      message: "Authentication failed",
+      description: "Unable to login!",
     });
 
     yield put({

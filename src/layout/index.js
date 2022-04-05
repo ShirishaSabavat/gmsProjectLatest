@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { connect } from 'react-redux';
-import { useLocation, Redirect } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { connect } from "react-redux";
+import { useLocation, Redirect } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 // layout imports
-import PublicLayout from './public';
-import AuthLayout from './auth';
-import MainLayout from './main';
+import PublicLayout from "./public";
+import AuthLayout from "./auth";
+import MainLayout from "./main";
 
 const Layouts = {
   public: PublicLayout,
@@ -21,13 +21,13 @@ const Layout = ({
 }) => {
   const { pathname } = useLocation();
   const getLayout = () => {
-    if (pathname === '/') return 'public';
-    if (/^\/auth(?=\/|$)/i.test(pathname)) return 'auth';
-    return 'main';
+    if (pathname === "/") return "public";
+    if (/^\/auth(?=\/|$)/i.test(pathname)) return "auth";
+    return "main";
   };
 
   const Container = Layouts[getLayout()];
-  const isAuthLayout = getLayout() === 'auth';
+  const isAuthLayout = getLayout() === "auth";
 
   const SelectedLayout = () => {
     // show loader when user in check authorization process

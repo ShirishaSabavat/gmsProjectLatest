@@ -1,21 +1,21 @@
-import { connect } from 'react-redux';
-import { useEffect, useState, useRef } from 'react';
-import lodash from 'lodash';
-import { Button, Space } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { connect } from "react-redux";
+import { useEffect, useState, useRef } from "react";
+import lodash from "lodash";
+import { Button, Space } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 // helper components
-import Card from 'components/layouts/card';
-import ShowError from 'components/layouts/showErrors';
-import InputWrapper from 'components/kit/widgets/input';
+import Card from "components/layouts/card";
+import ShowError from "components/layouts/showErrors";
+import InputWrapper from "components/kit/widgets/input";
 
 // helper data
-import { onFormValidation } from 'lib/helper';
-import { userLogin as userLoginRedux } from 'redux/user/actions';
-import { userLoginStructure, userLoginSchema } from './data';
+import { onFormValidation } from "lib/helper";
+import { userLogin as userLoginRedux } from "redux/user/actions";
+import { userLoginStructure, userLoginSchema } from "./data";
 
 // mutation/query
-import USER_LOGIN from './mutation';
+import USER_LOGIN from "./mutation";
 
 const Login = ({
   login,
@@ -60,7 +60,7 @@ const Login = ({
   return (
     <div
       className="w-full flex items-center justify-center"
-      style={{ height: 'calc(100vh - 69px)', minHeight: 500 }}
+      style={{ height: "calc(100vh - 69px)", minHeight: 500 }}
     >
       <Card
         title="Sign in to your account"
@@ -81,7 +81,7 @@ const Login = ({
           <InputWrapper
             label="Email"
             mandatory
-            error={errors?.paths.includes('email')}
+            error={errors?.paths.includes("email")}
             name="email"
             ref={(ref) => { inputRefs.current.email = ref; }}
             value={(userLogin && userLogin?.email) || null}
@@ -90,7 +90,7 @@ const Login = ({
           <InputWrapper
             label="Password"
             mandatory
-            error={errors?.paths.includes('password')}
+            error={errors?.paths.includes("password")}
             name="password"
             ref={(ref) => { inputRefs.current.password = ref; }}
             inputType="Password"
@@ -130,4 +130,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
-Login.displayName = 'Login User Component';
+Login.displayName = "Login User Component";
