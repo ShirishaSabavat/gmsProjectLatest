@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client';
-import Cookies from 'js-cookie';
-import client from 'services/apollo_link';
+import { gql } from "@apollo/client";
+import Cookies from "js-cookie";
+import client from "services/apollo_link";
 
 const verifyToken = gql`
     query verifyToken ($token: String!) {
@@ -18,14 +18,14 @@ export const login = async (payload) => {
     const response = await client.mutate({
       mutation,
       variables,
-      context: { clientName: 'auth-server' },
+      context: { clientName: "auth-server" },
     });
     const {
       token,
       userId,
     } = response.data.employeeLogin;
-    Cookies.set('appToken', token);
-    Cookies.set('appUserId', userId);
+    Cookies.set("appToken", token);
+    Cookies.set("appUserId", userId);
     return true;
   } catch (error) {
     return false;
@@ -38,8 +38,8 @@ export const currentAccountLoad = async () => {
   try {
     await client.query({
       query: verifyToken,
-      variables: { token: Cookies.get('appToken') || '' },
-      context: { clientName: 'auth-server' },
+      variables: { token: Cookies.get("appToken") || "" },
+      context: { clientName: "auth-server" },
     });
     return true;
   } catch (error) {
@@ -49,7 +49,7 @@ export const currentAccountLoad = async () => {
 
 // logout and remove all the cookies
 export const logout = async () => {
-  Cookies.remove('appToken');
-  Cookies.remove('appUserId');
+  Cookies.remove("appToken");
+  Cookies.remove("appUserId");
   return false;
 };

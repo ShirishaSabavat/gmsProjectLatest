@@ -1,5 +1,5 @@
-import { Helmet } from 'react-helmet';
-import Unauthorized from 'components/system/auth/unauthorized';
+import { Helmet } from "react-helmet";
+import Unauthorized from "components/system/auth/unauthorized";
 
 const UnauthorizedPage = () => (
   <>

@@ -1,19 +1,220 @@
-//  NOTE:  Avoid using color names such as white/black
-// use HEX COLOR CODES instead such as #ffffff/#000000
-//  NOTE:  Avoid using specific namings such as $input-shadow-light
-// instead use global naming type such as $shadow-light for scss variables
-$font-10: 10px;
-$font-12: 12px;
-$font-14: 14px;
-$font-16: 16px;
-$font-18: 18px;
-$font-20: 20px;
-$font-28: 28px;
-$font-38: 38px;
+/*-----------------------------------------------------------------BOX SHADOW----------------------------------------------------------------*/
+$box_shadow_one: 0 4px 10px 0 #14132205;
+$box_shadow_two: 0 0 10px 0 #4915570d;
+$box_shadow_three: 0 0 0 2px #621b6826;
+$box-shadow4: 0px 0px 32px #49155705;
+/*-----------------------------------------------------------------BOX SHADOW----------------------------------------------------------------*/
 
-$mulish-extra-bold: 'Mulish, Extra-Bold';
-$mulish-bold: 'Mulish, Bold';
-$mulish-semi-bold: 'Mulish, Semi-Bold';
-$mulish-medium: 'Mulish, Medium';
-$mulish-regular: 'Mulish, Regular';
-$mulish-light: 'Mulish, Light';
+
+
+/*-----------------------------------------------------------------Font USED-----------------------------------------------------------------*/
+$Font-Size-10: 10px;
+$Font-Size-12: 12px;
+$Font-Size-14: 14px;
+$Font-Size-16: 16px;
+$Font-Size-18: 18px;
+$Font-Size-20: 20px;
+$Font-Size-38: 38px;
+/*-----------------------------------------------------------------Font USED-----------------------------------------------------------------*/
+
+
+
+/*-------------------------------------------------------------CHARACTER SPACING-------------------------------------------------------------*/
+$character-spacing-0: 0px;
+$character-spacing--0-57: -0.57px;
+$character-spacing-0-2: 0.2px;
+$character-spacing-0-24: 0.24px;
+$character-spacing-0-38: 0.38px;
+$character-spacing-0-4: 0.4px;
+$character-spacing-0-12: 0.12px;
+$character-spacing-0-18: 0.18px;
+$character-spacing-0-15: 0.15px;
+$character-spacing-0-38: 0.38px;
+/*-------------------------------------------------------------CHARACTER SPACING-------------------------------------------------------------*/
+
+
+
+/*----------------------------------------------------------------LINE SPACING---------------------------------------------------------------*/
+$line-spacing-unset: unset;
+$line-spacing-20: 20px;
+$line-spacing-22: 22px;
+$line-spacing-24: 24px;
+$line-spacing-28: 28px;
+$line-spacing-35: 35px;
+/*----------------------------------------------------------------LINE SPACING---------------------------------------------------------------*/
+
+
+
+/*--------------------------------------------------------------COLOR SPECTRUM---------------------------------------------------------------*/
+// general color spectrum
+$Color-Pink-Light0: #D42A56;
+$Color-Red-Medium0: #9A0000;
+$Color-Yellow-Light0: #DBAB01;
+$border-color: #9294a229;
+
+// purple color spectrum
+$Color-Purple-Dark1: #491557;
+$Color-Purple-Dark2: #621B68;
+$Color-Purple-light1: #f5e6ff78;
+
+// Cyan color spectrum
+$Color-Cyan-Light1: #48C3D8;
+$Color-Cyan-Light2: #43C0D5;
+$Color-Cyan-Light3: #49B5C7;
+$Color-Cyan-Light4: #3DB4C8;
+$Color-Cyan-Light5: #45CEE5;
+
+// Blue color spectrum
+$Color-Blue-Light1: #5EB7FC;
+$Color-Blue-Light2: #65B1FC;
+$Color-Blue-Light3: #97D7FF;
+$Color-Blue-Light4: #A3D4FF;
+$Color-Blue-Dark0: #0C1030;
+$color-blue-dark0: #0C1030;
+
+// gray color spectrum
+$Color-Gray-Medium1: #636978;
+$Color-Gray-Medium2: #9193A2;
+$Color-Gray-Medium3: #9294A2;
+$color-gray-medium3: #9294A2;
+$Color-Gray-Medium4: #555A66;
+$Color-Gray-Medium5: #414952;
+$Color-Gray-Medium6: #333940;
+$Color-Gray-Light1: #BEC3D2;
+$Color-Gray-Light2: #AFB4C8;
+$Color-Gray-Light3: #CDD2E1;
+
+// black color spectrum
+$Color-Black-Dark1: #000000;
+$Color-Black-Dark2: #0E1011;
+$Color-Black-Dark3: #101214;
+$Color-Black-Dark4: #23272B;
+$Color-Black-Light0: #3D3D3D;
+
+// white color spectrum
+$Color-White-Light1: #FFFFFF;
+$color-white-light1: #FFFFFF;
+$Color-White-Light2: #FAFAFA;
+$Color-White-Light3: #F6F6F6;
+$color-white-light4: #F8F8F9;
+$Color-White-Light5: #E9EDF5;
+
+// green color spectrum
+$Color-Green-Medium0: #076B68;
+$Color-Green-Light0: #00ADA7;
+
+//Table Head Color
+$Color-Dark-Blue0: #013453;
+/*--------------------------------------------------------------COLOR SPECTRUM---------------------------------------------------------------*/
+
+$font-family-type: (
+    quicksand-regular: 'Quicksand, Regular',
+    quicksand-bold: 'Quicksand, Bold',
+    quicksand-medium: 'Quicksand, Medium',
+    quicksand-semi-bold: 'Quicksand, SemiBold',
+);
+$quicksand-semi-bold: 'Quicksand, SemiBold';
+
+$font-style-type: (
+    normal: normal,
+    italic: italic,
+);
+
+$font-size-type: (
+    10: $Font-Size-10,
+    12: $Font-Size-12,
+    14: $Font-Size-14,
+    20: $Font-Size-20,
+    38: $Font-Size-38,
+);
+
+$character-spacing-type: (
+    0: $character-spacing-0,
+    57: $character-spacing--0-57,
+    2: $character-spacing-0-2,
+    24: $character-spacing-0-24,
+    38: $character-spacing-0-38,
+    4: $character-spacing-0-4,
+    12: $character-spacing-0-12,
+    18: $character-spacing-0-18,
+    15: $character-spacing-0-15,
+);
+
+$line-spacing-type: (
+    20: $line-spacing-20,
+    22: $line-spacing-22,
+    24: $line-spacing-24,
+    28: $line-spacing-28,
+    35: $line-spacing-35,
+);
+
+$font-color-type: (
+    green-light-0 : $Color-Green-Light0,
+    blue-dark-0 : $Color-Blue-Dark0,
+    white-light-1 : $Color-White-Light1,
+    white-light-3 : $Color-White-Light3,
+    gray-medium-3 : $Color-Gray-Medium3,
+    gray-medium-2 : $Color-Gray-Medium2,
+    purple-dark-2 : $Color-Purple-Dark2,
+    dark-blue-0 : $Color-Dark-Blue0,
+);
+
+@mixin font-style(
+    $font-type,
+    $font-style,
+    $font-size,
+    $line-spacing,
+    $character-Spacing,
+    $font-color,
+) {
+    font-family: map-get($font-family-type, $font-type);
+    font-style: map-get($font-style-type, $font-style);
+    font-size: map-get($font-size-type, $font-size);
+    line-height: map-get($line-spacing-type, $line-spacing);
+    letter-spacing: map-get($character-spacing-type, $character-Spacing);
+    color: map-get($font-color-type, $font-color);
+}
+
+/*-----------------------------------------------------------------font size used-----------------------------------------------------------------*/
+$font-size-10: 10px;
+$font-size-12: 12px;
+$font-size-14: 14px;
+$font-size-16: 16px;
+$font-size-18: 18px;
+$font-size-20: 20px;
+$font-size-28: 28px;
+$font-size-38: 38px;
+/*-----------------------------------------------------------------font size used-----------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------button color used-----------------------------------------------------------------*/
+$primary-color: #00ADA7;
+$primary-color-hover: #1fbdb7;
+/*-----------------------------------------------------------------button color used-----------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------general color used-----------------------------------------------------------------*/
+$white-color: #FFFFFF;
+$bg-white-color: #F8F8F9;
+$purple-color: #491557;
+$error-bg-color: #feeaea;
+/*-----------------------------------------------------------------general color used-----------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------border color used-----------------------------------------------------------------*/
+$border-thin-color: #F0F0F0;
+$border-thick-color: #F8F8F9;
+$input-border-color: #d9d9d9;
+/*-----------------------------------------------------------------border color used-----------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------box shadow color used-----------------------------------------------------------------*/
+$input-hover-color: #1fbdb724;
+$form-card-color: #49155705;
+/*-----------------------------------------------------------------box shadow color used-----------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------font color used-----------------------------------------------------------------*/
+$dark-font-color: #0C1030;
+$gray-font-color: #9294A2;
+$red-font-color: #ff4d4f;
+/*-----------------------------------------------------------------font color used-----------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------icon bg color used-----------------------------------------------------------------*/
+$icon-bg-purple-color: #F5CEFF4F;
+/*-----------------------------------------------------------------icon bg color used-----------------------------------------------------------------*/

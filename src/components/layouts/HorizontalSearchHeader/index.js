@@ -1,5 +1,5 @@
-import { Input } from 'antd';
-import React from 'react';
+import { Input } from "antd";
+import React from "react";
 
 const HorizontalSearchHeader = ({ Title }) => (
   <div className="box-border h-200 p-4 ">
@@ -23,7 +23,7 @@ const HorizontalSearchHeader = ({ Title }) => (
             />
           )}
           style={{
-            padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '150%',
+            padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%",
           }}
 
         />

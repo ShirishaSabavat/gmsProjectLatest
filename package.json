@@ -19,7 +19,9 @@
         "history": "^4.10.1",
         "js-cookie": "^3.0.1",
         "lodash": "^4.17.21",
+        "mdbreact": "^5.2.0",
         "node-sass": "^7.0.0",
+        "qs": "^6.10.3",
         "react": "^17.0.2",
         "react-bootstrap": "^2.1.1",
         "react-data-table-component": "^7.4.6",
@@ -84,6 +86,5 @@
         "react-app-rewired": "^2.1.8",
         "style-loader": "^3.3.1",
         "tailwindcss": "^3.0.18"
-    },
-    "proxy": "https://staging.everestfleet.com"
+    }
 }

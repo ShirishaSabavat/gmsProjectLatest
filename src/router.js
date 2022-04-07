@@ -74,9 +74,39 @@ const routes = [
   },
   {
     path: '/userroles/addrole',
-    key: 'GARAGE',
+    key: 'Add User Role',
     exact: true,
     Component: lazy(() => import('pages/userroles/addrole')),
+  },
+  {
+    path: '/userProfiles/userProfiles',
+    key: 'USER PROFILES',
+    exact: true,
+    Component: lazy(() => import('pages/userProfiles/userProfiles')),
+  },
+  {
+    path: '/modules/modules',
+    key: 'MODULES',
+    exact: true,
+    Component: lazy(() => import('pages/modules/modules')),
+  },
+  {
+    path: '/modules/addModule',
+    key: 'Add Module',
+    exact: true,
+    Component: lazy(() => import('pages/modules/addModule')),
+  },
+  {
+    path: '/processes/processes',
+    key: 'PROCESSES',
+    exact: true,
+    Component: lazy(() => import('pages/processes/processes')),
+  },
+  {
+    path: '/processes/addProcess',
+    key: 'Add Process',
+    exact: true,
+    Component: lazy(() => import('pages/processes/addProcess')),
   },
 ];
 

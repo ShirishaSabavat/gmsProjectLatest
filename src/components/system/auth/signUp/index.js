@@ -1,16 +1,16 @@
-import { useEffect, useState, useRef } from 'react';
-import lodash from 'lodash';
-import { Button, Space } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { useEffect, useState, useRef } from "react";
+import lodash from "lodash";
+import { Button, Space } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 // helper components
-import Card from 'components/layouts/card';
-import ShowError from 'components/layouts/showErrors';
-import InputWrapper from 'components/kit/widgets/input';
+import Card from "components/layouts/card";
+import ShowError from "components/layouts/showErrors";
+import InputWrapper from "components/kit/widgets/input";
 
 // helper data
-import { onFormValidation } from 'lib/helper';
-import { userRegisterStructure, userRegisterSchema } from './data';
+import { onFormValidation } from "lib/helper";
+import { userRegisterStructure, userRegisterSchema } from "./data";
 
 const Register = () => {
   const inputRefs = useRef(lodash.cloneDeep(userRegisterStructure));
@@ -52,7 +52,7 @@ const Register = () => {
   return (
     <div
       className="w-full flex items-center justify-center"
-      style={{ height: 'calc(100vh - 69px)', minHeight: 500 }}
+      style={{ height: "calc(100vh - 69px)", minHeight: 500 }}
     >
       <Card
         title="Sign up for account"
@@ -73,7 +73,7 @@ const Register = () => {
           <InputWrapper
             label="Name"
             mandatory
-            error={errors?.paths.includes('username')}
+            error={errors?.paths.includes("username")}
             name="username"
             ref={(ref) => { inputRefs.current.username = ref; }}
             value={(userRegister && userRegister?.username) || null}
@@ -82,7 +82,7 @@ const Register = () => {
           <InputWrapper
             label="Email"
             mandatory
-            error={errors?.paths.includes('email')}
+            error={errors?.paths.includes("email")}
             name="email"
             ref={(ref) => { inputRefs.current.email = ref; }}
             value={(userRegister && userRegister?.email) || null}
@@ -91,7 +91,7 @@ const Register = () => {
           <InputWrapper
             label="Password"
             mandatory
-            error={errors?.paths.includes('password')}
+            error={errors?.paths.includes("password")}
             name="password"
             ref={(ref) => { inputRefs.current.password = ref; }}
             inputType="Password"
@@ -101,7 +101,7 @@ const Register = () => {
           <InputWrapper
             label="Confirm Password"
             mandatory
-            error={errors?.paths.includes('confirmPassword')}
+            error={errors?.paths.includes("confirmPassword")}
             name="confirmPassword"
             ref={(ref) => { inputRefs.current.confirmPassword = ref; }}
             inputType="Password"
@@ -130,4 +130,4 @@ const Register = () => {
 };
 
 export default Register;
-Register.displayName = 'Register User Component';
+Register.displayName = "Register User Component";

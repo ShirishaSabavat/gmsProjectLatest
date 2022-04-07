@@ -1,10 +1,10 @@
-import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
-import Dashboard from 'components/app/home/dashboard';
+import { Helmet } from "react-helmet";
+import Breadcrumb from "components/layouts/breadcrumb";
+import Dashboard from "components/app/home/dashboard";
 
 const nestedPath = [
-  'Home',
-  'Dashboard',
+  "Home",
+  "Dashboard",
 ];
 
 const DashboardPage = () => (

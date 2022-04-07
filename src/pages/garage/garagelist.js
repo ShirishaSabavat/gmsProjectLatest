@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 import { getGarages } from 'services/axios';
 
 const nestedPath = [
-  'Home',
-  'Garages',
+  "Home",
+  "Garages",
 ];
 
 function garagelist() {

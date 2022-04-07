@@ -5,9 +5,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'mulish-semi-bold': ['\'Mulish, Semi-Bold\''],
-        'mulish-bold': ['\'Mulish, Bold\''],
-        'mulish-medium': ['\'Mulish, Medium\''],
+        'quicksand-regular': ['\'Quicksand, Regular\''],
+        'quicksand-bold': ['\'Quicksand, Bold\''],
+        'quicksand-medium': ['\'Quicksand, Medium\''],
+        'quicksand-semi-bold': ['\'Quicksand, Semi-Bold\''],
       },
       backgroundColor: {
         primary: '#e6f7ff',
