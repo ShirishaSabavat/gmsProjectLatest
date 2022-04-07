@@ -86,6 +86,5 @@
         "react-app-rewired": "^2.1.8",
         "style-loader": "^3.3.1",
         "tailwindcss": "^3.0.18"
-    },
-    "proxy": "https://staging.everestfleet.com"
+    }
 }

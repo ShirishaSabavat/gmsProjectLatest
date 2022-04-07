@@ -28,7 +28,7 @@ const createModules = () => {
         <Button
           onClick=""
           style={{
-            marginRight: "20px", borderRadius: "4px", fontWeight: "500", backgroundColor: "#013453", color: "#FFFFFF", fontSize: "16px", width: "120px", height: "40px", boxShadow: "0px 8px 16px #005B923D",
+            marginRight: "20px", borderRadius: "4px", fontWeight: "500", backgroundColor: "#013453", color: "#FFFFFF", fontSize: "16px", width: "120px", height: "52px", boxShadow: "0px 8px 16px #005B923D",
           }}
         >
           Save

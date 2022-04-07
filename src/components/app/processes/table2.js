@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const editIcon = (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -14,6 +15,7 @@ const table2 = () => {
       modules: "Module 1",
       createdOn: "14/3/1965",
       status: "Active",
+      id: "1",
       action: "",
     },
     {
@@ -21,6 +23,7 @@ const table2 = () => {
       modules: "Module 2",
       createdOn: "15/5/1984",
       status: "Active",
+      id: "2",
       action: "hai",
     },
     {
@@ -28,6 +31,7 @@ const table2 = () => {
       modules: "Module 3",
       createdOn: "14/3/1965",
       status: "Active",
+      id: "3",
       action: "hai",
     },
     {
@@ -35,6 +39,7 @@ const table2 = () => {
       modules: "Module 4",
       createdOn: "15/5/1984",
       status: "Inactive",
+      id: "1",
       action: "hai",
     },
     {
@@ -42,6 +47,7 @@ const table2 = () => {
       modules: "Module 4",
       createdOn: "14/3/1965",
       status: "Active",
+      id: "1",
       action: "hai",
     },
     {
@@ -49,6 +55,7 @@ const table2 = () => {
       modules: "Module 5",
       createdOn: "15/5/1984",
       status: "Active",
+      id: "1",
       action: "hai",
     },
     {
@@ -56,6 +63,7 @@ const table2 = () => {
       modules: "Module 5",
       createdOn: "14/3/1965",
       status: "Inactive",
+      id: "1",
       action: "hai",
     },
   ];
@@ -76,7 +84,11 @@ const table2 = () => {
             <td className="text-[#86A1A4] pl-5 py-2.5 border-[#F6FAFB] border-r-2">{object.createdOn}</td>
             <td className={object.status === "Active" ? "text-[#74D1D8] pl-5 py-2.5 border-[#F6FAFB] border-r-2" : "border-[#F6FAFB] pl-5 py-2.5 border-r-2"}>{object.status}</td>
             <td className={object.status === "Active" ? "text-[#74D1D8] pl-5 py-2.5 border-[#F6FAFB] border-r-2" : "text-[#9193A2] pl-5 py-2.5 border-[#F6FAFB] border-r-2"}>
-              {editIcon}
+              <Link
+                to={{ pathname: "addProcess", state: { id: object.id } }}
+              >
+                {editIcon}
+              </Link>
             </td>
           </tr>
         ))}

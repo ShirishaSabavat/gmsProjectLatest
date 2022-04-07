@@ -1,91 +1,185 @@
-import React from "react";
-import { Helmet } from "react-helmet";
-import Breadcrumb from "components/layouts/breadcrumb";
-import { Input } from "antd";
-import { Link } from "react-router-dom";
+/* eslint-disable react/jsx-boolean-value */
+import { React, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import Breadcrumb from 'components/layouts/breadcrumb';
+import { Input, Radio, Button } from 'antd';
+import { useLocation } from 'react-router-dom';
+import { addCity, editCity } from 'services/axios';
 
 const nestedPath = [
-  "Home",
-  "Add New City",
+  'Home',
+  'Add New City',
 ];
+const { TextArea } = Input;
+const addcity = () => {
+  const [radioValue, setRadioValue] = useState(true);
+  const [cityName, setCityName] = useState('');
+  const [description, setDescription] = useState('');
+  const [garageSeries, setGarageSeries] = useState('');
+  const [userSeries, setUserSeries] = useState('');
+  const [cityError, setCityError] = useState({});
+  const [descriptionError, setDescriptionError] = useState({});
+  const [garageError, setGarageError] = useState({});
+  const [userError, setUserError] = useState({});
+  const location = useLocation();
+  const { id } = location.state;
 
-const addcity = () => (
-  <>
-    <Helmet title="Cities" />
-    <div className="flex flex-col space-y-12">
-      <div className="space-y-2 basic-1/2">
-        <span className="font-montserrat-medium text-4xl mr-3.5">
-          Add New City
-        </span>
-        <Breadcrumb nestedPath={nestedPath} />
-      </div>
-      <div className="bg-white p-5">
-        <p>City Name</p>
-        <div className="flex flex-row flex-nonwrap bg-white">
-          <Input
-            size="medium"
-            placeholder="Enter Name Here..."
+  const validateFormData = () => {
+    const cityNameError = {};
+    const descriptionNameError = {};
+    const garageNameError = {};
+    const userNameError = {};
+    let isValid = true;
+
+    if (cityName.trim().length === 0) {
+      cityNameError.err = 'City name can not be empty';
+      isValid = false;
+    }
+    if (description.trim().length === 0) {
+      descriptionNameError.err = 'City name can not be empty';
+      isValid = false;
+    }
+    if (garageSeries.trim().length === 0) {
+      garageNameError.err = 'Garage series can not be empty';
+      isValid = false;
+    }
+    if (userSeries.trim().length === 0) {
+      userNameError.err = 'User series can not be empty';
+      isValid = false;
+    }
+
+    setCityError(cityNameError);
+    setDescriptionError(descriptionNameError);
+    setGarageError(garageNameError);
+    setUserError(userNameError);
+    return isValid;
+  };
+
+  const onSave = (event) => {
+    event.preventDefault();
+    console.log('radio', radioValue);
+    console.log('cName', cityName);
+    console.log('des', description);
+    console.log('garage', garageSeries);
+    console.log('user', userSeries);
+    const resp = validateFormData();
+    if (resp) {
+      if (id !== -1) {
+        console.log('in edit');
+        editCity(cityName, radioValue, description, garageSeries, userSeries, id)
+          .then((res) => {
+            console.log('res', res);
+          })
+          .catch((err) => {
+            console.log('err', err);
+          });
+      } else {
+        console.log('in add');
+        addCity(cityName, radioValue, description, garageSeries, userSeries)
+          .then((res) => {
+            console.log('res', res);
+          })
+          .catch((err) => {
+            console.log('err', err);
+          });
+      }
+    }
+  };
+
+  return (
+    <>
+      <Helmet title="Cities" />
+      <div className="flex flex-col space-y-12" style={{ fontFamily: 'Quicksand' }}>
+        <div className="space-y-2 basic-1/2">
+          <span className="font-quicksand-semi-bold text-4xl mr-3.5">
+            Add New City
+          </span>
+          <Breadcrumb nestedPath={nestedPath} />
+        </div>
+        <div className="bg-white p-5">
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>City Name</p>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <Input placeholder="CITY NAME" value={cityName} onChange={(e) => setCityName(e.target.value)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }} />
+            {Object.keys(cityError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {cityError[key]}
+              </div>
+            ))}
+          </div>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Description</p>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <TextArea
+              rows={4}
+              placeholder="Enter Description Here..."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              style={{
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              }}
+            />
+            {Object.keys(descriptionError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {descriptionError[key]}
+              </div>
+            ))}
+
+          </div>
+        </div>
+        <div className="bg-white p-5">
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Garage Series</p>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <Input
+              placeholder="Enter Garage Series Here..."
+              value={garageSeries}
+              onChange={(e) => setGarageSeries(e.target.value)}
+              style={{
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              }}
+            />
+            {Object.keys(garageError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {garageError[key]}
+              </div>
+            ))}
+          </div>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>User Series</p>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <Input
+              placeholder="Enter User Series Here..."
+              value={userSeries}
+              onChange={(e) => setUserSeries(e.target.value)}
+              style={{
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              }}
+            />
+            {Object.keys(userError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {userError[key]}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="bg-white p-5">
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>City Status</p>
+          <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={true}>Active</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>Inactive</Radio>
+          </Radio.Group>
+        </div>
+        <div className="col-12 flex flex-row justify-end">
+          <Button
+            onClick={onSave}
+            className="font-quicksand-medium"
             style={{
-              padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%",
+              marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
-
-          />
-
-        </div>
-        <p>Description</p>
-        <div className="flex flex-row flex-nonwrap bg-white">
-          <Input
-            size="medium"
-            placeholder="Enter Description Here..."
-            style={{
-              padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%", height: "200px",
-            }}
-
-          />
-
+          >
+            Add City
+          </Button>
         </div>
       </div>
-      <div className="bg-white p-5">
-        <p>Garage Series</p>
-        <div className="flex flex-row flex-nonwrap bg-white">
-          <Input
-            size="large"
-            placeholder="Enter Garage Series Here..."
-            style={{
-              padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%",
-            }}
-
-          />
-
-        </div>
-        <p>User Series</p>
-        <div className="flex flex-row flex-nonwrap bg-white">
-          <Input
-            size="medium"
-            placeholder="Enter Uber Series Here..."
-            style={{
-              padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%",
-            }}
-
-          />
-
-        </div>
-      </div>
-      <div className="bg-white p-5">
-        <p>City Status</p>
-        <div className="flex flex-row flex-nonwrap bg-white">
-          <span className="mx-6">Active</span>
-          <span className="mx-6">Inactive</span>
-        </div>
-      </div>
-      <div className="flex-row mt-3.5 mb-48 scroll-pb-60">
-
-        <Link to="citieslist" className="font-montserrat-medium text-xl text-white bg-cyan-900 p-3 right-10 absolute">
-          Add City
-        </Link>
-      </div>
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 export default addcity;

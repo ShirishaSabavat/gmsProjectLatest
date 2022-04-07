@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 const myHeaders = new Headers();
 myHeaders.append(
   "Authorization",
@@ -15,6 +16,21 @@ export const getUsers = async ({ page, size }) => {
     `http://13.126.183.78:8086/api/v1/user/?page=${page - 1 || 0}&size=${size || 5}`,
     requestOptions,
   );
+  const jsonRes = await res.json();
+  return jsonRes;
+};
+
+export const addModule = async ({ moduleName }) => {
+  console.log(moduleName);
+  const res = await fetch("http://13.126.183.78:8086/api/v1/modules", {
+    method: "POST",
+    headers: myHeaders,
+    body: {
+      // eslint-disable-next-line key-spacing
+      "module": moduleName,
+    },
+    redirect: "follow",
+  });
   const jsonRes = await res.json();
   return jsonRes;
 };
