@@ -3,13 +3,13 @@ import {
   ApolloClient,
   HttpLink,
   ApolloLink,
-} from "@apollo/client";
-import Cookies from "js-cookie";
-import createUploadLink from "apollo-upload-client/public/createUploadLink";
-import { setContext } from "@apollo/client/link/context";
-import { onError } from "@apollo/client/link/error";
-import { notification } from "antd";
-import { createHashHistory } from "history";
+} from '@apollo/client';
+import Cookies from 'js-cookie';
+import createUploadLink from 'apollo-upload-client/public/createUploadLink';
+import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error';
+import { notification } from 'antd';
+import { createHashHistory } from 'history';
 
 const history = createHashHistory();
 // main server link supporting upload functionality
@@ -26,22 +26,22 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
       console.log(
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
       );
-      const token = Cookies.get("appToken");
+      const token = Cookies.get('appToken');
       // show graphQL errors notification excluding error for "jwt expired" and
       // "Unauthenticated Access" only if token is defined
       if (token
-        && message !== "jwt expired"
-        && message !== "Unauthenticated Access") {
+        && message !== 'jwt expired'
+        && message !== 'Unauthenticated Access') {
         notification.error({
-          message: "GraphQL error",
+          message: 'GraphQL error',
           description: message,
         });
       }
 
       // for unauthenticated access logout the user and remove the cookies
-      if (message === "Unauthenticated Access") {
-        if (token) Cookies.remove("appToken");
-        history.push("/auth/sign-in");
+      if (message === 'Unauthenticated Access') {
+        if (token) Cookies.remove('appToken');
+        history.push('/auth/sign-in');
       }
     });
   }
@@ -52,8 +52,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 // to create an instance of header supporting token
 const authHeader = setContext((_, { headers }) => {
-  const token = Cookies.get("appToken");
-  const authorization = token ? `Bearer ${token}` : "";
+  const token = Cookies.get('appToken');
+  const authorization = token ? `Bearer ${token}` : '';
   return { headers: { ...headers, authorization } };
 });
 
@@ -63,7 +63,7 @@ const AUTH_SERVER = authHeader.concat(ApolloLink.from([errorLink, httpLinkAuth])
 
 // combining the two server links
 const link = ApolloLink.split(
-  (operation) => operation.getContext().clientName === "auth-server",
+  (operation) => operation.getContext().clientName === 'auth-server',
   AUTH_SERVER,
   MAIN_SERVER,
 );

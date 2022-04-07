@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const editIcon = (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -11,60 +11,60 @@ const editIcon = (
 const table2 = () => {
   const data = [
     {
-      process: "Francine Holmes",
-      modules: "Module 1",
-      createdOn: "14/3/1965",
-      status: "Active",
-      id: "1",
-      action: "",
+      process: 'Francine Holmes',
+      modules: 'Module 1',
+      createdOn: '14/3/1965',
+      status: 'Active',
+      id: '1',
+      action: '',
     },
     {
-      process: "Vincent Pierce",
-      modules: "Module 2",
-      createdOn: "15/5/1984",
-      status: "Active",
-      id: "2",
-      action: "hai",
+      process: 'Vincent Pierce',
+      modules: 'Module 2',
+      createdOn: '15/5/1984',
+      status: 'Active',
+      id: '2',
+      action: 'hai',
     },
     {
-      process: "Francine Holmes",
-      modules: "Module 3",
-      createdOn: "14/3/1965",
-      status: "Active",
-      id: "3",
-      action: "hai",
+      process: 'Francine Holmes',
+      modules: 'Module 3',
+      createdOn: '14/3/1965',
+      status: 'Active',
+      id: '3',
+      action: 'hai',
     },
     {
-      process: "Vincent Pierce",
-      modules: "Module 4",
-      createdOn: "15/5/1984",
-      status: "Inactive",
-      id: "1",
-      action: "hai",
+      process: 'Vincent Pierce',
+      modules: 'Module 4',
+      createdOn: '15/5/1984',
+      status: 'Inactive',
+      id: '1',
+      action: 'hai',
     },
     {
-      process: "Francine Holmes",
-      modules: "Module 4",
-      createdOn: "14/3/1965",
-      status: "Active",
-      id: "1",
-      action: "hai",
+      process: 'Francine Holmes',
+      modules: 'Module 4',
+      createdOn: '14/3/1965',
+      status: 'Active',
+      id: '1',
+      action: 'hai',
     },
     {
-      process: "Vincent Pierce",
-      modules: "Module 5",
-      createdOn: "15/5/1984",
-      status: "Active",
-      id: "1",
-      action: "hai",
+      process: 'Vincent Pierce',
+      modules: 'Module 5',
+      createdOn: '15/5/1984',
+      status: 'Active',
+      id: '1',
+      action: 'hai',
     },
     {
-      process: "Francine Holmes",
-      modules: "Module 5",
-      createdOn: "14/3/1965",
-      status: "Inactive",
-      id: "1",
-      action: "hai",
+      process: 'Francine Holmes',
+      modules: 'Module 5',
+      createdOn: '14/3/1965',
+      status: 'Inactive',
+      id: '1',
+      action: 'hai',
     },
   ];
   return (
@@ -82,10 +82,10 @@ const table2 = () => {
             <td className="pl-5 py-2.5 border-[#F6FAFB] border-r-2">{object.process}</td>
             <td className="text-[#86A1A4] pl-5 py-2.5 border-[#F6FAFB] border-r-2">{object.modules}</td>
             <td className="text-[#86A1A4] pl-5 py-2.5 border-[#F6FAFB] border-r-2">{object.createdOn}</td>
-            <td className={object.status === "Active" ? "text-[#74D1D8] pl-5 py-2.5 border-[#F6FAFB] border-r-2" : "border-[#F6FAFB] pl-5 py-2.5 border-r-2"}>{object.status}</td>
-            <td className={object.status === "Active" ? "text-[#74D1D8] pl-5 py-2.5 border-[#F6FAFB] border-r-2" : "text-[#9193A2] pl-5 py-2.5 border-[#F6FAFB] border-r-2"}>
+            <td className={object.status === 'Active' ? 'text-[#74D1D8] pl-5 py-2.5 border-[#F6FAFB] border-r-2' : 'border-[#F6FAFB] pl-5 py-2.5 border-r-2'}>{object.status}</td>
+            <td className={object.status === 'Active' ? 'text-[#74D1D8] pl-5 py-2.5 border-[#F6FAFB] border-r-2' : 'text-[#9193A2] pl-5 py-2.5 border-[#F6FAFB] border-r-2'}>
               <Link
-                to={{ pathname: "addProcess", state: { id: object.id } }}
+                to={{ pathname: 'addProcess', state: { id: object.id } }}
               >
                 {editIcon}
               </Link>

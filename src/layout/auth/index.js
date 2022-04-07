@@ -1,5 +1,5 @@
-import { Layout } from "antd";
-import AuthHeader from "components/layouts/authHeader";
+import { Layout } from 'antd';
+import AuthHeader from 'components/layouts/authHeader';
 
 const { Header, Content } = Layout;
 

@@ -1,7 +1,7 @@
-import { Menu } from "antd";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { history } from "redux/store";
+import { Menu } from 'antd';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { history } from 'redux/store';
 
 const { Item } = Menu;
 
@@ -14,46 +14,46 @@ const Sidebar = ({
 }) => {
   const sidebarMenu = [
     {
-      title: "Home",
-      icon: "/assets/images/logo/sidebarLogo/home.svg",
-      key: "/home/dashboard",
+      title: 'Home',
+      icon: '/assets/images/logo/sidebarLogo/home.svg',
+      key: '/home/dashboard',
     },
     {
-      title: "Cities",
-      icon: "/assets/images/logo/sidebarLogo/cities.svg",
-      key: "/cities/citieslist",
+      title: 'Cities',
+      icon: '/assets/images/logo/sidebarLogo/cities.svg',
+      key: '/cities/citieslist',
     },
     {
-      title: "Garage",
-      icon: "/assets/images/logo/sidebarLogo/garage.svg",
-      key: "/garage/garagelist",
+      title: 'Garage',
+      icon: '/assets/images/logo/sidebarLogo/garage.svg',
+      key: '/garage/garagelist',
     },
     {
-      title: "User Profiles",
-      icon: "/assets/images/logo/sidebarLogo/people.svg",
-      key: "/userProfiles/userProfiles",
+      title: 'User Profiles',
+      icon: '/assets/images/logo/sidebarLogo/people.svg',
+      key: '/userProfiles/userProfiles',
     },
     {
-      title: "User Roles",
-      icon: "/assets/images/logo/sidebarLogo/roles.svg",
-      key: "/userroles/userroleslist",
+      title: 'User Roles',
+      icon: '/assets/images/logo/sidebarLogo/roles.svg',
+      key: '/userroles/userroleslist',
     },
     {
-      title: "Modules",
-      icon: "/assets/images/logo/sidebarLogo/modules.svg",
-      key: "/modules/modules",
+      title: 'Modules',
+      icon: '/assets/images/logo/sidebarLogo/modules.svg',
+      key: '/modules/modules',
     },
     {
-      title: "Processes",
-      icon: "/assets/images/logo/sidebarLogo/processes.svg",
-      key: "/processes/processes",
+      title: 'Processes',
+      icon: '/assets/images/logo/sidebarLogo/processes.svg',
+      key: '/processes/processes',
     },
   ];
 
   // const settingPath = '/setting';
   return (
     <>
-      <div className={`py-3 px-6 flex items-center border-b border-gray-100 ${sideBarLayout ? "justify-center" : ""}`}>
+      <div className={`py-3 px-6 flex items-center border-b border-gray-100 ${sideBarLayout ? 'justify-center' : ''}`}>
         <img
           src="/assets/images/logo/app-logo.svg"
           alt="app-logo"
@@ -61,7 +61,7 @@ const Sidebar = ({
         />
       </div>
       <Menu
-        style={{ borderRight: "none" }}
+        style={{ borderRight: 'none' }}
         selectedKeys={[pathname]}
         onClick={({ key }) => history.push(key)}
         mode="inline"
@@ -78,7 +78,7 @@ const Sidebar = ({
             && mainPermission) return null;
           return (
             <Item
-              icon={<img style={{ paddingBottom: "0.22rem" }} src={icon} alt={icon} />}
+              icon={<img style={{ paddingBottom: '0.22rem' }} src={icon} alt={icon} />}
               key={menuKey}
               className="text-xs font-quicksand-semi-bold"
             >
@@ -88,13 +88,13 @@ const Sidebar = ({
         })}
       </Menu>
       <Menu
-        style={{ borderRight: "none", marginTop: "95%" }}
+        style={{ borderRight: 'none', marginTop: '95%' }}
         mode="inline"
         selectedKeys={[pathname]}
-        onClick={({ settingPath = "/setting" }) => history.push(settingPath)}
+        onClick={({ settingPath = '/setting' }) => history.push(settingPath)}
       >
         <Item
-          icon={<img style={{ paddingBottom: "0.22rem" }} src="/assets/images/logo/sidebarLogo/settings.svg" alt="settings" />}
+          icon={<img style={{ paddingBottom: '0.22rem' }} src="/assets/images/logo/sidebarLogo/settings.svg" alt="settings" />}
           className="text-xs font-quicksand-semi-bold"
         >
           Settings

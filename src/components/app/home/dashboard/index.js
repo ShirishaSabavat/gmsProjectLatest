@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import WithPageHandler from "components/layouts/pageHandler";
+import { useEffect } from 'react';
+import WithPageHandler from 'components/layouts/pageHandler';
 
 // eslint-disable-next-line no-unused-vars
 const promise = new Promise((resolve) => {
@@ -13,9 +13,9 @@ const Dashboard = ({
   const onFetchData = async () => {
     try {
       await promise;
-      setPageState("loaded");
+      setPageState('loaded');
     } catch (error) {
-      setPageState("error");
+      setPageState('error');
     }
   };
 
@@ -24,7 +24,7 @@ const Dashboard = ({
   }, []);
 
   // return null during page loading or data fetching error
-  if (pageState === "loading" || pageState === "error") return null;
+  if (pageState === 'loading' || pageState === 'error') return null;
   return (
     <span>
       Dashboard Page
