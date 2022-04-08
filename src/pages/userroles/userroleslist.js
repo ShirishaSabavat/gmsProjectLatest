@@ -30,15 +30,20 @@ function userroleslist() {
   return (
     <>
       <Helmet title="User Roles" />
-      <div className="absolute right-20 mt-3.5">
-        <Link to="addrole" className="font-montserrat-medium text-xl text-white bg-cyan-900 p-3">
+      <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
+        <Link
+          to={{ pathname: 'addrole', state: { id: -1 } }}
+          style={{
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
+          }}
+        >
           Add New Role +
         </Link>
       </div>
       <div>
         <div className="flex flex-col space-y-12">
           <div className="space-y-2 basic-1/2">
-            <span className="font-montserrat-medium text-4xl mr-3.5">
+            <span className="font-quicksand-semi-bold text-4xl mr-3.5">
               User Roles
             </span>
             <Breadcrumb nestedPath={nestedPath} />
