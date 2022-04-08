@@ -30,8 +30,8 @@ const createModules = () => {
   useEffect(() => {
     getModules()
       .then((res) => {
-        console.log('res', res.data?.pageData);
-        setDropDownMenu(res.data?.pageData);
+        console.log('res', res?.data?.results?.pageData);
+        setDropDownMenu(res?.data?.results?.pageData);
       })
       .catch((err) => {
         console.log('err', err);
@@ -41,9 +41,9 @@ const createModules = () => {
   useEffect(() => {
     getProcess(id)
       .then((res) => {
-        setProcessName(res.data?.process);
-        setSelectedItem(res.data?.moduleId);
-        setRadioValue(res.data?.isActive7);
+        setProcessName(res?.data?.results?.process);
+        setSelectedItem(res?.data?.results?.moduleId);
+        setRadioValue(res?.data?.results?.isActive);
       })
       .catch((err) => {
         console.log('err', err);
