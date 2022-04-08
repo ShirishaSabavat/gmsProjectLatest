@@ -44,69 +44,9 @@ const routes = [
   },
   {
     path: '/cities/citieslist',
-    key: 'PARTNER',
+    key: 'HOME',
     exact: true,
     Component: lazy(() => import('pages/cities/citieslist')),
-  },
-  {
-    path: '/cities/addcity',
-    key: 'Add City',
-    exact: true,
-    Component: lazy(() => import('pages/cities/addcity')),
-  },
-  {
-    path: '/garage/garagelist',
-    key: 'GARAGE',
-    exact: true,
-    Component: lazy(() => import('pages/garage/garagelist')),
-  },
-  {
-    path: '/garage/addgarage',
-    key: 'GARAGE',
-    exact: true,
-    Component: lazy(() => import('pages/garage/addgarage')),
-  },
-  {
-    path: '/userroles/userroleslist',
-    key: 'USER ROLE',
-    exact: true,
-    Component: lazy(() => import('pages/userroles/userroleslist')),
-  },
-  {
-    path: '/userroles/addrole',
-    key: 'Add User Role',
-    exact: true,
-    Component: lazy(() => import('pages/userroles/addrole')),
-  },
-  {
-    path: '/userProfiles/userProfiles',
-    key: 'USER PROFILES',
-    exact: true,
-    Component: lazy(() => import('pages/userProfiles/userProfiles')),
-  },
-  {
-    path: '/modules/modules',
-    key: 'MODULES',
-    exact: true,
-    Component: lazy(() => import('pages/modules/modules')),
-  },
-  {
-    path: '/modules/addModule',
-    key: 'Add Module',
-    exact: true,
-    Component: lazy(() => import('pages/modules/addModule')),
-  },
-  {
-    path: '/processes/processes',
-    key: 'PROCESSES',
-    exact: true,
-    Component: lazy(() => import('pages/processes/processes')),
-  },
-  {
-    path: '/processes/addProcess',
-    key: 'Add Process',
-    exact: true,
-    Component: lazy(() => import('pages/processes/addProcess')),
   },
 ];
 
