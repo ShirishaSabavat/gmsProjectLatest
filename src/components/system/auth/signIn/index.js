@@ -21,12 +21,12 @@ const Login = ({
   login,
   isLoading,
 }) => {
-  const inputRefs = useRef({ email: null, password: null });
+  const inputRefs = useRef({ userName: null, password: null });
   const [userLogin, setUserLogin] = useState(null);
   const [errors, setErrors] = useState(null);
 
   const onResetForm = () => {
-    inputRefs.current.email.focus();
+    inputRefs.current.userName.focus();
     setErrors(null);
     setUserLogin(lodash.cloneDeep(userLoginStructure));
   };
@@ -79,12 +79,12 @@ const Login = ({
             />
           )}
           <InputWrapper
-            label="Email"
+            label="User Name"
             mandatory
-            error={errors?.paths.includes('email')}
-            name="email"
-            ref={(ref) => { inputRefs.current.email = ref; }}
-            value={(userLogin && userLogin?.email) || null}
+            error={errors?.paths.includes('userName')}
+            name="userName"
+            ref={(ref) => { inputRefs.current.userName = ref; }}
+            value={(userLogin && userLogin?.userName) || null}
             onChange={({ target }) => onInput(target)}
           />
           <InputWrapper

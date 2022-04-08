@@ -15,6 +15,7 @@ const Header = ({ logout }) => {
   };
 
   const showUserProfile = () => { };
+  const user = localStorage.getItem('user');
 
   return (
     <div className="flex justify-between" style={{ margin: 'auto', height: 64 }}>
@@ -67,7 +68,7 @@ const Header = ({ logout }) => {
           </div>
         </div>
         <div id="Jessica_Smith">
-          <span>Jessica Smith</span>
+          <span>{user}</span>
         </div>
         <Popover
           placement="bottomRight"

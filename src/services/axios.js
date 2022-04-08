@@ -2,6 +2,39 @@
 /* eslint-disable max-len */
 import axios from 'axios';
 
+export const loginApi = async (userData) => {
+  const { variables: { userName, password } } = userData;
+  const data = JSON.stringify({
+    user_name: userName,
+    password,
+  });
+  try {
+    const resp = await axios({
+      method: 'POST',
+      url: 'http://13.126.183.78:8086/api/v1/user/login',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data,
+    });
+    console.log(resp);
+    localStorage.setItem('token', resp.data.results.token);
+    const user = `${resp.data.results.user.first_name} ${resp.data.results.user.last_name}`;
+    localStorage.setItem('user', user);
+    return resp;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+const apiToken = localStorage.getItem('token');
+
+const headers = {
+  Authorization: `Bearer ${apiToken}`,
+  'Content-Type': 'application/json',
+};
+
 export const addModule = (moduleName, radioValue) => {
   console.log(moduleName);
   const data = JSON.stringify({
@@ -11,10 +44,7 @@ export const addModule = (moduleName, radioValue) => {
   return axios({
     method: 'POST',
     url: 'http://13.126.183.78:8086/api/v1/modules',
-    headers: {
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
-      'Content-Type': 'application/json',
-    },
+    headers,
     data,
   });
 };
@@ -22,27 +52,18 @@ export const addModule = (moduleName, radioValue) => {
 export const getUserRoles = () => axios({
   method: 'GET',
   url: 'http://13.126.183.78:8086/api/v1/role',
-  headers: {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
-    'Content-Type': 'application/json',
-  },
+  headers,
 });
 export const getModule = (id) => axios({
   method: 'GET',
   url: `http://13.126.183.78:8086/api/v1/modules/${id}`,
-  headers: {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
-    'Content-Type': 'application/json',
-  },
+  headers,
 });
 
 export const getGarages = () => axios({
   method: 'GET',
   url: 'http://13.126.183.78:8086/api/v1/garage',
-  headers: {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
-    'Content-Type': 'application/json',
-  },
+  headers,
 });
 export const editModule = (moduleName, radioValue, moduleId) => {
   const data = JSON.stringify({
@@ -81,27 +102,18 @@ export const addProcess = (processName, radioValue, selectedItem) => {
 export const getModules = () => axios({
   method: 'GET',
   url: 'http://13.126.183.78:8086/api/v1/modules',
-  headers: {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
-    'Content-Type': 'application/json',
-  },
+  headers,
 });
 
 export const getCities = () => axios({
   method: 'GET',
   url: 'http://13.126.183.78:8086/api/v1/city',
-  headers: {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
-    'Content-Type': 'application/json',
-  },
+  headers,
 });
 export const getProcess = (id) => axios({
   method: 'GET',
   url: `http://13.126.183.78:8086/api/v1/process/${id}`,
-  headers: {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
-    'Content-Type': 'application/json',
-  },
+  headers,
 });
 
 // AXIOS FOR PROCESS EDITING

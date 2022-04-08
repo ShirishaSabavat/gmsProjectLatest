@@ -3,32 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { history } from 'redux/store';
 
-const { SubMenu, Item } = Menu;
-
-const sidebarMenu = [
-  {
-    title: 'Home',
-    icon: HomeOutlined,
-    key: '/home/dashboard'
-    // subMenu: [
-    //   {
-    //     key: '/home/dashboard',
-    //     label: 'Dashboard',
-    //   },
-    // ],
-  },
-  {
-    title: 'Cities',
-    icon: HomeOutlined,
-    key: '/cities/citieslist'
-    // subMenu: [
-    //   {
-    //     key: '/home/dashboard',
-    //     label: 'Dashboard',
-    //   },
-    // ],
-  },
-];
+const { Item } = Menu;
 
 const Sidebar = ({
   location: {
