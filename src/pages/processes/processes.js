@@ -1,50 +1,123 @@
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Breadcrumb from "components/layouts/breadcrumb";
-// import { useState } from "react";
-import Processes from "components/app/processes/index";
-// import CreateProcess from "components/app/processes/createProcess";
-// import { Button } from "antd";
+import HorizontalSearchHeader from "components/layouts/HorizontalSearchHeader";
+import Listitemprocess from "components/layouts/Listitemprocess";
+import { Pagination } from "react-headless-pagination";
 import { Link } from "react-router-dom";
+import { getProcess } from "services/axios";
 
 const nestedPath = [
   "Home",
   "Processes",
 ];
 
-const ProcessesPage = () => (
-  // const [onClickValue, setOnClickValue] = useState(false);
-
-  // const createModule = () => {
-  //   // setOnClickValue(true);
-  // };
-
-  <>
-    <Helmet title="Processes" />
-    <div style={{ fontFamily: "Quicksand" }} className="row space-y-4">
-      <div className="col-12">
-        <div className="row pl-8">
-          <div className="col-6">
-            <span className="font-quicksand-semi-bold text-2xl font-semi-bold text-[#3D3D3D]">
+function ProcessesPage() {
+  const [processlist, setProcessList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  useEffect(() => {
+    getProcess(0).then((res) => {
+      console.log("res", res);
+      setProcessList(res.data?.results.pageData);
+      setCurrentPage(res.data?.results.currentPage);
+      setTotalPages(res.data?.results.totalPages);
+    })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }, []);
+  function clickNext() {
+    if (currentPage + 1 <= totalPages) {
+      getProcess(currentPage + 1).then((res) => {
+        console.log("res", res);
+        setProcessList(res.data?.results.pageData);
+        setCurrentPage(currentPage + 1);
+      })
+        .catch((err) => {
+          console.log("err", err);
+        });
+    }
+  }
+  function clickPrevious() {
+    if (currentPage - 1 >= 0) {
+      getProcess(currentPage - 1).then((res) => {
+        console.log("res", res);
+        setProcessList(res.data?.results.pageData);
+        setCurrentPage(currentPage - 1);
+      })
+        .catch((err) => {
+          console.log("err", err);
+        });
+    }
+  }
+  return (
+    <>
+      <Helmet title="Processes" />
+      <div className="absolute right-20 mt-3.5">
+        <Link to="addModules" className="font-montserrat-medium text-xl text-white bg-cyan-900 p-3">
+          Add new Process +
+        </Link>
+      </div>
+      <div>
+        <div className="flex flex-col space-y-12">
+          <div className="space-y-2 basic-1/2">
+            <span className="font-montserrat-medium text-4xl mr-3.5">
               Processes
             </span>
             <Breadcrumb nestedPath={nestedPath} />
+            <HorizontalSearchHeader Title="" />
+
           </div>
-          <div className="col-6 flex flex-row justify-end">
-            <Link
-              to={{ pathname: "addProcess", state: { id: -1 } }}
-              style={{
-                marginRight: "20px", borderRadius: "4px", fontWeight: "500", backgroundColor: "#013453", color: "#FFFFFF", fontSize: "16px", width: "194px", height: "52px", boxShadow: "0px 8px 16px #005B923D", padding: "13px 30px", textDecoration: "none",
-              }}
-            >
-              Create Process +
-            </Link>
-          </div>
+
         </div>
+        <div className="box-border h-100">
+          <div className="flex flex-row flex-nowrap">
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">Process</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">Modules</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">Created on</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5">Status</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5">Action</h1>
+          </div>
+
+        </div>
+        <div>
+          {processlist.map((item) => (
+            <Listitemprocess
+              process_name={item.process}
+              module_name={item.moduleId}
+              created_on={item.createdAt.substring(0, 10)}
+              status={String(item.isActive)}
+            />
+          ))}
+        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          edgePageCount={2}
+          middlePagesSiblingCount={2}
+          className=""
+          truncableText="..."
+          truncableClassName="mt-5 mx-5"
+        >
+          <div className="flex items-center justify-center flex-grow mt-5">
+            <div onClick={clickPrevious}>
+              <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{"<"}</Pagination.PrevButton>
+            </div>
+            <Pagination.PageButton
+              activeClassName="bg-teal-400 text-white"
+              inactiveClassName="bg-white"
+              className="p-3 mx-4 mt-5 rounded"
+            />
+            <div onClick={clickNext}>
+              <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{">"}</Pagination.NextButton>
+            </div>
+          </div>
+        </Pagination>
+        {/* <Items currentItems={currentItems} /> */}
       </div>
-      <div className="col-12">
-        <Processes />
-      </div>
-    </div>
-  </>
-);
+    </>
+  );
+}
+
 export default ProcessesPage;

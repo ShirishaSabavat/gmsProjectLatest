@@ -2,24 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Breadcrumb from "components/layouts/breadcrumb";
 import HorizontalSearchHeader from "components/layouts/HorizontalSearchHeader";
-import Listitemmodule from "components/layouts/Listitemmodule";
+import Listitemteamgarage from "components/layouts/Listitemteamgarage";
 import { Pagination } from "react-headless-pagination";
 import { Link } from "react-router-dom";
-import { getModules } from "services/axios";
+import { getTeamGarages } from "services/axios";
 
 const nestedPath = [
   "Home",
-  "Modules",
+  "Garages",
+  "Garage Names",
 ];
 
-function modules() {
-  const [moduleslist, setModulesList] = useState([]);
+function teamslist() {
+  const [garages, setGarages] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
-    getModules(0).then((res) => {
+    getTeamGarages(0, 1).then((res) => {
       console.log("res", res);
-      setModulesList(res.data?.results.pageData);
+      setGarages(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
     })
@@ -29,9 +30,9 @@ function modules() {
   }, []);
   function clickNext() {
     if (currentPage + 1 <= totalPages) {
-      getModules(currentPage + 1).then((res) => {
+      getTeamGarages(currentPage + 1).then((res) => {
         console.log("res", res);
-        setModulesList(res.data?.results.pageData);
+        setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
         .catch((err) => {
@@ -41,9 +42,9 @@ function modules() {
   }
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
-      getModules(currentPage - 1).then((res) => {
+      getTeamGarages(currentPage - 1).then((res) => {
         console.log("res", res);
-        setModulesList(res.data?.results.pageData);
+        setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })
         .catch((err) => {
@@ -53,38 +54,36 @@ function modules() {
   }
   return (
     <>
-      <Helmet title="Modules" />
+      <Helmet title="Garages" />
       <div className="absolute right-20 mt-3.5">
-        <Link to="addModules" className="font-montserrat-medium text-xl text-white bg-cyan-900 p-3">
-          Add new Module +
+        <Link to="addgarage" className="font-montserrat-medium text-xl text-white bg-cyan-900 p-3">
+          Add new Team +
         </Link>
       </div>
       <div>
         <div className="flex flex-col space-y-12">
           <div className="space-y-2 basic-1/2">
             <span className="font-montserrat-medium text-4xl mr-3.5">
-              Modules
+              Garage Name
             </span>
             <Breadcrumb nestedPath={nestedPath} />
-            <HorizontalSearchHeader Title="" />
+            <HorizontalSearchHeader Title="Teams" />
 
           </div>
 
         </div>
         <div className="box-border h-100">
           <div className="flex flex-row flex-nowrap">
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">Modules</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">Created on</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5">Status</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5">Action</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-4 mr-0.5">Team Name</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-4 mr-0.5">Status</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-4 mr-0.5">Action</h1>
           </div>
 
         </div>
         <div>
-          {moduleslist.map((item) => (
-            <Listitemmodule
-              module_name={item.module}
-              created_on={item.createdAt.substring(0, 10)}
+          {garages.map((item) => (
+            <Listitemteamgarage
+              garage_name={item.name}
               status={String(item.isActive)}
             />
           ))}
@@ -118,4 +117,4 @@ function modules() {
   );
 }
 
-export default modules;
+export default teamslist;

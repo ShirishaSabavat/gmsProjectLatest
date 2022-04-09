@@ -65,7 +65,7 @@
         "jsx-a11y/no-noninteractive-element-interactions": "off",
         "quotes": [
             "error",
-            "single"
+            "double"
         ]
     }
 }

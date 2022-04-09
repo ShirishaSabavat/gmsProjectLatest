@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import React from "react";
-import { Link } from "react-router-dom";
 
 const editIcon = (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -16,21 +15,20 @@ const editIconFilled = (
   </svg>
 );
 
-const Listitemgarage = ({
-  garage_name, garage_manager, garage_members, status,
+const Listitemmodule = ({
+  module_name, created_on, status,
 }) => (
   <div className="box-border h-14">
     <div className="flex flex-row flex-nowrap">
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4">{garage_name}</h1>
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4">{garage_manager}</h1>
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4">{garage_members}</h1>
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">{module_name}</h1>
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">{created_on}</h1>
       <h1 className={status === "true" ? "text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5" : "text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5"}>{status === "true" ? "Active" : "Inactive"}</h1>
-      <Link to="teamslist" className="basis-1/7 bg-white p-4 ml-14 mr-0.5">
+      <div className="basis-1/7 bg-white p-4 ml-8 mr-0.5">
         {status === "true" ? editIconFilled : editIcon}
-      </Link>
+      </div>
     </div>
 
   </div>
 );
 
-export default Listitemgarage;
+export default Listitemmodule;
