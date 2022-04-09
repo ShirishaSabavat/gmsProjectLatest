@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import WithPageHandler from "components/layouts/pageHandler";
-import { Input } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import Table from "./table2";
+import React, { useState, useEffect } from 'react';
+import WithPageHandler from 'components/layouts/pageHandler';
+import { Input } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import Table from './table2';
 
 // eslint-disable-next-line no-unused-vars
 const promise = new Promise((resolve) => {
@@ -16,9 +16,9 @@ const Modules = ({
   const onFetchData = async () => {
     try {
       await promise;
-      setPageState("loaded");
+      setPageState('loaded');
     } catch (error) {
-      setPageState("error");
+      setPageState('error');
     }
   };
 
@@ -34,7 +34,7 @@ const Modules = ({
   };
 
   // return null during page loading or data fetching error
-  if (pageState === "loading" || pageState === "error") return null;
+  if (pageState === 'loading' || pageState === 'error') return null;
   return (
     <div className="row mx-2">
       <div className="col-12 flex flex-row justify-end">
@@ -50,7 +50,7 @@ const Modules = ({
             />
           )}
           style={{
-            marginLeft: "-11px", marginBottom: "8px", marginTop: "8px", padding: "10px", backgroundColor: "#FFFFFF", width: "42%",
+            marginLeft: '-11px', marginBottom: '8px', marginTop: '8px', padding: '10px', backgroundColor: '#FFFFFF', width: '42%',
           }}
           suffix={searchLoading && <LoadingOutlined />}
           bordered={false}

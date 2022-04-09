@@ -1,5 +1,5 @@
-import { Helmet } from "react-helmet";
-import PageNotFound from "components/system/auth/pageNotFound";
+import { Helmet } from 'react-helmet';
+import PageNotFound from 'components/system/auth/pageNotFound';
 
 const PageNotFoundPage = () => (
   <>

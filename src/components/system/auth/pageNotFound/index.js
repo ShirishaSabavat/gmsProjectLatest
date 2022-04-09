@@ -1,7 +1,7 @@
 const Error404 = () => (
   <div
     className="flex flex-col items-center justify-center space-y-4"
-    style={{ height: "calc(100vh - 70px)", minHeight: 450 }}
+    style={{ height: 'calc(100vh - 70px)', minHeight: 450 }}
   >
     <img
       src="assets/images/page/404-page-1.svg"

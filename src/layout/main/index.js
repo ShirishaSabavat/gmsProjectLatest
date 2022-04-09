@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { Layout } from "antd";
-import AppHeader from "components/layouts/AppHeader";
-import Sidebar from "components/layouts/sidebar";
+import { useEffect } from 'react';
+import { Layout } from 'antd';
+import AppHeader from 'components/layouts/AppHeader';
+import Sidebar from 'components/layouts/sidebar';
 
 const {
   Header,
@@ -24,14 +24,14 @@ const MainLayout = ({
       }, 150);
     };
 
-    window.addEventListener("resize", onHandleResize);
-    return () => window.removeEventListener("resize", onHandleResize);
+    window.addEventListener('resize', onHandleResize);
+    return () => window.removeEventListener('resize', onHandleResize);
   }, []);
 
   return (
     <Layout>
       <Header style={{
-        padding: 0, backgroundColor: "rgba(255,255,255,1)", borderRadius: "0 0 16px 16px", boxShadow: "0 4px 16px #eef4f7",
+        padding: 0, backgroundColor: 'rgba(255,255,255,1)', borderRadius: '0 0 16px 16px', boxShadow: '0 4px 16px #eef4f7',
       }}
       >
         <AppHeader />

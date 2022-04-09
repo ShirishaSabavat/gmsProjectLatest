@@ -1,14 +1,16 @@
+/* eslint-disable no-unused-vars */
 import {
   call,
   put,
   all,
   takeEvery,
-} from "redux-saga/effects";
-import { createHashHistory } from "history";
-import { notification } from "antd";
+} from 'redux-saga/effects';
+import { createHashHistory } from 'history';
+import { notification } from 'antd';
 
-import { login, currentAccountLoad, logout } from "services/authorization";
-import actions from "./actionTypes";
+import { currentAccountLoad, logout } from 'services/authorization';
+import { loginApi } from 'services/axios';
+import actions from './actionTypes';
 
 const history = createHashHistory();
 
@@ -21,24 +23,32 @@ function* LOGIN(userAction) {
     },
   });
 
-  const success = yield call(login, payload);
-
-  if (success) {
+  const success = yield call(loginApi, payload);
+  console.log(success);
+  if (success.status === 200) {
     yield put({
-      type: "user/LOAD_CURRENT_ACCOUNT",
+      type: actions.SET_STATE,
+      payload: {
+        loading: false,
+        authorized: true,
+      },
     });
+    // yield put({
+    //   type: 'user/LOAD_CURRENT_ACCOUNT',
+    // });
 
-    yield history.push("/home/dashboard");
-    notification.success({
-      message: "Logged In",
-      description: "You have successfully logged in!",
-    });
+    yield history.push('/home/dashboard');
+    // console.log('history', history);
+    // notification.success({
+    //   message: 'Logged In',
+    //   description: 'You have successfully logged in!',
+    // });
   }
 
   if (!success) {
     notification.error({
-      message: "Authentication failed",
-      description: "Unable to login!",
+      message: 'Authentication failed',
+      description: 'Unable to login!',
     });
 
     yield put({
@@ -54,24 +64,7 @@ function* LOAD_CURRENT_ACCOUNT() {
   yield put({
     type: actions.SET_STATE,
     payload: {
-      loading: true,
-    },
-  });
-
-  const success = yield call(currentAccountLoad);
-
-  if (success) {
-    yield put({
-      type: actions.SET_STATE,
-      payload: {
-        authorized: true,
-      },
-    });
-  }
-
-  yield put({
-    type: actions.SET_STATE,
-    payload: {
+      authorized: true,
       loading: false,
     },
   });

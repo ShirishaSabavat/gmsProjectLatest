@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 import { getProcess } from "services/axios";
 
 const nestedPath = [
-  "Home",
-  "Processes",
+  'Home',
+  'Processes',
 ];
 
 function ProcessesPage() {
@@ -69,7 +69,6 @@ function ProcessesPage() {
             <HorizontalSearchHeader Title="" />
 
           </div>
-
         </div>
         <div className="box-border h-100">
           <div className="flex flex-row flex-nowrap">

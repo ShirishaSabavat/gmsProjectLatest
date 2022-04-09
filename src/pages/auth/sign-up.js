@@ -1,5 +1,5 @@
-import { Helmet } from "react-helmet";
-import SignUp from "components/system/auth/signUp";
+import { Helmet } from 'react-helmet';
+import SignUp from 'components/system/auth/signUp';
 
 const SignUpPage = () => (
   <>

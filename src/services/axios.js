@@ -2,6 +2,39 @@
 /* eslint-disable max-len */
 import axios from "axios";
 
+export const loginApi = async (userData) => {
+  const { variables: { userName, password } } = userData;
+  const data = JSON.stringify({
+    user_name: userName,
+    password,
+  });
+  try {
+    const resp = await axios({
+      method: 'POST',
+      url: 'http://13.126.183.78:8086/api/v1/user/login',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data,
+    });
+    console.log(resp);
+    localStorage.setItem('token', resp.data.results.token);
+    const user = `${resp.data.results.user.first_name} ${resp.data.results.user.last_name}`;
+    localStorage.setItem('user', user);
+    return resp;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+const apiToken = localStorage.getItem('token');
+
+const headers = {
+  Authorization: `Bearer ${apiToken}`,
+  'Content-Type': 'application/json',
+};
+
 export const addModule = (moduleName, radioValue) => {
   console.log(moduleName);
   const data = JSON.stringify({
@@ -9,12 +42,9 @@ export const addModule = (moduleName, radioValue) => {
     isActive: radioValue,
   });
   return axios({
-    method: "POST",
-    url: "http://13.126.183.78:8086/api/v1/modules",
-    headers: {
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5MzkzODQyLCJleHAiOjE2NDk2NTMwNDJ9.Y-U_D4BAVAIdhvh6JXhz67NFgTOykc4OQPiY1gY3l74",
-      "Content-Type": "application/json",
-    },
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/modules',
+    headers,
     data,
   });
 };
@@ -62,8 +92,8 @@ export const editModule = (moduleName, radioValue, moduleId) => {
     method: "PUT",
     url: `http://13.126.183.78:8086/api/v1/process/${moduleId}`,
     headers: {
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5MzkzODQyLCJleHAiOjE2NDk2NTMwNDJ9.Y-U_D4BAVAIdhvh6JXhz67NFgTOykc4OQPiY1gY3l74",
-      "Content-Type": "application/json",
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
+      'Content-Type': 'application/json',
     },
     data,
   });
@@ -80,8 +110,8 @@ export const addProcess = (processName, radioValue, selectedItem) => {
     method: "POST",
     url: "http://13.126.183.78:8086/api/v1/process",
     headers: {
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5MzkzODQyLCJleHAiOjE2NDk2NTMwNDJ9.Y-U_D4BAVAIdhvh6JXhz67NFgTOykc4OQPiY1gY3l74",
-      "Content-Type": "application/json",
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
+      'Content-Type': 'application/json',
     },
     data,
   });
@@ -124,8 +154,8 @@ export const editProcess = (processName, radioValue, selectedItem, processId) =>
     method: "PUT",
     url: `http://13.126.183.78:8086/api/v1/process/${processId}`,
     headers: {
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5MzkzODQyLCJleHAiOjE2NDk2NTMwNDJ9.Y-U_D4BAVAIdhvh6JXhz67NFgTOykc4OQPiY1gY3l74",
-      "Content-Type": "application/json",
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
+      'Content-Type': 'application/json',
     },
     data,
   });
@@ -145,8 +175,8 @@ export const addCity = (cityName, radioValue, description, garageSeries, userSer
     method: "POST",
     url: "http://13.126.183.78:8086/api/v1/city",
     headers: {
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5MzkzODQyLCJleHAiOjE2NDk2NTMwNDJ9.Y-U_D4BAVAIdhvh6JXhz67NFgTOykc4OQPiY1gY3l74",
-      "Content-Type": "application/json",
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
+      'Content-Type': 'application/json',
     },
     data,
   });
@@ -163,8 +193,8 @@ export const editCity = (cityName, radioValue, description, garageSeries, userSe
     method: "PUT",
     url: `http://13.126.183.78:8086/api/v1/city/${processId}`,
     headers: {
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5MzkzODQyLCJleHAiOjE2NDk2NTMwNDJ9.Y-U_D4BAVAIdhvh6JXhz67NFgTOykc4OQPiY1gY3l74",
-      "Content-Type": "application/json",
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
+      'Content-Type': 'application/json',
     },
     data,
   });
@@ -172,20 +202,17 @@ export const editCity = (cityName, radioValue, description, garageSeries, userSe
 
 // User Roles axios
 
-export const addRole = (cityName, radioValue, description, garageSeries, userSeries) => {
-  console.log(cityName, radioValue, description, garageSeries, userSeries, "axios");
+export const addRole = (roleTitle) => {
+  console.log(roleTitle);
   const data = JSON.stringify({
-    name: cityName,
-    description,
-    user_series: userSeries,
-    garage_series: garageSeries,
+    role: roleTitle,
   });
   return axios({
-    method: "POST",
-    url: "http://13.126.183.78:8086/api/v1/city",
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/role',
     headers: {
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5MzkzODQyLCJleHAiOjE2NDk2NTMwNDJ9.Y-U_D4BAVAIdhvh6JXhz67NFgTOykc4OQPiY1gY3l74",
-      "Content-Type": "application/json",
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
+      'Content-Type': 'application/json',
     },
     data,
   });
@@ -202,8 +229,25 @@ export const editRole = (cityName, radioValue, description, garageSeries, userSe
     method: "PUT",
     url: `http://13.126.183.78:8086/api/v1/city/${processId}`,
     headers: {
-      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5MzkzODQyLCJleHAiOjE2NDk2NTMwNDJ9.Y-U_D4BAVAIdhvh6JXhz67NFgTOykc4OQPiY1gY3l74",
-      "Content-Type": "application/json",
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
+      'Content-Type': 'application/json',
+    },
+    data,
+  });
+};
+
+export const addRoleModule = (roleId, moduleId) => {
+  console.log(roleId);
+  const data = JSON.stringify({
+    roleId,
+    moduleId,
+  });
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/modules/roleModule',
+    headers: {
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
+      'Content-Type': 'application/json',
     },
     data,
   });

@@ -1,12 +1,12 @@
-import React from "react";
-import { Helmet } from "react-helmet";
-import Breadcrumb from "components/layouts/breadcrumb";
-import { Input } from "antd";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import Breadcrumb from 'components/layouts/breadcrumb';
+import { Input } from 'antd';
+import { Link } from 'react-router-dom';
 
 const nestedPath = [
-  "Home",
-  "Add New Garage",
+  'Home',
+  'Add New Garage',
 ];
 
 const addgarage = () => (
@@ -26,7 +26,7 @@ const addgarage = () => (
             size="medium"
             placeholder="Enter Name Here..."
             style={{
-              padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%",
+              padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '150%',
             }}
 
           />
@@ -38,7 +38,7 @@ const addgarage = () => (
             size="medium"
             placeholder="Enter Description Here..."
             style={{
-              padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%", height: "200px",
+              padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '150%', height: '200px',
             }}
 
           />
@@ -52,7 +52,7 @@ const addgarage = () => (
             size="large"
             placeholder="Select City Here..."
             style={{
-              padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%",
+              padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '150%',
             }}
 
           />
@@ -66,7 +66,7 @@ const addgarage = () => (
             size="large"
             placeholder="Enter Garage Series Here..."
             style={{
-              padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%",
+              padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '150%',
             }}
 
           />
@@ -78,7 +78,7 @@ const addgarage = () => (
             size="medium"
             placeholder="Enter User Series Here..."
             style={{
-              padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "150%",
+              padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '150%',
             }}
 
           />

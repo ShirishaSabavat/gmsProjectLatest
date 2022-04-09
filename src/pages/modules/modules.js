@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 import { getModules } from "services/axios";
 
 const nestedPath = [
-  "Home",
-  "Modules",
+  'Home',
+  'Modules',
 ];
 
 function modules() {
