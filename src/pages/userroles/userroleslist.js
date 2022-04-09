@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Breadcrumb from "components/layouts/breadcrumb";
-import { Input } from "antd";
+import HorizontalSearchHeader from "components/layouts/HorizontalSearchHeader";
 import { Pagination } from "react-headless-pagination";
 import { Link } from "react-router-dom";
 import Listitemuserroles from "components/layouts/Listitemuserroles";
@@ -54,11 +54,11 @@ function userroleslist() {
   return (
     <>
       <Helmet title="User Roles" />
-      <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
+      <div className="absolute right-20 mt-3.5" style={{ fontFamily: "Quicksand" }}>
         <Link
-          to={{ pathname: 'addrole', state: { id: -1 } }}
+          to={{ pathname: "addrole", state: { id: -1 } }}
           style={{
-            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
+            marginRight: "20px", borderRadius: "4px", fontWeight: "500", backgroundColor: "#013453", color: "#FFFFFF", fontSize: "16px", width: "194px", height: "52px", boxShadow: "0px 8px 16px #005B923D", padding: "13px 30px", textDecoration: "none",
           }}
         >
           Add New Role +
@@ -66,41 +66,22 @@ function userroleslist() {
       </div>
       <div>
         <div className="flex flex-col space-y-12">
-          <div className="space-y-2 basic-1/2">
+          <div className="space-y-2 basic-1/2 mx-5">
             <span className="font-quicksand-semi-bold text-4xl mr-3.5">
               User Roles
             </span>
             <Breadcrumb nestedPath={nestedPath} />
-            <div className="basis-1/2">{"  "}</div>
-            <div className="basis-1/3 flex flex-row flex-nonwrap bg-white mt-5">
-              <Input
-                size="medium"
-                placeholder="Search for anything..."
-                prefix={(
-                  <img
-                    className="mr-3"
-                    src="/assets/images/general/loupe.svg"
-                    alt="search"
-                    width="10"
-                  />
-                )}
-                style={{
-                  padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "30%",
-                }}
-
-              />
-
-            </div>
+            <HorizontalSearchHeader Title="" />
 
           </div>
 
         </div>
         <div className="box-border h-100">
-          <div className="flex flex-row flex-nowrap">
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">Role Title</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">Created On</h1>
+          <div className="flex flex-row flex-nowrap mx-5">
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/2 bg-white p-4 mr-0.5">Role Title</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-4 mr-0.5">Created On</h1>
             <h1 className="text-base font-mulish-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5">Status</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5">Action</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/7 bg-white py-4 px-6 mr-0.5">Action</h1>
           </div>
 
         </div>

@@ -19,11 +19,11 @@ const Listitemmodule = ({
   module_name, created_on, status,
 }) => (
   <div className="box-border h-14">
-    <div className="flex flex-row flex-nowrap">
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">{module_name}</h1>
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">{created_on}</h1>
-      <h1 className={status === "true" ? "text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5" : "text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5"}>{status === "true" ? "Active" : "Inactive"}</h1>
-      <div className="basis-1/7 bg-white p-4 ml-8 mr-0.5">
+    <div className="flex flex-row flex-nowrap mx-5">
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">{module_name}</h1>
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">{created_on}</h1>
+      <h1 className={status === "true" ? "text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-1" : "text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-1"}>{status === "true" ? "Active" : "Inactive"}</h1>
+      <div className="basis-1/5 bg-white p-4 mr-0.5">
         {status === "true" ? editIconFilled : editIcon}
       </div>
     </div>
