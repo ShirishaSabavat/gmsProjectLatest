@@ -15,15 +15,16 @@ const editIconFilled = (
   </svg>
 );
 
-const Listitemuserrole = ({
-  role_title, created_on, status,
+const Listitemprocess = ({
+  process_name, module_name, created_on, status,
 }) => (
   <div className="box-border h-14">
     <div className="flex flex-row flex-nowrap mx-5">
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-0.5">{role_title}</h1>
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white p-4 mr-0.5">{created_on}</h1>
-      <h1 className={status === "true" ? "text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5" : "text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5"}>{status === "true" ? "Active" : "Inactive"}</h1>
-      <div className="basis-1/7 bg-white py-4 px-8 mr-0.5">
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">{process_name}</h1>
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">{module_name}</h1>
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white p-4 mr-1">{created_on}</h1>
+      <h1 className={status === "true" ? "text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-1" : "text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-1"}>{status === "true" ? "Active" : "Inactive"}</h1>
+      <div className="basis-1/4 bg-white p-4 mr-0.5">
         {status === "true" ? editIconFilled : editIcon}
       </div>
     </div>
@@ -31,4 +32,4 @@ const Listitemuserrole = ({
   </div>
 );
 
-export default Listitemuserrole;
+export default Listitemprocess;

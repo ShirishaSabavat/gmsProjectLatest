@@ -2,24 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Breadcrumb from "components/layouts/breadcrumb";
 import HorizontalSearchHeader from "components/layouts/HorizontalSearchHeader";
-import Listitemprocess from "components/layouts/Listitemprocess";
+import Listitemteamgarage from "components/layouts/Listitemteamgarage";
 import { Pagination } from "react-headless-pagination";
 import { Link } from "react-router-dom";
-import { getProcess } from "services/axios";
+import { getTeamGarages } from "services/axios";
 
 const nestedPath = [
   "Home",
-  "Processes",
+  "Garages",
+  "Garage Names",
 ];
 
-function ProcessesPage() {
-  const [processlist, setProcessList] = useState([]);
+function teamslist() {
+  const [garages, setGarages] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
-    getProcess(0).then((res) => {
+    getTeamGarages(0, 1).then((res) => {
       console.log("res", res);
-      setProcessList(res.data?.results.pageData);
+      setGarages(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
     })
@@ -29,9 +30,9 @@ function ProcessesPage() {
   }, []);
   function clickNext() {
     if (currentPage + 1 <= totalPages) {
-      getProcess(currentPage + 1).then((res) => {
+      getTeamGarages(currentPage + 1).then((res) => {
         console.log("res", res);
-        setProcessList(res.data?.results.pageData);
+        setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
         .catch((err) => {
@@ -41,9 +42,9 @@ function ProcessesPage() {
   }
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
-      getProcess(currentPage - 1).then((res) => {
+      getTeamGarages(currentPage - 1).then((res) => {
         console.log("res", res);
-        setProcessList(res.data?.results.pageData);
+        setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })
         .catch((err) => {
@@ -53,44 +54,41 @@ function ProcessesPage() {
   }
   return (
     <>
-      <Helmet title="Processes" />
-      <div className="absolute right-20 mt-3.5" style={{ fontFamily: "Quicksand" }}>
+      <Helmet title="Garages" />
+      <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
         <Link
-          to={{ pathname: "addcity", state: { id: -1 } }}
+          to={{ pathname: 'addgarage', state: { id: -1 } }}
           style={{
-            marginRight: "20px", borderRadius: "4px", fontWeight: "500", backgroundColor: "#013453", color: "#FFFFFF", fontSize: "16px", width: "194px", height: "52px", boxShadow: "0px 8px 16px #005B923D", padding: "13px 30px", textDecoration: "none",
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
           }}
         >
-          Add New Process +
+          Add New Team +
         </Link>
       </div>
       <div>
         <div className="flex flex-col space-y-12">
-          <div className="space-y-2 basic-1/2  mx-5">
+          <div className="space-y-2 basic-1/2">
             <span className="font-montserrat-medium text-4xl mr-3.5">
-              Processes
+              Garage Name
             </span>
             <Breadcrumb nestedPath={nestedPath} />
-            <HorizontalSearchHeader Title="" />
+            <HorizontalSearchHeader Title="Teams" />
 
           </div>
+
         </div>
         <div className="box-border h-100">
-          <div className="flex flex-row flex-nowrap  mx-5">
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-4 mr-1">Process</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-4 mr-1">Modules</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/5 bg-white p-4 mr-1">Created on</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-4 mr-1">Status</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-4 mr-1">Action</h1>
+          <div className="flex flex-row flex-nowrap">
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-4 mr-0.5">Team Name</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-4 mr-0.5">Status</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-4 mr-0.5">Action</h1>
           </div>
 
         </div>
         <div>
-          {processlist.map((item) => (
-            <Listitemprocess
-              process_name={item.process}
-              module_name={item.moduleId}
-              created_on={item.createdAt.substring(0, 10)}
+          {garages.map((item) => (
+            <Listitemteamgarage
+              garage_name={item.name}
               status={String(item.isActive)}
             />
           ))}
@@ -124,4 +122,4 @@ function ProcessesPage() {
   );
 }
 
-export default ProcessesPage;
+export default teamslist;
