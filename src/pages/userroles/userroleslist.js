@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
-import Breadcrumb from "components/layouts/breadcrumb";
-import HorizontalSearchHeader from "components/layouts/HorizontalSearchHeader";
-import { Pagination } from "react-headless-pagination";
-import { Link } from "react-router-dom";
-import Listitemuserroles from "components/layouts/Listitemuserroles";
-import { getUserRoles } from "services/axios";
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import Breadcrumb from 'components/layouts/breadcrumb';
+import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
+import { Pagination } from 'react-headless-pagination';
+import { Link } from 'react-router-dom';
+import Listitemuserroles from 'components/layouts/Listitemuserroles';
+import { getUserRoles } from 'services/axios';
 
 const nestedPath = [
-  "Home",
-  "User Roles",
+  'Home',
+  'User Roles',
 ];
 
 function userroleslist() {
@@ -18,47 +18,47 @@ function userroleslist() {
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
     getUserRoles(0).then((res) => {
-      console.log("res", res);
+      console.log('res', res);
       setRoles(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
     })
       .catch((err) => {
-        console.log("err", err);
+        console.log('err', err);
       });
   }, []);
   function clickNext() {
     if (currentPage + 1 <= totalPages) {
       getUserRoles(currentPage + 1).then((res) => {
-        console.log("res", res);
+        console.log('res', res);
         setRoles(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
         .catch((err) => {
-          console.log("err", err);
+          console.log('err', err);
         });
     }
   }
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
       getUserRoles(currentPage - 1).then((res) => {
-        console.log("res", res);
+        console.log('res', res);
         setRoles(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })
         .catch((err) => {
-          console.log("err", err);
+          console.log('err', err);
         });
     }
   }
   return (
     <>
       <Helmet title="User Roles" />
-      <div className="absolute right-20 mt-3.5" style={{ fontFamily: "Quicksand" }}>
+      <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
         <Link
-          to={{ pathname: "addrole", state: { id: -1 } }}
+          to={{ pathname: 'addrole', state: { id: -1 } }}
           style={{
-            marginRight: "20px", borderRadius: "4px", fontWeight: "500", backgroundColor: "#013453", color: "#FFFFFF", fontSize: "16px", width: "194px", height: "52px", boxShadow: "0px 8px 16px #005B923D", padding: "13px 30px", textDecoration: "none",
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
           }}
         >
           Add New Role +
@@ -105,7 +105,7 @@ function userroleslist() {
         >
           <div className="flex items-center justify-center flex-grow mt-5">
             <div onClick={clickPrevious}>
-              <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{"<"}</Pagination.PrevButton>
+              <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{'<'}</Pagination.PrevButton>
             </div>
             <Pagination.PageButton
               activeClassName="bg-teal-400 text-white"
@@ -113,7 +113,7 @@ function userroleslist() {
               className="p-3 mx-4 mt-5 rounded"
             />
             <div onClick={clickNext}>
-              <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{">"}</Pagination.NextButton>
+              <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{'>'}</Pagination.NextButton>
             </div>
           </div>
         </Pagination>

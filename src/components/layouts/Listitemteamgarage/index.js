@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React from "react";
+import React from 'react';
 
 const editIcon = (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -21,9 +21,9 @@ const Listitemteamgarage = ({
   <div className="box-border h-14">
     <div className="flex flex-row flex-nowrap">
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white p-4">{garage_name}</h1>
-      <h1 className={status === "true" ? "text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/6 bg-white p-4" : "text-base font-quicksand-semi-bold font-medium basis-1/6 bg-white p-4 mr-0.5"}>{status === "true" ? "Active" : "Inactive"}</h1>
+      <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/6 bg-white p-4' : 'text-base font-quicksand-semi-bold font-medium basis-1/6 bg-white p-4 mr-0.5'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
       <div className="basis-1/7 bg-white p-4 ml-4 mr-0.5">
-        {status === "true" ? editIconFilled : editIcon}
+        {status === 'true' ? editIconFilled : editIcon}
       </div>
     </div>
 

@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
-import Breadcrumb from "components/layouts/breadcrumb";
-import HorizontalSearchHeader from "components/layouts/HorizontalSearchHeader";
-import Listitemteamgarage from "components/layouts/Listitemteamgarage";
-import { Pagination } from "react-headless-pagination";
-import { Link } from "react-router-dom";
-import { getTeamGarages } from "services/axios";
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import Breadcrumb from 'components/layouts/breadcrumb';
+import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
+import Listitemteamgarage from 'components/layouts/Listitemteamgarage';
+import { Pagination } from 'react-headless-pagination';
+import { Link } from 'react-router-dom';
+import { getTeamGarages } from 'services/axios';
 
 const nestedPath = [
-  "Home",
-  "Garages",
-  "Garage Names",
+  'Home',
+  'Garages',
+  'Garage Names',
 ];
 
 function teamslist() {
@@ -19,36 +19,36 @@ function teamslist() {
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
     getTeamGarages(0, 1).then((res) => {
-      console.log("res", res);
+      console.log('res', res);
       setGarages(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
     })
       .catch((err) => {
-        console.log("err", err);
+        console.log('err', err);
       });
   }, []);
   function clickNext() {
     if (currentPage + 1 <= totalPages) {
       getTeamGarages(currentPage + 1).then((res) => {
-        console.log("res", res);
+        console.log('res', res);
         setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
         .catch((err) => {
-          console.log("err", err);
+          console.log('err', err);
         });
     }
   }
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
       getTeamGarages(currentPage - 1).then((res) => {
-        console.log("res", res);
+        console.log('res', res);
         setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })
         .catch((err) => {
-          console.log("err", err);
+          console.log('err', err);
         });
     }
   }
@@ -104,7 +104,7 @@ function teamslist() {
         >
           <div className="flex items-center justify-center flex-grow mt-5">
             <div onClick={clickPrevious}>
-              <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{"<"}</Pagination.PrevButton>
+              <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{'<'}</Pagination.PrevButton>
             </div>
             <Pagination.PageButton
               activeClassName="bg-teal-400 text-white"
@@ -112,7 +112,7 @@ function teamslist() {
               className="p-3 mx-4 mt-5 rounded"
             />
             <div onClick={clickNext}>
-              <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{">"}</Pagination.NextButton>
+              <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{'>'}</Pagination.NextButton>
             </div>
           </div>
         </Pagination>

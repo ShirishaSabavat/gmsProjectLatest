@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
-import Breadcrumb from "components/layouts/breadcrumb";
-import HorizontalSearchHeader from "components/layouts/HorizontalSearchHeader";
-import Listitemcity from "components/layouts/Listitemcity";
-import { Pagination } from "react-headless-pagination";
-import { Link } from "react-router-dom";
-import { getCities } from "services/axios";
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import Breadcrumb from 'components/layouts/breadcrumb';
+import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
+import Listitemcity from 'components/layouts/Listitemcity';
+import { Pagination } from 'react-headless-pagination';
+import { Link } from 'react-router-dom';
+import { getCities } from 'services/axios';
 
 const nestedPath = [
-  "Home",
-  "Cities",
+  'Home',
+  'Cities',
 ];
 
 function citieslist() {
@@ -18,36 +18,36 @@ function citieslist() {
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
     getCities(0).then((res) => {
-      console.log("res", res);
+      console.log('res', res);
       setCities(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
     })
       .catch((err) => {
-        console.log("err", err);
+        console.log('err', err);
       });
   }, []);
   function clickNext() {
     if (currentPage + 1 <= totalPages) {
       getCities(currentPage + 1).then((res) => {
-        console.log("res", res);
+        console.log('res', res);
         setCities(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
         .catch((err) => {
-          console.log("err", err);
+          console.log('err', err);
         });
     }
   }
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
       getCities(currentPage - 1).then((res) => {
-        console.log("res", res);
+        console.log('res', res);
         setCities(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })
         .catch((err) => {
-          console.log("err", err);
+          console.log('err', err);
         });
     }
   }
@@ -107,7 +107,7 @@ function citieslist() {
         >
           <div className="flex items-center justify-center flex-grow mt-5">
             <div onClick={clickPrevious}>
-              <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{"<"}</Pagination.PrevButton>
+              <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{'<'}</Pagination.PrevButton>
             </div>
             <Pagination.PageButton
               activeClassName="bg-teal-400 text-white"
@@ -115,7 +115,7 @@ function citieslist() {
               className="p-3 mx-4 mt-5 rounded"
             />
             <div onClick={clickNext}>
-              <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{">"}</Pagination.NextButton>
+              <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{'>'}</Pagination.NextButton>
             </div>
           </div>
         </Pagination>
