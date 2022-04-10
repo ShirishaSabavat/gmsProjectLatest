@@ -73,10 +73,7 @@ export const editModule = (moduleName, radioValue, moduleId) => {
   return axios({
     method: 'PUT',
     url: `http://13.126.183.78:8086/api/v1/process/${moduleId}`,
-    headers: {
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
-      'Content-Type': 'application/json',
-    },
+    headers,
     data,
   });
 };
@@ -218,6 +215,42 @@ export const addRoleModule = (roleId, moduleId) => {
   return axios({
     method: 'POST',
     url: 'http://13.126.183.78:8086/api/v1/modules/roleModule',
+    headers: {
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
+      'Content-Type': 'application/json',
+    },
+    data,
+  });
+};
+
+export const addGarageApi = (garageTitle, garageDescription, cityId, garageSeries) => {
+  const data = JSON.stringify({
+    name: garageTitle,
+    description: garageDescription,
+    garage_series: garageSeries,
+    cityId,
+  });
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/garage',
+    headers: {
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
+      'Content-Type': 'application/json',
+    },
+    data,
+  });
+};
+
+export const editGarageApi = (garageTitle, garageDescription, cityId, garageSeries) => {
+  const data = JSON.stringify({
+    name: garageTitle,
+    description: garageDescription,
+    garage_series: garageSeries,
+    cityId,
+  });
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/garage',
     headers: {
       Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5NDAzNTczLCJleHAiOjE2NDk2NjI3NzN9.w8uNYgVlZ2EUCtFA6t7qWfItakbNaBbNSnsZwZs3tK0',
       'Content-Type': 'application/json',

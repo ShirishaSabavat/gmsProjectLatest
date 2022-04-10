@@ -36,7 +36,7 @@ const addcity = () => {
       isValid = false;
     }
     if (description.trim().length === 0) {
-      descriptionNameError.err = 'City name can not be empty';
+      descriptionNameError.err = 'City description can not be empty';
       isValid = false;
     }
     if (garageSeries.trim().length === 0) {
