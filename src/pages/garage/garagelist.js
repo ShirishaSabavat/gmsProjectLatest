@@ -75,7 +75,7 @@ function garagelist() {
           </div>
 
         </div>
-        <div className="box-border h-12">
+        <div className="box-border mb-px">
           <div className="flex flex-row flex-nowrap mx-5">
             <h1 className="text-base font-quicksand-medium font-medium basis-1/2 bg-white p-4 mr-1">Garage Name</h1>
             <h1 className="text-base font-quicksand-medium font-medium basis-1/2 bg-white p-4 mr-1">Description</h1>

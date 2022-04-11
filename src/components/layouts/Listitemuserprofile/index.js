@@ -18,11 +18,11 @@ const editIconFilled = (
 const Listitemuserprofile = ({
   name, status,
 }) => (
-  <div className="box-border h-14">
+  <div className="box-border mt-px">
     <div className="flex flex-row flex-nowrap mx-5">
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">{name}</h1>
-      <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
-      <div className="basis-1/5 bg-white p-4 mr-1">
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">{name}</h1>
+      <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
+      <div className="basis-1/6 bg-white h-16 p-4 mr-1">
         {status === 'true' ? editIconFilled : editIcon}
       </div>
     </div>

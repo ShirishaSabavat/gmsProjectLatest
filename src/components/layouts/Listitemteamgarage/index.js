@@ -18,11 +18,11 @@ const editIconFilled = (
 const Listitemteamgarage = ({
   garage_name, status,
 }) => (
-  <div className="box-border h-14">
+  <div className="box-border mx-5">
     <div className="flex flex-row flex-nowrap">
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white p-4">{garage_name}</h1>
-      <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/6 bg-white p-4' : 'text-base font-quicksand-semi-bold font-medium basis-1/6 bg-white p-4 mr-0.5'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
-      <div className="basis-1/7 bg-white p-4 ml-4 mr-0.5">
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">{garage_name}</h1>
+      <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
+      <div className="basis-1/6 bg-white h-16 p-4 mr-1">
         {status === 'true' ? editIconFilled : editIcon}
       </div>
     </div>
