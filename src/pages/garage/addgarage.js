@@ -131,7 +131,7 @@ const addgarage = () => {
   return (
     <>
       <Helmet title="Garages" />
-      <div className="flex flex-col space-y-12">
+      <div className="flex flex-col space-y-12 mx-5">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
             Add New Garage

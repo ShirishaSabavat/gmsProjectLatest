@@ -26,6 +26,7 @@ const Listitemteamgarage = ({
       <Link to={{ pathname: 'addteam', state: { id: team_id } }} className="basis-1/6 bg-white p-4 mr-1 pt-4 h-16">
         {status === 'true' ? editIconFilled : editIcon}
       </Link>
+
     </div>
 
   </div>

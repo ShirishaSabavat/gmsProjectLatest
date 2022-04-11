@@ -8,12 +8,27 @@ const nestedPath = [
   'Add New Garage',
 ];
 
+const Employees = [
+  {
+    member_id: 1,
+    member_name: 'John Doe',
+    member_position: 'Manager',
+    member_photo: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  },
+  {
+    member_id: 1,
+    member_name: 'Smith Row',
+    member_position: 'Manager',
+    member_photo: 'https://st.depositphotos.com/1008939/1880/i/600/depositphotos_18807295-stock-photo-portrait-of-handsome-man.jpg',
+  },
+];
+
 const addteam = () => {
   const [radioValue, setRadioValue] = useState(true);
   return (
     <>
       <Helmet title="Cities" />
-      <div className="flex flex-col space-y-12">
+      <div className="flex flex-col space-y-12 mx-5">
         <div className="space-y-2 basic-1/2">
           <span className="font-montserrat-medium text-4xl mr-3.5">
             Add New Team
@@ -68,6 +83,17 @@ const addteam = () => {
             />
 
           </div>
+        </div>
+        <div>
+          {Employees.map((item) => (
+            <div className="h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 w-2/6">
+              <img className="w-28 h-28 my-3 mx-6 rounded-full" src={item.member_photo}></img>
+              <div>
+                <h1 className="font-quicksand-bold text-2xl mt-6">{item.member_name}</h1>
+                <h1 className="font-quicksand-semi-bold text-xl mt-6">{item.member_position}</h1>
+              </div>
+            </div>
+          ))}
         </div>
         <div className="col-12 flex flex-row justify-end">
           <Button
