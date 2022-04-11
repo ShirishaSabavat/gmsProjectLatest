@@ -78,14 +78,15 @@ function userProfiles() {
         <div className="box-border h-100">
           <div className="flex flex-row flex-nowrap mx-5">
             <h1 className="text-base font-mulish-semi-bold font-medium basis-1/2 bg-white p-4 mr-0.5">Name</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/4 bg-white p-4 mr-0.5">Status</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/5 bg-white p-4 mr-0.5">Action</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-4 mr-0.5">Status</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-4 mr-0.5">Action</h1>
           </div>
 
         </div>
         <div>
           {profileList.map((item) => (
             <Listitemuserprofile
+              personid={item.id}
               name={item.first_name}
               status={String(item.isActive)}
             />

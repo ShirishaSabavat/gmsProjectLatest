@@ -72,7 +72,7 @@ function userroleslist() {
               User Roles
             </span>
             <Breadcrumb nestedPath={nestedPath} />
-            {/* <HorizontalSearchHeader Title="" /> */}
+            <HorizontalSearchHeader Title="" />
 
           </div>
 
@@ -82,13 +82,14 @@ function userroleslist() {
             <h1 className="text-base font-mulish-semi-bold font-medium basis-1/2 bg-white p-4 mr-0.5">Role Title</h1>
             <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-4 mr-0.5">Created On</h1>
             <h1 className="text-base font-mulish-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5">Status</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/7 bg-white py-4 px-6 mr-0.5">Action</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white py-4 px-6 mr-0.5">Action</h1>
           </div>
 
         </div>
         <div>
           {roles.map((item) => (
             <Listitemuserroles
+              role_id={item.id}
               role_title={item.role}
               created_on={item.createdAt.substring(0, 10)}
               status={String(item.isActive)}

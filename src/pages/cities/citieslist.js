@@ -76,7 +76,7 @@ function citieslist() {
           </div>
 
         </div>
-        <div className="box-border h-12">
+        <div className="box-border mb-px">
           <div className="flex flex-row flex-nowrap mx-5">
             <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-3 mr-0.5">City</h1>
             <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-3 mr-0.5">User Series</h1>
@@ -89,6 +89,7 @@ function citieslist() {
         <div>
           {cities.map((item) => (
             <Listitemcity
+              city_id={item.id}
               city_name={item.name}
               city_manager={item.user_series}
               garage_quantity={item.garage_series}

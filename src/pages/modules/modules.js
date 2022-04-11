@@ -88,6 +88,7 @@ function modules() {
         <div>
           {moduleslist.map((item) => (
             <Listitemmodule
+              module_id={item.id}
               module_name={item.module}
               created_on={item.createdAt.substring(0, 10)}
               status={String(item.isActive)}
