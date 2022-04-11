@@ -54,14 +54,19 @@ function citieslist() {
   return (
     <>
       <Helmet title="Cities" />
-      <div className="absolute right-20 mt-3.5">
-        <Link to="addcity" className="font-montserrat-medium text-xl text-white bg-cyan-900 p-3">
-          Add new City +
+      <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
+        <Link
+          to={{ pathname: 'addcity', state: { id: -1 } }}
+          style={{
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
+          }}
+        >
+          Add New City +
         </Link>
       </div>
       <div>
         <div className="flex flex-col space-y-12">
-          <div className="space-y-2 basic-1/2">
+          <div className="space-y-2 basic-1/2 mx-5">
             <span className="font-montserrat-medium text-4xl mr-3.5">
               Cities
             </span>
@@ -71,13 +76,13 @@ function citieslist() {
           </div>
 
         </div>
-        <div className="box-border h-100">
-          <div className="flex flex-row flex-nowrap">
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-4 mr-0.5">City</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-4 mr-0.5">User Series</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-4 mr-0.5">Garage Series</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-4 mr-0.5">Status</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-4 mr-0.5">Action</h1>
+        <div className="box-border h-12">
+          <div className="flex flex-row flex-nowrap mx-5">
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-3 mr-0.5">City</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-3 mr-0.5">User Series</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/3 bg-white p-3 mr-0.5">Garage Series</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-3 mr-0.5">Status</h1>
+            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/6 bg-white p-3 mr-0.5">Action</h1>
           </div>
 
         </div>

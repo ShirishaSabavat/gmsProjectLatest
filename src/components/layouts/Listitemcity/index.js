@@ -19,16 +19,16 @@ const Listitemcity = ({
   city_name, city_manager, garage_quantity, status,
 }) => (
   <div className="box-border h-14">
-    <div className="flex flex-row flex-nowrap">
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4">{city_name}</h1>
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4">{city_manager}</h1>
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4">{garage_quantity}</h1>
-      <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5' : 'text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
-      <div className="basis-1/7 bg-white p-4 ml-14 mr-0.5">
-        {status === 'true' ? editIconFilled : editIcon}
+    <div className="flex flex-row flex-nowrap mx-5">
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white p-4 mt-1">{city_name}</h1>
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white p-4 mt-1 ml-0.5">{city_manager}</h1>
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white p-4 mt-1 ml-0.5">{garage_quantity}</h1>
+      <h1 className={status === "true" ? "self-center text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/6 bg-white p-4 mt-1 ml-0.5" : "text-base font-quicksand-semi-bold font-medium basis-1/6 bg-white p-4 mt-1 ml-0.5"}>{status === "true" ? "Active" : "Inactive"}</h1>
+      <div className="self-center basis-1/6 bg-white p-4 mt-1 ml-0.5">
+        {status === "true" ? editIconFilled : editIcon}
       </div>
     </div>
-
+    <div className="h-0.5"></div>
   </div>
 );
 

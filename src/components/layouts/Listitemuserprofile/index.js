@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React from "react";
 
 const editIcon = (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -15,15 +15,14 @@ const editIconFilled = (
   </svg>
 );
 
-const Listitemmodule = ({
-  module_name, created_on, status,
+const Listitemuserprofile = ({
+  name, status,
 }) => (
   <div className="box-border h-14">
     <div className="flex flex-row flex-nowrap mx-5">
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">{module_name}</h1>
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">{created_on}</h1>
+      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">{name}</h1>
       <h1 className={status === "true" ? "text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-1" : "text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-1"}>{status === "true" ? "Active" : "Inactive"}</h1>
-      <div className="basis-1/5 bg-white p-4 mr-0.5">
+      <div className="basis-1/5 bg-white p-4 mr-1">
         {status === "true" ? editIconFilled : editIcon}
       </div>
     </div>
@@ -31,4 +30,4 @@ const Listitemmodule = ({
   </div>
 );
 
-export default Listitemmodule;
+export default Listitemuserprofile;
