@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Input } from 'antd';
+// import { Input } from 'antd';
 import { Pagination } from 'react-headless-pagination';
 import { Link } from 'react-router-dom';
 import Listitemuserroles from 'components/layouts/Listitemuserroles';
@@ -54,11 +54,11 @@ function userroleslist() {
   return (
     <>
       <Helmet title="User Roles" />
-      <div className="absolute right-20 mt-3.5" style={{ fontFamily: "Quicksand" }}>
+      <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
         <Link
-          to={{ pathname: "addrole", state: { id: -1 } }}
+          to={{ pathname: 'addrole', state: { id: -1 } }}
           style={{
-            marginRight: "20px", borderRadius: "4px", fontWeight: "500", backgroundColor: "#013453", color: "#FFFFFF", fontSize: "16px", width: "194px", height: "52px", boxShadow: "0px 8px 16px #005B923D", padding: "13px 30px", textDecoration: "none",
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
           }}
         >
           Add New Role +
@@ -71,7 +71,7 @@ function userroleslist() {
               User Roles
             </span>
             <Breadcrumb nestedPath={nestedPath} />
-            <HorizontalSearchHeader Title="" />
+            {/* <HorizontalSearchHeader Title="" /> */}
 
           </div>
 

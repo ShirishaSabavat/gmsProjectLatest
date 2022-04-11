@@ -24,9 +24,9 @@ const Listitemgarage = ({
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mt-1 mr-1">{garage_name}</h1>
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mt-1 mr-1">{garage_manager}</h1>
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mt-1 mr-1">{garage_members}</h1>
-      <h1 className={status === "true" ? "text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-0.5 mt-1 mr-1" : "text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-0.5 mt-1 mr-1"}>{status === "true" ? "Active" : "Inactive"}</h1>
+      <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-0.5 mt-1 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-0.5 mt-1 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
       <Link to="teamslist" className="basis-1/5 bg-white p-4 mr-1 mt-1">
-        {status === "true" ? editIconFilled : editIcon}
+        {status === 'true' ? editIconFilled : editIcon}
       </Link>
     </div>
 
