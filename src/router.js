@@ -91,6 +91,12 @@ const routes = [
     Component: lazy(() => import('pages/userProfiles/userProfiles')),
   },
   {
+    path: '/userProfiles/addUserProfile',
+    key: 'USER PROFILES',
+    exact: true,
+    Component: lazy(() => import('pages/userProfiles/addUserProfile')),
+  },
+  {
     path: '/modules/modules',
     key: 'MODULES',
     exact: true,

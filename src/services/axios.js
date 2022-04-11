@@ -71,6 +71,12 @@ export const getGarages = (page) => axios({
   headers,
 });
 
+export const getAllGarages = () => axios({
+  method: 'GET',
+  url: 'http://13.126.183.78:8086/api/v1/garage',
+  headers,
+});
+
 export const getTeamGarages = (page, garageid) => axios({
   method: 'GET',
   url: `http://13.126.183.78:8086/api/v1/team/?garage_id=${garageid}page=${page}&size=10`,
@@ -115,6 +121,13 @@ export const getCities = (page) => axios({
   url: `http://13.126.183.78:8086/api/v1/city?page=${page}&size=10`,
   headers,
 });
+
+export const getAllCities = () => axios({
+  method: 'GET',
+  url: 'http://13.126.183.78:8086/api/v1/city',
+  headers,
+});
+
 export const getProcess = (page) => axios({
   method: 'GET',
   url: `http://13.126.183.78:8086/api/v1/process?page=${page}&size=10`,
@@ -198,6 +211,12 @@ export const editRole = (cityName, radioValue, description, garageSeries, userSe
     data,
   });
 };
+
+export const getRoles = () => axios({
+  method: 'GET',
+  url: 'http://13.126.183.78:8086/api/v1/role',
+  headers,
+});
 
 export const addRoleModule = (roleId, moduleId) => {
   console.log(roleId);

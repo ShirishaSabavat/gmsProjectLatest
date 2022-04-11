@@ -5,7 +5,7 @@ import {
   Input, Menu, Dropdown, Button, Radio,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
-import { getCities, addGarageApi, editGarageApi } from 'services/axios';
+import { getAllCities, addGarageApi, editGarageApi } from 'services/axios';
 import { useLocation } from 'react-router-dom';
 
 const nestedPath = [
@@ -45,9 +45,9 @@ const addgarage = () => {
   );
 
   useEffect(() => {
-    getCities()
+    getAllCities()
       .then((res) => {
-        console.log('res', res?.data?.results);
+        console.log('resp', res?.data?.results);
         setDropDownMenu(res?.data?.results?.pageData);
       })
       .catch((err) => {
