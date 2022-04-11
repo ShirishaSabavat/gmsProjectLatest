@@ -23,9 +23,9 @@ const Listitemcity = ({
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4">{city_name}</h1>
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4">{city_manager}</h1>
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4">{garage_quantity}</h1>
-      <h1 className={status === "true" ? "text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5" : "text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5"}>{status === "true" ? "Active" : "Inactive"}</h1>
+      <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5' : 'text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white p-4 mr-0.5'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
       <div className="basis-1/7 bg-white p-4 ml-14 mr-0.5">
-        {status === "true" ? editIconFilled : editIcon}
+        {status === 'true' ? editIconFilled : editIcon}
       </div>
     </div>
 

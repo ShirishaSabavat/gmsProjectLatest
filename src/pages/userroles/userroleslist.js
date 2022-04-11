@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
-import Breadcrumb from "components/layouts/breadcrumb";
-import { Input } from "antd";
-import { Pagination } from "react-headless-pagination";
-import { Link } from "react-router-dom";
-import Listitemuserroles from "components/layouts/Listitemuserroles";
-import { getUserRoles } from "services/axios";
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import Breadcrumb from 'components/layouts/breadcrumb';
+import { Input } from 'antd';
+import { Pagination } from 'react-headless-pagination';
+import { Link } from 'react-router-dom';
+import Listitemuserroles from 'components/layouts/Listitemuserroles';
+import { getUserRoles } from 'services/axios';
 
 const nestedPath = [
-  "Home",
-  "User Roles",
+  'Home',
+  'User Roles',
 ];
 
 function userroleslist() {
@@ -18,36 +18,36 @@ function userroleslist() {
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
     getUserRoles(0).then((res) => {
-      console.log("res", res);
+      console.log('res', res);
       setRoles(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
     })
       .catch((err) => {
-        console.log("err", err);
+        console.log('err', err);
       });
   }, []);
   function clickNext() {
     if (currentPage + 1 <= totalPages) {
       getUserRoles(currentPage + 1).then((res) => {
-        console.log("res", res);
+        console.log('res', res);
         setRoles(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
         .catch((err) => {
-          console.log("err", err);
+          console.log('err', err);
         });
     }
   }
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
       getUserRoles(currentPage - 1).then((res) => {
-        console.log("res", res);
+        console.log('res', res);
         setRoles(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })
         .catch((err) => {
-          console.log("err", err);
+          console.log('err', err);
         });
     }
   }
@@ -71,7 +71,7 @@ function userroleslist() {
               User Roles
             </span>
             <Breadcrumb nestedPath={nestedPath} />
-            <div className="basis-1/2">{"  "}</div>
+            <div className="basis-1/2">{'  '}</div>
             <div className="basis-1/3 flex flex-row flex-nonwrap bg-white mt-5">
               <Input
                 size="medium"
@@ -85,7 +85,7 @@ function userroleslist() {
                   />
                 )}
                 style={{
-                  padding: "14px", marginLeft: "15px", marginBottom: "8px", backgroundColor: "rgba(245,248,252,1)", width: "30%",
+                  padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '30%',
                 }}
 
               />
@@ -124,7 +124,7 @@ function userroleslist() {
         >
           <div className="flex items-center justify-center flex-grow mt-5">
             <div onClick={clickPrevious}>
-              <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{"<"}</Pagination.PrevButton>
+              <Pagination.PrevButton className="mt-5 bg-white mx-5 rounded">{'<'}</Pagination.PrevButton>
             </div>
             <Pagination.PageButton
               activeClassName="bg-teal-400 text-white"
@@ -132,7 +132,7 @@ function userroleslist() {
               className="p-3 mx-4 mt-5 rounded"
             />
             <div onClick={clickNext}>
-              <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{">"}</Pagination.NextButton>
+              <Pagination.NextButton className="mt-5 bg-white mx-5 rounded">{'>'}</Pagination.NextButton>
             </div>
           </div>
         </Pagination>

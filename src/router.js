@@ -1,118 +1,130 @@
-import { lazy, Suspense } from "react";
-import { ConnectedRouter } from "connected-react-router";
+import { lazy, Suspense } from 'react';
+import { ConnectedRouter } from 'connected-react-router';
 import {
   Route,
   Redirect,
   Switch,
-} from "react-router-dom";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
-import AuthLayout from "./layout";
+} from 'react-router-dom';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import AuthLayout from './layout';
 
 const routes = [
   // AUTH RELATED ROUTES
   {
-    path: "/auth/sign-in",
-    key: "SIGN-IN",
+    path: '/auth/sign-in',
+    key: 'SIGN-IN',
     exact: true,
-    Component: lazy(() => import("pages/auth/sign-in")),
+    Component: lazy(() => import('pages/auth/sign-in')),
   },
   {
-    path: "/auth/sign-up",
-    key: "SIGN-UP",
+    path: '/auth/sign-up',
+    key: 'SIGN-UP',
     exact: true,
-    Component: lazy(() => import("pages/auth/sign-up")),
+    Component: lazy(() => import('pages/auth/sign-up')),
   },
   {
-    path: "/auth/page-not-found",
-    key: "PAGE-NOT-FOUND",
+    path: '/auth/page-not-found',
+    key: 'PAGE-NOT-FOUND',
     exact: true,
-    Component: lazy(() => import("pages/auth/page-not-found")),
+    Component: lazy(() => import('pages/auth/page-not-found')),
   },
   {
-    path: "/auth/unauthorized",
-    key: "UNAUTHORIZED",
+    path: '/auth/unauthorized',
+    key: 'UNAUTHORIZED',
     exact: true,
-    Component: lazy(() => import("pages/auth/unauthorized")),
+    Component: lazy(() => import('pages/auth/unauthorized')),
   },
 
   // APP RELATED ROUTES
   {
-    path: "/home/dashboard",
-    key: "HOME",
+    path: '/home/dashboard',
+    key: 'HOME',
     exact: true,
-    Component: lazy(() => import("pages/home/dashboard")),
+    Component: lazy(() => import('pages/home/dashboard')),
   },
   {
-    path: "/cities/citieslist",
-    key: "PARTNER",
+    path: '/cities/citieslist',
+    key: 'PARTNER',
     exact: true,
-    Component: lazy(() => import("pages/cities/citieslist")),
+    Component: lazy(() => import('pages/cities/citieslist')),
   },
   {
-    path: "/cities/addcity",
-    key: "Add City",
+    path: '/cities/addcity',
+    key: 'Add City',
     exact: true,
-    Component: lazy(() => import("pages/cities/addcity")),
+    Component: lazy(() => import('pages/cities/addcity')),
   },
   {
-    path: "/garage/garagelist",
-    key: "GARAGE",
+    path: '/garage/garagelist',
+    key: 'GARAGE',
     exact: true,
-    Component: lazy(() => import("pages/garage/garagelist")),
+    Component: lazy(() => import('pages/garage/garagelist')),
   },
   {
-    path: "/garage/addgarage",
-    key: "GARAGE",
+    path: '/garage/addgarage',
+    key: 'GARAGE',
     exact: true,
-    Component: lazy(() => import("pages/garage/addgarage")),
+    Component: lazy(() => import('pages/garage/addgarage')),
   },
   {
-    path: "/garage/teamslist",
-    key: "TEAMS",
+    path: '/garage/teamslist',
+    key: 'TEAMS',
     exact: true,
-    Component: lazy(() => import("pages/garage/teamslist")),
+    Component: lazy(() => import('pages/garage/teamslist')),
   },
   {
-    path: "/userroles/userroleslist",
-    key: "USER ROLE",
+    path: '/userroles/userroleslist',
+    key: 'USER ROLE',
     exact: true,
-    Component: lazy(() => import("pages/userroles/userroleslist")),
+    Component: lazy(() => import('pages/userroles/userroleslist')),
   },
   {
-    path: "/userroles/addrole",
-    key: "Add User Role",
+    path: '/userroles/addrole',
+    key: 'Add User Role',
     exact: true,
-    Component: lazy(() => import("pages/userroles/addrole")),
+    Component: lazy(() => import('pages/userroles/addrole')),
   },
   {
-    path: "/userProfiles/userProfiles",
-    key: "USER PROFILES",
+    path: '/userProfiles/userProfiles',
+    key: 'USER PROFILES',
     exact: true,
-    Component: lazy(() => import("pages/userProfiles/userProfiles")),
+    Component: lazy(() => import('pages/userProfiles/userProfiles')),
   },
   {
-    path: "/modules/modules",
-    key: "MODULES",
+    path: '/modules/modules',
+    key: 'MODULES',
     exact: true,
-    Component: lazy(() => import("pages/modules/modules")),
+    Component: lazy(() => import('pages/modules/modules')),
   },
   {
-    path: "/modules/addModule",
-    key: "Add Module",
+    path: '/modules/addModule',
+    key: 'Add Module',
     exact: true,
-    Component: lazy(() => import("pages/modules/addModule")),
+    Component: lazy(() => import('pages/modules/addModule')),
   },
   {
-    path: "/processes/processes",
-    key: "PROCESSES",
+    path: '/processes/processes',
+    key: 'PROCESSES',
     exact: true,
-    Component: lazy(() => import("pages/processes/processes")),
+    Component: lazy(() => import('pages/processes/processes')),
   },
   {
-    path: "/processes/addProcess",
-    key: "Add Process",
+    path: '/processes/addProcess',
+    key: 'Add Process',
     exact: true,
-    Component: lazy(() => import("pages/processes/addProcess")),
+    Component: lazy(() => import('pages/processes/addProcess')),
+  },
+  {
+    path: '/pickuplocations/pickupLocations',
+    key: 'Pickup Locations',
+    exact: true,
+    Component: lazy(() => import('pages/pickupLocations/pickupLocations')),
+  },
+  {
+    path: '/pickuplocations/addPickupLocation',
+    key: 'Add Pickup Locations',
+    exact: true,
+    Component: lazy(() => import('pages/pickupLocations/addPickupLocation')),
   },
 ];
 
@@ -157,4 +169,4 @@ const Router = ({ history }) => (
 );
 
 export default Router;
-Router.displayName = "Router Page";
+Router.displayName = 'Router Page';
