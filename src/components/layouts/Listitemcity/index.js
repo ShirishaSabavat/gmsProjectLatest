@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const editIcon = (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -16,7 +17,7 @@ const editIconFilled = (
 );
 
 const Listitemcity = ({
-  city_name, city_manager, garage_quantity, status,
+  city_id, city_name, city_manager, garage_quantity, status,
 }) => (
   <div className="box-border mt-px">
     <div className="flex flex-row flex-nowrap mx-5">
@@ -24,9 +25,9 @@ const Listitemcity = ({
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 ml-0.5">{city_manager}</h1>
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 ml-0.5">{garage_quantity}</h1>
       <h1 className={status === 'true' ? 'self-center text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/6 bg-white p-4 h-16 ml-0.5' : 'text-base font-quicksand-semi-bold font-medium basis-1/6 bg-white p-4 h-16 ml-0.5'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
-      <div className="basis-1/6 bg-white ml-0.5 pl-5 h-16 pt-4">
+      <Link to={{ pathname: 'addcity', state: { id: city_id } }} className="basis-1/6 bg-white p-4 mr-1 pt-4 h-16">
         {status === 'true' ? editIconFilled : editIcon}
-      </div>
+      </Link>
     </div>
   </div>
 );

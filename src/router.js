@@ -67,6 +67,12 @@ const routes = [
     Component: lazy(() => import('pages/garage/addgarage')),
   },
   {
+    path: '/garage/addteam',
+    key: 'TEAMS',
+    exact: true,
+    Component: lazy(() => import('pages/garage/addteam')),
+  },
+  {
     path: '/garage/teamslist',
     key: 'TEAMS',
     exact: true,

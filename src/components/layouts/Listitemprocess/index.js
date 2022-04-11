@@ -17,7 +17,7 @@ const editIconFilled = (
 );
 
 const Listitemprocess = ({
-  process_name, module_name, created_on, status,
+  process_id, process_name, module_name, created_on, status,
 }) => (
   <div className="box-border mt-px">
     <div className="flex flex-row flex-nowrap mx-5">
@@ -25,7 +25,7 @@ const Listitemprocess = ({
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">{module_name}</h1>
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">{created_on}</h1>
       <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white h-16 p-4 mr-0.5 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/4 h-16 bg-white p-4 mr-0.5 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
-      <Link to="teamslist" className="basis-1/5 bg-white p-4 mr-1 pt-4 h-16">
+      <Link to={{ pathname: 'addcity', state: { id: process_id } }} className="basis-1/5 bg-white p-4 mr-1 pt-4 h-16">
         {status === 'true' ? editIconFilled : editIcon}
       </Link>
     </div>

@@ -89,6 +89,7 @@ function citieslist() {
         <div>
           {cities.map((item) => (
             <Listitemcity
+              city_id={item.id}
               city_name={item.name}
               city_manager={item.user_series}
               garage_quantity={item.garage_series}

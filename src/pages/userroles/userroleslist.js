@@ -89,6 +89,7 @@ function userroleslist() {
         <div>
           {roles.map((item) => (
             <Listitemuserroles
+              role_id={item.id}
               role_title={item.role}
               created_on={item.createdAt.substring(0, 10)}
               status={String(item.isActive)}

@@ -86,6 +86,7 @@ function userProfiles() {
         <div>
           {profileList.map((item) => (
             <Listitemuserprofile
+              personid={item.id}
               name={item.first_name}
               status={String(item.isActive)}
             />

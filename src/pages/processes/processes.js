@@ -88,8 +88,9 @@ function ProcessesPage() {
         <div>
           {processlist.map((item) => (
             <Listitemprocess
+              process_id={item.id}
               process_name={item.process}
-              module_name={item.moduleId}
+              module_name={item.module?.module}
               created_on={item.createdAt.substring(0, 10)}
               status={String(item.isActive)}
             />
