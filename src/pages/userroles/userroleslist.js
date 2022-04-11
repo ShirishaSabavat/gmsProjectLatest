@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
+// eslint-disable-next-line no-unused-vars
 import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
 import { Pagination } from 'react-headless-pagination';
 import { Link } from 'react-router-dom';
@@ -71,7 +72,7 @@ function userroleslist() {
               User Roles
             </span>
             <Breadcrumb nestedPath={nestedPath} />
-            <HorizontalSearchHeader Title="" />
+            {/* <HorizontalSearchHeader Title="" /> */}
 
           </div>
 

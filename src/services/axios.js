@@ -261,3 +261,59 @@ export const editGarageApi = (garageTitle, garageDescription, cityId, garageSeri
     data,
   });
 };
+
+export const addPickupLocation = (name, description, radioValue, garageId) => {
+  console.log(name, radioValue, garageId, 'axios');
+  const data = JSON.stringify({
+    name,
+    description,
+    garageId,
+    isActive: radioValue,
+  });
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/pickupLocation',
+    headers: {
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5Mzk5NzkyLCJleHAiOjE2NDk2NTg5OTJ9.pM3M9qL2WD_jGn2TTrhU5HnooAor66XxfG8IzDldHdc',
+      'Content-Type': 'application/json',
+    },
+    data,
+  });
+};
+
+export const getPickupLocations = () => axios({
+  method: 'GET',
+  url: 'http://13.126.183.78:8086/api/v1/pickupLocation',
+  headers: {
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5Mzk5NzkyLCJleHAiOjE2NDk2NTg5OTJ9.pM3M9qL2WD_jGn2TTrhU5HnooAor66XxfG8IzDldHdc',
+    'Content-Type': 'application/json',
+  },
+});
+
+export const getPickupLocation = (id) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/pickupLocation/${id}`,
+  headers: {
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5Mzk5NzkyLCJleHAiOjE2NDk2NTg5OTJ9.pM3M9qL2WD_jGn2TTrhU5HnooAor66XxfG8IzDldHdc',
+    'Content-Type': 'application/json',
+  },
+});
+
+// AXIOS FOR PROCESS EDITING
+export const editPickupLocation = (name, description, radioValue, garageId, pickupLocationId) => {
+  const data = JSON.stringify({
+    name,
+    description,
+    garageId,
+    isActive: radioValue,
+  });
+  return axios({
+    method: 'PUT',
+    url: `http://13.126.183.78:8086/api/v1/pickupLocation/${pickupLocationId}`,
+    headers: {
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5Mzk5NzkyLCJleHAiOjE2NDk2NTg5OTJ9.pM3M9qL2WD_jGn2TTrhU5HnooAor66XxfG8IzDldHdc',
+      'Content-Type': 'application/json',
+    },
+    data,
+  });
+};

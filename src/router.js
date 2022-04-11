@@ -120,6 +120,18 @@ const routes = [
     exact: true,
     Component: lazy(() => import('pages/processes/addProcess')),
   },
+  {
+    path: '/pickuplocations/pickupLocations',
+    key: 'Pickup Locations',
+    exact: true,
+    Component: lazy(() => import('pages/pickupLocations/pickupLocations')),
+  },
+  {
+    path: '/pickuplocations/addPickupLocation',
+    key: 'Add Pickup Locations',
+    exact: true,
+    Component: lazy(() => import('pages/pickupLocations/addPickupLocation')),
+  },
 ];
 
 const Router = ({ history }) => (
