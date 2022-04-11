@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-boolean-value */
 import { React, useState, useEffect } from 'react';
@@ -9,8 +10,9 @@ import {
 import { CaretDownOutlined } from '@ant-design/icons';
 import { useLocation } from 'react-router-dom';
 import {
-  addRole, editRole, getModules, addRoleModule, getRoles, getAllCities, getAllGarages,
+  editRole, getModules, getRoles, getAllCities, getAllGarages, addUserData, addUserProfile, addUserRole, addUserProcess,
 } from 'services/axios';
+import moment from 'moment';
 
 const nestedPath = [
   'Home',
@@ -25,17 +27,38 @@ const addrole = () => {
   const { id } = location.state;
 
   const [radioValue, setRadioValue] = useState(true);
-  const [roleTitle, setRoleTitle] = useState('');
-  const [roleError, setRoleError] = useState('');
-  const [checkboxList, setCheckboxList] = useState([]);
-  const [checkboxValue, setCheckboxValue] = useState([]);
-  const [checkboxError, setCheckboxError] = useState('');
+  const [fName, setFName] = useState('');
+  const [mName, setMName] = useState('');
+  const [lName, setLName] = useState('');
   const [userRoleDropDown, setUserRoleDropDown] = useState([]);
   const [roleSelect, setRoleSelect] = useState('');
+  const [email, setEmail] = useState('');
+  const [contactNo, setContactNo] = useState('');
+  const [address, setAddress] = useState('');
+  const [license, setLicense] = useState('');
+  const [licenseValidity, setLicenseValidity] = useState('');
   const [cityDropdown, setCityDropDown] = useState([]);
   const [citySelect, setCitySelect] = useState('');
   const [garageDropdown, setGarageDropDown] = useState([]);
   const [garageSelect, setGarageSelect] = useState('');
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [checkboxList, setCheckboxList] = useState([]);
+  const [checkboxValue, setCheckboxValue] = useState([]);
+
+  const [fNameError, setFNameError] = useState({});
+  const [lNameError, setLNameError] = useState({});
+  const [userRoleError, setUserRoleError] = useState({});
+  const [emailError, setEmailError] = useState({});
+  const [mobileError, setMobileError] = useState({});
+  const [addressError, setAddressError] = useState({});
+  const [licenseError, setLicenseError] = useState({});
+  const [licenseValidityError, setLicenseValidityError] = useState({});
+  const [cityError, setCityError] = useState({});
+  const [garageError, setGarageError] = useState({});
+  const [userNameError, setUserNameError] = useState({});
+  const [passwordError, setPasswordError] = useState({});
+  const [processError, setProcessError] = useState({});
 
   const userRoleMenu = (
     <Menu onClick={(e) => setRoleSelect(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
@@ -127,36 +150,157 @@ const addrole = () => {
     }
   };
 
+  const dateFormat = 'DD/MM/YYYY';
+  const onDateChange = (date) => {
+    const dateSelected = moment(date);
+    setLicenseValidity(dateSelected);
+  };
+
   const validateFormData = () => {
-    const roleNameError = {};
-    const checkboxValueError = {};
+    const fNameErr = {};
+    const lNameErr = {};
+    const userRoleSelectErr = {};
+    const emailErr = {};
+    const mobileErr = {};
+    const addressErr = {};
+    const licenseErr = {};
+    const licenseValidityErr = {};
+    const citySelectErr = {};
+    const garageSelectErr = {};
+    const userNameErr = {};
+    const passwordErr = {};
+    const processErr = {};
+    const regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    const numCheck = /^[0-9\b]+$/;
+
     let isValid = true;
 
-    if (roleTitle.trim().length === 0) {
-      roleNameError.err = 'Role name can not be empty';
+    if (fName.trim().length === 0) {
+      fNameErr.err = 'First name can not be empty';
+      isValid = false;
+    }
+
+    if (lName.trim().length === 0) {
+      lNameErr.err = 'Last name can not be empty';
+      isValid = false;
+    }
+
+    if (!roleSelect) {
+      userRoleSelectErr.err = 'Please Select User Role';
+      isValid = false;
+    }
+
+    if (!regexEmail.test(email)) {
+      emailErr.emailErr = 'The email must be a valid email address.';
+      isValid = false;
+    }
+
+    if (email.trim().length === 0) {
+      emailErr.emailErr = "Email Id can't be empty";
+      isValid = false;
+    }
+
+    if (contactNo.trim().length < 10 || contactNo.trim().length > 10) {
+      mobileErr.pinErr = 'Mobile Number should be of 10 digits only';
+      isValid = false;
+    }
+
+    if (!numCheck.test(contactNo)) {
+      mobileErr.pinErr = 'Only digits allowed';
+      isValid = false;
+    }
+
+    if (contactNo.trim().length === 0) {
+      mobileErr.pinErr = 'This field can not be empty';
+      isValid = false;
+    }
+
+    if (address.trim().length === 0) {
+      addressErr.addressErr = 'Address can not be empty';
+      isValid = false;
+    }
+
+    if (license.trim().length === 0) {
+      licenseErr.licenseErr = 'Driving License can not be empty';
+      isValid = false;
+    }
+
+    if (licenseValidity === '') {
+      licenseValidityErr.err = 'License Expiry Date can not be empty';
+      isValid = false;
+    }
+
+    if (!citySelect) {
+      citySelectErr.err = 'Please Select City';
+      isValid = false;
+    }
+
+    if (!garageSelect) {
+      garageSelectErr.err = 'Please Select Garage';
+      isValid = false;
+    }
+
+    if (userName.trim().length === 0) {
+      userNameErr.err = 'User Name can not be empty';
+      isValid = false;
+    }
+
+    if (password.trim().length === 0) {
+      passwordErr.err = 'Password can not be empty';
       isValid = false;
     }
 
     if (checkboxValue.length === 0) {
-      checkboxValueError.err = 'Please select at least one module';
+      processErr.err = 'Please select at least one process';
       isValid = false;
     }
 
-    setRoleError(roleNameError);
-    setCheckboxError(checkboxValueError);
+    setFNameError(fNameErr);
+    setLNameError(lNameErr);
+    setUserRoleError(userRoleSelectErr);
+    setEmailError(emailErr);
+    setMobileError(mobileErr);
+    setAddressError(addressErr);
+    setLicenseError(licenseErr);
+    setLicenseValidityError(licenseValidityErr);
+    setCityError(citySelectErr);
+    setGarageError(garageSelectErr);
+    setUserNameError(userNameErr);
+    setPasswordError(passwordErr);
+    setProcessError(processErr);
     return isValid;
   };
 
   const onSave = (event) => {
     event.preventDefault();
-    console.log('radio', radioValue);
-    console.log('roleTitle', roleTitle);
-    console.log('chkval', checkboxValue);
     const resp = validateFormData();
+
+    const userData = {
+      fName,
+      mName,
+      lName,
+      userName,
+      password,
+    };
+
+    const userProfileData = {
+      address,
+      email,
+      contactNo,
+      license,
+      licenseValidity: moment(licenseValidity).format('YYYY-MM-DD'),
+      cityId: cityDropdown[citySelect]?.id,
+      garageId: garageDropdown[garageSelect]?.id,
+    };
+
+    const userRoleData = {
+      roleId: userRoleDropDown[roleSelect]?.id,
+    };
+
     if (resp) {
       if (id !== -1) {
         console.log('in edit');
-        editRole(roleTitle, radioValue, id)
+        editRole(radioValue, id)
           .then((res) => {
             console.log('res', res);
           })
@@ -164,23 +308,40 @@ const addrole = () => {
             console.log('err', err);
           });
       } else {
-        console.log('in add');
-        addRole(roleTitle)
+        addUserData(userData)
           .then((res) => {
-            console.log('respp', res?.data?.results?.id);
-            const data = res?.data?.results?.id;
-            checkboxValue.forEach((item) => {
-              addRoleModule(data, item)
-                .then((response) => {
-                  console.log('response', response);
-                })
-                .catch((err) => {
-                  console.log('err', err);
-                });
-            });
+            console.log('userDataResp', res);
+            const userId = res?.data?.results?.id;
+            addUserProfile(userProfileData, userId)
+              .then((userProfileResp) => {
+                console.log(userProfileResp);
+                addUserRole(userRoleData, userId)
+                  .then((userRoleResp) => {
+                    console.log(userRoleResp);
+                    checkboxValue.forEach((item) => {
+                      addUserProcess(item, userId)
+                        .then((userProcessResp) => {
+                          console.log(userProcessResp);
+                        })
+                        .catch((err) => {
+                          console.log('err', err);
+                        });
+                    });
+                  })
+                  .catch((err) => {
+                    console.log('err', err);
+                  });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           })
           .catch((err) => {
             console.log('err', err);
+          })
+          .finally(() => {
+            alert('User Added Successfully');
+            window.location = '#/userProfiles/userProfiles';
           });
       }
     }
@@ -200,54 +361,56 @@ const addrole = () => {
         <div className="bg-white p-5">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>User Name</p>
           <div className="flex flex-row flex-nonwrap bg-white">
-            <div className="flex basis-1/3">
-              <Input
-                placeholder="First Name"
-                value={roleTitle}
-                onChange={(e) => setRoleTitle(e.target.value)}
-                style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-                }}
-              />
-              {Object.keys(roleError).map((key) => (
+            <div className="flex flex-col basis-1/3">
+              <div className="flex">
+                <Input
+                  placeholder="First Name"
+                  value={fName}
+                  onChange={(e) => setFName(e.target.value)}
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                  }}
+                />
+              </div>
+              {Object.keys(fNameError).map((key) => (
                 <div style={{ color: 'red' }}>
-                  {roleError[key]}
+                  {fNameError[key]}
                 </div>
               ))}
             </div>
 
-            <div className="flex basis-1/3">
-              <Input
-                placeholder="Middle Name"
-                value={roleTitle}
-                onChange={(e) => setRoleTitle(e.target.value)}
-                style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-                }}
-              />
-              {Object.keys(roleError).map((key) => (
-                <div style={{ color: 'red' }}>
-                  {roleError[key]}
-                </div>
-              ))}
+            <div className="flex flex-col basis-1/3">
+              <div className="flex">
+                <Input
+                  placeholder="Middle Name"
+                  value={mName}
+                  onChange={(e) => setMName(e.target.value)}
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                  }}
+                />
+              </div>
             </div>
 
-            <div className="flex basis-1/3">
-              <Input
-                placeholder="Last Name"
-                value={roleTitle}
-                onChange={(e) => setRoleTitle(e.target.value)}
-                style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-                }}
-              />
-              {Object.keys(roleError).map((key) => (
+            <div className="flex flex-col basis-1/3">
+              <div className="flex">
+                <Input
+                  placeholder="Last Name"
+                  value={lName}
+                  onChange={(e) => setLName(e.target.value)}
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                  }}
+                />
+              </div>
+              {Object.keys(lNameError).map((key) => (
                 <div style={{ color: 'red' }}>
-                  {roleError[key]}
+                  {lNameError[key]}
                 </div>
               ))}
             </div>
           </div>
+
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Select User Role</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <Dropdown overlay={userRoleMenu}>
@@ -267,12 +430,12 @@ const addrole = () => {
                 </div>
               </Button>
             </Dropdown>
-            {Object.keys(roleError).map((key) => (
-              <div style={{ color: 'red' }}>
-                {roleError[key]}
-              </div>
-            ))}
           </div>
+          {Object.keys(userRoleError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {userRoleError[key]}
+            </div>
+          ))}
         </div>
 
         <div className="bg-white p-5">
@@ -285,33 +448,37 @@ const addrole = () => {
             </div>
           </div>
           <div className="flex flex-row flex-nonwrap bg-white">
-            <div className="flex basis-1/2">
-              <Input
-                placeholder="Email Id"
-                value={roleTitle}
-                onChange={(e) => setRoleTitle(e.target.value)}
-                style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-                }}
-              />
-              {Object.keys(roleError).map((key) => (
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <Input
+                  placeholder="Email Id"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                  }}
+                />
+              </div>
+              {Object.keys(emailError).map((key) => (
                 <div style={{ color: 'red' }}>
-                  {roleError[key]}
+                  {emailError[key]}
                 </div>
               ))}
             </div>
-            <div className="flex basis-1/2">
-              <Input
-                placeholder="Mobile Number"
-                value={roleTitle}
-                onChange={(e) => setRoleTitle(e.target.value)}
-                style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-                }}
-              />
-              {Object.keys(roleError).map((key) => (
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <Input
+                  placeholder="Mobile Number"
+                  value={contactNo}
+                  onChange={(e) => setContactNo(e.target.value)}
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                  }}
+                />
+              </div>
+              {Object.keys(mobileError).map((key) => (
                 <div style={{ color: 'red' }}>
-                  {roleError[key]}
+                  {mobileError[key]}
                 </div>
               ))}
             </div>
@@ -323,12 +490,19 @@ const addrole = () => {
           <div className="flex flex-row flex-nonwrap bg-white">
             <TextArea
               rows={4}
-              placeholder="Ultra Vision Optics, Borivali, Mumbai"
+              placeholder="USER ADDRESS"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
               style={{
                 padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
               }}
             />
           </div>
+          {Object.keys(addressError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {addressError[key]}
+            </div>
+          ))}
         </div>
 
         <div className="bg-white p-5">
@@ -341,32 +515,37 @@ const addrole = () => {
             </div>
           </div>
           <div className="flex flex-row flex-nonwrap bg-white">
-            <div className="flex basis-1/2">
-              <Input
-                placeholder="License Number"
-                value={roleTitle}
-                onChange={(e) => setRoleTitle(e.target.value)}
-                style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-                }}
-              />
-              {Object.keys(roleError).map((key) => (
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <Input
+                  placeholder="License Number"
+                  value={license}
+                  onChange={(e) => setLicense(e.target.value)}
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                  }}
+                />
+              </div>
+              {Object.keys(licenseError).map((key) => (
                 <div style={{ color: 'red' }}>
-                  {roleError[key]}
+                  {licenseError[key]}
                 </div>
               ))}
             </div>
-            <div className="flex basis-1/2">
-              <DatePicker
-                value={roleTitle}
-                onChange={(e) => setRoleTitle(e.target.value)}
-                style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-                }}
-              />
-              {Object.keys(roleError).map((key) => (
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <DatePicker
+                  onChange={onDateChange}
+                  value={licenseValidity}
+                  format={dateFormat}
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                  }}
+                />
+              </div>
+              {Object.keys(licenseValidityError).map((key) => (
                 <div style={{ color: 'red' }}>
-                  {roleError[key]}
+                  {licenseValidityError[key]}
                 </div>
               ))}
             </div>
@@ -394,9 +573,9 @@ const addrole = () => {
               </Button>
             </Dropdown>
           </div>
-          {Object.keys(roleError).map((key) => (
+          {Object.keys(cityError).map((key) => (
             <div style={{ color: 'red' }}>
-              {roleError[key]}
+              {cityError[key]}
             </div>
           ))}
 
@@ -420,9 +599,9 @@ const addrole = () => {
               </Button>
             </Dropdown>
           </div>
-          {Object.keys(roleError).map((key) => (
+          {Object.keys(garageError).map((key) => (
             <div style={{ color: 'red' }}>
-              {roleError[key]}
+              {garageError[key]}
             </div>
           ))}
         </div>
@@ -432,35 +611,35 @@ const addrole = () => {
           <div className="flex">
             <Input
               placeholder="Username"
-              value={roleTitle}
-              onChange={(e) => setRoleTitle(e.target.value)}
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
               style={{
                 padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
               }}
             />
-            {Object.keys(roleError).map((key) => (
-              <div style={{ color: 'red' }}>
-                {roleError[key]}
-              </div>
-            ))}
           </div>
+          {Object.keys(userNameError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {userNameError[key]}
+            </div>
+          ))}
 
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Password</p>
           <div className="flex">
             <Input
               placeholder="********"
-              value={roleTitle}
-              onChange={(e) => setRoleTitle(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               style={{
                 padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
               }}
             />
-            {Object.keys(roleError).map((key) => (
-              <div style={{ color: 'red' }}>
-                {roleError[key]}
-              </div>
-            ))}
           </div>
+          {Object.keys(passwordError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {passwordError[key]}
+            </div>
+          ))}
         </div>
 
         <div className="bg-white p-5">
@@ -475,20 +654,24 @@ const addrole = () => {
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Assign Additional Processes</p>
           <div className="box-border h-100">
             {checkboxList.map((item) => (
-              <div className="flex flex-row flex-nowrap">
-                <h1 className="text-base font-quicksand-semi-bold basis-1/7 bg-white p-4 mr-0.5">
-                  {item.Module_Name}
-                </h1>
-                <div className="flex flex-row flex-nowrap">
-                  {item?.processes.map((data) => (
-                    <Checkbox value={data.id} onChange={handleChange}>{data.process}</Checkbox>
-                  ))}
-                </div>
+              <div className="flex flex-col flex-nowrap flex-auto">
+                {item?.processes.length > 0 && (
+                  <>
+                    <h1 className="flex flex-row text-base font-quicksand-semi-bold bg-white p-4 mr-0.5">
+                      {item.Module_Name}
+                    </h1>
+                    <div className="flex flex-row flex-nowrap bg-slate-200 p-4 mr-0.5">
+                      {item?.processes.map((data) => (
+                        <Checkbox value={data.id} onChange={handleChange}>{data.process}</Checkbox>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             ))}
-            {Object.keys(checkboxError).map((key) => (
+            {Object.keys(processError).map((key) => (
               <div style={{ color: 'red' }}>
-                {checkboxError[key]}
+                {processError[key]}
               </div>
             ))}
           </div>

@@ -85,7 +85,7 @@ const addgarage = () => {
     }
 
     setGarageError(garageNameError);
-    setDescriptionError(garageNameError);
+    setDescriptionError(descriptionNameError);
     setCityError(citySelectError);
     setGarageSeriesError(garageSeriesNameError);
     setUserSeriesError(userSeriesNameError);

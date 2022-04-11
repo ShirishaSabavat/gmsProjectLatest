@@ -317,3 +317,67 @@ export const editPickupLocation = (name, description, radioValue, garageId, pick
     data,
   });
 };
+
+// USER PROFILE AXIOS
+
+export const addUserData = (userData) => {
+  const data = JSON.stringify({
+    first_name: userData.fName,
+    middle_name: userData.mName,
+    last_name: userData.lName,
+    user_name: userData.userName,
+    password: userData.password,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/user',
+    headers,
+    data,
+  });
+};
+
+export const addUserProfile = (userProfileData, userId) => {
+  const data = JSON.stringify({
+    address: userProfileData.address,
+    email: userProfileData.email,
+    mobile_no: userProfileData.contactNo,
+    driving_license_no: userProfileData.license,
+    license_validity: userProfileData.licenseValidity,
+    userId,
+    cityId: userProfileData.cityId,
+    garageId: userProfileData.garageId,
+  });
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/user/userProfile',
+    headers,
+    data,
+  });
+};
+
+export const addUserRole = (userRoleData, userId) => {
+  const data = JSON.stringify({
+    userId,
+    roleId: userRoleData.roleId,
+  });
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/role/userRole',
+    headers,
+    data,
+  });
+};
+
+export const addUserProcess = (processId, userId) => {
+  const data = JSON.stringify({
+    userId,
+    processId,
+  });
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/process/userProcess',
+    headers,
+    data,
+  });
+};
