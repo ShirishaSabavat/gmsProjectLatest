@@ -83,6 +83,12 @@ export const getAllGarages = () => axios({
   headers,
 });
 
+export const getGarageById = (id) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/garage/${id}`,
+  headers,
+});
+
 export const getTeamGarages = (page, garageid) => axios({
   method: 'GET',
   url: `http://13.126.183.78:8086/api/v1/team/?garage_id=${garageid}page=${page}&size=10`,
@@ -256,7 +262,6 @@ export const addGarageApi = (garageTitle, garageDescription, cityId, garageSerie
   const data = JSON.stringify({
     name: garageTitle,
     description: garageDescription,
-    garage_series: garageSeries,
     cityId,
   });
   return axios({
@@ -267,16 +272,15 @@ export const addGarageApi = (garageTitle, garageDescription, cityId, garageSerie
   });
 };
 
-export const editGarageApi = (garageTitle, garageDescription, cityId, garageSeries) => {
+export const editGarageApi = (garageTitle, garageDescription, cityId, garageId) => {
   const data = JSON.stringify({
     name: garageTitle,
     description: garageDescription,
-    garage_series: garageSeries,
     cityId,
   });
   return axios({
-    method: 'POST',
-    url: 'http://13.126.183.78:8086/api/v1/garage',
+    method: 'PUT',
+    url: `http://13.126.183.78:8086/api/v1/garage/${garageId}`,
     headers,
     data,
   });
@@ -293,10 +297,7 @@ export const addPickupLocation = (name, description, radioValue, garageId) => {
   return axios({
     method: 'POST',
     url: 'http://13.126.183.78:8086/api/v1/pickupLocation',
-    headers: {
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5Mzk5NzkyLCJleHAiOjE2NDk2NTg5OTJ9.pM3M9qL2WD_jGn2TTrhU5HnooAor66XxfG8IzDldHdc',
-      'Content-Type': 'application/json',
-    },
+    headers,
     data,
   });
 };
@@ -304,19 +305,13 @@ export const addPickupLocation = (name, description, radioValue, garageId) => {
 export const getPickupLocations = () => axios({
   method: 'GET',
   url: 'http://13.126.183.78:8086/api/v1/pickupLocation',
-  headers: {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5Mzk5NzkyLCJleHAiOjE2NDk2NTg5OTJ9.pM3M9qL2WD_jGn2TTrhU5HnooAor66XxfG8IzDldHdc',
-    'Content-Type': 'application/json',
-  },
+  headers,
 });
 
 export const getPickupLocation = (id) => axios({
   method: 'GET',
   url: `http://13.126.183.78:8086/api/v1/pickupLocation/${id}`,
-  headers: {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5Mzk5NzkyLCJleHAiOjE2NDk2NTg5OTJ9.pM3M9qL2WD_jGn2TTrhU5HnooAor66XxfG8IzDldHdc',
-    'Content-Type': 'application/json',
-  },
+  headers,
 });
 
 // AXIOS FOR PROCESS EDITING
@@ -337,6 +332,12 @@ export const editPickupLocation = (name, description, radioValue, garageId, pick
     data,
   });
 };
+
+export const getPickupLocationByGarageId = (garageId) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/pickupLocation/?garage_id=${garageId}`,
+  headers,
+});
 
 // USER PROFILE AXIOS
 

@@ -4,18 +4,45 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Input, Radio, Button } from 'antd';
-import { getUserProfiles } from 'services/axios';
+import {
+  Input, Radio, Button, Menu, Dropdown,
+} from 'antd';
+import { CaretDownOutlined } from '@ant-design/icons';
+import { getUserProfiles, getPickupLocationByGarageId } from 'services/axios';
+import { useLocation } from 'react-router-dom';
+import { DropdownMenu } from 'reactstrap';
 
-const nestedPath = [
-  'Home',
-  'Add New Garage',
-];
+const { TextArea } = Input;
 
 const addteam = () => {
+  const location = useLocation();
+  const { teamId, garageId } = location.state;
+
+  const nestedPath = [
+    'Home',
+    `${teamId === -1 ? 'Add Team' : 'Edit Team'}`,
+  ];
+
   const [radioValue, setRadioValue] = useState(true);
   const [profileList, setProfileList] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [teamTitle, setTeamTitle] = useState('');
+  const [teamError, setTeamError] = useState({});
+  const [teamDescription, setTeamDescription] = useState('');
+  const [dropDownMenu, setDropDownMenu] = useState([]);
+  const [selectedItem, setSelectedItem] = useState([]);
+
+  const userRoleMenu = (
+    <Menu onClick={(e) => setSelectedItem(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
+      {dropDownMenu?.map((data, key) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Menu.Item key={key} value={data.id}>
+          {data.name}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   useEffect(() => {
     getUserProfiles(0).then((res) => {
       console.log('res', res);
@@ -25,43 +52,59 @@ const addteam = () => {
         console.log('err', err);
       });
   }, []);
-  function AddToArray(id) {
-    const tempUsers = [];
-    tempUsers.push(id);
-    setSelectedUsers(tempUsers);
-  }
+
+  useEffect(() => {
+    getPickupLocationByGarageId(garageId)
+      .then((res) => {
+        console.log('garageList', res);
+        setDropDownMenu(res?.data?.results?.pageData);
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }, []);
+  // function AddToArray(id) {
+  //   const tempUsers = [];
+  //   tempUsers.push(id);
+  //   setSelectedUsers(tempUsers);
+  // }
   return (
     <>
-      <Helmet title="Cities" />
+      <Helmet title="Teams" />
       <div className="flex flex-col space-y-12 mx-5">
         <div className="space-y-2 basic-1/2">
-          <span className="font-montserrat-medium text-4xl mr-3.5">
-            Add New Team
+          <span className="font-quicksand-semi-bold text-4xl mr-3.5">
+            {teamId === -1 ? 'Add Team' : 'Edit Team'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
         <div className="bg-white p-5">
-          <p>Team Title</p>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Team Title</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <Input
-              size="medium"
               placeholder="Enter Name Here..."
+              value={teamTitle}
+              onChange={(e) => setTeamTitle(e.target.value)}
               style={{
-                padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '150%',
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
               }}
-
             />
-
+            {Object.keys(teamError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {teamError[key]}
+              </div>
+            ))}
           </div>
-          <p>Description</p>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Description</p>
           <div className="flex flex-row flex-nonwrap bg-white">
-            <Input
-              size="medium"
+            <TextArea
+              rows={4}
               placeholder="Enter Description Here..."
+              value={teamDescription}
+              onChange={(e) => setTeamDescription(e.target.value)}
               style={{
-                padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '150%', height: '200px',
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
               }}
-
             />
 
           </div>
@@ -76,17 +119,25 @@ const addteam = () => {
           </div>
         </div>
         <div className="bg-white p-5">
-          <p>Select Pickup Location</p>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Location</p>
           <div className="flex flex-row flex-nonwrap bg-white">
-            <Input
-              size="large"
-              placeholder="Select Location Here..."
-              style={{
-                padding: '14px', marginLeft: '15px', marginBottom: '8px', backgroundColor: 'rgba(245,248,252,1)', width: '150%',
-              }}
-
-            />
-
+            <Dropdown overlay={userRoleMenu}>
+              <Button
+                className="w-100"
+                style={{
+                  backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A',
+                }}
+              >
+                <div className="row">
+                  <div span={22} className="col-6 text-start font-quicksand-medium">
+                    {dropDownMenu.find((x) => x.id === selectedItem)?.name || 'Select Location'}
+                  </div>
+                  <div span={2} className="col-6 text-end">
+                    <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
+                  </div>
+                </div>
+              </Button>
+            </Dropdown>
           </div>
         </div>
         <div>

@@ -17,13 +17,13 @@ const editIconFilled = (
 );
 
 const Listitemteamgarage = ({
-  team_id, garage_name, status,
+  team_id, garage_name, garage_id, status,
 }) => (
   <div className="box-border mx-5">
     <div className="flex flex-row flex-nowrap">
       <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">{garage_name}</h1>
       <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
-      <Link to={{ pathname: 'addteam', state: { id: team_id } }} className="basis-1/6 bg-white p-4 mr-1 pt-4 h-16">
+      <Link to={{ pathname: 'addteam', state: { teamId: team_id, garageId: garage_id } }} className="basis-1/6 bg-white p-4 mr-1 pt-4 h-16">
         {status === 'true' ? editIconFilled : editIcon}
       </Link>
 

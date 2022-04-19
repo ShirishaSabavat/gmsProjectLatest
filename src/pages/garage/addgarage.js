@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
@@ -5,20 +7,16 @@ import {
   Input, Menu, Dropdown, Button, Radio,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
-import { getAllCities, addGarageApi, editGarageApi } from 'services/axios';
+import {
+  getAllCities, addGarageApi, editGarageApi, getGarageById,
+} from 'services/axios';
 import { useLocation } from 'react-router-dom';
-
-const nestedPath = [
-  'Home',
-  'Add New Garage',
-];
 
 const { TextArea } = Input;
 
 const addgarage = () => {
   const location = useLocation();
   const { id } = location.state;
-  // console.log('id', id);
 
   const [garageTitle, setGarageTitle] = useState('');
   const [garageDescription, setGarageDescription] = useState('');
@@ -32,6 +30,11 @@ const addgarage = () => {
   const [cityError, setCityError] = useState({});
   const [garageSeriesError, setGarageSeriesError] = useState({});
   const [userSeriesError, setUserSeriesError] = useState({});
+
+  const nestedPath = [
+    'Home',
+    `${id === -1 ? 'Add New Garage' : 'Edit Garage'}`,
+  ];
 
   const menu = (
     <Menu onClick={(e) => setSelectedItem(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
@@ -55,6 +58,18 @@ const addgarage = () => {
       });
   }, []);
 
+  useEffect(() => {
+    getGarageById(id)
+      .then((res) => {
+        console.log('getResp', res?.data?.results?.cityId);
+        setGarageTitle(res?.data?.results?.name);
+        setGarageDescription(res?.data?.results?.description);
+        setSelectedItem(res?.data?.results?.cityId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const validateFormData = () => {
     const garageNameError = {};
     const descriptionNameError = {};
@@ -75,14 +90,14 @@ const addgarage = () => {
       citySelectError.err = 'Select city';
       isValid = false;
     }
-    if (garageSeries.trim().length === 0) {
-      garageSeriesNameError.err = 'Garage series can not be empty';
-      isValid = false;
-    }
-    if (userSeries.trim().length === 0) {
-      userSeriesNameError.err = 'User series can not be empty';
-      isValid = false;
-    }
+    // if (garageSeries.trim().length === 0) {
+    //   garageSeriesNameError.err = 'Garage series can not be empty';
+    //   isValid = false;
+    // }
+    // if (userSeries.trim().length === 0) {
+    //   userSeriesNameError.err = 'User series can not be empty';
+    //   isValid = false;
+    // }
 
     setGarageError(garageNameError);
     setDescriptionError(descriptionNameError);
@@ -108,18 +123,22 @@ const addgarage = () => {
       if (id !== -1) {
         console.log('in edit');
         // eslint-disable-next-line max-len
-        editGarageApi(garageTitle, garageDescription, dropDownMenu[selectedItem]?.id, garageSeries, id)
+        editGarageApi(garageTitle, garageDescription, dropDownMenu[selectedItem]?.id, id)
           .then((res) => {
             console.log('res', res);
+            alert('Garage updated successfully');
+            window.location.href = '#/garage/garagelist';
           })
           .catch((err) => {
             console.log('err', err);
           });
       } else {
         console.log('in add');
-        addGarageApi(garageTitle, garageDescription, dropDownMenu[selectedItem]?.id, garageSeries)
+        addGarageApi(garageTitle, garageDescription, dropDownMenu[selectedItem]?.id)
           .then((res) => {
             console.log('res', res);
+            alert('Garage added successfully');
+            window.location.href = '#/garage/garagelist';
           })
           .catch((err) => {
             console.log('err', err);
@@ -134,7 +153,7 @@ const addgarage = () => {
       <div className="flex flex-col space-y-12 mx-5">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            Add New Garage
+            {id === -1 ? 'Add New Garage' : 'Edit Garage'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -185,7 +204,7 @@ const addgarage = () => {
               >
                 <div className="row">
                   <div span={22} className="col-6 text-start font-quicksand-medium">
-                    {dropDownMenu[selectedItem]?.name || 'Select from Cities'}
+                    {dropDownMenu.find((x) => x.id === selectedItem)?.name || 'Select from Cities'}
                   </div>
                   <div span={2} className="col-6 text-end">
                     <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
@@ -200,7 +219,7 @@ const addgarage = () => {
             </div>
           ))}
         </div>
-        <div className="bg-white p-5">
+        {/* <div className="bg-white p-5">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Garage Series</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <Input
@@ -233,7 +252,7 @@ const addgarage = () => {
               {userSeriesError[key]}
             </div>
           ))}
-        </div>
+        </div> */}
         <div className="bg-white p-5">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Garage Status</p>
           <div className="flex flex-row flex-nonwrap bg-white">

@@ -35,7 +35,7 @@ const Listitemgarage = ({
         <Link to={{ pathname: 'addgarage', state: { id: garage_id } }}>
           {status === 'true' ? editIconFilled : editIcon}
         </Link>
-        <Link to="teamslist" className="ml-8">
+        <Link to={{ pathname: 'teamslist', state: { garageId: garage_id, name: garage_name } }} className="ml-8">
           {gototeams}
         </Link>
       </div>

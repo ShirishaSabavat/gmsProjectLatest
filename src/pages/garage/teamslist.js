@@ -19,7 +19,7 @@ function teamslist() {
   const [totalPages, setTotalPages] = useState(0);
 
   const location = useLocation();
-  const { name } = location.state;
+  const { name, garageId } = location.state;
 
   useEffect(() => {
     getTeamGarages(0, 1).then((res) => {
@@ -94,6 +94,7 @@ function teamslist() {
             <Listitemteamgarage
               team_id={item.id}
               garage_name={item.name}
+              garage_id={garageId}
               status={String(item.isActive)}
             />
           ))}
