@@ -64,7 +64,6 @@ function* LOAD_CURRENT_ACCOUNT() {
   yield put({
     type: actions.SET_STATE,
     payload: {
-      authorized: true,
       loading: false,
     },
   });
