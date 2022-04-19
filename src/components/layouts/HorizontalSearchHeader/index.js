@@ -1,8 +1,8 @@
-// eslint-disable-next-line no-unused-vars
-import { Input } from 'antd';
+// import { Input } from "antd";
 import React from 'react';
+import { Input } from 'antd';
 
-const HorizontalSearchHeader = () => (
+const HorizontalSearchHeader = ({ Title }) => (
   <div className="box-border h-100 p-4 ">
     <div className="flex flex-row flex-nonwrap mt-0.5 ml-36">
       <div className="basis-1/4 mt-2">

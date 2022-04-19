@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input, Radio, Button } from 'antd';
+import { getUserProfiles } from 'services/axios';
 
 const nestedPath = [
   'Home',
@@ -10,10 +11,26 @@ const nestedPath = [
 
 const addteam = () => {
   const [radioValue, setRadioValue] = useState(true);
+  const [profileList, setProfileList] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  useEffect(() => {
+    getUserProfiles(0).then((res) => {
+      console.log('res', res);
+      setProfileList(res.data?.results.pageData);
+    })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }, []);
+  function AddToArray(id) {
+    var tempUsers = [];
+    tempUsers.push(id);
+    setSelectedUsers(tempUsers);
+  }
   return (
     <>
       <Helmet title="Cities" />
-      <div className="flex flex-col space-y-12">
+      <div className="flex flex-col space-y-12 mx-5">
         <div className="space-y-2 basic-1/2">
           <span className="font-montserrat-medium text-4xl mr-3.5">
             Add New Team
@@ -68,6 +85,17 @@ const addteam = () => {
             />
 
           </div>
+        </div>
+        <div>
+          {profileList.map((item) => (
+            <div className="h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 w-2/6">
+              <img className="w-28 h-28 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/defaultperson.jpg')}></img>
+              <div>
+                <h1 className="font-quicksand-bold text-2xl mt-6">{item.first_name}</h1>
+                <h1 className="font-quicksand-semi-bold text-xl mt-6">{item.user_name}</h1>
+              </div>
+            </div>
+          ))}
         </div>
         <div className="col-12 flex flex-row justify-end">
           <Button
