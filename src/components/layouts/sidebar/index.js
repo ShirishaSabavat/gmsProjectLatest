@@ -48,11 +48,11 @@ const Sidebar = ({
       icon: '/assets/images/logo/sidebarLogo/processes.svg',
       key: '/processes/processes',
     },
-    // {
-    //   title: 'Pickup Locations',
-    //   icon: '/assets/images/logo/sidebarLogo/garage.svg',
-    //   key: '/pickupLocations/pickupLocations',
-    // },
+    {
+      title: 'Pickup Locations',
+      icon: '/assets/images/logo/sidebarLogo/garage.svg',
+      key: '/pickupLocations/pickupLocations',
+    },
   ];
 
   // const settingPath = '/setting';

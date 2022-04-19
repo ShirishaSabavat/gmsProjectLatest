@@ -67,7 +67,7 @@ function modules() {
       <div>
         <div className="flex flex-col space-y-12">
           <div className="space-y-2 basic-1/2 mx-5">
-            <span className="font-montserrat-medium text-4xl mr-3.5">
+            <span className="font-quicksand-medium text-4xl mr-3.5">
               Modules
             </span>
             <Breadcrumb nestedPath={nestedPath} />
@@ -78,10 +78,10 @@ function modules() {
         </div>
         <div className="box-border h-100">
           <div className="flex flex-row flex-nowrap mx-5">
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">Modules</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">Created on</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/4 bg-white p-4 mr-1">Status</h1>
-            <h1 className="text-base font-mulish-semi-bold font-medium basis-1/5 bg-white p-4 mr-1">Action</h1>
+            <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">Modules</h1>
+            <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white p-4 mr-1">Created on</h1>
+            <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white p-4 mr-1">Status</h1>
+            <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/5 bg-white p-4 mr-1">Action</h1>
           </div>
 
         </div>
