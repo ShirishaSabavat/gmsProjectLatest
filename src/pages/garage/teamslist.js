@@ -4,7 +4,7 @@ import Breadcrumb from 'components/layouts/breadcrumb';
 import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
 import Listitemteamgarage from 'components/layouts/Listitemteamgarage';
 import { Pagination } from 'react-headless-pagination';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { getTeamGarages } from 'services/axios';
 
 const nestedPath = [
@@ -17,6 +17,10 @@ function teamslist() {
   const [garages, setGarages] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+
+  const location = useLocation();
+  const { name } = location.state;
+
   useEffect(() => {
     getTeamGarages(0, 1).then((res) => {
       console.log('res', res);
@@ -68,8 +72,8 @@ function teamslist() {
       <div>
         <div className="flex flex-col space-y-12 mx-5">
           <div className="space-y-2 basic-1/2">
-            <span className="font-montserrat-medium text-4xl mr-3.5">
-              Garage Name
+            <span className="font-quicksand-semi-bold text-4xl mr-3.5">
+              {name}
             </span>
             <Breadcrumb nestedPath={nestedPath} />
             <HorizontalSearchHeader Title="Teams" />

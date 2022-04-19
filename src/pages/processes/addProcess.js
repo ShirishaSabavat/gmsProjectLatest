@@ -3,9 +3,10 @@ import { React, useState, useEffect } from 'react';
 import {
   Input, Menu, Button, Dropdown, Radio,
 } from 'antd';
+import Breadcrumb from 'components/layouts/breadcrumb';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
-  addProcess, getModules, getProcess, editProcess,
+  addProcess, getModules, getProcessById, editProcess,
 } from 'services/axios';
 import { useLocation } from 'react-router-dom';
 
@@ -17,6 +18,12 @@ const createModules = () => {
   const [selectedItem, setSelectedItem] = useState('');
   const location = useLocation();
   const { id } = location.state;
+
+  const nestedPath = [
+    'Home',
+    `${id === -1 ? 'Add New Process' : 'Edit Process'}`,
+  ];
+
   const menu = (
     <Menu onClick={(e) => setSelectedItem(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
       {dropDownMenu?.map((data, key) => (
@@ -30,7 +37,7 @@ const createModules = () => {
   useEffect(() => {
     getModules()
       .then((res) => {
-        console.log('res', res?.data?.results?.pageData);
+        console.log('res1', res?.data?.results?.pageData);
         setDropDownMenu(res?.data?.results?.pageData);
       })
       .catch((err) => {
@@ -39,8 +46,9 @@ const createModules = () => {
   }, []);
 
   useEffect(() => {
-    getProcess(id)
+    getProcessById(id)
       .then((res) => {
+        console.log('response', res?.data?.results);
         setProcessName(res?.data?.results?.process);
         setSelectedItem(res?.data?.results?.moduleId);
         setRadioValue(res?.data?.results?.isActive);
@@ -74,6 +82,8 @@ const createModules = () => {
         editProcess(processName, radioValue, dropDownMenu[selectedItem]?.id, id)
           .then((res) => {
             console.log('res', res);
+            alert('Process Edited Successfully');
+            window.location = '#/processes/processes';
           })
           .catch((err) => {
             console.log('err', err);
@@ -83,6 +93,8 @@ const createModules = () => {
         addProcess(processName, radioValue, dropDownMenu[selectedItem]?.id)
           .then((res) => {
             console.log('res', res);
+            alert('Process Added Successfully');
+            window.location = '#/processes/processes';
           })
           .catch((err) => {
             console.log('err', err);
@@ -93,6 +105,12 @@ const createModules = () => {
 
   return (
     <div className="row px-4">
+      <div className="space-y-2 basic-1/2">
+        <span className="font-quicksand-semi-bold text-4xl mr-3.5">
+          {id === -1 ? 'Add New Process' : 'Edit Process'}
+        </span>
+        <Breadcrumb nestedPath={nestedPath} />
+      </div>
       <div className="col-12 py-3 px-4 bg-[#FFFFFF] mb-4">
         <h6 className="text-sm text-[#53565A] font-quicksand-semi-bold">Process</h6>
         <Input placeholder="PROCESS NAME" value={processName} onChange={(e) => setProcessName(e.target.value)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }} />
@@ -120,7 +138,7 @@ const createModules = () => {
           >
             <div className="row">
               <div span={22} className="col-6 text-start font-quicksand-medium">
-                {dropDownMenu[selectedItem]?.module || 'Select from Modules(dropdown)'}
+                {dropDownMenu.find((x) => x.id === selectedItem)?.module || 'Select from Modules(dropdown)'}
               </div>
               <div span={2} className="col-6 text-end">
                 <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />

@@ -18,8 +18,8 @@ export const loginApi = async (userData) => {
       data,
     });
     console.log(resp);
-    localStorage.setItem('token', resp.data.results.token);
-    const user = `${resp.data.results.user.first_name} ${resp.data.results.user.last_name}`;
+    localStorage.setItem('token', resp?.data?.results?.token);
+    const user = `${resp?.data?.results?.user?.first_name} ${resp?.data?.results?.user?.last_name}`;
     localStorage.setItem('user', user);
     return resp;
   } catch (err) {
@@ -48,6 +48,12 @@ export const addModule = (moduleName, radioValue) => {
     data,
   });
 };
+
+export const getModuleById = (id) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/modules/${id}`,
+  headers,
+});
 
 export const getUserRoles = (page) => axios({
   method: 'GET',
@@ -84,12 +90,12 @@ export const getTeamGarages = (page, garageid) => axios({
 });
 export const editModule = (moduleName, radioValue, moduleId) => {
   const data = JSON.stringify({
-    process: moduleName,
+    module: moduleName,
     isActive: radioValue,
   });
   return axios({
     method: 'PUT',
-    url: `http://13.126.183.78:8086/api/v1/process/${moduleId}`,
+    url: `http://13.126.183.78:8086/api/v1/modules/${moduleId}`,
     headers,
     data,
   });
@@ -131,6 +137,12 @@ export const getAllCities = () => axios({
 export const getProcess = (page) => axios({
   method: 'GET',
   url: `http://13.126.183.78:8086/api/v1/process?page=${page}&size=10`,
+  headers,
+});
+
+export const getProcessById = (id) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/process/${id}`,
   headers,
 });
 
@@ -182,6 +194,12 @@ export const editCity = (cityName, radioValue, description, garageSeries, userSe
   });
 };
 
+export const getCityData = (cityId) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/city/${cityId}`,
+  headers,
+});
+
 // User Roles axios
 
 export const addRole = (roleTitle) => {
@@ -197,16 +215,13 @@ export const addRole = (roleTitle) => {
   });
 };
 
-export const editRole = (cityName, radioValue, description, garageSeries, userSeries, processId) => {
+export const editRole = (roleTitle, roleId) => {
   const data = JSON.stringify({
-    name: cityName,
-    description,
-    user_series: userSeries,
-    garage_series: garageSeries,
+    role: roleTitle,
   });
   return axios({
     method: 'PUT',
-    url: `http://13.126.183.78:8086/api/v1/city/${processId}`,
+    url: `http://13.126.183.78:8086/api/v1/role/${roleId}`,
     headers,
     data,
   });
@@ -218,8 +233,13 @@ export const getRoles = () => axios({
   headers,
 });
 
+export const getRole = (roleId) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/role/${roleId}`,
+  headers,
+});
+
 export const addRoleModule = (roleId, moduleId) => {
-  console.log(roleId);
   const data = JSON.stringify({
     roleId,
     moduleId,
@@ -328,7 +348,6 @@ export const addUserData = (userData) => {
     user_name: userData.userName,
     password: userData.password,
   });
-  console.log(data);
   return axios({
     method: 'POST',
     url: 'http://13.126.183.78:8086/api/v1/user',
@@ -381,3 +400,15 @@ export const addUserProcess = (processId, userId) => {
     data,
   });
 };
+
+export const getUserProfile = (userId) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/user/${userId}`,
+  headers,
+});
+
+export const getRolesUI = (id) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/role/initialiseRoleUI/${id}`,
+  headers,
+});

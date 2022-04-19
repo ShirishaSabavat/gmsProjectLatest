@@ -10,21 +10,28 @@ import {
 import { CaretDownOutlined } from '@ant-design/icons';
 import { useLocation } from 'react-router-dom';
 import {
-  editRole, getModules, getRoles, getAllCities, getAllGarages, addUserData, addUserProfile, addUserRole, addUserProcess,
+  editRole, getModules, getRoles, getAllCities, getAllGarages, addUserData, addUserProfile, addUserRole, addUserProcess, getUserProfile,
 } from 'services/axios';
 import moment from 'moment';
 
-const nestedPath = [
-  'Home',
-  'User Roles',
-  'Create New User',
-];
-
 const { TextArea } = Input;
+
+const CRUD = {
+  create: 'Add',
+  edit: 'Edit',
+  view: 'View',
+  deActive: 'Delete',
+};
 
 const addrole = () => {
   const location = useLocation();
   const { id } = location.state;
+
+  const nestedPath = [
+    'Home',
+    'User Roles',
+    `${id === -1 ? 'Create New User' : 'Edit User'}`,
+  ];
 
   const [radioValue, setRadioValue] = useState(true);
   const [fName, setFName] = useState('');
@@ -44,7 +51,7 @@ const addrole = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [checkboxList, setCheckboxList] = useState([]);
-  const [checkboxValue, setCheckboxValue] = useState([]);
+  const [checkboxValue, setCheckboxValue] = useState({});
 
   const [fNameError, setFNameError] = useState({});
   const [lNameError, setLNameError] = useState({});
@@ -132,6 +139,32 @@ const addrole = () => {
   }, []);
 
   useEffect(() => {
+    getUserProfile(id)
+      .then((res) => {
+        console.log('getProfResp1', res?.data?.results);
+        setFName(res?.data?.results?.first_name);
+        setMName(res?.data?.results?.middle_name);
+        setLName(res?.data?.results?.last_name);
+        setUserName(res?.data?.results?.user_name);
+        setAddress(res?.data?.results?.user_profile?.address);
+        setLicense(res?.data?.results?.user_profile?.driving_license_no);
+        // setLicenseValidity(res?.data?.results?.user_profile?.license_validity);
+        setEmail(res?.data?.results?.user_profile?.email);
+        setContactNo(res?.data?.results?.user_profile?.mobile_no);
+        setRoleSelect(res?.data?.results?.roles[0]?.id);
+        setCitySelect(res?.data?.results?.user_profile?.cityId);
+        setGarageSelect(res?.data?.results?.user_profile?.garageId);
+        let data = res?.data?.results?.processes;
+        console.log('dataaaaaa', data);
+        data = data.map((obj) => obj);
+        setCheckboxValue(data);
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }, []);
+
+  useEffect(() => {
     getAllGarages()
       .then((res) => {
         console.log('garageResp', res?.data?.results);
@@ -144,10 +177,23 @@ const addrole = () => {
 
   const handleChange = (e) => {
     if (e.target.checked) {
-      setCheckboxValue([...checkboxValue, e.target.value]);
+      const permissions = {
+        processId: e.target.value,
+        view: 0,
+        edit: 0,
+        delete: 0,
+        create: 0,
+      };
+      setCheckboxValue({ ...checkboxValue, permissions });
+      console.log('permissions', permissions);
     } else {
       setCheckboxValue(checkboxValue.filter((item) => item !== e.target.value));
     }
+  };
+  console.log(checkboxValue);
+  const handlePermissionChange = (data, checked) => {
+    console.log(data, 'datadatadata');
+    console.log(checked, 'checkedchecked');
   };
 
   const dateFormat = 'DD/MM/YYYY';
@@ -338,10 +384,6 @@ const addrole = () => {
           })
           .catch((err) => {
             console.log('err', err);
-          })
-          .finally(() => {
-            alert('User Added Successfully');
-            window.location = '#/userProfiles/userProfiles';
           });
       }
     }
@@ -353,7 +395,7 @@ const addrole = () => {
       <div className="flex flex-col space-y-12">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            Create User
+            {id === -1 ? 'Create New User' : 'Edit User'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -422,7 +464,7 @@ const addrole = () => {
               >
                 <div className="row">
                   <div span={22} className="col-6 text-start font-quicksand-medium">
-                    {userRoleDropDown[roleSelect]?.role || 'Select Role'}
+                    {userRoleDropDown.find((x) => x.id === roleSelect)?.role || 'Select Role'}
                   </div>
                   <div span={2} className="col-6 text-end">
                     <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
@@ -564,7 +606,7 @@ const addrole = () => {
               >
                 <div className="row">
                   <div span={22} className="col-6 text-start font-quicksand-medium">
-                    {cityDropdown[citySelect]?.name || 'Select City'}
+                    {cityDropdown.find((x) => x.id === citySelect)?.name || 'Select City'}
                   </div>
                   <div span={2} className="col-6 text-end">
                     <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
@@ -590,7 +632,7 @@ const addrole = () => {
               >
                 <div className="row">
                   <div span={22} className="col-6 text-start font-quicksand-medium">
-                    {garageDropdown[garageSelect]?.name || 'Select Garage'}
+                    {garageDropdown.find((x) => x.id === garageSelect)?.name || 'Select Garage'}
                   </div>
                   <div span={2} className="col-6 text-end">
                     <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
@@ -660,9 +702,22 @@ const addrole = () => {
                     <h1 className="flex flex-row text-base font-quicksand-semi-bold bg-white p-4 mr-0.5">
                       {item.Module_Name}
                     </h1>
-                    <div className="flex flex-row flex-nowrap bg-slate-200 p-4 mr-0.5">
+                    <div className="flex flex-col flex-nowrap font-quicksand-semi-bold bg-slate-200 py-1 px-4 mr-0.5">
                       {item?.processes.map((data) => (
-                        <Checkbox value={data.id} onChange={handleChange}>{data.process}</Checkbox>
+                        <div className="flex flex-row">
+                          <div className="my-3 mx-0 basis-1/4">
+                            <Checkbox onChange={handleChange} checked>
+                              {data.process}
+                            </Checkbox>
+                          </div>
+                          <div className="my-3 mx-0 basis-3/4">
+                            {console.log(data)}
+                            {console.log(checkboxValue)}
+                            {/* {Object.keys(data.permission).map((key, index) => (
+                              <Checkbox checked={CRUD[key]} onChange={({ target: { checked } }) => handlePermissionChange(data, checked)} style={{ margin: '0 0 0 15%' }}> Add </Checkbox>
+                            ))} */}
+                          </div>
+                        </div>
                       ))}
                     </div>
                   </>
@@ -685,7 +740,7 @@ const addrole = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '140px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            Add Role
+            Add User
           </Button>
         </div>
       </div>

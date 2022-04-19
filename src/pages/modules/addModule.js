@@ -3,19 +3,25 @@ import { React, useState, useEffect } from 'react';
 import {
   Input, Radio, Button,
 } from 'antd';
-import { addModule, getModule, editModule } from 'services/axios';
+import Breadcrumb from 'components/layouts/breadcrumb';
+import { addModule, getModuleById, editModule } from 'services/axios';
 import { useLocation } from 'react-router-dom';
 
 const addModules = () => {
   const location = useLocation();
   const { id } = location.state;
 
+  const nestedPath = [
+    'Home',
+    `${id === -1 ? 'Add New Module' : 'Edit Module'}`,
+  ];
+
   const [radioValue, setRadioValue] = useState(true);
   const [moduleName, setModuleName] = useState('');
   const [moduleError, setModuleError] = useState({});
 
   useEffect(() => {
-    getModule(id)
+    getModuleById(id)
       .then((res) => {
         console.log(res);
         setModuleName(res.data?.results?.module);
@@ -48,6 +54,8 @@ const addModules = () => {
         editModule(moduleName, radioValue, id)
           .then((res) => {
             console.log('res', res);
+            alert('Module Edited Successfully');
+            window.location = '#/modules/modules';
           })
           .catch((err) => {
             console.log('err', err);
@@ -56,6 +64,8 @@ const addModules = () => {
         addModule(moduleName, radioValue)
           .then((res) => {
             console.log('res', res);
+            alert('Module Added Successfully');
+            window.location = '#/modules/modules';
           })
           .catch((err) => {
             console.log('err', err);
@@ -66,7 +76,13 @@ const addModules = () => {
 
   return (
     <div className="row px-4">
-      <div className="col-12 py-3 px-4 bg-[#FFFFFF] mb-4">
+      <div className="space-y-2 basic-1/2">
+        <span className="font-quicksand-semi-bold text-4xl mr-3.5">
+          {id === -1 ? 'Add New Module' : 'Edit Module'}
+        </span>
+        <Breadcrumb nestedPath={nestedPath} />
+      </div>
+      <div className="col-12 py-3 px-4 mt-5 bg-[#FFFFFF] mb-4">
         <h6 className="text-sm text-[#53565A] font-quicksand-semi-bold">Module Title</h6>
         <Input placeholder="MODULE NAME" value={moduleName} onChange={(e) => setModuleName(e.target.value)} className="font-quicksand-medium" style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }} />
         {Object.keys(moduleError).map((key) => (

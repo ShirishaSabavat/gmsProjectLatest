@@ -16,9 +16,10 @@ function garagelist() {
   const [garages, setGarages] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+
   useEffect(() => {
     getGarages(0).then((res) => {
-      console.log('res', res);
+      console.log('resppp', res);
       setGarages(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
@@ -88,6 +89,7 @@ function garagelist() {
         <div>
           {garages.map((item) => (
             <Listitemgarage
+              garage_id={item.id}
               garage_name={item.name}
               garage_manager={item.description}
               garage_members={item.garage_series}

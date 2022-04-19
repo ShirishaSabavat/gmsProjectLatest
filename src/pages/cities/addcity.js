@@ -1,15 +1,11 @@
 /* eslint-disable react/jsx-boolean-value */
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input, Radio, Button } from 'antd';
 import { useLocation } from 'react-router-dom';
-import { addCity, editCity } from 'services/axios';
+import { addCity, editCity, getCityData } from 'services/axios';
 
-const nestedPath = [
-  'Home',
-  'Add New City',
-];
 const { TextArea } = Input;
 const addcity = () => {
   const [radioValue, setRadioValue] = useState(true);
@@ -23,6 +19,26 @@ const addcity = () => {
   const [userError, setUserError] = useState({});
   const location = useLocation();
   const { id } = location.state;
+
+  const nestedPath = [
+    'Home',
+    `${id === -1 ? 'Add New City' : 'Edit City'}`,
+  ];
+
+  useEffect(() => {
+    getCityData(id)
+      .then((res) => {
+        console.log('mod', res?.data?.results);
+        setCityName(res?.data?.results?.name);
+        setDescription(res?.data?.results?.description);
+        setGarageSeries(res?.data?.results?.garage_series);
+        setUserSeries(res?.data?.results?.user_series);
+        setRadioValue(res?.data?.results?.isActive);
+      })
+      .catch((err) => {
+        console.log('err1', err);
+      });
+  }, []);
 
   const validateFormData = () => {
     const cityNameError = {};
@@ -69,6 +85,8 @@ const addcity = () => {
         editCity(cityName, radioValue, description, garageSeries, userSeries, id)
           .then((res) => {
             console.log('res', res);
+            alert('City Edited Successfully');
+            window.location = '#/cities/citieslist';
           })
           .catch((err) => {
             console.log('err', err);
@@ -78,9 +96,11 @@ const addcity = () => {
         addCity(cityName, radioValue, description, garageSeries, userSeries)
           .then((res) => {
             console.log('res', res);
+            alert('City Added Successfully');
+            window.location = '#/cities/citieslist';
           })
           .catch((err) => {
-            console.log('err', err);
+            console.log('err111', err.data);
           });
       }
     }
@@ -92,7 +112,7 @@ const addcity = () => {
       <div className="flex flex-col space-y-12" style={{ fontFamily: 'Quicksand' }}>
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            Add New City
+            {id === -1 ? 'Add New City' : 'Edit City'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -174,7 +194,7 @@ const addcity = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            Add City
+            {id === -1 ? 'Add New City' : 'Edit City'}
           </Button>
         </div>
       </div>

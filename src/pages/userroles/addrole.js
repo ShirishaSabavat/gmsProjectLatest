@@ -8,18 +8,18 @@ import {
 } from 'antd';
 import { useLocation } from 'react-router-dom';
 import {
-  addRole, editRole, getModules, addRoleModule,
+  addRole, editRole, getRolesUI, addRoleModule, getRole,
 } from 'services/axios';
-
-const nestedPath = [
-  'Home',
-  'User Roles',
-  'Create New Role',
-];
 
 const addrole = () => {
   const location = useLocation();
   const { id } = location.state;
+
+  const nestedPath = [
+    'Home',
+    'User Roles',
+    `${id === -1 ? 'Create New Role' : 'Edit Role'}`,
+  ];
 
   const [radioValue, setRadioValue] = useState(true);
   const [roleTitle, setRoleTitle] = useState('');
@@ -29,17 +29,35 @@ const addrole = () => {
   const [checkboxError, setCheckboxError] = useState('');
 
   useEffect(() => {
-    getModules()
+    getRolesUI(id)
       .then((res) => {
-        console.log('res', res?.data?.results?.pageData);
-        const data = res?.data?.results?.pageData.map((item) => ({
+        console.log('resp', res?.data?.results?.modules?.pageData);
+        const data = res?.data?.results?.modules?.pageData.map((item) => ({
           Module_ID: item.id,
           Module_Name: item.module,
+          processes: item?.processes,
         }));
         setCheckboxList(data);
       })
       .catch((err) => {
         console.log('err', err);
+      });
+  }, []);
+
+  useEffect(() => {
+    getRole(id)
+      .then((res) => {
+        console.log('mod', res?.data?.results);
+        setRoleTitle(res?.data?.results?.role);
+        setRadioValue(res?.data?.results?.isActive);
+        let data = res?.data?.results?.modules.map((item) => ({
+          moduleId: item.id,
+        }));
+        data = data.map((obj) => obj.moduleId);
+        setCheckboxValue(data);
+      })
+      .catch((err) => {
+        console.log('err1', err);
       });
   }, []);
 
@@ -80,9 +98,20 @@ const addrole = () => {
     if (resp) {
       if (id !== -1) {
         console.log('in edit');
-        editRole(roleTitle, radioValue, id)
+        editRole(roleTitle, id)
           .then((res) => {
             console.log('res', res);
+            checkboxValue.forEach((item) => {
+              addRoleModule(id, item)
+                .then((response) => {
+                  console.log('edit', response);
+                })
+                .catch((err) => {
+                  console.log('err', err);
+                });
+            });
+            alert('Role updated successfully');
+            window.location.href = '#/userroles/userroleslist';
           })
           .catch((err) => {
             console.log('err', err);
@@ -102,6 +131,8 @@ const addrole = () => {
                   console.log('err', err);
                 });
             });
+            alert('Role added successfully');
+            window.location.href = '#/userroles/userroleslist';
           })
           .catch((err) => {
             console.log('err', err);
@@ -116,7 +147,7 @@ const addrole = () => {
       <div className="flex flex-col space-y-12">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            Create New Role
+            {id === -1 ? 'Create New Role' : 'Edit Role'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -149,20 +180,34 @@ const addrole = () => {
         </div>
         <div className="bg-white p-5">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Add Modules</p>
-        </div>
-        <div className="box-border h-100">
-          {checkboxList.map((item) => (
-            <div className="flex flex-row flex-nowrap">
-              <h1 className="text-base font-quicksand-semi-bold basis-1/7 bg-white p-4 mr-0.5">
-                <Checkbox value={item.Module_ID} onChange={handleChange}>{item.Module_Name}</Checkbox>
-              </h1>
-            </div>
-          ))}
-          {Object.keys(checkboxError).map((key) => (
-            <div style={{ color: 'red' }}>
-              {checkboxError[key]}
-            </div>
-          ))}
+          <div className="box-border h-100">
+            {checkboxList.map((item) => (
+              <div className="flex flex-col flex-nowrap flex-auto">
+                {item?.processes.length > 0 && (
+                  <>
+                    <div>
+                      <h1 className="text-base font-quicksand-semi-bold basis-1/7 bg-white p-4 mr-0.5">
+                        <Checkbox value={item.Module_ID} onChange={handleChange} checked={checkboxValue.includes(item.Module_ID)} style={{ fontSize: '16px' }}>{item.Module_Name}</Checkbox>
+                      </h1>
+                    </div>
+                    <div className="flex flex-nowrap bg-slate-200 p-4 mr-0.5">
+                      {item?.processes.map((data) => (
+                        <div className="flex flex-row font-quicksand-medium" style={{ marginRight: '150px', fontSize: '14px' }}>
+                          {data.process}
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+
+              </div>
+            ))}
+            {Object.keys(checkboxError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {checkboxError[key]}
+              </div>
+            ))}
+          </div>
         </div>
         <div className="col-12 flex flex-row justify-end">
           <Button
@@ -172,7 +217,7 @@ const addrole = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '140px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            Add Role
+            {id === -1 ? 'Add Role' : 'Edit Role'}
           </Button>
         </div>
       </div>
