@@ -30,12 +30,11 @@ const Layout = ({
   const isAuthLayout = getLayout() === 'auth';
 
   const SelectedLayout = () => {
-    const apiToken = localStorage.getItem('token');
     // show loader when user in check authorization process
     if (isLoading && !isUserAuthorized && !isAuthLayout) {
       return null;
     }
-
+    const apiToken = localStorage.getItem('token');
     // redirect to login page if current is not login page and user not authorized
     if (!isAuthLayout && !isUserAuthorized && !apiToken) {
       return <Redirect to="/auth/sign-in" />;
