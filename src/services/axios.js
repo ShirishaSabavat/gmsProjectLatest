@@ -169,11 +169,9 @@ export const editProcess = (processName, radioValue, selectedItem, processId) =>
 
 // City axios
 
-export const addCity = (cityName, radioValue, description, garageSeries, userSeries) => {
-  console.log(cityName, radioValue, description, garageSeries, userSeries, 'axios');
+export const addCity = (cityName, radioValue, garageSeries, userSeries) => {
   const data = JSON.stringify({
     name: cityName,
-    description,
     user_series: userSeries,
     garage_series: garageSeries,
   });
@@ -185,10 +183,9 @@ export const addCity = (cityName, radioValue, description, garageSeries, userSer
   });
 };
 
-export const editCity = (cityName, radioValue, description, garageSeries, userSeries, processId) => {
+export const editCity = (cityName, radioValue, garageSeries, userSeries, processId) => {
   const data = JSON.stringify({
     name: cityName,
-    description,
     user_series: userSeries,
     garage_series: garageSeries,
   });
@@ -397,6 +394,41 @@ export const addUserProcess = (processId, userId) => {
   return axios({
     method: 'POST',
     url: 'http://13.126.183.78:8086/api/v1/process/userProcess',
+    headers,
+    data,
+  });
+};
+
+export const editUserData = (userData, userId) => {
+  const data = JSON.stringify({
+    first_name: userData.fName,
+    middle_name: userData.mName,
+    last_name: userData.lName,
+    user_name: userData.userName,
+    password: userData.password,
+  });
+  return axios({
+    method: 'PUT',
+    url: `http://13.126.183.78:8086/api/v1/user/${userId}`,
+    headers,
+    data,
+  });
+};
+
+export const editUserProfile = (userProfileData, userId) => {
+  const data = JSON.stringify({
+    address: userProfileData.address,
+    email: userProfileData.email,
+    mobile_no: userProfileData.contactNo,
+    driving_license_no: userProfileData.license,
+    license_validity: userProfileData.licenseValidity,
+    userId,
+    cityId: userProfileData.cityId,
+    garageId: userProfileData.garageId,
+  });
+  return axios({
+    method: 'PUT',
+    url: `http://13.126.183.78:8086/api/v1/user/userProfile/${userId}`,
     headers,
     data,
   });
