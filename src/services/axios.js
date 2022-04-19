@@ -28,10 +28,8 @@ export const loginApi = async (userData) => {
   }
 };
 
-const apiToken = localStorage.getItem('token');
-
 const headers = {
-  Authorization: `Bearer ${apiToken}`,
+  Authorization: `Bearer ${localStorage.getItem('token')}`,
   'Content-Type': 'application/json',
 };
 
