@@ -1,3 +1,6 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable global-require */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
@@ -23,7 +26,7 @@ const addteam = () => {
       });
   }, []);
   function AddToArray(id) {
-    var tempUsers = [];
+    const tempUsers = [];
     tempUsers.push(id);
     setSelectedUsers(tempUsers);
   }
@@ -89,7 +92,7 @@ const addteam = () => {
         <div>
           {profileList.map((item) => (
             <div className="h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 w-2/6">
-              <img className="w-28 h-28 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/defaultperson.jpg')}></img>
+              <img className="w-28 h-28 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/defaultperson.jpg')} />
               <div>
                 <h1 className="font-quicksand-bold text-2xl mt-6">{item.first_name}</h1>
                 <h1 className="font-quicksand-semi-bold text-xl mt-6">{item.user_name}</h1>
