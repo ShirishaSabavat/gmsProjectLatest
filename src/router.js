@@ -79,6 +79,12 @@ const routes = [
     Component: lazy(() => import('pages/garage/teamslist')),
   },
   {
+    path: '/garage/locationlist',
+    key: 'LOCATIONS',
+    exact: true,
+    Component: lazy(() => import('pages/garage/locationlist')),
+  },
+  {
     path: '/userroles/userroleslist',
     key: 'USER ROLE',
     exact: true,
@@ -133,10 +139,10 @@ const routes = [
     Component: lazy(() => import('pages/pickupLocations/pickupLocations')),
   },
   {
-    path: '/pickuplocations/addPickupLocation',
+    path: '/garage/addPickupLocation',
     key: 'Add Pickup Locations',
     exact: true,
-    Component: lazy(() => import('pages/pickupLocations/addPickupLocation')),
+    Component: lazy(() => import('pages/garage/addPickupLocation')),
   },
 ];
 

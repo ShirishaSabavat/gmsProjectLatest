@@ -7,12 +7,6 @@ import { Pagination } from 'react-headless-pagination';
 import { Link, useLocation } from 'react-router-dom';
 import { getTeamGarages } from 'services/axios';
 
-const nestedPath = [
-  'Home',
-  'Garages',
-  'Garage Names',
-];
-
 function teamslist() {
   const [garages, setGarages] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -20,6 +14,12 @@ function teamslist() {
 
   const location = useLocation();
   const { name, garageId } = location.state;
+
+  const nestedPath = [
+    'Home',
+    'Garages',
+    `Garage - ${name}`,
+  ];
 
   useEffect(() => {
     getTeamGarages(0, 1).then((res) => {

@@ -28,10 +28,9 @@ export const loginApi = async (userData) => {
   }
 };
 
-const apiToken = localStorage.getItem('token');
-
+// const apiToken = localStorage.getItem('token');
 const headers = {
-  Authorization: `Bearer ${apiToken}`,
+  Authorization: `Bearer ${localStorage.getItem('token')}`,
   'Content-Type': 'application/json',
 };
 
@@ -283,11 +282,10 @@ export const editGarageApi = (garageTitle, garageDescription, cityId, garageId) 
   });
 };
 
-export const addPickupLocation = (name, description, radioValue, garageId) => {
+export const addPickupLocation = (name, radioValue, garageId) => {
   console.log(name, radioValue, garageId, 'axios');
   const data = JSON.stringify({
     name,
-    description,
     garageId,
     isActive: radioValue,
   });
@@ -305,27 +303,23 @@ export const getPickupLocations = () => axios({
   headers,
 });
 
-export const getPickupLocation = (id) => axios({
+export const getPickupLocation = (locationId) => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/pickupLocation/${id}`,
+  url: `http://13.126.183.78:8086/api/v1/pickupLocation/${locationId}`,
   headers,
 });
 
 // AXIOS FOR PROCESS EDITING
-export const editPickupLocation = (name, description, radioValue, garageId, pickupLocationId) => {
+export const editPickupLocation = (name, radioValue, garageId, locationId) => {
   const data = JSON.stringify({
     name,
-    description,
-    garageId,
     isActive: radioValue,
+    garageId,
   });
   return axios({
     method: 'PUT',
-    url: `http://13.126.183.78:8086/api/v1/pickupLocation/${pickupLocationId}`,
-    headers: {
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjQ5Mzk5NzkyLCJleHAiOjE2NDk2NTg5OTJ9.pM3M9qL2WD_jGn2TTrhU5HnooAor66XxfG8IzDldHdc',
-      'Content-Type': 'application/json',
-    },
+    url: `http://13.126.183.78:8086/api/v1/pickupLocation/${locationId}`,
+    headers,
     data,
   });
 };
