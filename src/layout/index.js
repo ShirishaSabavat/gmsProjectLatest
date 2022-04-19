@@ -34,9 +34,9 @@ const Layout = ({
     if (isLoading && !isUserAuthorized && !isAuthLayout) {
       return null;
     }
-
+    apiToken = localStorage.getItem("token");
     // redirect to login page if current is not login page and user not authorized
-    if (!isAuthLayout && !isUserAuthorized) {
+    if (!isAuthLayout && !isUserAuthorized && !apiToken) {
       return <Redirect to="/auth/sign-in" />;
     }
 
