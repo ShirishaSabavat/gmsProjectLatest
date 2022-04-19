@@ -10,7 +10,7 @@ import {
 import { CaretDownOutlined } from '@ant-design/icons';
 import { useLocation } from 'react-router-dom';
 import {
-  editRole, getModules, getRoles, getAllCities, getAllGarages, addUserData, addUserProfile, addUserRole, addUserProcess, getUserProfile,
+  editUserData, editUserProfile, getModules, getRoles, getAllCities, getAllGarages, addUserData, addUserProfile, addUserRole, addUserProcess, getUserProfile,
 } from 'services/axios';
 import moment from 'moment';
 
@@ -51,7 +51,7 @@ const addrole = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [checkboxList, setCheckboxList] = useState([]);
-  const [checkboxValue, setCheckboxValue] = useState({});
+  const [checkboxValue, setCheckboxValue] = useState([]);
 
   const [fNameError, setFNameError] = useState({});
   const [lNameError, setLNameError] = useState({});
@@ -156,7 +156,7 @@ const addrole = () => {
         setGarageSelect(res?.data?.results?.user_profile?.garageId);
         let data = res?.data?.results?.processes;
         console.log('dataaaaaa', data);
-        data = data.map((obj) => obj);
+        data = data.map((obj) => obj.id);
         setCheckboxValue(data);
       })
       .catch((err) => {
@@ -184,13 +184,13 @@ const addrole = () => {
         delete: 0,
         create: 0,
       };
-      setCheckboxValue({ ...checkboxValue, permissions });
+      setCheckboxValue([...checkboxValue, permissions]);
       console.log('permissions', permissions);
     } else {
       setCheckboxValue(checkboxValue.filter((item) => item !== e.target.value));
     }
   };
-  console.log(checkboxValue);
+
   const handlePermissionChange = (data, checked) => {
     console.log(data, 'datadatadata');
     console.log(checked, 'checkedchecked');
@@ -346,9 +346,32 @@ const addrole = () => {
     if (resp) {
       if (id !== -1) {
         console.log('in edit');
-        editRole(radioValue, id)
+        editUserData(userData, id)
           .then((res) => {
             console.log('res', res);
+            editUserProfile(userProfileData, id)
+              .then((editUserProfResp) => {
+                console.log('editUserProfResp', editUserProfResp);
+                addUserRole(userRoleData, id)
+                  .then((userRoleResp) => {
+                    console.log(userRoleResp);
+                    checkboxValue.forEach((item) => {
+                      addUserProcess(item, id)
+                        .then((userProcessResp) => {
+                          console.log(userProcessResp);
+                        })
+                        .catch((err) => {
+                          console.log('err', err);
+                        });
+                    });
+                  })
+                  .catch((err) => {
+                    console.log('err', err);
+                  });
+              })
+              .catch((err) => {
+                console.log('err', err);
+              });
           })
           .catch((err) => {
             console.log('err', err);
@@ -392,7 +415,7 @@ const addrole = () => {
   return (
     <>
       <Helmet title="User" />
-      <div className="flex flex-col space-y-12">
+      <div className="flex flex-col space-y-8">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
             {id === -1 ? 'Create New User' : 'Edit User'}
@@ -400,7 +423,7 @@ const addrole = () => {
           <Breadcrumb nestedPath={nestedPath} />
         </div>
 
-        <div className="bg-white p-5">
+        <div className="bg-white p-4">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>User Name</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <div className="flex flex-col basis-1/3">
@@ -480,7 +503,7 @@ const addrole = () => {
           ))}
         </div>
 
-        <div className="bg-white p-5">
+        <div className="bg-white p-4">
           <div className="flex flex-row flex-nonwrap bg-white">
             <div className="flex basis-1/2">
               <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Email Id</p>
@@ -527,7 +550,7 @@ const addrole = () => {
           </div>
         </div>
 
-        <div className="bg-white p-5">
+        <div className="bg-white p-4">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>User Address</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <TextArea
@@ -547,7 +570,7 @@ const addrole = () => {
           ))}
         </div>
 
-        <div className="bg-white p-5">
+        <div className="bg-white p-4">
           <div className="flex flex-row flex-nonwrap bg-white">
             <div className="flex basis-1/2">
               <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driving License Number</p>
@@ -594,7 +617,7 @@ const addrole = () => {
           </div>
         </div>
 
-        <div className="bg-white p-5">
+        <div className="bg-white p-4">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Select City</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <Dropdown overlay={cityMenu}>
@@ -648,7 +671,7 @@ const addrole = () => {
           ))}
         </div>
 
-        <div className="bg-white p-5">
+        <div className="bg-white p-4">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>User Name</p>
           <div className="flex">
             <Input
@@ -684,7 +707,7 @@ const addrole = () => {
           ))}
         </div>
 
-        <div className="bg-white p-5">
+        <div className="bg-white p-4">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>User Status</p>
           <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={true}>Active</Radio>
@@ -692,7 +715,7 @@ const addrole = () => {
           </Radio.Group>
         </div>
 
-        <div className="bg-white p-5">
+        <div className="bg-white p-4">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Assign Additional Processes</p>
           <div className="box-border h-100">
             {checkboxList.map((item) => (
@@ -706,13 +729,13 @@ const addrole = () => {
                       {item?.processes.map((data) => (
                         <div className="flex flex-row">
                           <div className="my-3 mx-0 basis-1/4">
-                            <Checkbox onChange={handleChange} checked>
+                            <Checkbox onChange={handleChange} checked={checkboxValue.includes(data.id)}>
                               {data.process}
                             </Checkbox>
                           </div>
+                          {console.log(data)}
+                          {console.log(checkboxValue)}
                           <div className="my-3 mx-0 basis-3/4">
-                            {console.log(data)}
-                            {console.log(checkboxValue)}
                             {/* {Object.keys(data.permission).map((key, index) => (
                               <Checkbox checked={CRUD[key]} onChange={({ target: { checked } }) => handlePermissionChange(data, checked)} style={{ margin: '0 0 0 15%' }}> Add </Checkbox>
                             ))} */}
@@ -740,7 +763,7 @@ const addrole = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '140px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            Add User
+            {id === -1 ? 'Add User' : 'Edit User'}
           </Button>
         </div>
       </div>

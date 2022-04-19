@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/jsx-boolean-value */
 import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
@@ -6,15 +7,15 @@ import { Input, Radio, Button } from 'antd';
 import { useLocation } from 'react-router-dom';
 import { addCity, editCity, getCityData } from 'services/axios';
 
-const { TextArea } = Input;
+// const { TextArea } = Input;
 const addcity = () => {
   const [radioValue, setRadioValue] = useState(true);
   const [cityName, setCityName] = useState('');
-  const [description, setDescription] = useState('');
+  // const [description, setDescription] = useState('');
   const [garageSeries, setGarageSeries] = useState('');
   const [userSeries, setUserSeries] = useState('');
   const [cityError, setCityError] = useState({});
-  const [descriptionError, setDescriptionError] = useState({});
+  // const [descriptionError, setDescriptionError] = useState({});
   const [garageError, setGarageError] = useState({});
   const [userError, setUserError] = useState({});
   const location = useLocation();
@@ -30,7 +31,7 @@ const addcity = () => {
       .then((res) => {
         console.log('mod', res?.data?.results);
         setCityName(res?.data?.results?.name);
-        setDescription(res?.data?.results?.description);
+        // setDescription(res?.data?.results?.description);
         setGarageSeries(res?.data?.results?.garage_series);
         setUserSeries(res?.data?.results?.user_series);
         setRadioValue(res?.data?.results?.isActive);
@@ -42,7 +43,7 @@ const addcity = () => {
 
   const validateFormData = () => {
     const cityNameError = {};
-    const descriptionNameError = {};
+    // const descriptionNameError = {};
     const garageNameError = {};
     const userNameError = {};
     let isValid = true;
@@ -51,10 +52,10 @@ const addcity = () => {
       cityNameError.err = 'City name can not be empty';
       isValid = false;
     }
-    if (description.trim().length === 0) {
-      descriptionNameError.err = 'City description can not be empty';
-      isValid = false;
-    }
+    // if (description.trim().length === 0) {
+    //   descriptionNameError.err = 'City description can not be empty';
+    //   isValid = false;
+    // }
     if (garageSeries.trim().length === 0) {
       garageNameError.err = 'Garage series can not be empty';
       isValid = false;
@@ -65,7 +66,7 @@ const addcity = () => {
     }
 
     setCityError(cityNameError);
-    setDescriptionError(descriptionNameError);
+    // setDescriptionError(descriptionNameError);
     setGarageError(garageNameError);
     setUserError(userNameError);
     return isValid;
@@ -75,14 +76,14 @@ const addcity = () => {
     event.preventDefault();
     console.log('radio', radioValue);
     console.log('cName', cityName);
-    console.log('des', description);
+    // console.log('des', description);
     console.log('garage', garageSeries);
     console.log('user', userSeries);
     const resp = validateFormData();
     if (resp) {
       if (id !== -1) {
         console.log('in edit');
-        editCity(cityName, radioValue, description, garageSeries, userSeries, id)
+        editCity(cityName, radioValue, garageSeries, userSeries, id)
           .then((res) => {
             console.log('res', res);
             alert('City Edited Successfully');
@@ -93,7 +94,7 @@ const addcity = () => {
           });
       } else {
         console.log('in add');
-        addCity(cityName, radioValue, description, garageSeries, userSeries)
+        addCity(cityName, radioValue, garageSeries, userSeries)
           .then((res) => {
             console.log('res', res);
             alert('City Added Successfully');
@@ -116,7 +117,7 @@ const addcity = () => {
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
-        <div className="bg-white p-5">
+        <div className="bg-white p-4">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>City Name</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <Input placeholder="CITY NAME" value={cityName} onChange={(e) => setCityName(e.target.value)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }} />
@@ -126,7 +127,7 @@ const addcity = () => {
               </div>
             ))}
           </div>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Description</p>
+          {/* <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Description</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <TextArea
               rows={4}
@@ -143,7 +144,7 @@ const addcity = () => {
               </div>
             ))}
 
-          </div>
+          </div> */}
         </div>
         <div className="bg-white p-5">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Garage Series</p>
