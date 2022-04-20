@@ -8,7 +8,9 @@ import {
   Input, Radio, Button, Menu, Dropdown,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
-import { getUserProfiles, getPickupLocationByGarageId, addTeamApi, editTeamApi } from 'services/axios';
+import {
+  getUserProfiles, getPickupLocationByGarageId, addTeamApi, editTeamApi,
+} from 'services/axios';
 import { useLocation } from 'react-router-dom';
 import { DropdownMenu } from 'reactstrap';
 
@@ -16,7 +18,9 @@ const { TextArea } = Input;
 
 const addteam = () => {
   const location = useLocation();
-  const { id, garageId, locationId, teamId } = location.state;
+  const {
+    id, garageId, locationId, teamId,
+  } = location.state;
 
   const nestedPath = [
     'Home',
@@ -37,10 +41,10 @@ const addteam = () => {
   const [cityError, setCityError] = useState({});
 
   const userRoleMenu = (
-    <Menu onClick={(e) => setSelectedItem(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
-      {dropDownMenu?.map((data, key) => (
+    <Menu onClick={(e) => setSelectedItem(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
+      {dropDownMenu?.map((data) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Menu.Item key={key} value={data.id}>
+        <Menu.Item key={data.id}>
           {data.name}
         </Menu.Item>
       ))}
@@ -56,9 +60,9 @@ const addteam = () => {
       .then((res) => {
         console.log('garageList', res);
         setDropDownMenu(res?.data?.results?.pageData);
-        getUserProfiles(0).then((res) => {
+        getUserProfiles(0).then((resp) => {
           console.log('res', res);
-          setProfileList(res.data?.results.pageData);
+          setProfileList(resp.data?.results.pageData);
         })
           .catch((err) => {
             console.log('err', err);
@@ -68,9 +72,9 @@ const addteam = () => {
         console.log('err', err);
       });
   }, []);
-  function AddToArray(id) {
+  function AddToArray(divId) {
     const tempUsers = [];
-    tempUsers.push(id);
+    tempUsers.push(divId);
     setSelectedUsers(tempUsers);
   }
   const validateFormData = () => {
@@ -112,7 +116,7 @@ const addteam = () => {
     console.log(resp);
     console.log('teamtitle', teamTitle);
     console.log('teamdescription', teamDescription);
-    console.log('selectedItem', dropDownMenu[selectedItem]?.id);
+    console.log('selectedItem', selectedItem);
     console.log('garageid', garageId);
     console.log('locationid', locationId);
     console.log('radioValue', radioValue);
@@ -121,7 +125,7 @@ const addteam = () => {
       if (id !== -1) {
         console.log('in edit');
         // eslint-disable-next-line max-len
-        editTeamApi(teamTitle, "", teamDescription, locationId, garageId, teamId)
+        editTeamApi(teamTitle, '', teamDescription, locationId, garageId, teamId)
           .then((res) => {
             console.log('res', res);
             alert('Team edited successfully');
@@ -226,15 +230,14 @@ const addteam = () => {
         </div>
         <div>
           {profileList.map((item) => (
-            <div className={selectedUsers.includes(item.id) ? "h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 border-2 border-cyan-500" : "h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8"}>
+            <div className={selectedUsers.includes(item.id) ? 'h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 border-2 border-cyan-500' : 'h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8'}>
               <img className="w-28 h-28 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/defaultperson.jpg')} />
               <div>
                 <h1 className="font-quicksand-bold text-2xl mt-6">{item.first_name}</h1>
                 <h1 className="font-quicksand-semi-bold text-xl mt-6">{item.user_name}</h1>
               </div>
             </div>
-          )
-          )}
+          ))}
         </div>
         <div className="col-12 flex flex-row justify-end">
           <Button

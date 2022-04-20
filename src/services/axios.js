@@ -256,7 +256,7 @@ export const addRoleModule = (roleId, moduleId) => {
 export const addTeamApi = (name, description, locationid, garageid) => {
   const data = JSON.stringify({
     name,
-    logourl: "",
+    logourl: '',
     description,
     locationId: locationid,
     garageId: garageid,
@@ -274,8 +274,8 @@ export const editTeamApi = (name, logourl, description, locationId, garageId, te
     name,
     logourl,
     description,
-    locationId: locationId,
-    garageId: garageId,
+    locationId,
+    garageId,
   });
   return axios({
     method: 'PUT',
