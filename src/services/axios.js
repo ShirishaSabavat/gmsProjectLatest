@@ -279,8 +279,8 @@ export const editTeamApi = (name, logourl, description, locationId, garageId, te
     name,
     logourl,
     description,
-    locationId: 1,
-    garageId: 1,
+    locationId: locationId,
+    garageId: garageId,
   });
   return axios({
     method: 'PUT',
