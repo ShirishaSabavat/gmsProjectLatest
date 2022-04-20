@@ -328,12 +328,12 @@ const addrole = () => {
       contactNo,
       license,
       licenseValidity: moment(licenseValidity).format('YYYY-MM-DD'),
-      cityId: cityDropdown[citySelect]?.id,
-      garageId: garageDropdown[garageSelect]?.id,
+      cityId: citySelect,
+      garageId: garageSelect,
     };
 
     const userRoleData = {
-      roleId: userRoleDropDown[roleSelect]?.id,
+      roleId: roleSelect,
     };
 
     if (resp) {
@@ -727,8 +727,7 @@ const addrole = () => {
                             </Checkbox>
                           </div>
                           <div className="my-3 mx-0 basis-3/4">
-                            {console.log(data, 'dataaaaaaaaaaaaaa')}
-                            {checkboxValue.map((key) => (
+                            {/* {checkboxValue.map((key) => (
                               key === data.id && (
                                 <>
                                   <Checkbox
@@ -761,7 +760,7 @@ const addrole = () => {
                                   </Checkbox>
                                 </>
                               )
-                            ))}
+                            ))} */}
 
                           </div>
                         </div>

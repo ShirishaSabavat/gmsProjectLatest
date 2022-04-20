@@ -25,10 +25,10 @@ const createModules = () => {
   ];
 
   const menu = (
-    <Menu onClick={(e) => setSelectedItem(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
-      {dropDownMenu?.map((data, key) => (
+    <Menu onClick={(e) => setSelectedItem(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
+      {dropDownMenu?.map((data) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Menu.Item key={key} value={data.id}>
+        <Menu.Item key={data.id}>
           {data.module}
         </Menu.Item>
       ))}
@@ -74,12 +74,12 @@ const createModules = () => {
     event.preventDefault();
     console.log('radio', radioValue);
     console.log('pname', processName);
-    console.log('mod', dropDownMenu[selectedItem]?.id);
+    console.log('mod', selectedItem);
     const resp = validateFormData();
     if (resp) {
       if (id !== -1) {
         console.log('in edit');
-        editProcess(processName, radioValue, dropDownMenu[selectedItem]?.id, id)
+        editProcess(processName, radioValue, selectedItem, id)
           .then((res) => {
             console.log('res', res);
             alert('Process Edited Successfully');
@@ -90,7 +90,7 @@ const createModules = () => {
           });
       } else {
         console.log('in add');
-        addProcess(processName, radioValue, dropDownMenu[selectedItem]?.id)
+        addProcess(processName, radioValue, selectedItem)
           .then((res) => {
             console.log('res', res);
             alert('Process Added Successfully');

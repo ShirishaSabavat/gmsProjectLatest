@@ -37,10 +37,9 @@ const addgarage = () => {
   ];
 
   const menu = (
-    <Menu onClick={(e) => setSelectedItem(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
-      {dropDownMenu?.map((data, key) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <Menu.Item key={key} value={data.id}>
+    <Menu onClick={(e) => setSelectedItem(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
+      {dropDownMenu?.map((data) => (
+        <Menu.Item key={data.id}>
           {data.name}
         </Menu.Item>
       ))}
@@ -113,7 +112,7 @@ const addgarage = () => {
     console.log(resp);
     console.log('garagetitle', garageTitle);
     console.log('garagedescription', garageDescription);
-    console.log('selectedItem', dropDownMenu[selectedItem]?.id);
+    console.log('selectedItem', selectedItem);
     console.log('garageseries', garageSeries);
     console.log('userseries', userSeries);
     console.log('radioValue', radioValue);
@@ -123,7 +122,7 @@ const addgarage = () => {
       if (id !== -1) {
         console.log('in edit');
         // eslint-disable-next-line max-len
-        editGarageApi(garageTitle, garageDescription, dropDownMenu[selectedItem]?.id, id)
+        editGarageApi(garageTitle, garageDescription, selectedItem, id)
           .then((res) => {
             console.log('res', res);
             alert('Garage updated successfully');
@@ -134,7 +133,7 @@ const addgarage = () => {
           });
       } else {
         console.log('in add');
-        addGarageApi(garageTitle, garageDescription, dropDownMenu[selectedItem]?.id)
+        addGarageApi(garageTitle, garageDescription, selectedItem)
           .then((res) => {
             console.log('res', res);
             alert('Garage added successfully');
