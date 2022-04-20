@@ -61,7 +61,7 @@ function teamslist() {
       <Helmet title="Garages" />
       <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
         <Link
-          to={{ pathname: 'addteam', state: { id: -1 } }}
+          to={{ pathname: 'addteam', state: { id: -1, garageId: garageId, locationId: -1 } }}
           style={{
             marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
           }}
@@ -95,6 +95,7 @@ function teamslist() {
               team_id={item.id}
               garage_name={item.name}
               garage_id={garageId}
+              locationId={item.locationId}
               status={String(item.isActive)}
             />
           ))}

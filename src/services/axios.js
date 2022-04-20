@@ -258,6 +258,38 @@ export const addRoleModule = (roleId, moduleId) => {
   });
 };
 
+export const addTeamApi = (name, description, locationid, garageid) => {
+  const data = JSON.stringify({
+    name,
+    logourl: "",
+    description,
+    locationId: locationid,
+    garageId: garageid,
+  });
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/team',
+    headers,
+    data,
+  });
+};
+
+export const editTeamApi = (name, logourl, description, locationId, garageId, teamID) => {
+  const data = JSON.stringify({
+    name,
+    logourl,
+    description,
+    locationId: 1,
+    garageId: 1,
+  });
+  return axios({
+    method: 'PUT',
+    url: `http://13.126.183.78:8086/api/v1/team/${teamID}`,
+    headers,
+    data,
+  });
+};
+
 export const addGarageApi = (garageTitle, garageDescription, cityId, garageSeries) => {
   const data = JSON.stringify({
     name: garageTitle,
