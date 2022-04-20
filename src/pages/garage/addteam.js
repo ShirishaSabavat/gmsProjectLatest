@@ -8,7 +8,7 @@ import {
   Input, Radio, Button, Menu, Dropdown,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
-import { getUserProfiles, getPickupLocationByGarageId } from 'services/axios';
+import { getUserProfiles, getPickupLocationByGarageId, addTeamApi, editTeamApi } from 'services/axios';
 import { useLocation } from 'react-router-dom';
 import { DropdownMenu } from 'reactstrap';
 
@@ -16,11 +16,11 @@ const { TextArea } = Input;
 
 const addteam = () => {
   const location = useLocation();
-  const { teamId, garageId } = location.state;
+  const { id, garageId, locationId, teamId } = location.state;
 
   const nestedPath = [
     'Home',
-    `${teamId === -1 ? 'Add Team' : 'Edit Team'}`,
+    `${id === -1 ? 'Add Team' : 'Edit Team'}`,
   ];
 
   const [radioValue, setRadioValue] = useState(true);
@@ -29,8 +29,12 @@ const addteam = () => {
   const [teamTitle, setTeamTitle] = useState('');
   const [teamError, setTeamError] = useState({});
   const [teamDescription, setTeamDescription] = useState('');
+  const [teamDescriptionError, setTeamDescriptionError] = useState('');
+  const [garageSeries, setGarageSeries] = useState('');
+  const [userSeries, setUserSeries] = useState('');
   const [dropDownMenu, setDropDownMenu] = useState([]);
   const [selectedItem, setSelectedItem] = useState([]);
+  const [cityError, setCityError] = useState({});
 
   const userRoleMenu = (
     <Menu onClick={(e) => setSelectedItem(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
@@ -44,13 +48,7 @@ const addteam = () => {
   );
 
   useEffect(() => {
-    getUserProfiles(0).then((res) => {
-      console.log('res', res);
-      setProfileList(res.data?.results.pageData);
-    })
-      .catch((err) => {
-        console.log('err', err);
-      });
+
   }, []);
 
   useEffect(() => {
@@ -58,29 +56,108 @@ const addteam = () => {
       .then((res) => {
         console.log('garageList', res);
         setDropDownMenu(res?.data?.results?.pageData);
+        getUserProfiles(0).then((res) => {
+          console.log('res', res);
+          setProfileList(res.data?.results.pageData);
+        })
+          .catch((err) => {
+            console.log('err', err);
+          });
       })
       .catch((err) => {
         console.log('err', err);
       });
   }, []);
-  // function AddToArray(id) {
-  //   const tempUsers = [];
-  //   tempUsers.push(id);
-  //   setSelectedUsers(tempUsers);
-  // }
+  function AddToArray(id) {
+    const tempUsers = [];
+    tempUsers.push(id);
+    setSelectedUsers(tempUsers);
+  }
+  const validateFormData = () => {
+    const teamNameError = {};
+    const descriptionNameError = {};
+    const citySelectError = {};
+    let isValid = true;
+    if (teamTitle.trim().length === 0) {
+      teamNameError.err = 'Team title can not be empty';
+      isValid = false;
+    }
+    if (teamDescription.trim().length === 0) {
+      descriptionNameError.err = 'Description can not be empty';
+      isValid = false;
+    }
+    if (!selectedItem) {
+      citySelectError.err = 'Select city';
+      isValid = false;
+      alert('Select city');
+    }
+    // if (garageSeries.trim().length === 0) {
+    //   garageSeriesNameError.err = 'Garage series can not be empty';
+    //   isValid = false;
+    // }
+    // if (userSeries.trim().length === 0) {
+    //   userSeriesNameError.err = 'User series can not be empty';
+    //   isValid = false;
+    // }
+
+    setTeamError(teamNameError);
+    setTeamDescriptionError(descriptionNameError);
+    setCityError(citySelectError);
+    return isValid;
+  };
+
+  const onSave = (event) => {
+    event.preventDefault();
+    const resp = validateFormData();
+    console.log(resp);
+    console.log('teamtitle', teamTitle);
+    console.log('teamdescription', teamDescription);
+    console.log('selectedItem', dropDownMenu[selectedItem]?.id);
+    console.log('garageid', garageId);
+    console.log('locationid', locationId);
+    console.log('radioValue', radioValue);
+
+    if (resp) {
+      if (id !== -1) {
+        console.log('in edit');
+        // eslint-disable-next-line max-len
+        editTeamApi(teamTitle, "", teamDescription, locationId, garageId, teamId)
+          .then((res) => {
+            console.log('res', res);
+            alert('Team edited successfully');
+            window.location.href = '#/garage/garagelist';
+          })
+          .catch((err) => {
+            console.log('err', err);
+          });
+      } else {
+        console.log('in add');
+        addTeamApi(teamTitle, teamDescription, locationId, garageId)
+          .then((res) => {
+            console.log('res', res);
+            alert('Team added successfully');
+            window.location.href = '#/garage/garagelist';
+          })
+          .catch((err) => {
+            console.log('err', err);
+          });
+      }
+    }
+  };
+
   return (
     <>
       <Helmet title="Teams" />
       <div className="flex flex-col space-y-12 mx-5">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            {teamId === -1 ? 'Add Team' : 'Edit Team'}
+            {id === -1 ? 'Add Team' : 'Edit Team'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
         <div className="bg-white p-5">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Team Title</p>
-          <div className="flex flex-row flex-nonwrap bg-white">
+          <div className="flex flex-nonwrap bg-white">
             <Input
               placeholder="Enter Name Here..."
               value={teamTitle}
@@ -89,14 +166,15 @@ const addteam = () => {
                 padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
               }}
             />
-            {Object.keys(teamError).map((key) => (
-              <div style={{ color: 'red' }}>
-                {teamError[key]}
-              </div>
-            ))}
+
           </div>
+          {Object.keys(teamError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {teamError[key]}
+            </div>
+          ))}
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Description</p>
-          <div className="flex flex-row flex-nonwrap bg-white">
+          <div className="flex flex-nonwrap bg-white">
             <TextArea
               rows={4}
               placeholder="Enter Description Here..."
@@ -108,6 +186,11 @@ const addteam = () => {
             />
 
           </div>
+          {Object.keys(teamDescriptionError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {teamDescriptionError[key]}
+            </div>
+          ))}
         </div>
         <div className="bg-white p-5">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Team Status</p>
@@ -139,26 +222,29 @@ const addteam = () => {
               </Button>
             </Dropdown>
           </div>
+
         </div>
         <div>
           {profileList.map((item) => (
-            <div className="h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 w-2/6">
+            <div className={selectedUsers.includes(item.id) ? "h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 border-2 border-cyan-500" : "h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8"}>
               <img className="w-28 h-28 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/defaultperson.jpg')} />
               <div>
                 <h1 className="font-quicksand-bold text-2xl mt-6">{item.first_name}</h1>
                 <h1 className="font-quicksand-semi-bold text-xl mt-6">{item.user_name}</h1>
               </div>
             </div>
-          ))}
+          )
+          )}
         </div>
         <div className="col-12 flex flex-row justify-end">
           <Button
+            onClick={onSave}
             className="font-quicksand-medium"
             style={{
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            Add Team
+            {id === -1 ? 'Add Team' : 'Edit Team'}
           </Button>
         </div>
       </div>

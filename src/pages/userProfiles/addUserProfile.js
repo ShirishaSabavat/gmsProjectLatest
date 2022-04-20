@@ -68,10 +68,10 @@ const addrole = () => {
   const [processError, setProcessError] = useState({});
 
   const userRoleMenu = (
-    <Menu onClick={(e) => setRoleSelect(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
-      {userRoleDropDown?.map((data, key) => (
+    <Menu onClick={(e) => setRoleSelect(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
+      {userRoleDropDown?.map((data) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Menu.Item key={key} value={data.id}>
+        <Menu.Item key={data.id}>
           {data.role}
         </Menu.Item>
       ))}
@@ -79,10 +79,10 @@ const addrole = () => {
   );
 
   const cityMenu = (
-    <Menu onClick={(e) => setCitySelect(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
-      {cityDropdown?.map((data, key) => (
+    <Menu onClick={(e) => setCitySelect(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
+      {cityDropdown?.map((data) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Menu.Item key={key} value={data.id}>
+        <Menu.Item key={data.id}>
           {data.name}
         </Menu.Item>
       ))}
@@ -90,10 +90,10 @@ const addrole = () => {
   );
 
   const garageMenu = (
-    <Menu onClick={(e) => setGarageSelect(e.key)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
-      {garageDropdown?.map((data, key) => (
+    <Menu onClick={(e) => setGarageSelect(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
+      {garageDropdown?.map((data) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Menu.Item key={key} value={data.id}>
+        <Menu.Item key={data.id}>
           {data.name}
         </Menu.Item>
       ))}
@@ -156,7 +156,7 @@ const addrole = () => {
         setGarageSelect(res?.data?.results?.user_profile?.garageId);
         let data = res?.data?.results?.processes;
         console.log('dataaaaaa', data);
-        data = data.map((obj) => obj.id);
+        data = data.map((obj) => obj);
         setCheckboxValue(data);
       })
       .catch((err) => {
@@ -177,15 +177,8 @@ const addrole = () => {
 
   const handleChange = (e) => {
     if (e.target.checked) {
-      const permissions = {
-        processId: e.target.value,
-        view: 0,
-        edit: 0,
-        delete: 0,
-        create: 0,
-      };
-      setCheckboxValue([...checkboxValue, permissions]);
-      console.log('permissions', permissions);
+      setCheckboxValue([...checkboxValue, e.target.value]);
+      // console.log('permissions', permissions);
     } else {
       setCheckboxValue(checkboxValue.filter((item) => item !== e.target.value));
     }
@@ -729,16 +722,47 @@ const addrole = () => {
                       {item?.processes.map((data) => (
                         <div className="flex flex-row">
                           <div className="my-3 mx-0 basis-1/4">
-                            <Checkbox onChange={handleChange} checked={checkboxValue.includes(data.id)}>
+                            <Checkbox value={data.id} onChange={handleChange} checked={checkboxValue.includes(data.id)}>
                               {data.process}
                             </Checkbox>
                           </div>
-                          {console.log(data)}
-                          {console.log(checkboxValue)}
                           <div className="my-3 mx-0 basis-3/4">
-                            {/* {Object.keys(data.permission).map((key, index) => (
-                              <Checkbox checked={CRUD[key]} onChange={({ target: { checked } }) => handlePermissionChange(data, checked)} style={{ margin: '0 0 0 15%' }}> Add </Checkbox>
-                            ))} */}
+                            {console.log(data, 'dataaaaaaaaaaaaaa')}
+                            {checkboxValue.map((key) => (
+                              key === data.id && (
+                                <>
+                                  <Checkbox
+                                    checked={data.permission.view}
+                                    onChange={({ target: { checked } }) => handlePermissionChange(data, checked)}
+                                    style={{ margin: '0 0 0 15%' }}
+                                  >
+                                    View
+                                  </Checkbox>
+                                  <Checkbox
+                                    checked={data.permission.create}
+                                    onChange={({ target: { checked } }) => handlePermissionChange(data, checked)}
+                                    style={{ margin: '0 0 0 15%' }}
+                                  >
+                                    Create
+                                  </Checkbox>
+                                  <Checkbox
+                                    checked={data.permission.edit}
+                                    onChange={({ target: { checked } }) => handlePermissionChange(data, checked)}
+                                    style={{ margin: '0 0 0 15%' }}
+                                  >
+                                    Edit
+                                  </Checkbox>
+                                  <Checkbox
+                                    checked={data.permission.deActive}
+                                    onChange={({ target: { checked } }) => handlePermissionChange(data, checked)}
+                                    style={{ margin: '0 0 0 15%' }}
+                                  >
+                                    Delete
+                                  </Checkbox>
+                                </>
+                              )
+                            ))}
+
                           </div>
                         </div>
                       ))}
