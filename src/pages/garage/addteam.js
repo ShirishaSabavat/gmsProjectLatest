@@ -60,8 +60,9 @@ const addteam = () => {
         console.log('garageList', res);
         setDropDownMenu(res?.data?.results?.pageData);
         getUserProfiles(0).then((resp) => {
-          console.log('res', res);
+          console.log('res', resp);
           setProfileList(resp.data?.results.pageData);
+          setSelectedItem(locationId);
         })
           .catch((err) => {
             console.log('err', err);
@@ -71,6 +72,10 @@ const addteam = () => {
         console.log('err', err);
       });
   }, []);
+
+  console.log('selectedItem', selectedItem);
+  console.log('locationId', locationId);
+
   const AddToArray = (itemId) => {
     setSelectedUsers([...selectedUsers, itemId]);
   };
