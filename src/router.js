@@ -144,6 +144,12 @@ const routes = [
     exact: true,
     Component: lazy(() => import('pages/garage/addPickupLocation')),
   },
+  {
+    path: '/roadTrial/roadTrial',
+    key: 'Road Trial',
+    exact: true,
+    Component: lazy(() => import('pages/roadTrial/roadTrial')),
+  },
 ];
 
 const Router = ({ history }) => (

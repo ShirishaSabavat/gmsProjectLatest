@@ -48,6 +48,11 @@ const Sidebar = ({
       icon: '/assets/images/logo/sidebarLogo/processes.svg',
       key: '/processes/processes',
     },
+    {
+      title: 'RoadTrial',
+      icon: '/assets/images/logo/sidebarLogo/processes.svg',
+      key: '/roadTrial/roadTrial',
+    },
     // {
     //   title: 'Pickup Locations',
     //   icon: '/assets/images/logo/sidebarLogo/garage.svg',
@@ -58,13 +63,7 @@ const Sidebar = ({
   // const settingPath = '/setting';
   return (
     <>
-      <div className={`py-3 px-6 flex items-center border-b border-gray-100 ${sideBarLayout ? 'justify-center' : ''}`}>
-        <img
-          src="/assets/images/logo/app-logo.svg"
-          alt="app-logo"
-          className="h-8"
-        />
-      </div>
+      <div className={`py-3 px-6 flex items-center border-b border-gray-100 ${sideBarLayout ? 'justify-center' : ''}`} />
       <Menu
         style={{ borderRight: 'none' }}
         selectedKeys={[pathname]}
