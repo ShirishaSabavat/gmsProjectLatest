@@ -19,7 +19,7 @@ const { TextArea } = Input;
 const addteam = () => {
   const location = useLocation();
   const {
-    id, garageId, locationId, teamId,
+    id, garageId, locationId, teamId, garage_name, garage_description
   } = location.state;
 
   const nestedPath = [
@@ -30,9 +30,10 @@ const addteam = () => {
   const [radioValue, setRadioValue] = useState(true);
   const [profileList, setProfileList] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [teamTitle, setTeamTitle] = useState('');
+  const [teamTitle, setTeamTitle] = useState(garage_name);
   const [teamError, setTeamError] = useState({});
-  const [teamDescription, setTeamDescription] = useState('');
+  const [selectedLocationID, setSelectedLocationID] = useState('');
+  const [teamDescription, setTeamDescription] = useState(garage_description);
   const [teamDescriptionError, setTeamDescriptionError] = useState('');
   const [garageSeries, setGarageSeries] = useState('');
   const [userSeries, setUserSeries] = useState('');
@@ -41,7 +42,7 @@ const addteam = () => {
   const [cityError, setCityError] = useState({});
 
   const userRoleMenu = (
-    <Menu onClick={(e) => setSelectedItem(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
+    <Menu onClick={(e) => { setSelectedItem(Number(e.key)) }} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
       {dropDownMenu?.map((data) => (
         // eslint-disable-next-line react/no-array-index-key
         <Menu.Item key={data.id}>
@@ -50,10 +51,6 @@ const addteam = () => {
       ))}
     </Menu>
   );
-
-  useEffect(() => {
-
-  }, []);
 
   useEffect(() => {
     getPickupLocationByGarageId(garageId)
