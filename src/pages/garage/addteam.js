@@ -72,10 +72,16 @@ const addteam = () => {
         console.log('err', err);
       });
   }, []);
-  function AddToArray(divId) {
-    const tempUsers = [];
-    tempUsers.push(divId);
-    setSelectedUsers(tempUsers);
+  const AddToArray = (id) => {
+    setSelectedUsers([...selectedUsers, id]);
+  }
+
+  const RemoveFromArray = (id) => {
+    const tempUsers = selectedUsers;
+    console.log(tempUsers);
+    const tempindex = tempUsers.indexOf(id);
+    tempUsers.splice(tempindex, 1);
+    setSelectedItem(tempUsers);
   }
   const validateFormData = () => {
     const teamNameError = {};
@@ -230,14 +236,23 @@ const addteam = () => {
         </div>
         <div>
           {profileList.map((item) => (
-            <div className={selectedUsers.includes(item.id) ? 'h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 border-2 border-cyan-500' : 'h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8'}>
+            <div className={selectedUsers.includes(item.id) ? "h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 border-2 border-cyan-500" : "h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8"}>
+              <Button
+                onClick={() => selectedUsers.includes(item.id) ? RemoveFromArray(item.id) : AddToArray(item.id)}
+                className="font-quicksand-medium"
+                style={{ marginTop: '50px', marginLeft: '30px' }}
+              >
+                {selectedUsers.includes(item.id) ? "Remove" : "Add"}
+              </Button>
               <img className="w-28 h-28 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/defaultperson.jpg')} />
               <div>
                 <h1 className="font-quicksand-bold text-2xl mt-6">{item.first_name}</h1>
                 <h1 className="font-quicksand-semi-bold text-xl mt-6">{item.user_name}</h1>
               </div>
+
             </div>
-          ))}
+          )
+          )}
         </div>
         <div className="col-12 flex flex-row justify-end">
           <Button
