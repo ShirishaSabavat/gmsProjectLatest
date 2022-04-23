@@ -487,6 +487,12 @@ export const getCarsListEverest = () => axios({
   headers,
 });
 
+export const getCarsListJama = () => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/visitingCars?visit_category=1,2`,
+  headers,
+});
+
 export const getCarDetailsList = (id) => axios({
   method: 'GET',
   url: `http://13.126.183.78:8086/api/v1/visitingCars/fetchCarDetailsFromEverest/${id}/2022-04-07`,
@@ -533,6 +539,23 @@ export const editCarVisit = (visitcat, carid, garageid, isdriverwithcar, driverI
   return axios({
     method: 'POST',
     url: `http://13.126.183.78:8086/api/v1/visitingCars`,
+    headers,
+    data,
+  })
+};
+
+export const addRTAList = (visitid, garageid, isleasing, roadtestcomment) => {
+  const data = JSON.stringify({
+    visitId: visitid,
+    garageId: garageid,
+    is_leasing: isleasing,
+    road_test_comments: roadtestcomment,
+    jama_status: 1,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: `http://13.126.183.78:8086/api/v1/roadTest`,
     headers,
     data,
   })

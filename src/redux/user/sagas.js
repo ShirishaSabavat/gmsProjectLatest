@@ -39,8 +39,10 @@ function* LOGIN(userAction) {
     console.log(temprole);
     if (temprole === 'Super Admin') {
       yield history.push('/home/dashboard');
-    } else {
+    } else if (temprole === 'Gate Keeper') {
       yield history.push('/gatekeeper/homepage');
+    } else if (temprole === 'Road Test Auditor') {
+      yield history.push('/rta/carlistrta');
     }
 
     // console.log('history', history);
