@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 const nestedPath = [
   'Home',
@@ -44,15 +45,15 @@ const homepage = () => {
         <div className={"flex bg-white rounded-lg my-3 mx-8 justify-center py-24"}>
           <div>
             <div className="col-12 flex flex-row justify-end">
-              <Button
-                onClick={goToCarFormPage}
+              <Link
+                to={{ pathname: 'carformpage', state: { carId: -1, carnumber: -1 } }}
                 className="font-quicksand-medium"
                 style={{
-                  marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
+                  marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px',
                 }}
               >
                 New Car Visit
-              </Button>
+              </Link>
             </div>
             <div className="col-12 flex flex-row justify-end mt-10">
               <Button

@@ -21,6 +21,8 @@ export const loginApi = async (userData) => {
     localStorage.setItem('token', resp?.data?.results?.token);
     const user = `${resp?.data?.results?.user?.first_name} ${resp?.data?.results?.user?.last_name}`;
     localStorage.setItem('user', user);
+    localStorage.setItem('garageid', resp?.data?.results?.user?.teams[0].garageId)
+    localStorage.setItem('locationid', resp?.data?.results?.user?.teams[0].locationId)
     localStorage.setItem('role', resp?.data?.results?.user?.roles[0].role)
     return resp;
   } catch (err) {
@@ -487,6 +489,51 @@ export const getCarsListEverest = () => axios({
 
 export const getCarDetailsList = (id) => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/visitingCars?createdBy=${id}`,
+  url: `http://13.126.183.78:8086/api/v1/visitingCars/fetchCarDetailsFromEverest/${id}/2022-04-07`,
   headers,
 });
+
+export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
+  const data = JSON.stringify({
+    visit_category: visitcat,
+    carId: carid,
+    car_number: carnumber,
+    garageId: garageid,
+    locationId,
+    is_with_driver: isdriverwithcar,
+    driverId,
+    driver_name: driverName,
+    drive_contact_number: drivercontactnumber,
+    driverManagerId: drivermanagerid,
+    driver_manager_name: drivermanagername,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: `http://13.126.183.78:8086/api/v1/visitingCars`,
+    headers,
+    data,
+  })
+};
+
+export const editCarVisit = (visitcat, carid, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
+  const data = JSON.stringify({
+    visit_category: visitcat,
+    carId: carid,
+    garageId: garageid,
+    locationId,
+    is_with_driver: isdriverwithcar,
+    driverId,
+    driver_name: driverName,
+    drive_contact_number: drivercontactnumber,
+    driverManagerId: drivermanagerid,
+    driver_manager_name: drivermanagername,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: `http://13.126.183.78:8086/api/v1/visitingCars`,
+    headers,
+    data,
+  })
+};
