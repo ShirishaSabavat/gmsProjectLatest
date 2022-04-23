@@ -17,10 +17,11 @@ export const loginApi = async (userData) => {
       },
       data,
     });
-    console.log(resp);
+    console.log(resp.data.results.user.roles[0].role);
     localStorage.setItem('token', resp?.data?.results?.token);
     const user = `${resp?.data?.results?.user?.first_name} ${resp?.data?.results?.user?.last_name}`;
     localStorage.setItem('user', user);
+    localStorage.setItem('role', resp?.data?.results?.user?.roles[0].role)
     return resp;
   } catch (err) {
     console.log(err);
@@ -469,5 +470,23 @@ export const getUserProfile = (userId) => axios({
 export const getRolesUI = (id) => axios({
   method: 'GET',
   url: `http://13.126.183.78:8086/api/v1/role/initialiseRoleUI/${id}`,
+  headers,
+});
+
+export const getCarsList = (id) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/visitingCars?createdBy=${id}`,
+  headers,
+});
+
+export const getCarsListEverest = () => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/visitingCars/fetchCarsFromEverest/1`,
+  headers,
+});
+
+export const getCarDetailsList = (id) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/visitingCars?createdBy=${id}`,
   headers,
 });

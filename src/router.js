@@ -43,6 +43,24 @@ const routes = [
     Component: lazy(() => import('pages/home/dashboard')),
   },
   {
+    path: '/gatekeeper/homepage',
+    key: 'GATEKEEPER HOME',
+    exact: true,
+    Component: lazy(() => import('pages/gatekeeper/homepage')),
+  },
+  {
+    path: '/gatekeeper/carslist',
+    key: 'GATEKEEPER CARLIST',
+    exact: true,
+    Component: lazy(() => import('pages/gatekeeper/carslist')),
+  },
+  {
+    path: '/gatekeeper/carformpage',
+    key: 'GATEKEEPER CARFORM',
+    exact: true,
+    Component: lazy(() => import('pages/gatekeeper/carformpage')),
+  },
+  {
     path: '/cities/citieslist',
     key: 'PARTNER',
     exact: true,
