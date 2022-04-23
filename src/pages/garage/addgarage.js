@@ -19,14 +19,14 @@ const addgarage = () => {
   const { id } = location.state;
 
   const [garageTitle, setGarageTitle] = useState('');
-  const [garageDescription, setGarageDescription] = useState('');
+  // const [garageDescription, setGarageDescription] = useState('');
   const [garageSeries, setGarageSeries] = useState('');
   const [userSeries, setUserSeries] = useState('');
   const [radioValue, setRadioValue] = useState(true);
   const [dropDownMenu, setDropDownMenu] = useState([]);
   const [selectedItem, setSelectedItem] = useState('');
   const [garageError, setGarageError] = useState({});
-  const [descriptionError, setDescriptionError] = useState({});
+  // const [descriptionError, setDescriptionError] = useState({});
   const [cityError, setCityError] = useState({});
   const [garageSeriesError, setGarageSeriesError] = useState({});
   const [userSeriesError, setUserSeriesError] = useState({});
@@ -62,7 +62,7 @@ const addgarage = () => {
       .then((res) => {
         console.log('getResp', res?.data?.results?.cityId);
         setGarageTitle(res?.data?.results?.name);
-        setGarageDescription(res?.data?.results?.description);
+        // setGarageDescription(res?.data?.results?.description);
         setSelectedItem(res?.data?.results?.cityId);
       })
       .catch((err) => {
@@ -71,7 +71,7 @@ const addgarage = () => {
   }, []);
   const validateFormData = () => {
     const garageNameError = {};
-    const descriptionNameError = {};
+    // const descriptionNameError = {};
     const citySelectError = {};
     const garageSeriesNameError = {};
     const userSeriesNameError = {};
@@ -81,10 +81,10 @@ const addgarage = () => {
       garageNameError.err = 'Garage title can not be empty';
       isValid = false;
     }
-    if (garageDescription.trim().length === 0) {
-      descriptionNameError.err = 'Description can not be empty';
-      isValid = false;
-    }
+    // if (garageDescription.trim().length === 0) {
+    //   descriptionNameError.err = 'Description can not be empty';
+    //   isValid = false;
+    // }
     if (!selectedItem) {
       citySelectError.err = 'Select city';
       isValid = false;
@@ -99,7 +99,7 @@ const addgarage = () => {
     // }
 
     setGarageError(garageNameError);
-    setDescriptionError(descriptionNameError);
+    // setDescriptionError(descriptionNameError);
     setCityError(citySelectError);
     setGarageSeriesError(garageSeriesNameError);
     setUserSeriesError(userSeriesNameError);
@@ -111,7 +111,7 @@ const addgarage = () => {
     const resp = validateFormData();
     console.log(resp);
     console.log('garagetitle', garageTitle);
-    console.log('garagedescription', garageDescription);
+    // console.log('garagedescription', garageDescription);
     console.log('selectedItem', selectedItem);
     console.log('garageseries', garageSeries);
     console.log('userseries', userSeries);
@@ -122,7 +122,7 @@ const addgarage = () => {
       if (id !== -1) {
         console.log('in edit');
         // eslint-disable-next-line max-len
-        editGarageApi(garageTitle, garageDescription, selectedItem, id)
+        editGarageApi(garageTitle, selectedItem, id)
           .then((res) => {
             console.log('res', res);
             alert('Garage updated successfully');
@@ -133,7 +133,7 @@ const addgarage = () => {
           });
       } else {
         console.log('in add');
-        addGarageApi(garageTitle, garageDescription, selectedItem)
+        addGarageApi(garageTitle, selectedItem)
           .then((res) => {
             console.log('res', res);
             alert('Garage added successfully');
@@ -173,7 +173,7 @@ const addgarage = () => {
               {garageError[key]}
             </div>
           ))}
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Description</p>
+          {/* <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Description</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <TextArea
               rows={4}
@@ -189,7 +189,7 @@ const addgarage = () => {
             <div style={{ color: 'red' }}>
               {descriptionError[key]}
             </div>
-          ))}
+          ))} */}
         </div>
         <div className="bg-white p-5">
           <p>Select City</p>
