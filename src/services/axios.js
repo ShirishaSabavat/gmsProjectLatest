@@ -560,3 +560,19 @@ export const addRTAList = (visitid, garageid, isleasing, roadtestcomment) => {
     data,
   })
 };
+
+export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) => {
+  const data = JSON.stringify({
+    visitId: visitid,
+    previousAudit: visitcategory,
+    currentAudit: rejectid,
+    transfer_reason: rejectreason,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: `http://13.126.183.78:8086/api/v1/auditTransfer`,
+    headers,
+    data,
+  })
+};

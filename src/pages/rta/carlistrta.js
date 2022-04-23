@@ -47,7 +47,7 @@ const carslistrta = () => {
         <div>
           {CarsList.map((item) => (
             <Link
-              to={{ pathname: 'leasingjama', state: { carId: item.carId, carnumber: item.car_number, drivername: item.driver_name, visitid: item.visitId, visitcategory: item.visit_category } }} className="bg-white">
+              to={{ pathname: 'leasingjama', state: { id: item.id, carId: item.carId, carnumber: item.car_number, drivername: item.driver_name, visitid: item.visitId, visitcategory: item.visit_category } }} className="bg-white">
               <div className="bg-white rounded-lg my-3 mx-2">
                 <div className="flex flex-row flex-nonwrap justify-center">
                   <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />

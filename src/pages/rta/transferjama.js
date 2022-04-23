@@ -2,6 +2,8 @@ import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input, Button } from 'antd';
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { rejectRTAList } from 'services/axios';
 
 const nestedPath = [
   'Home',
@@ -11,8 +13,37 @@ const nestedPath = [
 const { TextArea } = Input;
 
 const transferjama = () => {
+  const location = useLocation();
+  const {
+    id, visitcategory
+  } = location.state;
   const [rejectfor, setrejectfor] = useState(0);
+  const [rejectforRemark, setrejectforRemark] = useState('');
 
+  useEffect(() => {
+    console.log(id);
+  }, []);
+
+  const RejectRTAListMethod = () => {
+    console.log(visitcategory);
+    var tempvisitid = 0;
+    if (visitcategory === "1" || visitcategory === 1) {
+      tempvisitid = 1
+    } else if (visitcategory === "2" || visitcategory === 1) {
+      tempvisitid = 2
+    } else {
+
+    }
+    rejectRTAList(id, visitcategory, rejectfor, rejectforRemark)
+      .then((res) => {
+        console.log('res', res);
+        alert('Jama Rejected successfully');
+        window.location.href = '#/rta/carlistrta';
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }
   return (
     <>
       <Helmet title="Dashboard" />
@@ -28,7 +59,7 @@ const transferjama = () => {
             <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Select Reject Option</p>
             <div className="flex flex-row flex-nonwrap">
               <Button
-                onClick={() => setrejectfor(4)}
+                onClick={() => { setrejectfor(4), setrejectforRemark('Transfer to Repair') }}
                 className="font-quicksand-medium"
                 style={{ marginTop: '10px', marginLeft: '10px' }}
               >
@@ -38,7 +69,7 @@ const transferjama = () => {
             </div>
             <div className="flex flex-row flex-nonwrap">
               <Button
-                onClick={() => setrejectfor(5)}
+                onClick={() => { setrejectfor(5), setrejectforRemark('Transfer to Servicing') }}
                 className="font-quicksand-medium"
                 style={{ marginTop: '10px', marginLeft: '10px' }}
               >
@@ -47,7 +78,7 @@ const transferjama = () => {
             </div>
             <div className="flex flex-row flex-nonwrap">
               <Button
-                onClick={() => setrejectfor(3)}
+                onClick={() => { setrejectfor(6), setrejectforRemark('Transfer to Fitness Queue') }}
                 className="font-quicksand-medium"
                 style={{ marginTop: '10px', marginLeft: '10px' }}
               >
@@ -57,12 +88,13 @@ const transferjama = () => {
           </div>
           <div className="col-12 flex flex-row justify-center my-3">
             <Button
+              onClick={() => RejectRTAListMethod()}
               className="font-quicksand-medium"
               style={{
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
               }}
             >
-              Create Job Card
+              Submit
             </Button>
           </div>
         </div>
