@@ -3,6 +3,7 @@ import { Input, Popover, Button } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { userLogout } from 'redux/user/actions';
+// import { webLogo } from './images/Web-Logo.png';
 import './styles.css';
 
 const Header = ({ logout }) => {

@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable global-require */
 /* eslint-disable no-unused-vars */
@@ -19,7 +21,7 @@ const { TextArea } = Input;
 const addteam = () => {
   const location = useLocation();
   const {
-    id, garageId, locationId, teamId,
+    id, garageId, locationId, teamId, garage_name, garage_description,
   } = location.state;
 
   const nestedPath = [
@@ -30,9 +32,10 @@ const addteam = () => {
   const [radioValue, setRadioValue] = useState(true);
   const [profileList, setProfileList] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [teamTitle, setTeamTitle] = useState('');
+  const [teamTitle, setTeamTitle] = useState(garage_name);
   const [teamError, setTeamError] = useState({});
-  const [teamDescription, setTeamDescription] = useState('');
+  const [selectedLocationID, setSelectedLocationID] = useState('');
+  const [teamDescription, setTeamDescription] = useState(garage_description);
   const [teamDescriptionError, setTeamDescriptionError] = useState('');
   const [garageSeries, setGarageSeries] = useState('');
   const [userSeries, setUserSeries] = useState('');
@@ -41,7 +44,7 @@ const addteam = () => {
   const [cityError, setCityError] = useState({});
 
   const userRoleMenu = (
-    <Menu onClick={(e) => setSelectedItem(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
+    <Menu onClick={(e) => { setSelectedItem(Number(e.key)); }} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
       {dropDownMenu?.map((data) => (
         // eslint-disable-next-line react/no-array-index-key
         <Menu.Item key={data.id}>
@@ -52,17 +55,14 @@ const addteam = () => {
   );
 
   useEffect(() => {
-
-  }, []);
-
-  useEffect(() => {
     getPickupLocationByGarageId(garageId)
       .then((res) => {
         console.log('garageList', res);
         setDropDownMenu(res?.data?.results?.pageData);
         getUserProfiles(0).then((resp) => {
-          console.log('res', res);
+          console.log('res', resp);
           setProfileList(resp.data?.results.pageData);
+          setSelectedItem(locationId);
         })
           .catch((err) => {
             console.log('err', err);
@@ -72,11 +72,21 @@ const addteam = () => {
         console.log('err', err);
       });
   }, []);
-  function AddToArray(divId) {
-    const tempUsers = [];
-    tempUsers.push(divId);
-    setSelectedUsers(tempUsers);
-  }
+
+  console.log('selectedItem', selectedItem);
+  console.log('locationId', locationId);
+
+  const AddToArray = (itemId) => {
+    setSelectedUsers([...selectedUsers, itemId]);
+  };
+
+  const RemoveFromArray = (itemId) => {
+    const tempUsers = selectedUsers;
+    console.log(tempUsers);
+    const tempindex = tempUsers.indexOf(itemId);
+    tempUsers.splice(tempindex, 1);
+    setSelectedItem(tempUsers);
+  };
   const validateFormData = () => {
     const teamNameError = {};
     const descriptionNameError = {};
@@ -231,11 +241,19 @@ const addteam = () => {
         <div>
           {profileList.map((item) => (
             <div className={selectedUsers.includes(item.id) ? 'h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 border-2 border-cyan-500' : 'h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8'}>
+              <Button
+                onClick={() => (selectedUsers.includes(item.id) ? RemoveFromArray(item.id) : AddToArray(item.id))}
+                className="font-quicksand-medium"
+                style={{ marginTop: '50px', marginLeft: '30px' }}
+              >
+                {selectedUsers.includes(item.id) ? 'Remove' : 'Add'}
+              </Button>
               <img className="w-28 h-28 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/defaultperson.jpg')} />
               <div>
                 <h1 className="font-quicksand-bold text-2xl mt-6">{item.first_name}</h1>
                 <h1 className="font-quicksand-semi-bold text-xl mt-6">{item.user_name}</h1>
               </div>
+
             </div>
           ))}
         </div>

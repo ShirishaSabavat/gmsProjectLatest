@@ -285,10 +285,9 @@ export const editTeamApi = (name, logourl, description, locationId, garageId, te
   });
 };
 
-export const addGarageApi = (garageTitle, garageDescription, cityId, garageSeries) => {
+export const addGarageApi = (garageTitle, cityId, garageSeries) => {
   const data = JSON.stringify({
     name: garageTitle,
-    description: garageDescription,
     cityId,
   });
   return axios({
@@ -299,10 +298,9 @@ export const addGarageApi = (garageTitle, garageDescription, cityId, garageSerie
   });
 };
 
-export const editGarageApi = (garageTitle, garageDescription, cityId, garageId) => {
+export const editGarageApi = (garageTitle, cityId, garageId) => {
   const data = JSON.stringify({
     name: garageTitle,
-    description: garageDescription,
     cityId,
   });
   return axios({
@@ -381,7 +379,6 @@ export const addUserData = (userData) => {
 
 export const addUserProfile = (userProfileData, userId) => {
   const data = JSON.stringify({
-    address: userProfileData.address,
     email: userProfileData.email,
     mobile_no: userProfileData.contactNo,
     driving_license_no: userProfileData.license,
@@ -399,26 +396,33 @@ export const addUserProfile = (userProfileData, userId) => {
 };
 
 export const addUserRole = (userRoleData, userId) => {
-  const data = JSON.stringify({
-    userId,
-    roleId: userRoleData.roleId,
-  });
+  const data = JSON.stringify([
+    {
+      userId,
+      roleId: userRoleData.roleId,
+    },
+  ]);
   return axios({
     method: 'POST',
-    url: 'http://13.126.183.78:8086/api/v1/role/userRole',
+    url: 'http://13.126.183.78:8086/api/v1/role/bulkUserRole',
     headers,
     data,
   });
 };
 
-export const addUserProcess = (processId, userId) => {
-  const data = JSON.stringify({
+export const addUserProcess = (process, userId) => {
+  const tempData = process.map(({ id, permission }) => ({
     userId,
-    processId,
-  });
+    processId: id,
+    create: permission.create,
+    deActive: permission.deActive,
+    edit: permission.edit,
+    view: permission.view,
+  }));
+  const data = JSON.stringify(tempData);
   return axios({
     method: 'POST',
-    url: 'http://13.126.183.78:8086/api/v1/process/userProcess',
+    url: 'http://13.126.183.78:8086/api/v1/process/bulkUserProcess',
     headers,
     data,
   });
@@ -442,7 +446,6 @@ export const editUserData = (userData, userId) => {
 
 export const editUserProfile = (userProfileData, userId) => {
   const data = JSON.stringify({
-    address: userProfileData.address,
     email: userProfileData.email,
     mobile_no: userProfileData.contactNo,
     driving_license_no: userProfileData.license,
