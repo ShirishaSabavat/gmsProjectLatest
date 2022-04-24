@@ -13,7 +13,6 @@ import { loginApi } from 'services/axios';
 import actions from './actionTypes';
 
 const history = createHashHistory();
-
 function* LOGIN(userAction) {
   const { payload } = userAction;
   yield put({
@@ -36,8 +35,16 @@ function* LOGIN(userAction) {
     // yield put({
     //   type: 'user/LOAD_CURRENT_ACCOUNT',
     // });
+    const temprole = localStorage.getItem('role');
+    console.log(temprole);
+    if (temprole === 'Super Admin') {
+      yield history.push('/home/dashboard');
+    } else if (temprole === 'Gate Keeper') {
+      yield history.push('/gatekeeper/homepage');
+    } else if (temprole === 'Road Test Auditor') {
+      yield history.push('/rta/carlistrta');
+    }
 
-    yield history.push('/home/dashboard');
     // console.log('history', history);
     // notification.success({
     //   message: 'Logged In',

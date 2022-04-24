@@ -17,10 +17,15 @@ export const loginApi = async (userData) => {
       },
       data,
     });
-    console.log(resp);
+    console.log(resp.data.results.user.roles[0].role);
     localStorage.setItem('token', resp?.data?.results?.token);
     const user = `${resp?.data?.results?.user?.first_name} ${resp?.data?.results?.user?.last_name}`;
     localStorage.setItem('user', user);
+    localStorage.setItem('role', resp?.data?.results?.user?.roles[0].role);
+    if (!(resp?.data?.results?.user?.roles[0].role === null || resp?.data?.results?.user?.roles[0].role === undefined || resp?.data?.results?.user?.roles[0].role === 'Super Admin')) {
+      localStorage.setItem('garageid', resp?.data?.results?.user?.teams[0].garageId);
+      localStorage.setItem('locationid', resp?.data?.results?.user?.teams[0].locationId);
+    }
     return resp;
   } catch (err) {
     console.log(err);
@@ -473,3 +478,105 @@ export const getRolesUI = (id) => axios({
   url: `http://13.126.183.78:8086/api/v1/role/initialiseRoleUI/${id}`,
   headers,
 });
+
+export const getCarsList = (id) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/visitingCars?createdBy=${id}`,
+  headers,
+});
+
+export const getCarsListEverest = () => axios({
+  method: 'GET',
+  url: 'http://13.126.183.78:8086/api/v1/visitingCars/fetchCarsFromEverest/1',
+  headers,
+});
+
+export const getCarsListJama = () => axios({
+  method: 'GET',
+  url: 'http://13.126.183.78:8086/api/v1/visitingCars?visit_category=1,2',
+  headers,
+});
+
+export const getCarDetailsList = (id) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/visitingCars/fetchCarDetailsFromEverest/${id}/2022-04-07`,
+  headers,
+});
+
+export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
+  const data = JSON.stringify({
+    visit_category: visitcat,
+    carId: carid,
+    car_number: carnumber,
+    garageId: garageid,
+    locationId,
+    is_with_driver: isdriverwithcar,
+    driverId,
+    driver_name: driverName,
+    drive_contact_number: drivercontactnumber,
+    driverManagerId: drivermanagerid,
+    driver_manager_name: drivermanagername,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/visitingCars',
+    headers,
+    data,
+  });
+};
+
+export const editCarVisit = (visitcat, carid, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
+  const data = JSON.stringify({
+    visit_category: visitcat,
+    carId: carid,
+    garageId: garageid,
+    locationId,
+    is_with_driver: isdriverwithcar,
+    driverId,
+    driver_name: driverName,
+    drive_contact_number: drivercontactnumber,
+    driverManagerId: drivermanagerid,
+    driver_manager_name: drivermanagername,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/visitingCars',
+    headers,
+    data,
+  });
+};
+
+export const addRTAList = (visitid, garageid, isleasing, roadtestcomment) => {
+  const data = JSON.stringify({
+    visitId: visitid,
+    garageId: garageid,
+    is_leasing: isleasing,
+    road_test_comments: roadtestcomment,
+    jama_status: 1,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/roadTest',
+    headers,
+    data,
+  });
+};
+
+export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) => {
+  const data = JSON.stringify({
+    visitId: visitid,
+    previousAudit: visitcategory,
+    currentAudit: rejectid,
+    transfer_reason: rejectreason,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: 'http://13.126.183.78:8086/api/v1/auditTransfer',
+    headers,
+    data,
+  });
+};
