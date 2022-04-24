@@ -1,9 +1,9 @@
+/* eslint-disable global-require */
 import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { getCarsListJama, getCarsList } from 'services/axios';
+import { Link } from 'react-router-dom';
+import { getCarsListJama } from 'services/axios';
 
 const carslistrta = () => {
   const [CarsList, setCarsList] = useState([]);
@@ -47,7 +47,19 @@ const carslistrta = () => {
         <div>
           {CarsList.map((item) => (
             <Link
-              to={{ pathname: 'leasingjama', state: { id: item.id, carId: item.carId, carnumber: item.car_number, drivername: item.driver_name, visitid: item.visitId, visitcategory: item.visit_category } }} className="bg-white">
+              to={{
+                pathname: 'leasingjama',
+                state: {
+                  id: item.id,
+                  carId: item.carId,
+                  carnumber: item.car_number,
+                  drivername: item.driver_name,
+                  visitid: item.visitId,
+                  visitcategory: item.visit_category,
+                },
+              }}
+              className="bg-white"
+            >
               <div className="bg-white rounded-lg my-3 mx-2">
                 <div className="flex flex-row flex-nonwrap justify-center">
                   <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
@@ -67,12 +79,11 @@ const carslistrta = () => {
               </div>
             </Link>
 
-          )
-          )}
+          ))}
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default carslistrta;

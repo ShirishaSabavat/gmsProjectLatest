@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable global-require */
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input, Button } from 'antd';
 import { useState, useEffect } from 'react';
-import { addRTAList, getCarsList } from 'services/axios';
-import { Link, Redirect } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { addRTAList } from 'services/axios';
+import { Link, useLocation } from 'react-router-dom';
 
 const nestedPath = [
   'Home',
@@ -16,10 +17,10 @@ const { TextArea } = Input;
 const carslistrta = () => {
   const location = useLocation();
   const {
-    id, carId, carnumber, drivername, visitid, visitcategory
+    id, carId, carnumber, drivername, visitid, visitcategory,
   } = location.state;
   const [remarks, setRemarks] = useState('');
-  const [GarageID, setGarageID] = useState("");
+  const [GarageID, setGarageID] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageID(tempGarageID);
@@ -27,13 +28,11 @@ const carslistrta = () => {
   }, []);
   const AddRTAListMethod = () => {
     console.log(visitcategory);
-    var tempvisitid = 0;
-    if (visitcategory === "1" || visitcategory === 1) {
-      tempvisitid = 1
-    } else if (visitcategory === "2" || visitcategory === 1) {
-      tempvisitid = 2
-    } else {
-
+    let tempvisitid = 0;
+    if (visitcategory === '1' || visitcategory === 1) {
+      tempvisitid = 1;
+    } else if (visitcategory === '2' || visitcategory === 1) {
+      tempvisitid = 2;
     }
     addRTAList(visitcategory, GarageID, true, remarks)
       .then((res) => {
@@ -44,7 +43,7 @@ const carslistrta = () => {
       .catch((err) => {
         console.log('err', err);
       });
-  }
+  };
 
   return (
     <>
@@ -102,7 +101,7 @@ const carslistrta = () => {
           </div>
           <div className="col-12 flex flex-row justify-center">
             <Link
-              to={{ pathname: 'transferjama', state: { id: id, visitcategory: visitcategory } }}
+              to={{ pathname: 'transferjama', state: { id, visitcategory } }}
               className="font-quicksand-medium"
               style={{
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px',
@@ -114,7 +113,7 @@ const carslistrta = () => {
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default carslistrta;

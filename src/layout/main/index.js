@@ -39,12 +39,14 @@ const MainLayout = ({
         <AppHeader />
       </Header>
       <Layout>
-        {role === 'Super Admin' ? <Sider
-          width={270}
-          className="h-screen sticky top-0 font-mulish-semi-bold text-xs border-r-4 border-gray-100"
-        >
-          <Sidebar />
-        </Sider> : <div></div>}
+        {role === 'Super Admin' ? (
+          <Sider
+            width={270}
+            className="h-screen sticky top-0 font-mulish-semi-bold text-xs border-r-4 border-gray-100"
+          >
+            <Sidebar />
+          </Sider>
+        ) : <div />}
         <Content className="py-6">
           {children}
         </Content>

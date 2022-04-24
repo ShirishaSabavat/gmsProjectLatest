@@ -1,9 +1,10 @@
+/* eslint-disable global-require */
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
 import { getCarsList } from 'services/axios';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const nestedPath = [
   'Home',
@@ -53,7 +54,9 @@ const carslist = () => {
         <div>
           {CarsList.map((item) => (
             <Link
-              to={{ pathname: 'carformpage', state: { carId: item.carId, carnumber: item.car_number } }} className="bg-white">
+              to={{ pathname: 'carformpage', state: { carId: item.carId, carnumber: item.car_number } }}
+              className="bg-white"
+            >
               <div className="bg-white rounded-lg my-3 mx-2">
                 <div className="flex flex-row flex-nonwrap justify-center">
                   <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
@@ -73,12 +76,11 @@ const carslist = () => {
               </div>
             </Link>
 
-          )
-          )}
+          ))}
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default carslist;

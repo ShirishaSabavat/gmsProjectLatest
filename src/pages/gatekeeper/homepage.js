@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Button } from 'antd';
@@ -9,12 +10,12 @@ const nestedPath = [
 ];
 
 const homepage = () => {
-  const goToCarFormPage = () => {
-    window.location.href = '#/gatekeeper/carformpage'
-  }
+  // const goToCarFormPage = () => {
+  //   window.location.href = '#/gatekeeper/carformpage';
+  // };
   const goToCarListPage = () => {
-    window.location.href = '#/gatekeeper/carslist'
-  }
+    window.location.href = '#/gatekeeper/carslist';
+  };
   return (
     <>
       <Helmet title="Dashboard" />
@@ -25,7 +26,7 @@ const homepage = () => {
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
-        <div className={"flex bg-white rounded-lg my-3 mx-8 justify-center"}>
+        <div className="flex bg-white rounded-lg my-3 mx-8 justify-center">
           <div>
             <div className="flex flex-row justify-center">
               <img className="w-28 h-28 my-3 rounded-full align-middle" alt="" src={require('../../components/layouts/defaultperson.jpg')} />
@@ -42,7 +43,7 @@ const homepage = () => {
             </div>
           </div>
         </div>
-        <div className={"flex bg-white rounded-lg my-3 mx-8 justify-center py-24"}>
+        <div className="flex bg-white rounded-lg my-3 mx-8 justify-center py-24">
           <div>
             <div className="col-12 flex flex-row justify-end">
               <Link
@@ -70,7 +71,7 @@ const homepage = () => {
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default homepage;

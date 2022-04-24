@@ -21,9 +21,11 @@ export const loginApi = async (userData) => {
     localStorage.setItem('token', resp?.data?.results?.token);
     const user = `${resp?.data?.results?.user?.first_name} ${resp?.data?.results?.user?.last_name}`;
     localStorage.setItem('user', user);
-    localStorage.setItem('garageid', resp?.data?.results?.user?.teams[0].garageId)
-    localStorage.setItem('locationid', resp?.data?.results?.user?.teams[0].locationId)
-    localStorage.setItem('role', resp?.data?.results?.user?.roles[0].role)
+    localStorage.setItem('role', resp?.data?.results?.user?.roles[0].role);
+    if (!(resp?.data?.results?.user?.roles[0].role === null || resp?.data?.results?.user?.roles[0].role === undefined || resp?.data?.results?.user?.roles[0].role === 'Super Admin')) {
+      localStorage.setItem('garageid', resp?.data?.results?.user?.teams[0].garageId);
+      localStorage.setItem('locationid', resp?.data?.results?.user?.teams[0].locationId);
+    }
     return resp;
   } catch (err) {
     console.log(err);
@@ -486,13 +488,13 @@ export const getCarsList = (id) => axios({
 
 export const getCarsListEverest = () => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/visitingCars/fetchCarsFromEverest/1`,
+  url: 'http://13.126.183.78:8086/api/v1/visitingCars/fetchCarsFromEverest/1',
   headers,
 });
 
 export const getCarsListJama = () => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/visitingCars?visit_category=1,2`,
+  url: 'http://13.126.183.78:8086/api/v1/visitingCars?visit_category=1,2',
   headers,
 });
 
@@ -519,10 +521,10 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
   console.log(data);
   return axios({
     method: 'POST',
-    url: `http://13.126.183.78:8086/api/v1/visitingCars`,
+    url: 'http://13.126.183.78:8086/api/v1/visitingCars',
     headers,
     data,
-  })
+  });
 };
 
 export const editCarVisit = (visitcat, carid, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
@@ -541,10 +543,10 @@ export const editCarVisit = (visitcat, carid, garageid, isdriverwithcar, driverI
   console.log(data);
   return axios({
     method: 'POST',
-    url: `http://13.126.183.78:8086/api/v1/visitingCars`,
+    url: 'http://13.126.183.78:8086/api/v1/visitingCars',
     headers,
     data,
-  })
+  });
 };
 
 export const addRTAList = (visitid, garageid, isleasing, roadtestcomment) => {
@@ -558,10 +560,10 @@ export const addRTAList = (visitid, garageid, isleasing, roadtestcomment) => {
   console.log(data);
   return axios({
     method: 'POST',
-    url: `http://13.126.183.78:8086/api/v1/roadTest`,
+    url: 'http://13.126.183.78:8086/api/v1/roadTest',
     headers,
     data,
-  })
+  });
 };
 
 export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) => {
@@ -574,8 +576,8 @@ export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) =>
   console.log(data);
   return axios({
     method: 'POST',
-    url: `http://13.126.183.78:8086/api/v1/auditTransfer`,
+    url: 'http://13.126.183.78:8086/api/v1/auditTransfer',
     headers,
     data,
-  })
+  });
 };
