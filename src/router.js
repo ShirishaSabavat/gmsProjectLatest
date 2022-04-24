@@ -43,6 +43,42 @@ const routes = [
     Component: lazy(() => import('pages/home/dashboard')),
   },
   {
+    path: '/gatekeeper/homepage',
+    key: 'GATEKEEPER HOME',
+    exact: true,
+    Component: lazy(() => import('pages/gatekeeper/homepage')),
+  },
+  {
+    path: '/gatekeeper/carslist',
+    key: 'GATEKEEPER CARLIST',
+    exact: true,
+    Component: lazy(() => import('pages/gatekeeper/carslist')),
+  },
+  {
+    path: '/gatekeeper/carformpage',
+    key: 'GATEKEEPER CARFORM',
+    exact: true,
+    Component: lazy(() => import('pages/gatekeeper/carformpage')),
+  },
+  {
+    path: '/rta/carlistrta',
+    key: 'RTA CARLIST',
+    exact: true,
+    Component: lazy(() => import('pages/rta/carlistrta')),
+  },
+  {
+    path: '/rta/leasingjama',
+    key: 'RTA LEASINGJAMA',
+    exact: true,
+    Component: lazy(() => import('pages/rta/leasingjama')),
+  },
+  {
+    path: '/rta/transferjama',
+    key: 'RTA TRANSFERJAMA',
+    exact: true,
+    Component: lazy(() => import('pages/rta/transferjama')),
+  },
+  {
     path: '/cities/citieslist',
     key: 'PARTNER',
     exact: true,
