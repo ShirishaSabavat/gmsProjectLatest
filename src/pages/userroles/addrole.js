@@ -18,7 +18,7 @@ const addrole = () => {
   const nestedPath = [
     'Home',
     'User Roles',
-    `${id === -1 ? 'Create New Role' : 'Edit Role'}`,
+    `${id === -1 ? 'Create New Role' : 'Update Role'}`,
   ];
 
   const [radioValue, setRadioValue] = useState(true);
@@ -147,7 +147,7 @@ const addrole = () => {
       <div className="flex flex-col space-y-12">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            {id === -1 ? 'Create New Role' : 'Edit Role'}
+            {id === -1 ? 'Create New Role' : 'Update Role'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -217,7 +217,7 @@ const addrole = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '140px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            {id === -1 ? 'Add Role' : 'Edit Role'}
+            {id === -1 ? 'Add Role' : 'Update Role'}
           </Button>
         </div>
       </div>

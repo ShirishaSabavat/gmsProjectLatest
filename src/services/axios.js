@@ -21,9 +21,13 @@ export const loginApi = async (userData) => {
     localStorage.setItem('token', resp?.data?.results?.token);
     const user = `${resp?.data?.results?.user?.first_name} ${resp?.data?.results?.user?.last_name}`;
     localStorage.setItem('user', user);
-    localStorage.setItem('garageid', resp?.data?.results?.user?.teams[0].garageId)
-    localStorage.setItem('locationid', resp?.data?.results?.user?.teams[0].locationId)
     localStorage.setItem('role', resp?.data?.results?.user?.roles[0].role)
+    if (resp?.data?.results?.user?.roles[0].role === null || resp?.data?.results?.user?.roles[0].role === undefined || resp?.data?.results?.user?.roles[0].role === "Super Admin") {
+
+    } else {
+      localStorage.setItem('garageid', resp?.data?.results?.user?.teams[0].garageId);
+      localStorage.setItem('locationid', resp?.data?.results?.user?.teams[0].locationId);
+    }
     return resp;
   } catch (err) {
     console.log(err);

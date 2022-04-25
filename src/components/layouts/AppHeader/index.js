@@ -25,7 +25,7 @@ const Header = ({ logout }) => {
         className="h-8"
         style={{ margin: '1% 0 0 3%' }}
       />
-      <Input
+      {/* <Input
         size="medium"
         placeholder="Search for anything..."
         prefix={(
@@ -42,7 +42,7 @@ const Header = ({ logout }) => {
         suffix={searchLoading && <LoadingOutlined />}
         bordered={false}
         onPressEnter={({ target: { value } }) => globalSearch(value)}
-      />
+      /> */}
       <div className="flex items-center">
         <div id="Notification">
           <div id="Chart_Button_Copy">

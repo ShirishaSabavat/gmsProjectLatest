@@ -23,7 +23,7 @@ const addcity = () => {
 
   const nestedPath = [
     'Home',
-    `${id === -1 ? 'Add New City' : 'Edit City'}`,
+    `${id === -1 ? 'Add New City' : 'Update City'}`,
   ];
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const addcity = () => {
       <div className="flex flex-col space-y-12" style={{ fontFamily: 'Quicksand' }}>
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            {id === -1 ? 'Add New City' : 'Edit City'}
+            {id === -1 ? 'Add New City' : 'Update City'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -195,7 +195,7 @@ const addcity = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            {id === -1 ? 'Add New City' : 'Edit City'}
+            {id === -1 ? 'Add New City' : 'Update City'}
           </Button>
         </div>
       </div>

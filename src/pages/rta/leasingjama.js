@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 
 const nestedPath = [
   'Home',
-  'Repair Audit',
+  'Road Trip Audit',
 ];
 
 const { TextArea } = Input;
@@ -75,7 +75,7 @@ const carslistrta = () => {
             </div>
           </div>
           <div className="bg-white p-4 mx-2">
-            <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Car Details</p>
+            <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Remarks</p>
             <div className="flex flex-nonwrap bg-white">
               <TextArea
                 rows={4}

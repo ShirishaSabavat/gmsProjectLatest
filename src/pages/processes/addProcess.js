@@ -138,7 +138,7 @@ const createModules = () => {
           >
             <div className="row">
               <div span={22} className="col-6 text-start font-quicksand-medium">
-                {dropDownMenu.find((x) => x.id === selectedItem)?.module || 'Select from Modules(dropdown)'}
+                {dropDownMenu.find((x) => x.id === selectedItem)?.module || 'Select Modules(dropdown)'}
               </div>
               <div span={2} className="col-6 text-end">
                 <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />

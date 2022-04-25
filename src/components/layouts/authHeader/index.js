@@ -7,13 +7,11 @@ const Header = () => {
     <>
       <div className="flex">
         <img
-          src="/assets/images/logo/app-logo.svg"
+          src="/assets/images/logo/Web-Logo.png"
           alt="app-logo"
-          width="30"
+          className="h-8"
+          style={{ margin: '1% 0 0 3%' }}
         />
-        <span className="mx-3 font-mulish-semi-bold">
-          App Name
-        </span>
       </div>
       {pathname === '/auth/sign-in' && (
         <span>
