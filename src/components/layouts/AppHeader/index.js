@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 import { useState } from 'react';
 import { Input, Popover, Button } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -26,7 +28,7 @@ const Header = ({ logout }) => {
         className="h-8"
         style={{ margin: '1% 0 0 3%' }}
       />
-      <Input
+      {/* <Input
         size="medium"
         placeholder="Search for anything..."
         prefix={(
@@ -43,9 +45,9 @@ const Header = ({ logout }) => {
         suffix={searchLoading && <LoadingOutlined />}
         bordered={false}
         onPressEnter={({ target: { value } }) => globalSearch(value)}
-      />
+      /> */}
       <div className="flex items-center">
-        <div id="Notification">
+        {/* <div id="Notification">
           <div id="Chart_Button_Copy">
             <svg className="Chart_Area">
               <ellipse id="Chart_Area" rx="16" ry="16" cx="16" cy="16" />
@@ -67,7 +69,7 @@ const Header = ({ logout }) => {
               <span>3</span>
             </div>
           </div>
-        </div>
+        </div> */}
         <div id="Jessica_Smith">
           <span>{user}</span>
         </div>

@@ -48,11 +48,11 @@ const Sidebar = ({
       icon: '/assets/images/logo/sidebarLogo/processes.svg',
       key: '/processes/processes',
     },
-    {
-      title: 'RoadTrial',
-      icon: '/assets/images/logo/sidebarLogo/processes.svg',
-      key: '/roadTrial/roadTrial',
-    },
+    // {
+    //   title: 'RoadTrial',
+    //   icon: '/assets/images/logo/sidebarLogo/processes.svg',
+    //   key: '/roadTrial/roadTrial',
+    // },
     // {
     //   title: 'Pickup Locations',
     //   icon: '/assets/images/logo/sidebarLogo/garage.svg',
@@ -91,19 +91,25 @@ const Sidebar = ({
           );
         })}
       </Menu>
-      <Menu
+      {/* <Menu
         style={{ borderRight: 'none', marginTop: '95%' }}
         mode="inline"
         selectedKeys={[pathname]}
         onClick={({ settingPath = '/setting' }) => history.push(settingPath)}
       >
         <Item
-          icon={<img style={{ paddingBottom: '0.22rem' }} src="/assets/images/logo/sidebarLogo/settings.svg" alt="settings" />}
+          icon={
+            <img
+              style={{ paddingBottom: '0.22rem' }}
+              src="/assets/images/logo/sidebarLogo/settings.svg"
+              alt="settings"
+            />
+          }
           className="text-xs font-quicksand-semi-bold"
         >
           Settings
         </Item>
-      </Menu>
+      </Menu> */}
     </>
   );
 };

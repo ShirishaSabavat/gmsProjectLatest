@@ -5,10 +5,10 @@ import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import {
-  Input, Menu, Dropdown, Radio, Button, Checkbox, DatePicker,
+  Input, Menu, Dropdown, Radio, Button, Checkbox, DatePicker, notification,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
-import { useLocation } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import {
   editUserData, editUserProfile, getModules, getRoles, getAllCities, getAllGarages, addUserData, addUserProfile, addUserRole, addUserProcess, getUserProfile,
 } from 'services/axios';
@@ -24,13 +24,13 @@ const CRUD = {
 };
 
 const addrole = () => {
-  const location = useLocation();
-  const { id } = location.state;
+  const { id } = useParams();
+  const history = useHistory();
 
   const nestedPath = [
     'Home',
     'User Roles',
-    `${id === -1 ? 'Create New User' : 'Edit User'}`,
+    `${id === '-1' ? 'Create New User' : 'Edit User'}`,
   ];
 
   const [radioValue, setRadioValue] = useState(true);
@@ -139,7 +139,7 @@ const addrole = () => {
   }, []);
 
   useEffect(() => {
-    getUserProfile(id)
+    getUserProfile(Number(id))
       .then((res) => {
         console.log('getProfResp1', res?.data?.results);
         setFName(res?.data?.results?.first_name);
@@ -307,7 +307,7 @@ const addrole = () => {
       isValid = false;
     }
 
-    if (id === -1 && password.trim().length === 0) {
+    if (id === '-1' && password.trim().length === 0) {
       passwordErr.err = 'Password can not be empty';
       isValid = false;
     }
@@ -343,6 +343,15 @@ const addrole = () => {
       lName,
       userName,
       password,
+      radioValue,
+    };
+
+    const editUser = {
+      fName,
+      mName,
+      lName,
+      userName,
+      radioValue,
     };
 
     const userProfileData = {
@@ -362,46 +371,68 @@ const addrole = () => {
     console.log('EDIT PROFILE', userProfileData);
     console.log('EDIT ROLE', userRoleData);
     console.log('EDIT checkData', checkboxValue);
+
     if (resp) {
-      if (id !== -1) {
+      if (id !== '-1') {
         console.log('in edit');
-        editUserData(userData, id)
+        editUserData(editUser, Number(id))
           .then((res) => {
             console.log('res', res);
-            editUserProfile(userProfileData, id)
+            editUserProfile(userProfileData, Number(id))
               .then((editUserProfResp) => {
                 console.log('editUserProfResp', editUserProfResp);
-                addUserRole(userRoleData, id)
+                addUserRole(userRoleData, Number(id))
                   .then((userRoleResp) => {
                     console.log(userRoleResp);
-                    addUserProcess(checkboxValue, id)
+                    addUserProcess(checkboxValue, Number(id))
                       .then((userProcessResp) => {
                         console.log(userProcessResp);
-                        alert('User Profile Edited Successfully');
-                        window.location = '#/userProfiles/userProfiles';
+                        // alert('User Profile Edited Successfully');
+                        notification.success({
+                          message: 'User Profile Edited Successfully',
+                        });
+                        setTimeout(() => {
+                          history.push('/userProfiles/userProfiles');
+                        }, 1000);
                       })
                       .catch((err) => {
                         console.log('err', err);
-                        alert('Someething went wrong, Please try again later');
-                        window.location = '#/userProfiles/userProfiles';
+                        notification.success({
+                          message: 'Something went wrong, Please try again later',
+                        });
+                        setTimeout(() => {
+                          history.push('/userProfiles/userProfiles');
+                        }, 1000);
                       });
                   })
                   .catch((err) => {
                     console.log('err', err);
-                    alert('Someething went wrong, Please try again later');
-                    window.location = '#/userProfiles/userProfiles';
+                    notification.success({
+                      message: 'Something went wrong, Please try again later',
+                    });
+                    setTimeout(() => {
+                      history.push('/userProfiles/userProfiles');
+                    }, 1000);
                   });
               })
               .catch((err) => {
                 console.log('err', err);
-                alert('Someething went wrong, Please try again later');
-                window.location = '#/userProfiles/userProfiles';
+                notification.success({
+                  message: 'Something went wrong, Please try again later',
+                });
+                setTimeout(() => {
+                  history.push('/userProfiles/userProfiles');
+                }, 1000);
               });
           })
           .catch((err) => {
             console.log('err', err);
-            alert('Someething went wrong, Please try again later');
-            window.location = '#/userProfiles/userProfiles';
+            notification.success({
+              message: 'Something went wrong, Please try again later',
+            });
+            setTimeout(() => {
+              history.push('/userProfiles/userProfiles');
+            }, 1000);
           });
       } else {
         addUserData(userData)
@@ -414,34 +445,54 @@ const addrole = () => {
                 addUserRole(userRoleData, userId)
                   .then((userRoleResp) => {
                     console.log(userRoleResp);
-                    addUserProcess(checkboxValue, id)
+                    addUserProcess(checkboxValue, userId)
                       .then((userProcessResp) => {
                         console.log('USER PROCS RESP', userProcessResp);
-                        alert('User Added Successfully');
-                        window.location = '#/userProfiles/userProfiles';
+                        notification.success({
+                          message: 'User added successfully',
+                        });
+                        setTimeout(() => {
+                          history.push('/userProfiles/userProfiles');
+                        }, 1000);
                       })
                       .catch((err) => {
                         console.log('err', err);
-                        alert('Someething went wrong, Please try again later');
-                        window.location = '#/userProfiles/userProfiles';
+                        notification.success({
+                          message: 'Something went wrong, Please try again later',
+                        });
+                        setTimeout(() => {
+                          history.push('/userProfiles/userProfiles');
+                        }, 1000);
                       });
                   })
                   .catch((err) => {
                     console.log('err', err);
-                    alert('Someething went wrong, Please try again later');
-                    window.location = '#/userProfiles/userProfiles';
+                    notification.success({
+                      message: 'Something went wrong, Please try again later',
+                    });
+                    setTimeout(() => {
+                      history.push('/userProfiles/userProfiles');
+                    }, 1000);
                   });
               })
               .catch((err) => {
                 console.log(err);
-                alert('Someething went wrong, Please try again later');
-                window.location = '#/userProfiles/userProfiles';
+                notification.success({
+                  message: 'Something went wrong, Please try again later',
+                });
+                setTimeout(() => {
+                  history.push('/userProfiles/userProfiles');
+                }, 1000);
               });
           })
           .catch((err) => {
             console.log('err', err);
-            alert('Someething went wrong, Please try again later');
-            window.location = '#/userProfiles/userProfiles';
+            notification.success({
+              message: 'Something went wrong, Please try again later',
+            });
+            setTimeout(() => {
+              history.push('/userProfiles/userProfiles');
+            }, 1000);
           });
       }
     }
@@ -453,7 +504,7 @@ const addrole = () => {
       <div className="flex flex-col space-y-8">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            {id === -1 ? 'Create New User' : 'Edit User'}
+            {id === '-1' ? 'Create New User' : 'Edit User'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -720,7 +771,7 @@ const addrole = () => {
             <div className="flex basis-1/2">
               <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>User Name</p>
             </div>
-            {id === -1 && (
+            {id === '-1' && (
               <div className="flex basis-1/2">
                 <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Password</p>
               </div>
@@ -732,7 +783,7 @@ const addrole = () => {
                 <Input
                   placeholder="Username"
                   value={userName}
-                  disabled={id !== -1}
+                  disabled={id !== '-1'}
                   onChange={(e) => setUserName(e.target.value)}
                   style={{
                     padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
@@ -745,7 +796,7 @@ const addrole = () => {
                 </div>
               ))}
             </div>
-            {id === -1 && (
+            {id === '-1' && (
               <div className="flex flex-col basis-1/2">
                 <div className="flex">
                   <Input
@@ -857,7 +908,7 @@ const addrole = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '140px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            {id === -1 ? 'Add User' : 'Edit User'}
+            {id === '-1' ? 'Add User' : 'Edit User'}
           </Button>
         </div>
       </div>

@@ -4,7 +4,7 @@ import Breadcrumb from 'components/layouts/breadcrumb';
 // eslint-disable-next-line no-unused-vars
 import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
 import { Pagination } from 'react-headless-pagination';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Listitemuserroles from 'components/layouts/Listitemuserroles';
 import { getUserRoles } from 'services/axios';
 
@@ -52,18 +52,21 @@ function userroleslist() {
         });
     }
   }
+
+  const history = useHistory();
+
   return (
     <>
       <Helmet title="User Roles" />
       <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
-        <Link
-          to={{ pathname: 'addrole', state: { id: -1 } }}
+        <div
+          onClick={() => history.push('/userroles/addrole/-1')}
           style={{
-            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none', cursor: 'pointer',
           }}
         >
           Add New Role +
-        </Link>
+        </div>
       </div>
       <div>
         <div className="flex flex-col space-y-12">

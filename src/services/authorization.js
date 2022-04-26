@@ -51,7 +51,6 @@ export const currentAccountLoad = async () => {
 export const logout = async () => {
   Cookies.remove('appToken');
   Cookies.remove('appUserId');
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
+  localStorage.clear();
   return false;
 };

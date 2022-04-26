@@ -4,19 +4,19 @@ import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import {
-  Input, Menu, Dropdown, Button, Radio,
+  Input, Menu, Dropdown, Button, Radio, notification,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
   getAllCities, addGarageApi, editGarageApi, getGarageById,
 } from 'services/axios';
-import { useLocation } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const { TextArea } = Input;
 
 const addgarage = () => {
-  const location = useLocation();
-  const { id } = location.state;
+  const { id } = useParams();
+  const history = useHistory();
 
   const [garageTitle, setGarageTitle] = useState('');
   // const [garageDescription, setGarageDescription] = useState('');
@@ -33,7 +33,7 @@ const addgarage = () => {
 
   const nestedPath = [
     'Home',
-    `${id === -1 ? 'Add New Garage' : 'Edit Garage'}`,
+    `${id === '-1' ? 'Add New Garage' : 'Edit Garage'}`,
   ];
 
   const menu = (
@@ -60,8 +60,9 @@ const addgarage = () => {
   useEffect(() => {
     getGarageById(id)
       .then((res) => {
-        console.log('getResp', res?.data?.results?.cityId);
+        console.log('getResp', res?.data?.results);
         setGarageTitle(res?.data?.results?.name);
+        setRadioValue(res?.data?.results?.isActive);
         // setGarageDescription(res?.data?.results?.description);
         setSelectedItem(res?.data?.results?.cityId);
       })
@@ -119,25 +120,33 @@ const addgarage = () => {
     console.log('id', id);
 
     if (resp) {
-      if (id !== -1) {
+      if (id !== '-1') {
         console.log('in edit');
         // eslint-disable-next-line max-len
-        editGarageApi(garageTitle, selectedItem, id)
+        editGarageApi(garageTitle, selectedItem, radioValue, id)
           .then((res) => {
             console.log('res', res);
-            alert('Garage updated successfully');
-            window.location.href = '#/garage/garagelist';
+            notification.success({
+              message: 'Garage updated successfully',
+            });
+            setTimeout(() => {
+              history.push('/garage/garagelist');
+            }, 1000);
           })
           .catch((err) => {
             console.log('err', err);
           });
       } else {
         console.log('in add');
-        addGarageApi(garageTitle, selectedItem)
+        addGarageApi(garageTitle, selectedItem, radioValue)
           .then((res) => {
             console.log('res', res);
-            alert('Garage added successfully');
-            window.location.href = '#/garage/garagelist';
+            notification.success({
+              message: 'Garage added successfully',
+            });
+            setTimeout(() => {
+              history.push('/garage/garagelist');
+            }, 1000);
           })
           .catch((err) => {
             console.log('err', err);
@@ -152,7 +161,7 @@ const addgarage = () => {
       <div className="flex flex-col space-y-12 mx-5">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            {id === -1 ? 'Add New Garage' : 'Edit Garage'}
+            {id === '-1' ? 'Add New Garage' : 'Edit Garage'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>

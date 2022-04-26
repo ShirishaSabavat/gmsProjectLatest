@@ -19,7 +19,7 @@ export const loginApi = async (userData) => {
     });
     console.log(resp.data.results.user.roles[0].role);
     localStorage.setItem('token', resp?.data?.results?.token);
-    const user = `${resp?.data?.results?.user?.first_name} ${resp?.data?.results?.user?.last_name}`;
+    const user = `${resp?.data?.results?.user?.first_name}`;
     localStorage.setItem('user', user);
     localStorage.setItem('role', resp?.data?.results?.user?.roles[0].role);
     if (!(resp?.data?.results?.user?.roles[0].role === null || resp?.data?.results?.user?.roles[0].role === undefined || resp?.data?.results?.user?.roles[0].role === 'Super Admin')) {
@@ -177,6 +177,7 @@ export const addCity = (cityName, radioValue, garageSeries, userSeries) => {
     name: cityName,
     user_series: userSeries,
     garage_series: garageSeries,
+    isActive: radioValue,
   });
   return axios({
     method: 'POST',
@@ -191,6 +192,7 @@ export const editCity = (cityName, radioValue, garageSeries, userSeries, process
     name: cityName,
     user_series: userSeries,
     garage_series: garageSeries,
+    isActive: radioValue,
   });
   return axios({
     method: 'PUT',
@@ -208,10 +210,11 @@ export const getCityData = (cityId) => axios({
 
 // User Roles axios
 
-export const addRole = (roleTitle) => {
+export const addRole = (roleTitle, radioValue) => {
   console.log(roleTitle);
   const data = JSON.stringify({
     role: roleTitle,
+    isActive: radioValue,
   });
   return axios({
     method: 'POST',
@@ -221,9 +224,10 @@ export const addRole = (roleTitle) => {
   });
 };
 
-export const editRole = (roleTitle, roleId) => {
+export const editRole = (roleTitle, roleId, radioValue) => {
   const data = JSON.stringify({
     role: roleTitle,
+    isActive: radioValue,
   });
   return axios({
     method: 'PUT',
@@ -245,14 +249,17 @@ export const getRole = (roleId) => axios({
   headers,
 });
 
-export const addRoleModule = (roleId, moduleId) => {
-  const data = JSON.stringify({
-    roleId,
-    moduleId,
+export const addRoleModule = (roleId, roleModules) => {
+  const data = [];
+  roleModules.forEach((item) => {
+    data.push({
+      roleId,
+      moduleId: item,
+    });
   });
   return axios({
     method: 'POST',
-    url: 'http://13.126.183.78:8086/api/v1/modules/roleModule',
+    url: 'http://13.126.183.78:8086/api/v1/modules/bulkRoleModules',
     headers,
     data,
   });
@@ -290,10 +297,11 @@ export const editTeamApi = (name, logourl, description, locationId, garageId, te
   });
 };
 
-export const addGarageApi = (garageTitle, cityId, garageSeries) => {
+export const addGarageApi = (garageTitle, cityId, radioValue) => {
   const data = JSON.stringify({
     name: garageTitle,
     cityId,
+    isActive: radioValue,
   });
   return axios({
     method: 'POST',
@@ -303,10 +311,11 @@ export const addGarageApi = (garageTitle, cityId, garageSeries) => {
   });
 };
 
-export const editGarageApi = (garageTitle, cityId, garageId) => {
+export const editGarageApi = (garageTitle, cityId, radioValue, garageId) => {
   const data = JSON.stringify({
     name: garageTitle,
     cityId,
+    isActive: radioValue,
   });
   return axios({
     method: 'PUT',
@@ -373,6 +382,7 @@ export const addUserData = (userData) => {
     last_name: userData.lName,
     user_name: userData.userName,
     password: userData.password,
+    isActive: userData.radioValue,
   });
   return axios({
     method: 'POST',
@@ -439,7 +449,7 @@ export const editUserData = (userData, userId) => {
     middle_name: userData.mName,
     last_name: userData.lName,
     user_name: userData.userName,
-    password: userData.password,
+    isActive: userData.radioValue,
   });
   return axios({
     method: 'PUT',

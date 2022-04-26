@@ -7,40 +7,40 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import {
-  Input, Radio, Button, Menu, Dropdown,
+  Input, Radio, Button, Menu, Dropdown, notification,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
   getUserProfiles, getPickupLocationByGarageId, addTeamApi, editTeamApi,
 } from 'services/axios';
-import { useLocation } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { DropdownMenu } from 'reactstrap';
 
 const { TextArea } = Input;
 
 const addteam = () => {
-  const location = useLocation();
   const {
-    id, garageId, locationId, teamId, garage_name, garage_description,
-  } = location.state;
+    teamId, garageId, locationId, garageName, team_name, team_description,
+  } = useParams();
+  const history = useHistory();
 
   const nestedPath = [
     'Home',
-    `${id === -1 ? 'Add Team' : 'Edit Team'}`,
+    `${teamId === '-1' ? 'Add Team' : 'Edit Team'}`,
   ];
 
   const [radioValue, setRadioValue] = useState(true);
   const [profileList, setProfileList] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [teamTitle, setTeamTitle] = useState(garage_name);
+  const [teamTitle, setTeamTitle] = useState(team_name === '-1' ? '' : team_name);
   const [teamError, setTeamError] = useState({});
   const [selectedLocationID, setSelectedLocationID] = useState('');
-  const [teamDescription, setTeamDescription] = useState(garage_description);
+  const [teamDescription, setTeamDescription] = useState(team_description === '-1' ? '' : team_description);
   const [teamDescriptionError, setTeamDescriptionError] = useState('');
   const [garageSeries, setGarageSeries] = useState('');
   const [userSeries, setUserSeries] = useState('');
   const [dropDownMenu, setDropDownMenu] = useState([]);
-  const [selectedItem, setSelectedItem] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(Number(locationId));
   const [cityError, setCityError] = useState({});
 
   const userRoleMenu = (
@@ -62,7 +62,7 @@ const addteam = () => {
         getUserProfiles(0).then((resp) => {
           console.log('res', resp);
           setProfileList(resp.data?.results.pageData);
-          setSelectedItem(locationId);
+          setSelectedItem(Number(locationId));
         })
           .catch((err) => {
             console.log('err', err);
@@ -72,9 +72,6 @@ const addteam = () => {
         console.log('err', err);
       });
   }, []);
-
-  console.log('selectedItem', selectedItem);
-  console.log('locationId', locationId);
 
   const AddToArray = (itemId) => {
     setSelectedUsers([...selectedUsers, itemId]);
@@ -128,29 +125,37 @@ const addteam = () => {
     console.log('teamdescription', teamDescription);
     console.log('selectedItem', selectedItem);
     console.log('garageid', garageId);
-    console.log('locationid', locationId);
+    console.log('locationid', Number(locationId));
     console.log('radioValue', radioValue);
 
     if (resp) {
-      if (id !== -1) {
+      if (teamId !== '-1') {
         console.log('in edit');
         // eslint-disable-next-line max-len
-        editTeamApi(teamTitle, '', teamDescription, locationId, garageId, teamId)
+        editTeamApi(teamTitle, '', teamDescription, Number(locationId), garageId, teamId)
           .then((res) => {
             console.log('res', res);
-            alert('Team edited successfully');
-            window.location.href = '#/garage/garagelist';
+            notification.success({
+              message: 'Team edited successfully',
+            });
+            setTimeout(() => {
+              history.push(`/garage/teamslist/${garageId}/${garageName}`);
+            }, 1000);
           })
           .catch((err) => {
             console.log('err', err);
           });
       } else {
         console.log('in add');
-        addTeamApi(teamTitle, teamDescription, locationId, garageId)
+        addTeamApi(teamTitle, teamDescription, Number(locationId), garageId)
           .then((res) => {
             console.log('res', res);
-            alert('Team added successfully');
-            window.location.href = '#/garage/garagelist';
+            notification.success({
+              message: 'Team added successfully',
+            });
+            setTimeout(() => {
+              history.push(`/garage/teamslist/${garageId}/${garageName}`);
+            }, 1000);
           })
           .catch((err) => {
             console.log('err', err);
@@ -165,7 +170,7 @@ const addteam = () => {
       <div className="flex flex-col space-y-12 mx-5">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            {id === -1 ? 'Add Team' : 'Edit Team'}
+            {teamId === '-1' ? 'Add Team' : 'Edit Team'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -235,10 +240,15 @@ const addteam = () => {
                 </div>
               </Button>
             </Dropdown>
+            {Object.keys(cityError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {cityError[key]}
+              </div>
+            ))}
           </div>
 
         </div>
-        <div>
+        <div className="bg-white p-0">
           {profileList.map((item) => (
             <div className={selectedUsers.includes(item.id) ? 'h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8 border-2 border-cyan-500' : 'h-36 flex flex-row flex-nonwrap bg-white rounded-lg my-3 mx-8'}>
               <Button
@@ -250,8 +260,8 @@ const addteam = () => {
               </Button>
               <img className="w-28 h-28 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/defaultperson.jpg')} />
               <div>
-                <h1 className="font-quicksand-bold text-2xl mt-6">{item.first_name}</h1>
-                <h1 className="font-quicksand-semi-bold text-xl mt-6">{item.user_name}</h1>
+                <h1 className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '50px', marginLeft: '30px' }}>{item.first_name}</h1>
+                <h1 className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginLeft: '30px' }}>{item.user_name}</h1>
               </div>
 
             </div>
@@ -265,7 +275,7 @@ const addteam = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            {id === -1 ? 'Add Team' : 'Edit Team'}
+            {teamId === '-1' ? 'Add Team' : 'Edit Team'}
           </Button>
         </div>
       </div>

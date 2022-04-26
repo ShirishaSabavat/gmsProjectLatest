@@ -4,7 +4,7 @@ import Breadcrumb from 'components/layouts/breadcrumb';
 import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
 import Listitemteamgarage from 'components/layouts/Listitemteamgarage';
 import { Pagination } from 'react-headless-pagination';
-import { Link, useLocation } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { getTeamGarages } from 'services/axios';
 
 function teamslist() {
@@ -12,8 +12,7 @@ function teamslist() {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
-  const location = useLocation();
-  const { name, garageId } = location.state;
+  const { name, garageId } = useParams();
 
   const nestedPath = [
     'Home',
@@ -22,7 +21,7 @@ function teamslist() {
   ];
 
   useEffect(() => {
-    getTeamGarages(0, 1).then((res) => {
+    getTeamGarages(0, garageId).then((res) => {
       console.log('res', res);
       setGarages(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
@@ -56,23 +55,19 @@ function teamslist() {
         });
     }
   }
+  const history = useHistory();
   return (
     <>
       <Helmet title="Garages" />
       <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
-        <Link
-          to={{
-            pathname: 'addteam',
-            state: {
-              id: -1, garageId, locationId: -1, garage_name: '', garage_description: '',
-            },
-          }}
+        <div
+          onClick={() => history.push(`/garage/addteam/-1/${garageId}/-1/${name}/-1/-1`)}
           style={{
-            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none', cursor: 'pointer',
           }}
         >
           Add New Team +
-        </Link>
+        </div>
       </div>
       <div>
         <div className="flex flex-col space-y-12 mx-5">
@@ -98,8 +93,9 @@ function teamslist() {
           {garages.map((item) => (
             <Listitemteamgarage
               team_id={item.id}
-              garage_name={item.name}
-              garage_description={item.description}
+              garageName={name}
+              team_name={item.name}
+              team_description={item.description}
               garage_id={garageId}
               locationId={item.locationId}
               status={String(item.isActive)}

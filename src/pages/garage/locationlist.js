@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
 import Listitemlocation from 'components/layouts/Listitemlocation';
 import { getPickupLocationByGarageId } from 'services/axios';
@@ -15,8 +15,7 @@ const nestedPath = [
 ];
 
 function ProcessesPage() {
-  const location = useLocation();
-  const { garageId } = location.state;
+  const { garageId } = useParams();
   console.log(garageId, 'in locations list');
 
   const [locationList, setLocationList] = useState([]);
@@ -34,18 +33,20 @@ function ProcessesPage() {
       });
   }, []);
 
+  const history = useHistory();
+
   return (
     <>
       <Helmet title="Locations" />
       <div style={{ fontFamily: 'Quicksand' }} className="absolute right-20 mt-3.5">
-        <Link
-          to={{ pathname: 'addPickupLocation', state: { locationId: -1, garage_id: garageId } }}
+        <div
+          onClick={() => history.push(`/garage/addPickupLocation/-1/${garageId}`)}
           style={{
-            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none', cursor: 'pointer',
           }}
         >
           Add Location +
-        </Link>
+        </div>
       </div>
       <div>
         <div className="flex flex-col space-y-12">

@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-boolean-value */
 import { React, useState, useEffect } from 'react';
 import {
-  Input, Menu, Button, Dropdown, Radio,
+  Input, Menu, Button, Dropdown, Radio, notification,
 } from 'antd';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
   addProcess, getModules, getProcessById, editProcess,
 } from 'services/axios';
-import { useLocation } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const createModules = () => {
   const [radioValue, setRadioValue] = useState(true);
@@ -16,12 +16,13 @@ const createModules = () => {
   const [processError, setProcessError] = useState({});
   const [dropDownMenu, setDropDownMenu] = useState([]);
   const [selectedItem, setSelectedItem] = useState('');
-  const location = useLocation();
-  const { id } = location.state;
+
+  const { id } = useParams();
+  const history = useHistory();
 
   const nestedPath = [
     'Home',
-    `${id === -1 ? 'Add New Process' : 'Edit Process'}`,
+    `${id === '-1' ? 'Add New Process' : 'Edit Process'}`,
   ];
 
   const menu = (
@@ -79,25 +80,45 @@ const createModules = () => {
     if (resp) {
       if (id !== -1) {
         console.log('in edit');
-        editProcess(processName, radioValue, selectedItem, id)
+        editProcess(processName, radioValue, selectedItem, Number(id))
           .then((res) => {
             console.log('res', res);
-            alert('Process Edited Successfully');
-            window.location = '#/processes/processes';
+            notification.success({
+              message: 'Process Edited Successfully',
+            });
+            setTimeout(() => {
+              history.push('/processes/processes');
+            }, 1000);
           })
           .catch((err) => {
             console.log('err', err);
+            notification.err({
+              message: 'Something went wrong',
+            });
+            setTimeout(() => {
+              history.push('/processes/processes');
+            }, 1000);
           });
       } else {
         console.log('in add');
         addProcess(processName, radioValue, selectedItem)
           .then((res) => {
             console.log('res', res);
-            alert('Process Added Successfully');
-            window.location = '#/processes/processes';
+            notification.success({
+              message: 'Process Added Successfully',
+            });
+            setTimeout(() => {
+              history.push('/processes/processes');
+            }, 1000);
           })
           .catch((err) => {
             console.log('err', err);
+            notification.err({
+              message: 'Something went wrong',
+            });
+            setTimeout(() => {
+              history.push('/processes/processes');
+            }, 1000);
           });
       }
     }
@@ -107,7 +128,7 @@ const createModules = () => {
     <div className="row px-4">
       <div className="space-y-2 basic-1/2">
         <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-          {id === -1 ? 'Add New Process' : 'Edit Process'}
+          {id === '-1' ? 'Add New Process' : 'Edit Process'}
         </span>
         <Breadcrumb nestedPath={nestedPath} />
       </div>
