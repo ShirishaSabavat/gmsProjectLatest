@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input, Button } from 'antd';
 import { useState, useEffect } from 'react';
-import { addRTAList, getCarsList } from 'services/axios';
+import { addRTAList } from 'services/axios';
 import { Link, Redirect } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 

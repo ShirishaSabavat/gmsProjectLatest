@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const nestedPath = [
   'Home',
@@ -9,6 +10,14 @@ const nestedPath = [
 ];
 
 const homepage = () => {
+  const [username, setUserName] = useState("");
+  const [empid, setEmpID] = useState("");
+  useEffect(() => {
+    const tempUserName = localStorage.getItem('user');
+    const tempempid = localStorage.getItem('empid');
+    setUserName(tempUserName);
+    setEmpID(tempempid);
+  }, []);
   const goToCarFormPage = () => {
     window.location.href = '#/gatekeeper/carformpage'
   }
@@ -30,16 +39,16 @@ const homepage = () => {
             <div className="flex flex-row justify-center">
               <img className="w-28 h-28 my-3 rounded-full align-middle" alt="" src={require('../../components/layouts/defaultperson.jpg')} />
             </div>
-            <h1 className="font-quicksand-bold text-xl mt-6 text-center">Shreyas Gupta</h1>
+            <h1 className="font-quicksand-bold text-xl mt-6 text-center">{username}</h1>
             <h1 className="font-quicksand-semi-bold text-base mt-3 text-center">Gatekeeper Auditor</h1>
-            <div className="flex flex-row justify-center">
+            <div className="flex flex-row justify-center mb-6">
               <h1 className="font-quicksand-semi-bold text-base mt-3">ID: </h1>
-              <h1 className="font-quicksand-semi-bold text-base mt-3 text-teal-300"> EFV564651654</h1>
+              <h1 className="font-quicksand-semi-bold text-base mt-3 text-teal-300"> {empid}</h1>
             </div>
-            <div className="flex flex-row justify-center">
+            {/* <div className="flex flex-row justify-center">
               <h1 className="font-quicksand-semi-bold text-base my-3">Last Login: </h1>
               <h1 className="font-quicksand-semi-bold text-base my-3 text-teal-300"> 17/01/2022 10:52:20</h1>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className={"flex bg-white rounded-lg my-3 mx-8 justify-center py-24"}>

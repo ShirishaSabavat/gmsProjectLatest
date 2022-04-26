@@ -24,6 +24,7 @@ const carformpage = () => {
     carId, carnumber
   } = location.state;
   const [radioValue, setRadioValue] = useState(true);
+  const [isFocused, setisFocused] = useState(false);
   const [CarsList, setCarsList] = useState([]);
   const [DriverName, setDriverName] = useState("");
   const [DriverContact, setDriverContact] = useState("");
@@ -31,7 +32,9 @@ const carformpage = () => {
   const [DriverNameError, setDriverNameError] = useState("");
   const [DriverContactError, setDriverContactError] = useState("");
   const [DriverManagerNameError, setDriverManagerNameError] = useState("");
-  const [VisitCategory, setVisitCategory] = useState(1);
+  const [DriverVisitCategoryError, setDriverVisitCategoryError] = useState("");
+  const [DriverSelectedCarNumberError, setDriverSelectedCarNumberError] = useState("");
+  const [VisitCategory, setVisitCategory] = useState(10);
   const [SelectedCarID, setSelectedCarID] = useState(0);
   const [SelectedCarNumber, setSelectedCarNumber] = useState("");
   const [GarageID, setGarageID] = useState("");
@@ -66,11 +69,20 @@ const carformpage = () => {
   const getCarDetails = (id) => {
     getCarDetailsList(id).then((resp) => {
       console.log(resp?.data);
-      setDriverName(resp?.data[0].driver_name);
-      setDriverContact(resp?.data[0].mobile);
-      setDriverManagerName(resp?.data[0].manager_name);
-      setSelectedDriverID(resp?.data[0].driver_id);
-      setSelectedDriverManagerID(resp?.data[0].manager_id);
+      if (resp?.data.length > 0) {
+        setDriverName(resp?.data[0].driver_name);
+        setDriverContact(resp?.data[0].mobile);
+        setDriverManagerName(resp?.data[0].manager_name);
+        setSelectedDriverID(resp?.data[0].driver_id);
+        setSelectedDriverManagerID(resp?.data[0].manager_id);
+      } else {
+        setDriverName("");
+        setDriverContact("");
+        setDriverManagerName("");
+        setSelectedDriverID(0);
+        setSelectedDriverManagerID("");
+      }
+
     })
       .catch((err) => {
         console.log('err', err);
@@ -79,31 +91,27 @@ const carformpage = () => {
 
   const validateFormData = () => {
     const driverNameError = {};
-    const driverContactError = {};
+    const selectedcarnumbererror = {};
     const driverManagerError = {};
+    const driverVisitCategoryError = {};
     let isValid = true;
-    if (DriverName.trim().length === 0) {
-      driverNameError.err = 'Driver name can not be empty';
-      isValid = false;
-    } else {
 
-    }
-    if (DriverContact.trim().length === 0) {
-      driverContactError.err = 'Driver Contact can not be empty';
-      isValid = false;
-    } else {
-
-    }
-    if (DriverManagerName.trim().length === 0) {
-      driverManagerError.err = 'Driver Manager name can not be empty';
+    if (SelectedCarNumber.trim() === "") {
+      selectedcarnumbererror.err = 'Please Select Car.';
       isValid = false;
     } else {
 
     }
 
-    setDriverNameError(driverNameError);
-    setDriverContactError(driverContactError);
-    setDriverManagerNameError(driverManagerError);
+    if (VisitCategory === 10) {
+      driverVisitCategoryError.err = 'Please select reason for visit';
+      isValid = false;
+    } else {
+
+    }
+
+    setDriverSelectedCarNumberError(selectedcarnumbererror);
+    setDriverVisitCategoryError(driverVisitCategoryError);
     return isValid;
   };
 
@@ -143,6 +151,13 @@ const carformpage = () => {
   const handleOnSearch = (string, results) => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
+    console.log(string);
+    if (string === "") {
+      setisFocused(false);
+    } else {
+      setisFocused(true)
+    }
+
   }
 
   const handleOnHover = (result) => {
@@ -150,6 +165,7 @@ const carformpage = () => {
     getCarDetails(result.id);
     setSelectedCarID(result.id);
     setSelectedCarNumber(result.name);
+    setisFocused(false);
   }
 
   const handleOnSelect = (item) => {
@@ -157,6 +173,7 @@ const carformpage = () => {
   }
 
   const handleOnFocus = () => {
+
     console.log('Focused')
   }
 
@@ -189,13 +206,19 @@ const carformpage = () => {
                 onSearch={handleOnSearch}
                 onHover={handleOnHover}
                 onSelect={handleOnSelect}
+                onClear={() => setisFocused(false)}
                 onFocus={handleOnFocus}
                 autoFocus
                 formatResult={formatResult}
               />
             </div> :
             <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>{carnumber}</p>}
-          <div className="bg-white py-5">
+          {Object.keys(DriverSelectedCarNumberError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {DriverSelectedCarNumberError[key]}
+            </div>
+          ))}
+          <div className={isFocused === true ? "bg-white pt-80 pb-5" : "bg-white py-5"}>
             <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Is Car with Driver?</p>
             <div className="flex flex-row flex-nonwrap bg-white">
               <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
@@ -281,6 +304,11 @@ const carformpage = () => {
               Leasing Car Jama
             </Button>
           </div>
+          {Object.keys(DriverVisitCategoryError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {DriverVisitCategoryError[key]}
+            </div>
+          ))}
         </div>
         <div className="col-12 flex flex-row justify-center">
           <Button

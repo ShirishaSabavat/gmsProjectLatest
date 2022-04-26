@@ -21,11 +21,14 @@ export const loginApi = async (userData) => {
     localStorage.setItem('token', resp?.data?.results?.token);
     const user = `${resp?.data?.results?.user?.first_name} ${resp?.data?.results?.user?.last_name}`;
     localStorage.setItem('user', user);
+
     localStorage.setItem('role', resp?.data?.results?.user?.roles[0].role)
     if (resp?.data?.results?.user?.roles[0].role === null || resp?.data?.results?.user?.roles[0].role === undefined || resp?.data?.results?.user?.roles[0].role === "Super Admin") {
 
     } else {
+      localStorage.setItem('empid', resp?.data?.results?.user?.user_profile?.emp_id);
       localStorage.setItem('garageid', resp?.data?.results?.user?.teams[0].garageId);
+      localStorage.setItem('createdby', resp?.data?.results?.user?.roles[0].createdBy);
       localStorage.setItem('locationid', resp?.data?.results?.user?.teams[0].locationId);
     }
     return resp;
@@ -479,9 +482,9 @@ export const getRolesUI = (id) => axios({
   headers,
 });
 
-export const getCarsList = (id) => axios({
+export const getCarsList = (garageid, createdby) => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/visitingCars?createdBy=${id}`,
+  url: `http://13.126.183.78:8086/api/v1/visitingCars?garageId[]=${garageid}&createdBy=${createdby}`,
   headers,
 });
 
@@ -491,9 +494,9 @@ export const getCarsListEverest = () => axios({
   headers,
 });
 
-export const getCarsListJama = () => axios({
+export const getCarsListJama = (garageid) => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/visitingCars?visit_category=1,2`,
+  url: `http://13.126.183.78:8086/api/v1/visitingCars?garageId[]=${garageid}&visit_category[]=1,2`,
   headers,
 });
 
@@ -571,11 +574,23 @@ export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) =>
     previousAudit: visitcategory,
     currentAudit: rejectid,
     transfer_reason: rejectreason,
+    jama_status: 2,
   });
   console.log(data);
   return axios({
     method: 'POST',
     url: `http://13.126.183.78:8086/api/v1/auditTransfer`,
+    headers,
+    data,
+  })
+};
+
+export const addTeamMembersBulk = (users) => {
+  const data = JSON.stringify(users);
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: `http://13.126.183.78:8086/api/v1/team/bulkUserTeam`,
     headers,
     data,
   })

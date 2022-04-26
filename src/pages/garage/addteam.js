@@ -9,7 +9,7 @@ import {
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
-  getUserProfiles, getPickupLocationByGarageId, addTeamApi, editTeamApi,
+  getUserProfiles, getPickupLocationByGarageId, addTeamApi, editTeamApi, addTeamMembersBulk,
 } from 'services/axios';
 import { useLocation } from 'react-router-dom';
 import { DropdownMenu } from 'reactstrap';
@@ -19,12 +19,12 @@ const { TextArea } = Input;
 const addteam = () => {
   const location = useLocation();
   const {
-    id, garageId, locationId, teamId, garage_name, garage_description
+    garageId, locationId, teamId, garage_name, garage_description, users_ids
   } = location.state;
 
   const nestedPath = [
     'Home',
-    `${id === -1 ? 'Add Team' : 'Edit Team'}`,
+    `${teamId === -1 ? 'Add Team' : 'Edit Team'}`,
   ];
 
   const [radioValue, setRadioValue] = useState(true);
@@ -55,11 +55,12 @@ const addteam = () => {
   useEffect(() => {
     getPickupLocationByGarageId(garageId)
       .then((res) => {
-        console.log('garageList', res);
+        //console.log('garageList', res);
         setDropDownMenu(res?.data?.results?.pageData);
         getUserProfiles(0).then((resp) => {
-          console.log('res', res);
+          //console.log('res', res);
           setProfileList(resp.data?.results.pageData);
+          AddUsersArray();
         })
           .catch((err) => {
             console.log('err', err);
@@ -69,6 +70,19 @@ const addteam = () => {
         console.log('err', err);
       });
   }, []);
+
+  const AddUsersArray = () => {
+    console.log(users_ids.length);
+    var i = 0;
+    var tempUsers = [];
+    for (i = 0; i < users_ids.length; i++) {
+      tempUsers.push(users_ids[i].id);
+    }
+    setSelectedUsers(tempUsers);
+
+    console.log(users_ids);
+  }
+
   const AddToArray = (id) => {
     setSelectedUsers([...selectedUsers, id]);
   }
@@ -125,14 +139,13 @@ const addteam = () => {
     console.log('radioValue', radioValue);
 
     if (resp) {
-      if (id !== -1) {
+      if (teamId !== -1) {
         console.log('in edit');
         // eslint-disable-next-line max-len
         editTeamApi(teamTitle, '', teamDescription, locationId, garageId, teamId)
           .then((res) => {
             console.log('res', res);
-            alert('Team edited successfully');
-            window.location.href = '#/garage/garagelist';
+            AddMemebersBulk(teamId, 'Team edited successfully.');
           })
           .catch((err) => {
             console.log('err', err);
@@ -142,8 +155,7 @@ const addteam = () => {
         addTeamApi(teamTitle, teamDescription, locationId, garageId)
           .then((res) => {
             console.log('res', res);
-            alert('Team added successfully');
-            window.location.href = '#/garage/garagelist';
+            AddMemebersBulk(res?.data?.results?.id, 'Team added successfully.');
           })
           .catch((err) => {
             console.log('err', err);
@@ -152,13 +164,33 @@ const addteam = () => {
     }
   };
 
+  const AddMemebersBulk = (idteam, message) => {
+    var tempUsersArray = [];
+    var i = 0;
+    for (i = 0; i < selectedUsers.length; i++) {
+      tempUsersArray.push({
+        teamId: idteam,
+        userId: selectedUsers[i]
+      })
+    }
+    addTeamMembersBulk(tempUsersArray)
+      .then((res) => {
+        console.log('res', res);
+        alert(message);
+        window.location.href = '#/garage/garagelist';
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }
+
   return (
     <>
       <Helmet title="Teams" />
       <div className="flex flex-col space-y-12 mx-5">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            {id === -1 ? 'Add Team' : 'Edit Team'}
+            {teamId === -1 ? 'Add Team' : 'Edit Team'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -259,7 +291,7 @@ const addteam = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            {id === -1 ? 'Add Team' : 'Edit Team'}
+            {teamId === -1 ? 'Add Team' : 'Edit Team'}
           </Button>
         </div>
       </div>

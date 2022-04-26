@@ -12,8 +12,15 @@ const nestedPath = [
 
 const carslist = () => {
   const [CarsList, setCarsList] = useState([]);
+  const [garageid, setGarageID] = useState("");
+  const [createdbyid, setCreatedBy] = useState("");
   useEffect(() => {
-    getCarsList(1).then((resp) => {
+    const tempgarageid = localStorage.getItem('garageid');
+    const tempcreatedbyid = localStorage.getItem('createdby');
+    setGarageID(tempgarageid);
+    setCreatedBy(tempcreatedbyid);
+    getCarsList(tempgarageid, tempcreatedbyid).then((resp) => {
+      console.log("garageid: " + tempgarageid + ", createdbyid: " + tempcreatedbyid);
       console.log(resp);
       setCarsList(resp.data?.results.pageData);
     })
@@ -60,15 +67,11 @@ const carslist = () => {
                   <div>
                     <h1 className="font-quicksand-bold text-xl mt-3">{item.car_number}</h1>
                     <h1 className="font-quicksand-semi-bold text-sm mt-1">Maruti Suzuki Drive Vxi CNG</h1>
-                    <div className="flex flex-row justify-center">
+                    <div className="flex flex-row">
                       <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-                      <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">EVSF534681321</h1>
+                      <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{item.visitId}</h1>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-row justify-center">
-                  <h1 className="font-quicksand-semi-bold text-base my-3">Last Login: </h1>
-                  <h1 className="font-quicksand-semi-bold text-base my-3 text-teal-300">{item.updatedAt.substring(0, 10)}</h1>
                 </div>
               </div>
             </Link>

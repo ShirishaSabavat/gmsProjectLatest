@@ -22,7 +22,7 @@ function teamslist() {
   ];
 
   useEffect(() => {
-    getTeamGarages(0, 1).then((res) => {
+    getTeamGarages(0, garageId).then((res) => {
       console.log('res', res);
       setGarages(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
@@ -61,7 +61,7 @@ function teamslist() {
       <Helmet title="Garages" />
       <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
         <Link
-          to={{ pathname: 'addteam', state: { id: -1, garageId: garageId, locationId: -1, garage_name: '', garage_description: '' } }}
+          to={{ pathname: 'addteam', state: { teamId: -1, garageId: garageId, locationId: -1, garage_name: '', garage_description: '', users_ids: [] } }}
           style={{
             marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
           }}
@@ -97,6 +97,7 @@ function teamslist() {
               garage_description={item.description}
               garage_id={garageId}
               locationId={item.locationId}
+              users_ids={item.users}
               status={String(item.isActive)}
             />
           ))}
