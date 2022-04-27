@@ -371,7 +371,7 @@ export const editPickupLocation = (name, radioValue, garageId, locationId) => {
 
 export const getPickupLocationByGarageId = (garageId) => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/pickupLocation/?garage_id=${garageId}`,
+  url: `http://13.126.183.78:8086/api/v1/pickupLocation/?garageId=${garageId}`,
   headers,
 });
 
