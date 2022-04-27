@@ -4,21 +4,21 @@ import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import {
-  Input, Radio, Button, Checkbox,
+  Input, Radio, Button, Checkbox, notification,
 } from 'antd';
-import { useLocation } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import {
   addRole, editRole, getRolesUI, addRoleModule, getRole,
 } from 'services/axios';
 
 const addrole = () => {
-  const location = useLocation();
-  const { id } = location.state;
+  const { id } = useParams();
+  const history = useHistory();
 
   const nestedPath = [
     'Home',
     'User Roles',
-    `${id === -1 ? 'Create New Role' : 'Update Role'}`,
+    `${id === '-1' ? 'Create New Role' : 'Edit Role'}`,
   ];
 
   const [radioValue, setRadioValue] = useState(true);
@@ -29,7 +29,7 @@ const addrole = () => {
   const [checkboxError, setCheckboxError] = useState('');
 
   useEffect(() => {
-    getRolesUI(id)
+    getRolesUI(Number(id))
       .then((res) => {
         console.log('resp', res?.data?.results?.modules?.pageData);
         const data = res?.data?.results?.modules?.pageData.map((item) => ({
@@ -45,7 +45,7 @@ const addrole = () => {
   }, []);
 
   useEffect(() => {
-    getRole(id)
+    getRole(Number(id))
       .then((res) => {
         console.log('mod', res?.data?.results);
         setRoleTitle(res?.data?.results?.role);
@@ -96,46 +96,74 @@ const addrole = () => {
     console.log('chkval', checkboxValue);
     const resp = validateFormData();
     if (resp) {
-      if (id !== -1) {
+      if (id !== '-1') {
         console.log('in edit');
-        editRole(roleTitle, id)
+        editRole(roleTitle, Number(id), radioValue)
           .then((res) => {
             console.log('res', res);
-            checkboxValue.forEach((item) => {
-              addRoleModule(id, item)
-                .then((response) => {
-                  console.log('edit', response);
-                })
-                .catch((err) => {
-                  console.log('err', err);
+            addRoleModule(Number(id), checkboxValue)
+              .then((response) => {
+                console.log('edit', response);
+                notification.success({
+                  message: 'Role Updated Successfully',
                 });
-            });
-            alert('Role updated successfully');
-            window.location.href = '#/userroles/userroleslist';
+                setTimeout(() => {
+                  history.push('/userroles/userroleslist');
+                }, 1000);
+              })
+              .catch((err) => {
+                console.log('err', err);
+                notification.error({
+                  message: 'Something went wrong, Please Try again later',
+                });
+                setTimeout(() => {
+                  history.push('/userroles/userroleslist');
+                }, 1000);
+              });
           })
           .catch((err) => {
             console.log('err', err);
+            notification.error({
+              message: 'Something went wrong, Please Try again later',
+            });
+            setTimeout(() => {
+              history.push('/userroles/userroleslist');
+            }, 1000);
           });
       } else {
         console.log('in add');
-        addRole(roleTitle)
+        addRole(roleTitle, radioValue)
           .then((res) => {
             console.log('respp', res?.data?.results?.id);
             const data = res?.data?.results?.id;
-            checkboxValue.forEach((item) => {
-              addRoleModule(data, item)
-                .then((response) => {
-                  console.log('response', response);
-                })
-                .catch((err) => {
-                  console.log('err', err);
+            addRoleModule(data, checkboxValue)
+              .then((response) => {
+                console.log('response', response);
+                notification.success({
+                  message: 'Role Added Successfully',
                 });
-            });
-            alert('Role added successfully');
-            window.location.href = '#/userroles/userroleslist';
+                setTimeout(() => {
+                  history.push('/userroles/userroleslist');
+                }, 1000);
+              })
+              .catch((err) => {
+                console.log('err', err);
+                notification.error({
+                  message: 'Something went wrong, Please Try again later',
+                });
+                setTimeout(() => {
+                  history.push('/userroles/userroleslist');
+                }, 1000);
+              });
           })
           .catch((err) => {
             console.log('err', err);
+            notification.error({
+              message: 'Something went wrong, Please Try again later',
+            });
+            setTimeout(() => {
+              history.push('/userroles/userroleslist');
+            }, 1000);
           });
       }
     }
@@ -147,7 +175,7 @@ const addrole = () => {
       <div className="flex flex-col space-y-12">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            {id === -1 ? 'Create New Role' : 'Update Role'}
+            {id === '-1' ? 'Create New Role' : 'Edit Role'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -162,12 +190,12 @@ const addrole = () => {
                 padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
               }}
             />
-            {Object.keys(roleError).map((key) => (
-              <div style={{ color: 'red' }}>
-                {roleError[key]}
-              </div>
-            ))}
           </div>
+          {Object.keys(roleError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {roleError[key]}
+            </div>
+          ))}
 
         </div>
 
@@ -217,7 +245,7 @@ const addrole = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '140px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            {id === -1 ? 'Add Role' : 'Update Role'}
+            {id === '-1' ? 'Add Role' : 'Edit Role'}
           </Button>
         </div>
       </div>

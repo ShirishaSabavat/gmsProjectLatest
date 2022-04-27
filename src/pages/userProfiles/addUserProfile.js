@@ -5,10 +5,10 @@ import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import {
-  Input, Menu, Dropdown, Radio, Button, Checkbox, DatePicker,
+  Input, Menu, Dropdown, Radio, Button, Checkbox, DatePicker, notification,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
-import { useLocation } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import {
   editUserData, editUserProfile, getModules, getRoles, getAllCities, getAllGarages, addUserData, addUserProfile, addUserRole, addUserProcess, getUserProfile,
 } from 'services/axios';
@@ -24,13 +24,13 @@ const CRUD = {
 };
 
 const addrole = () => {
-  const location = useLocation();
-  const { id } = location.state;
+  const { id } = useParams();
+  const history = useHistory();
 
   const nestedPath = [
     'Home',
     'User Roles',
-    `${id === -1 ? 'Create User Profile' : 'Edit User'}`,
+    `${id === '-1' ? 'Create New User' : 'Edit User'}`,
   ];
 
   const [radioValue, setRadioValue] = useState(true);
@@ -41,7 +41,7 @@ const addrole = () => {
   const [roleSelect, setRoleSelect] = useState('');
   const [email, setEmail] = useState('');
   const [contactNo, setContactNo] = useState('');
-  const [address, setAddress] = useState('');
+  // const [address, setAddress] = useState('');
   const [license, setLicense] = useState('');
   const [licenseValidity, setLicenseValidity] = useState('');
   const [cityDropdown, setCityDropDown] = useState([]);
@@ -58,7 +58,7 @@ const addrole = () => {
   const [userRoleError, setUserRoleError] = useState({});
   const [emailError, setEmailError] = useState({});
   const [mobileError, setMobileError] = useState({});
-  const [addressError, setAddressError] = useState({});
+  // const [addressError, setAddressError] = useState({});
   const [licenseError, setLicenseError] = useState({});
   const [licenseValidityError, setLicenseValidityError] = useState({});
   const [cityError, setCityError] = useState({});
@@ -139,23 +139,26 @@ const addrole = () => {
   }, []);
 
   useEffect(() => {
-    getUserProfile(id)
+    getUserProfile(Number(id))
       .then((res) => {
         console.log('getProfResp1', res?.data?.results);
         setFName(res?.data?.results?.first_name);
         setMName(res?.data?.results?.middle_name);
         setLName(res?.data?.results?.last_name);
         setUserName(res?.data?.results?.user_name);
-        setAddress(res?.data?.results?.user_profile?.address);
+        // setAddress(res?.data?.results?.user_profile?.address);
         setLicense(res?.data?.results?.user_profile?.driving_license_no);
-        // setLicenseValidity(res?.data?.results?.user_profile?.license_validity);
+        let tempDate = res?.data?.results?.user_profile?.license_validity;
+        tempDate = moment(tempDate);
+        console.log('tempDate', tempDate);
+        setLicenseValidity(tempDate);
         setEmail(res?.data?.results?.user_profile?.email);
         setContactNo(res?.data?.results?.user_profile?.mobile_no);
         setRoleSelect(res?.data?.results?.roles[0]?.id);
         setCitySelect(res?.data?.results?.user_profile?.cityId);
         setGarageSelect(res?.data?.results?.user_profile?.garageId);
         let data = res?.data?.results?.processes;
-        console.log('dataaaaaa', data);
+        console.log('dataaaaaaa', data);
         data = data.map((obj) => obj);
         setCheckboxValue(data);
       })
@@ -176,17 +179,37 @@ const addrole = () => {
   }, []);
 
   const handleChange = (e) => {
+    const tempDataObj = {
+      id: e.target.value,
+      permission: {
+        view: false,
+        create: false,
+        edit: false,
+        deActive: false,
+      },
+    };
     if (e.target.checked) {
-      setCheckboxValue([...checkboxValue, e.target.value]);
-      // console.log('permissions', permissions);
+      // console.log(...checkboxValue);
+      setCheckboxValue([...checkboxValue, tempDataObj]);
     } else {
-      setCheckboxValue(checkboxValue.filter((item) => item !== e.target.value));
+      setCheckboxValue(checkboxValue.filter((item) => item.id !== e.target.value));
     }
   };
 
-  const handlePermissionChange = (data, checked) => {
-    console.log(data, 'datadatadata');
-    console.log(checked, 'checkedchecked');
+  const handlePermissionChange = (data, target) => {
+    const { checked, name } = target;
+    const dataTemp = {
+      ...data,
+      permission: {
+        ...data.permission,
+        [name]: checked,
+      },
+    };
+    // console.log(data, dataTemp, 'datadatadata');
+    const checkboxValueTemp = checkboxValue.map(({ id: tempId, ...keys }) => (
+      tempId === dataTemp.id ? dataTemp : { id: tempId, ...keys }
+    ));
+    setCheckboxValue(checkboxValueTemp);
   };
 
   const dateFormat = 'DD/MM/YYYY';
@@ -254,10 +277,10 @@ const addrole = () => {
       isValid = false;
     }
 
-    if (address.trim().length === 0) {
-      addressErr.addressErr = 'Address can not be empty';
-      isValid = false;
-    }
+    // if (address.trim().length === 0) {
+    //   addressErr.addressErr = 'Address can not be empty';
+    //   isValid = false;
+    // }
 
     if (license.trim().length === 0) {
       licenseErr.licenseErr = 'Driving License can not be empty';
@@ -284,7 +307,7 @@ const addrole = () => {
       isValid = false;
     }
 
-    if (password.trim().length === 0) {
+    if (id === '-1' && password.trim().length === 0) {
       passwordErr.err = 'Password can not be empty';
       isValid = false;
     }
@@ -299,7 +322,7 @@ const addrole = () => {
     setUserRoleError(userRoleSelectErr);
     setEmailError(emailErr);
     setMobileError(mobileErr);
-    setAddressError(addressErr);
+    // setAddressError(addressErr);
     setLicenseError(licenseErr);
     setLicenseValidityError(licenseValidityErr);
     setCityError(citySelectErr);
@@ -320,10 +343,18 @@ const addrole = () => {
       lName,
       userName,
       password,
+      radioValue,
+    };
+
+    const editUser = {
+      fName,
+      mName,
+      lName,
+      userName,
+      radioValue,
     };
 
     const userProfileData = {
-      address,
       email,
       contactNo,
       license,
@@ -335,39 +366,73 @@ const addrole = () => {
     const userRoleData = {
       roleId: roleSelect,
     };
+    console.log('EDIT RESP', resp);
+    console.log('EDIT USERDATA', userData);
+    console.log('EDIT PROFILE', userProfileData);
+    console.log('EDIT ROLE', userRoleData);
+    console.log('EDIT checkData', checkboxValue);
 
     if (resp) {
-      if (id !== -1) {
+      if (id !== '-1') {
         console.log('in edit');
-        editUserData(userData, id)
+        editUserData(editUser, Number(id))
           .then((res) => {
             console.log('res', res);
-            editUserProfile(userProfileData, id)
+            editUserProfile(userProfileData, Number(id))
               .then((editUserProfResp) => {
                 console.log('editUserProfResp', editUserProfResp);
-                addUserRole(userRoleData, id)
+                addUserRole(userRoleData, Number(id))
                   .then((userRoleResp) => {
                     console.log(userRoleResp);
-                    checkboxValue.forEach((item) => {
-                      addUserProcess(item, id)
-                        .then((userProcessResp) => {
-                          console.log(userProcessResp);
-                        })
-                        .catch((err) => {
-                          console.log('err', err);
+                    addUserProcess(checkboxValue, Number(id))
+                      .then((userProcessResp) => {
+                        console.log(userProcessResp);
+                        // alert('User Profile Edited Successfully');
+                        notification.success({
+                          message: 'User Profile Edited Successfully',
                         });
-                    });
+                        setTimeout(() => {
+                          history.push('/userProfiles/userProfiles');
+                        }, 1000);
+                      })
+                      .catch((err) => {
+                        console.log('err', err);
+                        notification.success({
+                          message: 'Something went wrong, Please try again later',
+                        });
+                        setTimeout(() => {
+                          history.push('/userProfiles/userProfiles');
+                        }, 1000);
+                      });
                   })
                   .catch((err) => {
                     console.log('err', err);
+                    notification.success({
+                      message: 'Something went wrong, Please try again later',
+                    });
+                    setTimeout(() => {
+                      history.push('/userProfiles/userProfiles');
+                    }, 1000);
                   });
               })
               .catch((err) => {
                 console.log('err', err);
+                notification.success({
+                  message: 'Something went wrong, Please try again later',
+                });
+                setTimeout(() => {
+                  history.push('/userProfiles/userProfiles');
+                }, 1000);
               });
           })
           .catch((err) => {
             console.log('err', err);
+            notification.success({
+              message: 'Something went wrong, Please try again later',
+            });
+            setTimeout(() => {
+              history.push('/userProfiles/userProfiles');
+            }, 1000);
           });
       } else {
         addUserData(userData)
@@ -380,26 +445,54 @@ const addrole = () => {
                 addUserRole(userRoleData, userId)
                   .then((userRoleResp) => {
                     console.log(userRoleResp);
-                    checkboxValue.forEach((item) => {
-                      addUserProcess(item, userId)
-                        .then((userProcessResp) => {
-                          console.log(userProcessResp);
-                        })
-                        .catch((err) => {
-                          console.log('err', err);
+                    addUserProcess(checkboxValue, userId)
+                      .then((userProcessResp) => {
+                        console.log('USER PROCS RESP', userProcessResp);
+                        notification.success({
+                          message: 'User added successfully',
                         });
-                    });
+                        setTimeout(() => {
+                          history.push('/userProfiles/userProfiles');
+                        }, 1000);
+                      })
+                      .catch((err) => {
+                        console.log('err', err);
+                        notification.success({
+                          message: 'Something went wrong, Please try again later',
+                        });
+                        setTimeout(() => {
+                          history.push('/userProfiles/userProfiles');
+                        }, 1000);
+                      });
                   })
                   .catch((err) => {
                     console.log('err', err);
+                    notification.success({
+                      message: 'Something went wrong, Please try again later',
+                    });
+                    setTimeout(() => {
+                      history.push('/userProfiles/userProfiles');
+                    }, 1000);
                   });
               })
               .catch((err) => {
                 console.log(err);
+                notification.success({
+                  message: 'Something went wrong, Please try again later',
+                });
+                setTimeout(() => {
+                  history.push('/userProfiles/userProfiles');
+                }, 1000);
               });
           })
           .catch((err) => {
             console.log('err', err);
+            notification.success({
+              message: 'Something went wrong, Please try again later',
+            });
+            setTimeout(() => {
+              history.push('/userProfiles/userProfiles');
+            }, 1000);
           });
       }
     }
@@ -411,7 +504,7 @@ const addrole = () => {
       <div className="flex flex-col space-y-8">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            {id === -1 ? 'Create User Profile' : 'Edit User'}
+            {id === '-1' ? 'Create New User' : 'Edit User'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -473,7 +566,7 @@ const addrole = () => {
           <div className="flex flex-row flex-nonwrap bg-white">
             <Dropdown overlay={userRoleMenu}>
               <Button
-                className="w-100"
+                className="w-1/3"
                 style={{
                   backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A',
                 }}
@@ -543,7 +636,7 @@ const addrole = () => {
           </div>
         </div>
 
-        <div className="bg-white p-4">
+        {/* <div className="bg-white p-4">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>User Address</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <TextArea
@@ -561,7 +654,7 @@ const addrole = () => {
               {addressError[key]}
             </div>
           ))}
-        </div>
+        </div> */}
 
         <div className="bg-white p-4">
           <div className="flex flex-row flex-nonwrap bg-white">
@@ -611,93 +704,118 @@ const addrole = () => {
         </div>
 
         <div className="bg-white p-4">
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Select City</p>
           <div className="flex flex-row flex-nonwrap bg-white">
-            <Dropdown overlay={cityMenu}>
-              <Button
-                className="w-100"
-                style={{
-                  backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A',
-                }}
-              >
-                <div className="row">
-                  <div span={22} className="col-6 text-start font-quicksand-medium">
-                    {cityDropdown.find((x) => x.id === citySelect)?.name || 'Select City'}
-                  </div>
-                  <div span={2} className="col-6 text-end">
-                    <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
-                  </div>
-                </div>
-              </Button>
-            </Dropdown>
-          </div>
-          {Object.keys(cityError).map((key) => (
-            <div style={{ color: 'red' }}>
-              {cityError[key]}
+            <div className="flex basis-1/2">
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Select City</p>
             </div>
-          ))}
-
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Select Garage</p>
+            <div className="flex basis-1/2">
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Select Garage</p>
+            </div>
+          </div>
           <div className="flex flex-row flex-nonwrap bg-white">
-            <Dropdown overlay={garageMenu}>
-              <Button
-                className="w-100"
-                style={{
-                  backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A',
-                }}
-              >
-                <div className="row">
-                  <div span={22} className="col-6 text-start font-quicksand-medium">
-                    {garageDropdown.find((x) => x.id === garageSelect)?.name || 'Select Garage'}
-                  </div>
-                  <div span={2} className="col-6 text-end">
-                    <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
-                  </div>
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <Dropdown overlay={cityMenu}>
+                  <Button
+                    style={{
+                      backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A', width: '85%',
+                    }}
+                  >
+                    <div className="row">
+                      <div span={22} className="col-6 text-start font-quicksand-medium">
+                        {cityDropdown.find((x) => x.id === citySelect)?.name || 'Select City'}
+                      </div>
+                      <div span={2} className="col-6 text-end">
+                        <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
+                      </div>
+                    </div>
+                  </Button>
+                </Dropdown>
+              </div>
+              {Object.keys(cityError).map((key) => (
+                <div style={{ color: 'red' }}>
+                  {cityError[key]}
                 </div>
-              </Button>
-            </Dropdown>
-          </div>
-          {Object.keys(garageError).map((key) => (
-            <div style={{ color: 'red' }}>
-              {garageError[key]}
+              ))}
             </div>
-          ))}
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <Dropdown overlay={garageMenu}>
+                  <Button
+                    style={{
+                      backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A', width: '85%',
+                    }}
+                  >
+                    <div className="row">
+                      <div span={22} className="col-6 text-start font-quicksand-medium">
+                        {garageDropdown.find((x) => x.id === garageSelect)?.name || 'Select Garage'}
+                      </div>
+                      <div span={2} className="col-6 text-end">
+                        <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
+                      </div>
+                    </div>
+                  </Button>
+                </Dropdown>
+              </div>
+              {Object.keys(garageError).map((key) => (
+                <div style={{ color: 'red' }}>
+                  {garageError[key]}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="bg-white p-4">
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>User Name</p>
-          <div className="flex">
-            <Input
-              placeholder="Username"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-              }}
-            />
-          </div>
-          {Object.keys(userNameError).map((key) => (
-            <div style={{ color: 'red' }}>
-              {userNameError[key]}
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <div className="flex basis-1/2">
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>User Name</p>
             </div>
-          ))}
-
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Password</p>
-          <div className="flex">
-            <Input
-              placeholder="********"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-              }}
-            />
+            {id === '-1' && (
+              <div className="flex basis-1/2">
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Password</p>
+              </div>
+            )}
           </div>
-          {Object.keys(passwordError).map((key) => (
-            <div style={{ color: 'red' }}>
-              {passwordError[key]}
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <Input
+                  placeholder="Username"
+                  value={userName}
+                  disabled={id !== '-1'}
+                  onChange={(e) => setUserName(e.target.value)}
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                  }}
+                />
+              </div>
+              {Object.keys(userNameError).map((key) => (
+                <div style={{ color: 'red' }}>
+                  {userNameError[key]}
+                </div>
+              ))}
             </div>
-          ))}
+            {id === '-1' && (
+              <div className="flex flex-col basis-1/2">
+                <div className="flex">
+                  <Input
+                    placeholder="********"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    style={{
+                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                    }}
+                  />
+                </div>
+                {Object.keys(passwordError).map((key) => (
+                  <div style={{ color: 'red' }}>
+                    {passwordError[key]}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="bg-white p-4">
@@ -722,45 +840,49 @@ const addrole = () => {
                       {item?.processes.map((data) => (
                         <div className="flex flex-row">
                           <div className="my-3 mx-0 basis-1/4">
-                            <Checkbox value={data.id} onChange={handleChange} checked={checkboxValue.includes(data.id)}>
+                            <Checkbox value={data.id} onChange={handleChange} checked={checkboxValue.find((x) => x.id === data.id)}>
                               {data.process}
                             </Checkbox>
                           </div>
                           <div className="my-3 mx-0 basis-3/4">
-                            {/* {checkboxValue.map((key) => (
-                              key === data.id && (
+                            {checkboxValue.map((key) => (
+                              key.id === data.id && (
                                 <>
                                   <Checkbox
-                                    checked={data.permission.view}
-                                    onChange={({ target: { checked } }) => handlePermissionChange(data, checked)}
+                                    checked={key.permission.view}
+                                    name="view"
+                                    onChange={({ target }) => handlePermissionChange(key, target)}
                                     style={{ margin: '0 0 0 15%' }}
                                   >
                                     View
                                   </Checkbox>
                                   <Checkbox
-                                    checked={data.permission.create}
-                                    onChange={({ target: { checked } }) => handlePermissionChange(data, checked)}
+                                    checked={key.permission.create}
+                                    name="create"
+                                    onChange={({ target }) => handlePermissionChange(key, target)}
                                     style={{ margin: '0 0 0 15%' }}
                                   >
                                     Create
                                   </Checkbox>
                                   <Checkbox
-                                    checked={data.permission.edit}
-                                    onChange={({ target: { checked } }) => handlePermissionChange(data, checked)}
+                                    checked={key.permission.edit}
+                                    name="edit"
+                                    onChange={({ target }) => handlePermissionChange(key, target)}
                                     style={{ margin: '0 0 0 15%' }}
                                   >
                                     Edit
                                   </Checkbox>
                                   <Checkbox
-                                    checked={data.permission.deActive}
-                                    onChange={({ target: { checked } }) => handlePermissionChange(data, checked)}
+                                    checked={key.permission.deActive}
+                                    name="deActive"
+                                    onChange={({ target }) => handlePermissionChange(key, target)}
                                     style={{ margin: '0 0 0 15%' }}
                                   >
                                     Delete
                                   </Checkbox>
                                 </>
                               )
-                            ))} */}
+                            ))}
 
                           </div>
                         </div>
@@ -786,7 +908,7 @@ const addrole = () => {
               marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '140px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
             }}
           >
-            {id === -1 ? 'Add User' : 'Edit User'}
+            {id === '-1' ? 'Add User' : 'Edit User'}
           </Button>
         </div>
       </div>

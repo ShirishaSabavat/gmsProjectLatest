@@ -49,6 +49,11 @@ const Sidebar = ({
       key: '/processes/processes',
     },
     // {
+    //   title: 'RoadTrial',
+    //   icon: '/assets/images/logo/sidebarLogo/processes.svg',
+    //   key: '/roadTrial/roadTrial',
+    // },
+    // {
     //   title: 'Pickup Locations',
     //   icon: '/assets/images/logo/sidebarLogo/garage.svg',
     //   key: '/pickupLocations/pickupLocations',
@@ -58,13 +63,7 @@ const Sidebar = ({
   // const settingPath = '/setting';
   return (
     <>
-      <div className={`py-3 px-6 flex items-center border-b border-gray-100 ${sideBarLayout ? 'justify-center' : ''}`}>
-        <img
-          src="/assets/images/logo/app-logo.svg"
-          alt="app-logo"
-          className="h-8"
-        />
-      </div>
+      <div className={`py-3 px-6 flex items-center border-b border-gray-100 ${sideBarLayout ? 'justify-center' : ''}`} />
       <Menu
         style={{ borderRight: 'none' }}
         selectedKeys={[pathname]}
@@ -92,19 +91,25 @@ const Sidebar = ({
           );
         })}
       </Menu>
-      <Menu
+      {/* <Menu
         style={{ borderRight: 'none', marginTop: '95%' }}
         mode="inline"
         selectedKeys={[pathname]}
         onClick={({ settingPath = '/setting' }) => history.push(settingPath)}
       >
         <Item
-          icon={<img style={{ paddingBottom: '0.22rem' }} src="/assets/images/logo/sidebarLogo/settings.svg" alt="settings" />}
+          icon={
+            <img
+              style={{ paddingBottom: '0.22rem' }}
+              src="/assets/images/logo/sidebarLogo/settings.svg"
+              alt="settings"
+            />
+          }
           className="text-xs font-quicksand-semi-bold"
         >
           Settings
         </Item>
-      </Menu>
+      </Menu> */}
     </>
   );
 };

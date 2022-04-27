@@ -4,7 +4,7 @@ import Breadcrumb from 'components/layouts/breadcrumb';
 import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
 import Listitemmodule from 'components/layouts/Listitemmodule';
 import { Pagination } from 'react-headless-pagination';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getModules } from 'services/axios';
 
 const nestedPath = [
@@ -51,18 +51,19 @@ function modules() {
         });
     }
   }
+  const history = useHistory();
   return (
     <>
       <Helmet title="Modules" />
       <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
-        <Link
-          to={{ pathname: 'addModule', state: { id: -1 } }}
+        <div
+          onClick={() => history.push('/modules/addModule/-1')}
           style={{
-            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '205px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none', cursor: 'pointer',
           }}
         >
           Add New Module +
-        </Link>
+        </div>
       </div>
       <div>
         <div className="flex flex-col space-y-12">

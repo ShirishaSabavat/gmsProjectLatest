@@ -4,36 +4,36 @@ import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import {
-  Input, Menu, Dropdown, Button, Radio,
+  Input, Menu, Dropdown, Button, Radio, notification,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
   getAllCities, addGarageApi, editGarageApi, getGarageById,
 } from 'services/axios';
-import { useLocation } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const { TextArea } = Input;
 
 const addgarage = () => {
-  const location = useLocation();
-  const { id } = location.state;
+  const { id } = useParams();
+  const history = useHistory();
 
   const [garageTitle, setGarageTitle] = useState('');
-  const [garageDescription, setGarageDescription] = useState('');
+  // const [garageDescription, setGarageDescription] = useState('');
   const [garageSeries, setGarageSeries] = useState('');
   const [userSeries, setUserSeries] = useState('');
   const [radioValue, setRadioValue] = useState(true);
   const [dropDownMenu, setDropDownMenu] = useState([]);
   const [selectedItem, setSelectedItem] = useState('');
   const [garageError, setGarageError] = useState({});
-  const [descriptionError, setDescriptionError] = useState({});
+  // const [descriptionError, setDescriptionError] = useState({});
   const [cityError, setCityError] = useState({});
   const [garageSeriesError, setGarageSeriesError] = useState({});
   const [userSeriesError, setUserSeriesError] = useState({});
 
   const nestedPath = [
     'Home',
-    `${id === -1 ? 'Add New Garage' : 'Edit Garage'}`,
+    `${id === '-1' ? 'Add New Garage' : 'Edit Garage'}`,
   ];
 
   const menu = (
@@ -60,9 +60,10 @@ const addgarage = () => {
   useEffect(() => {
     getGarageById(id)
       .then((res) => {
-        console.log('getResp', res?.data?.results?.cityId);
+        console.log('getResp', res?.data?.results);
         setGarageTitle(res?.data?.results?.name);
-        setGarageDescription(res?.data?.results?.description);
+        setRadioValue(res?.data?.results?.isActive);
+        // setGarageDescription(res?.data?.results?.description);
         setSelectedItem(res?.data?.results?.cityId);
       })
       .catch((err) => {
@@ -71,7 +72,7 @@ const addgarage = () => {
   }, []);
   const validateFormData = () => {
     const garageNameError = {};
-    const descriptionNameError = {};
+    // const descriptionNameError = {};
     const citySelectError = {};
     const garageSeriesNameError = {};
     const userSeriesNameError = {};
@@ -81,10 +82,10 @@ const addgarage = () => {
       garageNameError.err = 'Garage title can not be empty';
       isValid = false;
     }
-    if (garageDescription.trim().length === 0) {
-      descriptionNameError.err = 'Description can not be empty';
-      isValid = false;
-    }
+    // if (garageDescription.trim().length === 0) {
+    //   descriptionNameError.err = 'Description can not be empty';
+    //   isValid = false;
+    // }
     if (!selectedItem) {
       citySelectError.err = 'Select city';
       isValid = false;
@@ -99,7 +100,7 @@ const addgarage = () => {
     // }
 
     setGarageError(garageNameError);
-    setDescriptionError(descriptionNameError);
+    // setDescriptionError(descriptionNameError);
     setCityError(citySelectError);
     setGarageSeriesError(garageSeriesNameError);
     setUserSeriesError(userSeriesNameError);
@@ -111,7 +112,7 @@ const addgarage = () => {
     const resp = validateFormData();
     console.log(resp);
     console.log('garagetitle', garageTitle);
-    console.log('garagedescription', garageDescription);
+    // console.log('garagedescription', garageDescription);
     console.log('selectedItem', selectedItem);
     console.log('garageseries', garageSeries);
     console.log('userseries', userSeries);
@@ -119,25 +120,33 @@ const addgarage = () => {
     console.log('id', id);
 
     if (resp) {
-      if (id !== -1) {
+      if (id !== '-1') {
         console.log('in edit');
         // eslint-disable-next-line max-len
-        editGarageApi(garageTitle, garageDescription, selectedItem, id)
+        editGarageApi(garageTitle, selectedItem, radioValue, id)
           .then((res) => {
             console.log('res', res);
-            alert('Garage updated successfully');
-            window.location.href = '#/garage/garagelist';
+            notification.success({
+              message: 'Garage updated successfully',
+            });
+            setTimeout(() => {
+              history.push('/garage/garagelist');
+            }, 1000);
           })
           .catch((err) => {
             console.log('err', err);
           });
       } else {
         console.log('in add');
-        addGarageApi(garageTitle, garageDescription, selectedItem)
+        addGarageApi(garageTitle, selectedItem, radioValue)
           .then((res) => {
             console.log('res', res);
-            alert('Garage added successfully');
-            window.location.href = '#/garage/garagelist';
+            notification.success({
+              message: 'Garage added successfully',
+            });
+            setTimeout(() => {
+              history.push('/garage/garagelist');
+            }, 1000);
           })
           .catch((err) => {
             console.log('err', err);
@@ -152,7 +161,7 @@ const addgarage = () => {
       <div className="flex flex-col space-y-12 mx-5">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-            {id === -1 ? 'Add New Garage' : 'Edit Garage'}
+            {id === '-1' ? 'Add New Garage' : 'Edit Garage'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -173,7 +182,7 @@ const addgarage = () => {
               {garageError[key]}
             </div>
           ))}
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Description</p>
+          {/* <p className="font-quicksand-semi-bold" style={{ fontSize: '12px', marginTop: '24px' }}>Description</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <TextArea
               rows={4}
@@ -189,7 +198,7 @@ const addgarage = () => {
             <div style={{ color: 'red' }}>
               {descriptionError[key]}
             </div>
-          ))}
+          ))} */}
         </div>
         <div className="bg-white p-5">
           <p>Select City</p>

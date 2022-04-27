@@ -10,10 +10,9 @@ const Header = () => {
           src="/assets/images/logo/Web-Logo.png"
           alt="app-logo"
           className="h-8"
-          style={{ margin: '1% 0 0 3%' }}
         />
       </div>
-      {pathname === '/auth/sign-in' && (
+      {/* {pathname === '/auth/sign-in' && (
         <span>
           <span>Don&apos;t have a account, </span>
           <span
@@ -23,7 +22,7 @@ const Header = () => {
             Create one.
           </span>
         </span>
-      )}
+      )} */}
       {pathname === '/auth/sign-up' && (
         <span>
           <span>Already have a account, </span>

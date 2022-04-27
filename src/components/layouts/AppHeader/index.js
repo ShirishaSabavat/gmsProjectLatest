@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 import { useState } from 'react';
 import { Input, Popover, Button } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { userLogout } from 'redux/user/actions';
+// import { webLogo } from './images/Web-Logo.png';
 import './styles.css';
 
 const Header = ({ logout }) => {
@@ -44,7 +47,7 @@ const Header = ({ logout }) => {
         onPressEnter={({ target: { value } }) => globalSearch(value)}
       /> */}
       <div className="flex items-center">
-        <div id="Notification">
+        {/* <div id="Notification">
           <div id="Chart_Button_Copy">
             <svg className="Chart_Area">
               <ellipse id="Chart_Area" rx="16" ry="16" cx="16" cy="16" />
@@ -66,7 +69,7 @@ const Header = ({ logout }) => {
               <span>3</span>
             </div>
           </div>
-        </div>
+        </div> */}
         <div id="Jessica_Smith">
           <span>{user}</span>
         </div>

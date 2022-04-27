@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-sequences */
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Input, Button } from 'antd';
+import { Button } from 'antd';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { rejectRTAList } from 'services/axios';
@@ -10,12 +13,10 @@ const nestedPath = [
   'Road Trip Audit',
 ];
 
-const { TextArea } = Input;
-
 const transferjama = () => {
   const location = useLocation();
   const {
-    id, visitcategory
+    id, visitcategory,
   } = location.state;
   const [rejectfor, setrejectfor] = useState(0);
   const [rejectforRemark, setrejectforRemark] = useState('');
@@ -26,13 +27,11 @@ const transferjama = () => {
 
   const RejectRTAListMethod = () => {
     console.log(visitcategory);
-    var tempvisitid = 0;
-    if (visitcategory === "1" || visitcategory === 1) {
-      tempvisitid = 1
-    } else if (visitcategory === "2" || visitcategory === 1) {
-      tempvisitid = 2
-    } else {
-
+    let tempvisitid = 0;
+    if (visitcategory === '1' || visitcategory === 1) {
+      tempvisitid = 1;
+    } else if (visitcategory === '2' || visitcategory === 1) {
+      tempvisitid = 2;
     }
     rejectRTAList(id, visitcategory, rejectfor, rejectforRemark)
       .then((res) => {
@@ -43,7 +42,7 @@ const transferjama = () => {
       .catch((err) => {
         console.log('err', err);
       });
-  }
+  };
   return (
     <>
       <Helmet title="Dashboard" />
@@ -59,7 +58,7 @@ const transferjama = () => {
             <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Select Reject Option</p>
             <div className="flex flex-row flex-nonwrap">
               <Button
-                onClick={() => { setrejectfor(4), setrejectforRemark('Transfer to Repair') }}
+                onClick={() => { setrejectfor(4), setrejectforRemark('Transfer to Repair'); }}
                 className="font-quicksand-medium"
                 style={{ marginTop: '10px', marginLeft: '10px' }}
               >
@@ -69,7 +68,7 @@ const transferjama = () => {
             </div>
             <div className="flex flex-row flex-nonwrap">
               <Button
-                onClick={() => { setrejectfor(5), setrejectforRemark('Transfer to Servicing') }}
+                onClick={() => { setrejectfor(5), setrejectforRemark('Transfer to Servicing'); }}
                 className="font-quicksand-medium"
                 style={{ marginTop: '10px', marginLeft: '10px' }}
               >
@@ -78,7 +77,7 @@ const transferjama = () => {
             </div>
             <div className="flex flex-row flex-nonwrap">
               <Button
-                onClick={() => { setrejectfor(6), setrejectforRemark('Transfer to Fitness Queue') }}
+                onClick={() => { setrejectfor(6), setrejectforRemark('Transfer to Fitness Queue'); }}
                 className="font-quicksand-medium"
                 style={{ marginTop: '10px', marginLeft: '10px' }}
               >
@@ -100,7 +99,7 @@ const transferjama = () => {
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default transferjama;

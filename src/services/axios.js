@@ -17,19 +17,16 @@ export const loginApi = async (userData) => {
       },
       data,
     });
-    console.log(resp.data.results.user.roles[0].role);
-    localStorage.setItem('token', resp?.data?.results?.token);
-    const user = `${resp?.data?.results?.user?.first_name} ${resp?.data?.results?.user?.last_name}`;
-    localStorage.setItem('user', user);
-
-    localStorage.setItem('role', resp?.data?.results?.user?.roles[0].role)
-    if (resp?.data?.results?.user?.roles[0].role === null || resp?.data?.results?.user?.roles[0].role === undefined || resp?.data?.results?.user?.roles[0].role === "Super Admin") {
-
-    } else {
-      localStorage.setItem('empid', resp?.data?.results?.user?.user_profile?.emp_id);
-      localStorage.setItem('garageid', resp?.data?.results?.user?.teams[0].garageId);
-      localStorage.setItem('createdby', resp?.data?.results?.user?.id);
-      localStorage.setItem('locationid', resp?.data?.results?.user?.teams[0].locationId);
+    const { user, token } = resp?.data?.results || {};
+    console.log(user.roles[0].role);
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', user?.first_name);
+    localStorage.setItem('role', user?.roles[0].role);
+    if (!(user?.roles[0].role === null || user?.roles[0].role === undefined || user?.roles[0].role === 'Super Admin')) {
+      localStorage.setItem('empid', user?.user_profile?.emp_id);
+      localStorage.setItem('garageid', user?.teams[0].garageId);
+      localStorage.setItem('createdby', user?.id);
+      localStorage.setItem('locationid', user?.teams[0].locationId);
     }
     return resp;
   } catch (err) {
@@ -38,7 +35,6 @@ export const loginApi = async (userData) => {
   }
 };
 
-// const apiToken = localStorage.getItem('token');
 const headers = {
   Authorization: `Bearer ${localStorage.getItem('token')}`,
   'Content-Type': 'application/json',
@@ -145,7 +141,7 @@ export const getCities = (page) => axios({
 
 export const getAllCities = () => axios({
   method: 'GET',
-  url: 'http://13.126.183.78:8086/api/v1/city',
+  url: 'http://13.126.183.78:8086/api/v1/city?isActive=1',
   headers,
 });
 
@@ -183,6 +179,7 @@ export const addCity = (cityName, radioValue, garageSeries, userSeries) => {
     name: cityName,
     user_series: userSeries,
     garage_series: garageSeries,
+    isActive: radioValue,
   });
   return axios({
     method: 'POST',
@@ -197,6 +194,7 @@ export const editCity = (cityName, radioValue, garageSeries, userSeries, process
     name: cityName,
     user_series: userSeries,
     garage_series: garageSeries,
+    isActive: radioValue,
   });
   return axios({
     method: 'PUT',
@@ -214,10 +212,11 @@ export const getCityData = (cityId) => axios({
 
 // User Roles axios
 
-export const addRole = (roleTitle) => {
+export const addRole = (roleTitle, radioValue) => {
   console.log(roleTitle);
   const data = JSON.stringify({
     role: roleTitle,
+    isActive: radioValue,
   });
   return axios({
     method: 'POST',
@@ -227,9 +226,10 @@ export const addRole = (roleTitle) => {
   });
 };
 
-export const editRole = (roleTitle, roleId) => {
+export const editRole = (roleTitle, roleId, radioValue) => {
   const data = JSON.stringify({
     role: roleTitle,
+    isActive: radioValue,
   });
   return axios({
     method: 'PUT',
@@ -251,14 +251,17 @@ export const getRole = (roleId) => axios({
   headers,
 });
 
-export const addRoleModule = (roleId, moduleId) => {
-  const data = JSON.stringify({
-    roleId,
-    moduleId,
+export const addRoleModule = (roleId, roleModules) => {
+  const data = [];
+  roleModules.forEach((item) => {
+    data.push({
+      roleId,
+      moduleId: item,
+    });
   });
   return axios({
     method: 'POST',
-    url: 'http://13.126.183.78:8086/api/v1/modules/roleModule',
+    url: 'http://13.126.183.78:8086/api/v1/modules/bulkRoleModules',
     headers,
     data,
   });
@@ -296,11 +299,11 @@ export const editTeamApi = (name, logourl, description, locationId, garageId, te
   });
 };
 
-export const addGarageApi = (garageTitle, garageDescription, cityId, garageSeries) => {
+export const addGarageApi = (garageTitle, cityId, radioValue) => {
   const data = JSON.stringify({
     name: garageTitle,
-    description: garageDescription,
     cityId,
+    isActive: radioValue,
   });
   return axios({
     method: 'POST',
@@ -310,11 +313,11 @@ export const addGarageApi = (garageTitle, garageDescription, cityId, garageSerie
   });
 };
 
-export const editGarageApi = (garageTitle, garageDescription, cityId, garageId) => {
+export const editGarageApi = (garageTitle, cityId, radioValue, garageId) => {
   const data = JSON.stringify({
     name: garageTitle,
-    description: garageDescription,
     cityId,
+    isActive: radioValue,
   });
   return axios({
     method: 'PUT',
@@ -381,6 +384,7 @@ export const addUserData = (userData) => {
     last_name: userData.lName,
     user_name: userData.userName,
     password: userData.password,
+    isActive: userData.radioValue,
   });
   return axios({
     method: 'POST',
@@ -392,7 +396,6 @@ export const addUserData = (userData) => {
 
 export const addUserProfile = (userProfileData, userId) => {
   const data = JSON.stringify({
-    address: userProfileData.address,
     email: userProfileData.email,
     mobile_no: userProfileData.contactNo,
     driving_license_no: userProfileData.license,
@@ -410,26 +413,33 @@ export const addUserProfile = (userProfileData, userId) => {
 };
 
 export const addUserRole = (userRoleData, userId) => {
-  const data = JSON.stringify({
-    userId,
-    roleId: userRoleData.roleId,
-  });
+  const data = JSON.stringify([
+    {
+      userId,
+      roleId: userRoleData.roleId,
+    },
+  ]);
   return axios({
     method: 'POST',
-    url: 'http://13.126.183.78:8086/api/v1/role/userRole',
+    url: 'http://13.126.183.78:8086/api/v1/role/bulkUserRole',
     headers,
     data,
   });
 };
 
-export const addUserProcess = (processId, userId) => {
-  const data = JSON.stringify({
+export const addUserProcess = (process, userId) => {
+  const tempData = process.map(({ id, permission }) => ({
     userId,
-    processId,
-  });
+    processId: id,
+    create: permission.create,
+    deActive: permission.deActive,
+    edit: permission.edit,
+    view: permission.view,
+  }));
+  const data = JSON.stringify(tempData);
   return axios({
     method: 'POST',
-    url: 'http://13.126.183.78:8086/api/v1/process/userProcess',
+    url: 'http://13.126.183.78:8086/api/v1/process/bulkUserProcess',
     headers,
     data,
   });
@@ -441,7 +451,7 @@ export const editUserData = (userData, userId) => {
     middle_name: userData.mName,
     last_name: userData.lName,
     user_name: userData.userName,
-    password: userData.password,
+    isActive: userData.radioValue,
   });
   return axios({
     method: 'PUT',
@@ -453,7 +463,6 @@ export const editUserData = (userData, userId) => {
 
 export const editUserProfile = (userProfileData, userId) => {
   const data = JSON.stringify({
-    address: userProfileData.address,
     email: userProfileData.email,
     mobile_no: userProfileData.contactNo,
     driving_license_no: userProfileData.license,
@@ -490,7 +499,7 @@ export const getCarsList = (garageid, createdby) => axios({
 
 export const getCarsListEverest = () => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/visitingCars/fetchCarsFromEverest/1`,
+  url: 'http://13.126.183.78:8086/api/v1/visitingCars/fetchCarsFromEverest/1',
   headers,
 });
 
@@ -523,10 +532,10 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
   console.log(data);
   return axios({
     method: 'POST',
-    url: `http://13.126.183.78:8086/api/v1/visitingCars`,
+    url: 'http://13.126.183.78:8086/api/v1/visitingCars',
     headers,
     data,
-  })
+  });
 };
 
 export const editCarVisit = (visitcat, carid, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
@@ -545,10 +554,10 @@ export const editCarVisit = (visitcat, carid, garageid, isdriverwithcar, driverI
   console.log(data);
   return axios({
     method: 'POST',
-    url: `http://13.126.183.78:8086/api/v1/visitingCars`,
+    url: 'http://13.126.183.78:8086/api/v1/visitingCars',
     headers,
     data,
-  })
+  });
 };
 
 export const addRTAList = (visitid, garageid, isleasing, roadtestcomment) => {
@@ -562,10 +571,10 @@ export const addRTAList = (visitid, garageid, isleasing, roadtestcomment) => {
   console.log(data);
   return axios({
     method: 'POST',
-    url: `http://13.126.183.78:8086/api/v1/roadTest`,
+    url: 'http://13.126.183.78:8086/api/v1/roadTest',
     headers,
     data,
-  })
+  });
 };
 
 export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) => {
@@ -579,10 +588,10 @@ export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) =>
   console.log(data);
   return axios({
     method: 'POST',
-    url: `http://13.126.183.78:8086/api/v1/auditTransfer`,
+    url: 'http://13.126.183.78:8086/api/v1/auditTransfer',
     headers,
     data,
-  })
+  });
 };
 
 export const addTeamMembersBulk = (users) => {
@@ -590,8 +599,8 @@ export const addTeamMembersBulk = (users) => {
   console.log(data);
   return axios({
     method: 'POST',
-    url: `http://13.126.183.78:8086/api/v1/team/bulkUserTeam`,
+    url: 'http://13.126.183.78:8086/api/v1/team/bulkUserTeam',
     headers,
     data,
-  })
+  });
 };

@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable global-require */
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
 import { getCarsList } from 'services/axios';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const nestedPath = [
   'Home',
@@ -12,15 +14,15 @@ const nestedPath = [
 
 const carslist = () => {
   const [CarsList, setCarsList] = useState([]);
-  const [garageid, setGarageID] = useState("");
-  const [createdbyid, setCreatedBy] = useState("");
+  const [garageid, setGarageID] = useState('');
+  const [createdbyid, setCreatedBy] = useState('');
   useEffect(() => {
     const tempgarageid = localStorage.getItem('garageid');
     const tempcreatedbyid = localStorage.getItem('createdby');
     setGarageID(tempgarageid);
     setCreatedBy(tempcreatedbyid);
     getCarsList(tempgarageid, tempcreatedbyid).then((resp) => {
-      console.log("garageid: " + tempgarageid + ", createdbyid: " + tempcreatedbyid);
+      console.log(`garageid: ${tempgarageid}, createdbyid: ${tempcreatedbyid}`);
       console.log(resp);
       setCarsList(resp.data?.results.pageData);
     })
@@ -76,12 +78,11 @@ const carslist = () => {
               </div>
             </Link>
 
-          )
-          )}
+          ))}
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default carslist;

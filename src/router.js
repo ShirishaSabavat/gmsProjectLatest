@@ -85,7 +85,7 @@ const routes = [
     Component: lazy(() => import('pages/cities/citieslist')),
   },
   {
-    path: '/cities/addcity',
+    path: '/cities/addcity/:id?',
     key: 'Add City',
     exact: true,
     Component: lazy(() => import('pages/cities/addcity')),
@@ -97,25 +97,25 @@ const routes = [
     Component: lazy(() => import('pages/garage/garagelist')),
   },
   {
-    path: '/garage/addgarage',
+    path: '/garage/addgarage/:id?',
     key: 'GARAGE',
     exact: true,
     Component: lazy(() => import('pages/garage/addgarage')),
   },
   {
-    path: '/garage/addteam',
+    path: '/garage/addteam/:teamId?/:garageId?/:locationId?/:garageName?/:team_name?/:team_description?',
     key: 'TEAMS',
     exact: true,
     Component: lazy(() => import('pages/garage/addteam')),
   },
   {
-    path: '/garage/teamslist',
+    path: '/garage/teamslist/:garageId?/:name?',
     key: 'TEAMS',
     exact: true,
     Component: lazy(() => import('pages/garage/teamslist')),
   },
   {
-    path: '/garage/locationlist',
+    path: '/garage/locationlist/:garageId?',
     key: 'LOCATIONS',
     exact: true,
     Component: lazy(() => import('pages/garage/locationlist')),
@@ -127,7 +127,7 @@ const routes = [
     Component: lazy(() => import('pages/userroles/userroleslist')),
   },
   {
-    path: '/userroles/addrole',
+    path: '/userroles/addrole/:id?',
     key: 'Add User Role',
     exact: true,
     Component: lazy(() => import('pages/userroles/addrole')),
@@ -139,7 +139,7 @@ const routes = [
     Component: lazy(() => import('pages/userProfiles/userProfiles')),
   },
   {
-    path: '/userProfiles/addUserProfile',
+    path: '/userProfiles/addUserProfile/:id?',
     key: 'USER PROFILES',
     exact: true,
     Component: lazy(() => import('pages/userProfiles/addUserProfile')),
@@ -151,7 +151,7 @@ const routes = [
     Component: lazy(() => import('pages/modules/modules')),
   },
   {
-    path: '/modules/addModule',
+    path: '/modules/addModule/:id?',
     key: 'Add Module',
     exact: true,
     Component: lazy(() => import('pages/modules/addModule')),
@@ -163,7 +163,7 @@ const routes = [
     Component: lazy(() => import('pages/processes/processes')),
   },
   {
-    path: '/processes/addProcess',
+    path: '/processes/addProcess/:id?',
     key: 'Add Process',
     exact: true,
     Component: lazy(() => import('pages/processes/addProcess')),
@@ -175,10 +175,16 @@ const routes = [
     Component: lazy(() => import('pages/pickupLocations/pickupLocations')),
   },
   {
-    path: '/garage/addPickupLocation',
+    path: '/garage/addPickupLocation/:locationId?/:garageId?',
     key: 'Add Pickup Locations',
     exact: true,
     Component: lazy(() => import('pages/garage/addPickupLocation')),
+  },
+  {
+    path: '/roadTrial/roadTrial',
+    key: 'Road Trial',
+    exact: true,
+    Component: lazy(() => import('pages/roadTrial/roadTrial')),
   },
 ];
 

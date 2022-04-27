@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Tooltip } from 'antd';
+import { useHistory } from 'react-router-dom';
 
 const editIcon = (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -18,18 +19,25 @@ const editIconFilled = (
 
 const Listitemmodule = ({
   module_id, module_name, created_on, status,
-}) => (
-  <div className="box-border mt-px">
-    <div className="flex flex-row flex-nowrap mx-5">
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">{module_name.substring(0, 15)}{module_name.length > 15 ? "..." : ""}</h1>
-      <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">{created_on}</h1>
-      <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white h-16 p-4 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white h-16 p-4 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
-      <Link to={{ pathname: 'addModule', state: { id: module_id } }} className="basis-1/5 bg-white p-4 mr-1 pt-4 h-16">
-        {status === 'true' ? editIconFilled : editIcon}
-      </Link>
+}) => {
+  const history = useHistory();
+  return (
+    <div className="box-border mt-px">
+      <div className="flex flex-row flex-nowrap mx-5">
+        <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">
+          {module_name.substring(0, 15)}
+          {module_name.length > 15 ? '...' : ''}
+        </h1>
+        <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">{created_on}</h1>
+        <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white h-16 p-4 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white h-16 p-4 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
+        <div onClick={() => history.push(`/modules/addModule/${module_id}`)} className="basis-1/5 bg-white p-4 mr-1 pt-4 h-16">
+          <Tooltip placement="top" title="Edit">
+            {status === 'true' ? editIconFilled : editIcon}
+          </Tooltip>
+        </div>
+      </div>
+
     </div>
-
-  </div>
-);
-
+  );
+};
 export default Listitemmodule;

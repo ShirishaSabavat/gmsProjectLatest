@@ -8,7 +8,9 @@ import {
   Input, Radio, Button, Dropdown,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
-import { addCarVisit, editCarVisit, getCarDetailsList, getCarsListEverest } from 'services/axios';
+import {
+  addCarVisit, editCarVisit, getCarDetailsList, getCarsListEverest,
+} from 'services/axios';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { useLocation } from 'react-router-dom';
 
@@ -26,22 +28,44 @@ const carformpage = () => {
   const [radioValue, setRadioValue] = useState(true);
   const [isFocused, setisFocused] = useState(false);
   const [CarsList, setCarsList] = useState([]);
-  const [DriverName, setDriverName] = useState("");
-  const [DriverContact, setDriverContact] = useState("");
-  const [DriverManagerName, setDriverManagerName] = useState("");
-  const [DriverNameError, setDriverNameError] = useState("");
-  const [DriverContactError, setDriverContactError] = useState("");
-  const [DriverManagerNameError, setDriverManagerNameError] = useState("");
-  const [DriverVisitCategoryError, setDriverVisitCategoryError] = useState("");
-  const [DriverSelectedCarNumberError, setDriverSelectedCarNumberError] = useState("");
+  const [DriverName, setDriverName] = useState('');
+  const [DriverContact, setDriverContact] = useState('');
+  const [DriverManagerName, setDriverManagerName] = useState('');
+  const [DriverNameError, setDriverNameError] = useState('');
+  const [DriverContactError, setDriverContactError] = useState('');
+  const [DriverManagerNameError, setDriverManagerNameError] = useState('');
+  const [DriverVisitCategoryError, setDriverVisitCategoryError] = useState('');
+  const [DriverSelectedCarNumberError, setDriverSelectedCarNumberError] = useState('');
   const [VisitCategory, setVisitCategory] = useState(10);
   const [SelectedCarID, setSelectedCarID] = useState(0);
-  const [SelectedCarNumber, setSelectedCarNumber] = useState("");
-  const [GarageID, setGarageID] = useState("");
-  const [LocationID, setLocationID] = useState("");
+  const [SelectedCarNumber, setSelectedCarNumber] = useState('');
+  const [GarageID, setGarageID] = useState('');
+  const [LocationID, setLocationID] = useState('');
   const [SelectedDriverID, setSelectedDriverID] = useState(0);
-  const [SelectedDriverManagerID, setSelectedDriverManagerID] = useState("");
+  const [SelectedDriverManagerID, setSelectedDriverManagerID] = useState('');
   const [isCarWithDriver, setisCarWithDriver] = useState(true);
+
+  const getCarDetails = (id) => {
+    getCarDetailsList(id).then((resp) => {
+      console.log(resp?.data);
+      if (resp?.data.length > 0) {
+        setDriverName(resp?.data[0].driver_name);
+        setDriverContact(resp?.data[0].mobile);
+        setDriverManagerName(resp?.data[0].manager_name);
+        setSelectedDriverID(resp?.data[0].driver_id);
+        setSelectedDriverManagerID(resp?.data[0].manager_id);
+      } else {
+        setDriverName('');
+        setDriverContact('');
+        setDriverManagerName('');
+        setSelectedDriverID(0);
+        setSelectedDriverManagerID('');
+      }
+    })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  };
 
   useEffect(() => {
     if (carId === -1) {
@@ -68,29 +92,6 @@ const carformpage = () => {
     }
   }, []);
 
-  const getCarDetails = (id) => {
-    getCarDetailsList(id).then((resp) => {
-      console.log(resp?.data);
-      if (resp?.data.length > 0) {
-        setDriverName(resp?.data[0].driver_name);
-        setDriverContact(resp?.data[0].mobile);
-        setDriverManagerName(resp?.data[0].manager_name);
-        setSelectedDriverID(resp?.data[0].driver_id);
-        setSelectedDriverManagerID(resp?.data[0].manager_id);
-      } else {
-        setDriverName("");
-        setDriverContact("");
-        setDriverManagerName("");
-        setSelectedDriverID(0);
-        setSelectedDriverManagerID("");
-      }
-
-    })
-      .catch((err) => {
-        console.log('err', err);
-      });
-  }
-
   const validateFormData = () => {
     const driverNameError = {};
     const selectedcarnumbererror = {};
@@ -98,18 +99,14 @@ const carformpage = () => {
     const driverVisitCategoryError = {};
     let isValid = true;
 
-    if (SelectedCarNumber.trim() === "") {
+    if (SelectedCarNumber.trim() === '') {
       selectedcarnumbererror.err = 'Please Select Car.';
       isValid = false;
-    } else {
-
     }
 
     if (VisitCategory === 10) {
       driverVisitCategoryError.err = 'Please select reason for visit';
       isValid = false;
-    } else {
-
     }
 
     setDriverSelectedCarNumberError(selectedcarnumbererror);
@@ -124,7 +121,19 @@ const carformpage = () => {
 
     if (resp) {
       if (carId === -1) {
-        addCarVisit(VisitCategory, SelectedCarID, SelectedCarNumber, GarageID, isCarWithDriver, SelectedDriverID, DriverName, DriverContact, SelectedDriverManagerID, DriverManagerName, LocationID)
+        addCarVisit(
+          VisitCategory,
+          SelectedCarID,
+          SelectedCarNumber,
+          GarageID,
+          isCarWithDriver,
+          SelectedDriverID,
+          DriverName,
+          DriverContact,
+          SelectedDriverManagerID,
+          DriverManagerName,
+          LocationID,
+        )
           .then((res) => {
             console.log('res', res);
             alert('Visit Added successfully');
@@ -134,7 +143,18 @@ const carformpage = () => {
             console.log('err', err);
           });
       } else {
-        editCarVisit(VisitCategory, SelectedCarID, GarageID, isCarWithDriver, SelectedDriverID, DriverName, DriverContact, SelectedDriverManagerID, DriverManagerName, LocationID)
+        editCarVisit(
+          VisitCategory,
+          SelectedCarID,
+          GarageID,
+          isCarWithDriver,
+          SelectedDriverID,
+          DriverName,
+          DriverContact,
+          SelectedDriverManagerID,
+          DriverManagerName,
+          LocationID,
+        )
           .then((res) => {
             console.log('res', res);
             alert('Visit Edited successfully');
@@ -144,9 +164,6 @@ const carformpage = () => {
             console.log('err', err);
           });
       }
-
-    } else {
-
     }
   };
 
@@ -154,13 +171,12 @@ const carformpage = () => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
     console.log(string);
-    if (string === "") {
+    if (string === '') {
       setisFocused(false);
     } else {
-      setisFocused(true)
+      setisFocused(true);
     }
-
-  }
+  };
 
   const handleOnHover = (result) => {
     // the item hovered
@@ -168,59 +184,58 @@ const carformpage = () => {
     setSelectedCarID(result.id);
     setSelectedCarNumber(result.name);
     setisFocused(false);
-  }
+  };
 
   const handleOnSelect = (item) => {
     // the item selected
-  }
+  };
 
   const handleOnFocus = () => {
+    console.log('Focused');
+  };
 
-    console.log('Focused')
-  }
-
-  const formatResult = (item) => {
-    return (
-      <>
-        <span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>
-      </>
-    )
-  }
+  const formatResult = (item) => (
+    <span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>
+  );
   return (
     <>
       <Helmet title="Teams" />
       <div className="flex flex-col space-y-12 mx-4">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-xl mr-3.5">
-            {carId === -1 ? "New Car Visit" : "Edit Car Visit"}
+            {carId === -1 ? 'New Car Visit' : 'Edit Car Visit'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
         <div className="bg-white p-4">
           <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Car Details</p>
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Number</p>
-          {carId === -1 ?
-            <div className="bg-white">
-              <ReactSearchAutocomplete
-                placeholder="Enter Car Number Here..."
-                styling={{ height: '40px', backgroundColor: '#F5F8FC', border: '2px', fontSize: "12px" }}
-                items={CarsList}
-                onSearch={handleOnSearch}
-                onHover={handleOnHover}
-                onSelect={handleOnSelect}
-                onClear={() => setisFocused(false)}
-                onFocus={handleOnFocus}
-                autoFocus
-                formatResult={formatResult}
-              />
-            </div> :
-            <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>{carnumber}</p>}
+          {carId === -1
+            ? (
+              <div className="bg-white">
+                <ReactSearchAutocomplete
+                  placeholder="Enter Car Number Here..."
+                  styling={{
+                    height: '40px', backgroundColor: '#F5F8FC', border: '2px', fontSize: '12px',
+                  }}
+                  items={CarsList}
+                  onSearch={handleOnSearch}
+                  onHover={handleOnHover}
+                  onSelect={handleOnSelect}
+                  onClear={() => setisFocused(false)}
+                  onFocus={handleOnFocus}
+                  autoFocus
+                  formatResult={formatResult}
+                />
+              </div>
+            )
+            : <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>{carnumber}</p>}
           {Object.keys(DriverSelectedCarNumberError).map((key) => (
             <div style={{ color: 'red' }}>
               {DriverSelectedCarNumberError[key]}
             </div>
           ))}
-          <div className={isFocused === true ? "bg-white pt-80 pb-5" : "bg-white py-5"}>
+          <div className={isFocused === true ? 'bg-white pt-80 pb-5' : 'bg-white py-5'}>
             <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Is Car with Driver?</p>
             <div className="flex flex-row flex-nonwrap bg-white">
               <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>

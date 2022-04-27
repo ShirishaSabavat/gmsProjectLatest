@@ -4,7 +4,7 @@ import Breadcrumb from 'components/layouts/breadcrumb';
 import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
 import Listitemcity from 'components/layouts/Listitemcity';
 import { Pagination } from 'react-headless-pagination';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getCities } from 'services/axios';
 
 const nestedPath = [
@@ -51,18 +51,19 @@ function citieslist() {
         });
     }
   }
+  const history = useHistory();
   return (
     <>
       <Helmet title="Cities" />
       <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
-        <Link
-          to={{ pathname: 'addcity', state: { id: -1 } }}
+        <div
+          onClick={() => history.push('/cities/addcity/-1')}
           style={{
-            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none',
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none', cursor: 'pointer',
           }}
         >
           Add New City +
-        </Link>
+        </div>
       </div>
       <div>
         <div className="flex flex-col space-y-12">

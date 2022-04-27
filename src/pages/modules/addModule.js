@@ -1,19 +1,19 @@
 /* eslint-disable react/jsx-boolean-value */
 import { React, useState, useEffect } from 'react';
 import {
-  Input, Radio, Button,
+  Input, Radio, Button, notification,
 } from 'antd';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { addModule, getModuleById, editModule } from 'services/axios';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const addModules = () => {
-  const location = useLocation();
-  const { id } = location.state;
+  const { id } = useParams();
+  const history = useHistory();
 
   const nestedPath = [
     'Home',
-    `${id === -1 ? 'Add New Module' : 'Edit Module'}`,
+    `${id === '-1' ? 'Add New Module' : 'Edit Module'}`,
   ];
 
   const [radioValue, setRadioValue] = useState(true);
@@ -21,7 +21,7 @@ const addModules = () => {
   const [moduleError, setModuleError] = useState({});
 
   useEffect(() => {
-    getModuleById(id)
+    getModuleById(Number(id))
       .then((res) => {
         console.log(res);
         setModuleName(res.data?.results?.module);
@@ -50,25 +50,45 @@ const addModules = () => {
     console.log('error', moduleName);
     const resp = validateFormData();
     if (resp) {
-      if (id !== -1) {
-        editModule(moduleName, radioValue, id)
+      if (id !== '-1') {
+        editModule(moduleName, radioValue, Number(id))
           .then((res) => {
             console.log('res', res);
-            alert('Module Edited Successfully');
-            window.location = '#/modules/modules';
+            notification.success({
+              message: 'Module Edited Successfully',
+            });
+            setTimeout(() => {
+              history.push('/modules/modules');
+            }, 1000);
           })
           .catch((err) => {
             console.log('err', err);
+            notification.error({
+              message: 'Something went wrong',
+            });
+            setTimeout(() => {
+              history.push('/modules/modules');
+            }, 1000);
           });
       } else {
         addModule(moduleName, radioValue)
           .then((res) => {
             console.log('res', res);
-            alert('Module Added Successfully');
-            window.location = '#/modules/modules';
+            notification.success({
+              message: 'Module Edited Successfully',
+            });
+            setTimeout(() => {
+              history.push('/modules/modules');
+            }, 1000);
           })
           .catch((err) => {
             console.log('err', err);
+            notification.error({
+              message: 'Something went wrong',
+            });
+            setTimeout(() => {
+              history.push('/modules/modules');
+            }, 1000);
           });
       }
     }
@@ -78,7 +98,7 @@ const addModules = () => {
     <div className="row px-4">
       <div className="space-y-2 basic-1/2">
         <span className="font-quicksand-semi-bold text-4xl mr-3.5">
-          {id === -1 ? 'Add New Module' : 'Edit Module'}
+          {id === '-1' ? 'Add New Module' : 'Edit Module'}
         </span>
         <Breadcrumb nestedPath={nestedPath} />
       </div>

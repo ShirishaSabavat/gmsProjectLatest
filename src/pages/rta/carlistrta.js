@@ -1,16 +1,17 @@
+/* eslint-disable global-require */
+/* eslint-disable no-unused-vars */
 import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getCarsListJama } from 'services/axios';
 
 const carslistrta = () => {
   const [CarsList, setCarsList] = useState([]);
-  const [garageid, setGarageid] = useState("");
+  const [garageid, setGarageid] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
-    setGarageid(tempGarageID)
+    setGarageid(tempGarageID);
     getCarsListJama(tempGarageID).then((resp) => {
       console.log(resp);
       setCarsList(resp.data?.results.pageData);
@@ -50,7 +51,19 @@ const carslistrta = () => {
         <div>
           {CarsList.map((item) => (
             <Link
-              to={{ pathname: 'leasingjama', state: { id: item.id, carId: item.carId, carnumber: item.car_number, drivername: item.driver_name, visitid: item.visitId, visitcategory: item.visit_category } }} className="bg-white">
+              to={{
+                pathname: 'leasingjama',
+                state: {
+                  id: item.id,
+                  carId: item.carId,
+                  carnumber: item.car_number,
+                  drivername: item.driver_name,
+                  visitid: item.visitId,
+                  visitcategory: item.visit_category,
+                },
+              }}
+              className="bg-white"
+            >
               <div className="bg-white rounded-lg my-3 mx-2">
                 <div className="flex flex-row flex-nonwrap justify-center">
                   <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
@@ -66,12 +79,11 @@ const carslistrta = () => {
               </div>
             </Link>
 
-          )
-          )}
+          ))}
         </div>
       </div>
     </>
-  )
+  );
 };
 
 export default carslistrta;
