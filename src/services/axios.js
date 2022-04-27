@@ -23,7 +23,9 @@ export const loginApi = async (userData) => {
     localStorage.setItem('user', user?.first_name);
     localStorage.setItem('role', user?.roles[0].role);
     if (!(user?.roles[0].role === null || user?.roles[0].role === undefined || user?.roles[0].role === 'Super Admin')) {
+      localStorage.setItem('empid', user?.user_profile?.emp_id);
       localStorage.setItem('garageid', user?.teams[0].garageId);
+      localStorage.setItem('createdby', user?.roles[0].createdBy);
       localStorage.setItem('locationid', user?.teams[0].locationId);
     }
     return resp;
