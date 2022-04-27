@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
+import { Tooltip } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 const editIcon = (
@@ -17,7 +18,7 @@ const editIconFilled = (
 );
 
 const Listitemteamgarage = ({
-  team_id, garageName, team_name, team_description, garage_id, locationId, status,
+  team_id, garageName, team_name, team_description, garage_id, locationId, status, users_ids,
 }) => {
   const history = useHistory();
   return (
@@ -26,10 +27,15 @@ const Listitemteamgarage = ({
         <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">{team_name}</h1>
         <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
         <div
-          onClick={() => history.push(`/garage/addteam/${team_id}/${garage_id}/${locationId}/${garageName}/${team_name}/${team_description}`)}
+          onClick={() => history.push({
+            pathname: `/garage/addteam/${team_id}/${garage_id}/${locationId}/${garageName}/${team_name}/${team_description}`,
+            state: { user_ids: users_ids },
+          })}
           className="basis-1/6 bg-white p-4 mr-1 pt-4 h-16"
         >
-          {status === 'true' ? editIconFilled : editIcon}
+          <Tooltip placement="top" title="Edit">
+            {status === 'true' ? editIconFilled : editIcon}
+          </Tooltip>
         </div>
 
       </div>

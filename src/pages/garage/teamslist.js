@@ -61,7 +61,10 @@ function teamslist() {
       <Helmet title="Garages" />
       <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
         <div
-          onClick={() => history.push(`/garage/addteam/-1/${garageId}/-1/${name}/-1/-1`)}
+          onClick={() => history.push({
+            pathname: `/garage/addteam/-1/${garageId}/-1/${name}/-1/-1`,
+            state: { user_ids: [] },
+          })}
           style={{
             marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '194px', height: '52px', boxShadow: '0px 8px 16px #005B923D', padding: '13px 30px', textDecoration: 'none', cursor: 'pointer',
           }}
@@ -98,6 +101,7 @@ function teamslist() {
               team_description={item.description}
               garage_id={garageId}
               locationId={item.locationId}
+              users_ids={item.users}
               status={String(item.isActive)}
             />
           ))}

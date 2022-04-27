@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 /* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
 // import AWS from 'aws-sdk';

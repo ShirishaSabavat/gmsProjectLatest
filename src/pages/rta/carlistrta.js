@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+/* eslint-disable no-unused-vars */
 import { Helmet } from 'react-helmet';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
@@ -7,8 +8,11 @@ import { getCarsListJama } from 'services/axios';
 
 const carslistrta = () => {
   const [CarsList, setCarsList] = useState([]);
+  const [garageid, setGarageid] = useState('');
   useEffect(() => {
-    getCarsListJama().then((resp) => {
+    const tempGarageID = localStorage.getItem('garageid');
+    setGarageid(tempGarageID);
+    getCarsListJama(tempGarageID).then((resp) => {
       console.log(resp);
       setCarsList(resp.data?.results.pageData);
     })
@@ -66,15 +70,11 @@ const carslistrta = () => {
                   <div>
                     <h1 className="font-quicksand-bold text-xl mt-3">{item.car_number}</h1>
                     <h1 className="font-quicksand-semi-bold text-sm mt-1">Maruti Suzuki Drive Vxi CNG</h1>
-                    <div className="flex flex-row justify-center">
+                    <div className="flex flex-row">
                       <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
                       <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{item.visitId}</h1>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-row justify-center">
-                  <h1 className="font-quicksand-semi-bold text-base my-3">Last Login: </h1>
-                  <h1 className="font-quicksand-semi-bold text-base my-3 text-teal-300">{item.updatedAt.substring(0, 10)}</h1>
                 </div>
               </div>
             </Link>

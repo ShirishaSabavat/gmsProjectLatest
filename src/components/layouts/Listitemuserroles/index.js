@@ -24,7 +24,10 @@ const Listitemuserrole = ({
   return (
     <div className="box-border mt-px">
       <div className="flex flex-row flex-nowrap mx-5">
-        <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">{role_title}</h1>
+        <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/2 bg-white h-16 p-4 mr-1">
+          {role_title.substring(0, 15)}
+          {role_title.length > 15 ? '...' : ''}
+        </h1>
         <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1">{created_on}</h1>
         <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white h-16 p-4 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/7 bg-white h-16 p-4 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
         <div onClick={() => history.push(`/userroles/addrole/${role_id}`)} className="basis-1/6 bg-white p-4 mr-1 pt-4 h-16">

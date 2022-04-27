@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-sequences */
 /* eslint-disable no-unused-expressions */
+/* eslint-disable no-sequences */
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Button } from 'antd';
@@ -10,7 +10,7 @@ import { rejectRTAList } from 'services/axios';
 
 const nestedPath = [
   'Home',
-  'Repair Audit',
+  'Road Trip Audit',
 ];
 
 const transferjama = () => {

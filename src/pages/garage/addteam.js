@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
 /* eslint-disable import/no-unresolved */
@@ -11,9 +12,9 @@ import {
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
-  getUserProfiles, getPickupLocationByGarageId, addTeamApi, editTeamApi,
+  getUserProfiles, getPickupLocationByGarageId, addTeamApi, editTeamApi, addTeamMembersBulk,
 } from 'services/axios';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { DropdownMenu } from 'reactstrap';
 
 const { TextArea } = Input;
@@ -22,6 +23,9 @@ const addteam = () => {
   const {
     teamId, garageId, locationId, garageName, team_name, team_description,
   } = useParams();
+  const location = useLocation();
+  const users_ids = location.state.user_ids;
+  // console.log(users_ids);
   const history = useHistory();
 
   const nestedPath = [
@@ -54,15 +58,28 @@ const addteam = () => {
     </Menu>
   );
 
+  const AddUsersArray = () => {
+    console.log(users_ids.length);
+    let i = 0;
+    const tempUsers = [];
+    for (i = 0; i < users_ids.length; i++) {
+      tempUsers.push(users_ids[i].id);
+    }
+    setSelectedUsers(tempUsers);
+
+    console.log(users_ids);
+  };
+
   useEffect(() => {
     getPickupLocationByGarageId(garageId)
       .then((res) => {
-        console.log('garageList', res);
+        // console.log('garageList', res);
         setDropDownMenu(res?.data?.results?.pageData);
         getUserProfiles(0).then((resp) => {
           console.log('res', resp);
           setProfileList(resp.data?.results.pageData);
           setSelectedItem(Number(locationId));
+          AddUsersArray();
         })
           .catch((err) => {
             console.log('err', err);
@@ -73,8 +90,8 @@ const addteam = () => {
       });
   }, []);
 
-  const AddToArray = (itemId) => {
-    setSelectedUsers([...selectedUsers, itemId]);
+  const AddToArray = (id) => {
+    setSelectedUsers([...selectedUsers, id]);
   };
 
   const RemoveFromArray = (itemId) => {
@@ -117,6 +134,36 @@ const addteam = () => {
     return isValid;
   };
 
+  const AddMemebersBulk = (idteam, message) => {
+    const tempUsersArray = [];
+    let i = 0;
+    for (i = 0; i < selectedUsers.length; i++) {
+      tempUsersArray.push({
+        teamId: idteam,
+        userId: selectedUsers[i],
+      });
+    }
+    addTeamMembersBulk(tempUsersArray)
+      .then((res) => {
+        console.log('res', res);
+        notification.success({
+          message,
+        });
+        setTimeout(() => {
+          history.push(`/garage/teamslist/${garageId}/${garageName}`);
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log('err', err);
+        notification.error({
+          message: 'Something went wrong',
+        });
+        setTimeout(() => {
+          history.push(`/garage/teamslist/${garageId}/${garageName}`);
+        }, 1000);
+      });
+  };
+
   const onSave = (event) => {
     event.preventDefault();
     const resp = validateFormData();
@@ -141,9 +188,16 @@ const addteam = () => {
             setTimeout(() => {
               history.push(`/garage/teamslist/${garageId}/${garageName}`);
             }, 1000);
+            AddMemebersBulk(teamId, 'Team edited successfully.');
           })
           .catch((err) => {
             console.log('err', err);
+            notification.error({
+              message: 'Something went wrong',
+            });
+            setTimeout(() => {
+              history.push(`/garage/teamslist/${garageId}/${garageName}`);
+            }, 1000);
           });
       } else {
         console.log('in add');
@@ -156,9 +210,16 @@ const addteam = () => {
             setTimeout(() => {
               history.push(`/garage/teamslist/${garageId}/${garageName}`);
             }, 1000);
+            AddMemebersBulk(res?.data?.results?.id, 'Team added successfully.');
           })
           .catch((err) => {
             console.log('err', err);
+            notification.error({
+              message: 'Something went wrong',
+            });
+            setTimeout(() => {
+              history.push(`/garage/teamslist/${garageId}/${garageName}`);
+            }, 1000);
           });
       }
     }

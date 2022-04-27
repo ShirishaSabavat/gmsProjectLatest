@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
+import { Tooltip } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 const editIcon = (
@@ -30,7 +31,9 @@ const Listitemlocation = ({
           onClick={() => history.push(`/garage/addPickupLocation/${locationId}/${garage_id}`)}
           className="basis-1/5 bg-white p-4 mr-1 pt-4 h-16"
         >
-          {status === 'true' ? editIconFilled : editIcon}
+          <Tooltip placement="top" title="Edit">
+            {status === 'true' ? editIconFilled : editIcon}
+          </Tooltip>
         </div>
       </div>
 
