@@ -99,7 +99,7 @@ const carformpage = () => {
     const driverVisitCategoryError = {};
     let isValid = true;
 
-    if (SelectedCarNumber.trim() === '') {
+    if (SelectedCarNumber.trim() === '' || SelectedCarNumber === "Enter Car Number Here...") {
       selectedcarnumbererror.err = 'Please Select Car.';
       isValid = false;
     }
@@ -188,6 +188,10 @@ const carformpage = () => {
 
   const handleOnSelect = (item) => {
     // the item selected
+    getCarDetails(item.id);
+    setSelectedCarID(item.id);
+    setSelectedCarNumber(item.name);
+    setisFocused(false);
   };
 
   const handleOnFocus = () => {
@@ -215,6 +219,7 @@ const carformpage = () => {
               <div className="bg-white">
                 <ReactSearchAutocomplete
                   placeholder="Enter Car Number Here..."
+                  inputSearchString={SelectedCarNumber === "" || SelectedCarNumber === "Enter Car Number Here..." ? "" : SelectedCarNumber}
                   styling={{
                     height: '40px', backgroundColor: '#F5F8FC', border: '2px', fontSize: '12px',
                   }}
@@ -225,6 +230,7 @@ const carformpage = () => {
                   onClear={() => setisFocused(false)}
                   onFocus={handleOnFocus}
                   autoFocus
+                  maxResults={10}
                   formatResult={formatResult}
                 />
               </div>
@@ -244,39 +250,43 @@ const carformpage = () => {
               </Radio.Group>
             </div>
           </div>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Name</p>
-          <div className="flex flex-nonwrap bg-white">
-            <Input
-              value={DriverName}
-              placeholder="Enter Name Here..."
-              style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-              }}
-            />
+          {radioValue === true ?
+            <div>
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Name</p>
+              <div className="flex flex-nonwrap bg-white">
+                <Input
+                  value={DriverName}
+                  placeholder="Enter Name Here..."
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                  }}
+                />
 
-          </div>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Contact Number</p>
-          <div className="flex flex-nonwrap bg-white">
-            <Input
-              value={DriverContact}
-              placeholder="Enter Contact Here..."
-              style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-              }}
-            />
+              </div>
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Contact Number</p>
+              <div className="flex flex-nonwrap bg-white">
+                <Input
+                  value={DriverContact}
+                  placeholder="Enter Contact Here..."
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                  }}
+                />
 
-          </div>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Manager Name</p>
-          <div className="flex flex-nonwrap bg-white">
-            <Input
-              value={DriverManagerName}
-              placeholder="Enter Name Here..."
-              style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-              }}
-            />
+              </div>
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Manager Name</p>
+              <div className="flex flex-nonwrap bg-white">
+                <Input
+                  value={DriverManagerName}
+                  placeholder="Enter Name Here..."
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                  }}
+                />
 
-          </div>
+              </div>
+            </div>
+            : <div></div>}
         </div>
         <div className="bg-white p-4">
           <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Reason for Visit</p>
