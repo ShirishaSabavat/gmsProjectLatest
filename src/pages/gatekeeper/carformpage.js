@@ -23,7 +23,7 @@ const nestedPath = [
 const carformpage = () => {
   const location = useLocation();
   const {
-    carId, carnumber, visitcategory
+    carId, carnumber, visitcategory,
   } = location.state;
   const [radioValue, setRadioValue] = useState(true);
   const [isFocused, setisFocused] = useState(false);
@@ -77,7 +77,7 @@ const carformpage = () => {
         setGarageID(tempGarageID);
         setLocationID(tempLocationID);
         setVisitCategory(visitcategory);
-        //setCarsList(resp?.data);
+        // setCarsList(resp?.data);
       })
         .catch((err) => {
           console.log('err', err);

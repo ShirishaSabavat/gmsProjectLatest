@@ -62,7 +62,9 @@ const carslist = () => {
         <div>
           {CarsList.map((item) => (
             <Link
-              to={{ pathname: 'carformpage', state: { carId: item.carId, carnumber: item.car_number, visitcategory: item.visit_category } }} className="bg-white">
+              to={{ pathname: 'carformpage', state: { carId: item.carId, carnumber: item.car_number, visitcategory: item.visit_category } }}
+              className="bg-white"
+            >
               <div className="bg-white rounded-lg my-3 mx-2">
                 <div className="flex flex-row flex-nonwrap justify-center">
                   <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
