@@ -21,7 +21,7 @@ const nestedPath = [
 const carformpage = () => {
   const location = useLocation();
   const {
-    carId, carnumber
+    carId, carnumber, visitcategory
   } = location.state;
   const [radioValue, setRadioValue] = useState(true);
   const [isFocused, setisFocused] = useState(false);
@@ -52,6 +52,7 @@ const carformpage = () => {
         const tempLocationID = localStorage.getItem('locationid');
         setGarageID(tempGarageID);
         setLocationID(tempLocationID);
+        setVisitCategory(visitcategory);
         //setCarsList(resp?.data);
       })
         .catch((err) => {
@@ -63,6 +64,7 @@ const carformpage = () => {
       setGarageID(tempGarageID);
       setLocationID(tempLocationID);
       getCarDetails(carId);
+      setVisitCategory(visitcategory);
     }
   }, []);
 
@@ -267,14 +269,14 @@ const carformpage = () => {
             <Button
               onClick={() => setVisitCategory(4)}
               className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px' }}
+              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 4 ? 'aqua' : 'white' }}
             >
               Servicing
             </Button>
             <Button
               onClick={() => setVisitCategory(5)}
               className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px' }}
+              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 5 ? 'aqua' : 'white' }}
             >
               Repair
             </Button>
@@ -283,14 +285,14 @@ const carformpage = () => {
             <Button
               onClick={() => setVisitCategory(3)}
               className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px' }}
+              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 3 ? 'aqua' : 'white' }}
             >
               Regular Audit
             </Button>
             <Button
               onClick={() => setVisitCategory(1)}
               className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px' }}
+              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 1 ? 'aqua' : 'white' }}
             >
               60:40 Jama
             </Button>
@@ -299,7 +301,7 @@ const carformpage = () => {
             <Button
               onClick={() => setVisitCategory(2)}
               className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px' }}
+              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 2 ? 'aqua' : 'white' }}
             >
               Leasing Car Jama
             </Button>

@@ -29,7 +29,7 @@ function userroleslist() {
       });
   }, []);
   function clickNext() {
-    if (currentPage + 1 <= totalPages) {
+    if (currentPage + 1 < totalPages) {
       getUserRoles(currentPage + 1).then((res) => {
         console.log('res', res);
         setRoles(res.data?.results.pageData);

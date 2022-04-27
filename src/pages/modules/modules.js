@@ -28,7 +28,7 @@ function modules() {
       });
   }, []);
   function clickNext() {
-    if (currentPage + 1 <= totalPages) {
+    if (currentPage + 1 < totalPages) {
       getModules(currentPage + 1).then((res) => {
         console.log('res', res);
         setModulesList(res.data?.results.pageData);

@@ -28,7 +28,7 @@ function userProfiles() {
       });
   }, []);
   function clickNext() {
-    if (currentPage + 1 <= totalPages) {
+    if (currentPage + 1 < totalPages) {
       getUserProfiles(currentPage + 1).then((res) => {
         console.log('res', res);
         setProfileList(res.data?.results.pageData);

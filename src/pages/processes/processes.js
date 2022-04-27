@@ -28,7 +28,7 @@ function ProcessesPage() {
       });
   }, []);
   function clickNext() {
-    if (currentPage + 1 <= totalPages) {
+    if (currentPage + 1 < totalPages) {
       getProcess(currentPage + 1).then((res) => {
         console.log('res', res);
         setProcessList(res.data?.results.pageData);

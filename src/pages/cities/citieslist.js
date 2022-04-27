@@ -28,7 +28,7 @@ function citieslist() {
       });
   }, []);
   function clickNext() {
-    if (currentPage + 1 <= totalPages) {
+    if (currentPage + 1 < totalPages) {
       getCities(currentPage + 1).then((res) => {
         console.log('res', res);
         setCities(res.data?.results.pageData);

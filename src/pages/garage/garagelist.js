@@ -29,7 +29,7 @@ function garagelist() {
       });
   }, []);
   function clickNext() {
-    if (currentPage + 1 <= totalPages) {
+    if (currentPage + 1 < totalPages) {
       getGarages(currentPage + 1).then((res) => {
         console.log('res', res);
         setGarages(res.data?.results.pageData);

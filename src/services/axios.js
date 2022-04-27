@@ -28,7 +28,7 @@ export const loginApi = async (userData) => {
     } else {
       localStorage.setItem('empid', resp?.data?.results?.user?.user_profile?.emp_id);
       localStorage.setItem('garageid', resp?.data?.results?.user?.teams[0].garageId);
-      localStorage.setItem('createdby', resp?.data?.results?.user?.roles[0].createdBy);
+      localStorage.setItem('createdby', resp?.data?.results?.user?.id);
       localStorage.setItem('locationid', resp?.data?.results?.user?.teams[0].locationId);
     }
     return resp;

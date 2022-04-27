@@ -55,7 +55,7 @@ const homepage = () => {
           <div>
             <div className="col-12 flex flex-row justify-end">
               <Link
-                to={{ pathname: 'carformpage', state: { carId: -1, carnumber: -1 } }}
+                to={{ pathname: 'carformpage', state: { carId: -1, carnumber: -1, visitcategory: -1 } }}
                 className="font-quicksand-medium"
                 style={{
                   marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px',

@@ -33,8 +33,8 @@ function teamslist() {
       });
   }, []);
   function clickNext() {
-    if (currentPage + 1 <= totalPages) {
-      getTeamGarages(currentPage + 1).then((res) => {
+    if (currentPage + 1 < totalPages) {
+      getTeamGarages(currentPage + 1, garageId).then((res) => {
         console.log('res', res);
         setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
@@ -46,7 +46,7 @@ function teamslist() {
   }
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
-      getTeamGarages(currentPage - 1).then((res) => {
+      getTeamGarages(currentPage - 1, garageId).then((res) => {
         console.log('res', res);
         setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
