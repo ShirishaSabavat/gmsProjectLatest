@@ -62,7 +62,7 @@ function teamslist() {
       <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
         <div
           onClick={() => history.push({
-            pathname: `/garage/addteam/-1/${garageId}/-1/${name}/-1/-1`,
+            pathname: `/garage/addteam/-1/${garageId}/-1/${name}/-1/-1/true`,
             state: { user_ids: [] },
           })}
           style={{

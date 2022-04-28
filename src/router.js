@@ -103,7 +103,7 @@ const routes = [
     Component: lazy(() => import('pages/garage/addgarage')),
   },
   {
-    path: '/garage/addteam/:teamId?/:garageId?/:locationId?/:garageName?/:team_name?/:team_description?',
+    path: '/garage/addteam/:teamId?/:garageId?/:locationId?/:garageName?/:team_name?/:team_description?/:isActive?',
     key: 'TEAMS',
     exact: true,
     Component: lazy(() => import('pages/garage/addteam')),

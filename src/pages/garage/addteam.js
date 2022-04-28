@@ -21,11 +21,11 @@ const { TextArea } = Input;
 
 const addteam = () => {
   const {
-    teamId, garageId, locationId, garageName, team_name, team_description,
+    teamId, garageId, locationId, garageName, team_name, team_description, isActive,
   } = useParams();
   const location = useLocation();
   const users_ids = location.state.user_ids;
-  // console.log(users_ids);
+  const isSetActive = isActive === 'true';
   const history = useHistory();
 
   const nestedPath = [
@@ -33,7 +33,7 @@ const addteam = () => {
     `${teamId === '-1' ? 'Add Team' : 'Edit Team'}`,
   ];
 
-  const [radioValue, setRadioValue] = useState(true);
+  const [radioValue, setRadioValue] = useState(isSetActive);
   const [profileList, setProfileList] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [teamTitle, setTeamTitle] = useState(team_name === '-1' ? '' : team_name);
@@ -179,7 +179,7 @@ const addteam = () => {
       if (teamId !== '-1') {
         console.log('in edit');
         // eslint-disable-next-line max-len
-        editTeamApi(teamTitle, '', teamDescription, Number(locationId), garageId, teamId)
+        editTeamApi(teamTitle, '', teamDescription, selectedItem, garageId, teamId, radioValue)
           .then((res) => {
             console.log('res', res);
             notification.success({
@@ -201,7 +201,7 @@ const addteam = () => {
           });
       } else {
         console.log('in add');
-        addTeamApi(teamTitle, teamDescription, Number(locationId), garageId)
+        addTeamApi(teamTitle, teamDescription, selectedItem, garageId, radioValue)
           .then((res) => {
             console.log('res', res);
             notification.success({

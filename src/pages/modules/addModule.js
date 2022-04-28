@@ -75,7 +75,7 @@ const addModules = () => {
           .then((res) => {
             console.log('res', res);
             notification.success({
-              message: 'Module Edited Successfully',
+              message: 'Module Added Successfully',
             });
             setTimeout(() => {
               history.push('/modules/modules');
@@ -84,11 +84,11 @@ const addModules = () => {
           .catch((err) => {
             console.log('err', err);
             notification.error({
-              message: 'Something went wrong',
+              message: err.response.data.errors[0].msg,
             });
-            setTimeout(() => {
-              history.push('/modules/modules');
-            }, 1000);
+            // setTimeout(() => {
+            //   history.push('/modules/modules');
+            // }, 1000);
           });
       }
     }
