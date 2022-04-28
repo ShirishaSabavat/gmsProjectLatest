@@ -27,6 +27,7 @@ export const loginApi = async (userData) => {
       localStorage.setItem('garageid', user?.teams[0].garageId);
       localStorage.setItem('createdby', user?.id);
       localStorage.setItem('locationid', user?.teams[0].locationId);
+      localStorage.setItem('cityid', user?.user_profile?.cityId);
     }
     return resp;
   } catch (err) {
@@ -497,15 +498,15 @@ export const getCarsList = (garageid, createdby) => axios({
   headers,
 });
 
-export const getCarsListEverest = () => axios({
+export const getCarsListEverest = (cityid) => axios({
   method: 'GET',
-  url: 'http://13.126.183.78:8086/api/v1/visitingCars/fetchCarsFromEverest/1',
+  url: `http://13.126.183.78:8086/api/v1/visitingCars/fetchCarsFromEverest/${cityid}`,
   headers,
 });
 
 export const getCarsListJama = (garageid) => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/visitingCars?garageId[]=${garageid}&visit_category[]=1,2`,
+  url: `http://13.126.183.78:8086/api/v1/visitingCars?garageId[]=${garageid}&visit_category[]=1,2&status=1`,
   headers,
 });
 
@@ -528,6 +529,7 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
     drive_contact_number: drivercontactnumber,
     driverManagerId: drivermanagerid,
     driver_manager_name: drivermanagername,
+    status: 1,
   });
   console.log(data);
   return axios({
@@ -550,6 +552,7 @@ export const editCarVisit = (visitcat, carid, garageid, isdriverwithcar, driverI
     drive_contact_number: drivercontactnumber,
     driverManagerId: drivermanagerid,
     driver_manager_name: drivermanagername,
+    status: 1,
   });
   console.log(data);
   return axios({

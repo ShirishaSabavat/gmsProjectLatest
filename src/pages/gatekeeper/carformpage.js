@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import {
-  Input, Radio, Button, Dropdown,
+  Input, Radio, Button, Dropdown, notification,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
@@ -28,6 +28,7 @@ const carformpage = () => {
   const [radioValue, setRadioValue] = useState(true);
   const [isFocused, setisFocused] = useState(false);
   const [CarsList, setCarsList] = useState([]);
+  const [cityID, setcityID] = useState("");
   const [DriverName, setDriverName] = useState('');
   const [DriverContact, setDriverContact] = useState('');
   const [DriverManagerName, setDriverManagerName] = useState('');
@@ -69,14 +70,18 @@ const carformpage = () => {
 
   useEffect(() => {
     if (carId === -1) {
-      getCarsListEverest().then((resp) => {
+      const tempcityID = localStorage.getItem('cityid');
+      setcityID(tempcityID);
+      getCarsListEverest(tempcityID).then((resp) => {
         console.log(resp?.data);
         setCarsList(resp?.data);
         const tempGarageID = localStorage.getItem('garageid');
         const tempLocationID = localStorage.getItem('locationid');
+
         setGarageID(tempGarageID);
         setLocationID(tempLocationID);
         setVisitCategory(visitcategory);
+
         //setCarsList(resp?.data);
       })
         .catch((err) => {
@@ -99,18 +104,29 @@ const carformpage = () => {
     const driverVisitCategoryError = {};
     let isValid = true;
 
-    if (SelectedCarNumber.trim() === '' || SelectedCarNumber === "Enter Car Number Here...") {
-      selectedcarnumbererror.err = 'Please Select Car.';
-      isValid = false;
+    if (carId === -1) {
+      if (SelectedCarNumber.trim() === '' || SelectedCarNumber === "Enter Car Number Here...") {
+        selectedcarnumbererror.err = 'Please Select Car.';
+        isValid = false;
+      }
+
+      if (VisitCategory === 10) {
+        driverVisitCategoryError.err = 'Please select reason for visit';
+        isValid = false;
+      }
+
+      setDriverSelectedCarNumberError(selectedcarnumbererror);
+      setDriverVisitCategoryError(driverVisitCategoryError);
+    } else {
+
+      if (VisitCategory === 10) {
+        driverVisitCategoryError.err = 'Please select reason for visit';
+        isValid = false;
+      }
+
+      setDriverVisitCategoryError(driverVisitCategoryError);
     }
 
-    if (VisitCategory === 10) {
-      driverVisitCategoryError.err = 'Please select reason for visit';
-      isValid = false;
-    }
-
-    setDriverSelectedCarNumberError(selectedcarnumbererror);
-    setDriverVisitCategoryError(driverVisitCategoryError);
     return isValid;
   };
 
@@ -136,11 +152,16 @@ const carformpage = () => {
         )
           .then((res) => {
             console.log('res', res);
-            alert('Visit Added successfully');
+            notification.success({
+              message: 'Visit Added successfully',
+            });
             window.location.href = '#/gatekeeper/homepage';
           })
           .catch((err) => {
-            console.log('err', err);
+            console.log('err', err.response);
+            notification.error({
+              message: err.response.data.message
+            });
           });
       } else {
         editCarVisit(
@@ -157,7 +178,9 @@ const carformpage = () => {
         )
           .then((res) => {
             console.log('res', res);
-            alert('Visit Edited successfully');
+            notification.success({
+              message: 'Visit Edited successfully',
+            });
             window.location.href = '#/gatekeeper/homepage';
           })
           .catch((err) => {
