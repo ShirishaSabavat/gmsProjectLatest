@@ -14,6 +14,7 @@ const createModules = () => {
   const [radioValue, setRadioValue] = useState(true);
   const [processName, setProcessName] = useState('');
   const [processError, setProcessError] = useState({});
+  const [moduleError, setModuleError] = useState({});
   const [dropDownMenu, setDropDownMenu] = useState([]);
   const [selectedItem, setSelectedItem] = useState('');
 
@@ -61,13 +62,19 @@ const createModules = () => {
 
   const validateFormData = () => {
     const processNameError = {};
+    const moduleSelectError = {};
     let isValid = true;
 
     if (processName.trim().length === 0) {
       processNameError.err = 'Process name can not be empty';
       isValid = false;
     }
+    if (!selectedItem) {
+      moduleSelectError.err = 'Please select module';
+      isValid = false;
+    }
     setProcessError(processNameError);
+    setModuleError(moduleSelectError);
     return isValid;
   };
 
@@ -78,7 +85,7 @@ const createModules = () => {
     console.log('mod', selectedItem);
     const resp = validateFormData();
     if (resp) {
-      if (id !== -1) {
+      if (id !== '-1') {
         console.log('in edit');
         editProcess(processName, radioValue, selectedItem, Number(id))
           .then((res) => {
@@ -92,7 +99,7 @@ const createModules = () => {
           })
           .catch((err) => {
             console.log('err', err);
-            notification.err({
+            notification.error({
               message: 'Something went wrong',
             });
             setTimeout(() => {
@@ -113,12 +120,12 @@ const createModules = () => {
           })
           .catch((err) => {
             console.log('err', err);
-            notification.err({
-              message: 'Something went wrong',
+            notification.error({
+              message: err.response.data.errors[0].msg,
             });
-            setTimeout(() => {
-              history.push('/processes/processes');
-            }, 1000);
+            // setTimeout(() => {
+            //   history.push('/processes/processes');
+            // }, 1000);
           });
       }
     }
@@ -167,6 +174,11 @@ const createModules = () => {
             </div>
           </Button>
         </Dropdown>
+        {Object.keys(moduleError).map((key) => (
+          <div style={{ color: 'red' }}>
+            {moduleError[key]}
+          </div>
+        ))}
       </div>
       <div className="col-12 flex flex-row justify-end">
         <Button

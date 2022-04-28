@@ -30,7 +30,7 @@ const locationIcon = (
 );
 
 const Listitemgarage = ({
-  garage_id, garage_name, garage_manager, garage_members, status,
+  garage_id, garage_name, garage_members, status,
 }) => {
   const history = useHistory();
   return (
@@ -40,7 +40,6 @@ const Listitemgarage = ({
           {garage_name.length > 15 ? garage_name.substring(0, 15) : garage_name}
           {garage_name.length > 15 ? '...' : ''}
         </h1>
-        <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1">{garage_manager}</h1>
         <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1">
           {garage_members.length > 15 ? garage_members.substring(0, 13) : garage_members}
           {garage_members.length > 13 ? '...' : ''}

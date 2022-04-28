@@ -147,6 +147,7 @@ const addrole = () => {
         setLName(res?.data?.results?.last_name);
         setUserName(res?.data?.results?.user_name);
         // setAddress(res?.data?.results?.user_profile?.address);
+        setRadioValue(res?.data?.results?.isActive);
         setLicense(res?.data?.results?.user_profile?.driving_license_no);
         let tempDate = res?.data?.results?.user_profile?.license_validity;
         tempDate = moment(tempDate);
@@ -457,42 +458,42 @@ const addrole = () => {
                       })
                       .catch((err) => {
                         console.log('err', err);
-                        notification.success({
-                          message: 'Something went wrong, Please try again later',
+                        notification.error({
+                          message: err.response.data.errors[0].msg,
                         });
-                        setTimeout(() => {
-                          history.push('/userProfiles/userProfiles');
-                        }, 1000);
+                        // setTimeout(() => {
+                        //   history.push('/userProfiles/userProfiles');
+                        // }, 1000);
                       });
                   })
                   .catch((err) => {
                     console.log('err', err);
-                    notification.success({
-                      message: 'Something went wrong, Please try again later',
+                    notification.error({
+                      message: err.response.data.errors[0].msg,
                     });
-                    setTimeout(() => {
-                      history.push('/userProfiles/userProfiles');
-                    }, 1000);
+                    // setTimeout(() => {
+                    //   history.push('/userProfiles/userProfiles');
+                    // }, 1000);
                   });
               })
               .catch((err) => {
                 console.log(err);
-                notification.success({
-                  message: 'Something went wrong, Please try again later',
+                notification.error({
+                  message: err.response.data.errors[0].msg,
                 });
-                setTimeout(() => {
-                  history.push('/userProfiles/userProfiles');
-                }, 1000);
+                // setTimeout(() => {
+                //   history.push('/userProfiles/userProfiles');
+                // }, 1000);
               });
           })
           .catch((err) => {
             console.log('err', err);
-            notification.success({
-              message: 'Something went wrong, Please try again later',
+            notification.error({
+              message: err.response.data.errors[0].msg,
             });
-            setTimeout(() => {
-              history.push('/userProfiles/userProfiles');
-            }, 1000);
+            // setTimeout(() => {
+            //   history.push('/userProfiles/userProfiles');
+            // }, 1000);
           });
       }
     }

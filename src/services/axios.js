@@ -267,13 +267,14 @@ export const addRoleModule = (roleId, roleModules) => {
   });
 };
 
-export const addTeamApi = (name, description, locationid, garageid) => {
+export const addTeamApi = (name, description, locationid, garageid, radioValue) => {
   const data = JSON.stringify({
     name,
     logourl: '',
     description,
     locationId: locationid,
     garageId: garageid,
+    isActive: radioValue,
   });
   return axios({
     method: 'POST',
@@ -283,13 +284,14 @@ export const addTeamApi = (name, description, locationid, garageid) => {
   });
 };
 
-export const editTeamApi = (name, logourl, description, locationId, garageId, teamID) => {
+export const editTeamApi = (name, logourl, description, locationId, garageId, teamID, radioValue) => {
   const data = JSON.stringify({
     name,
     logourl,
     description,
     locationId,
     garageId,
+    isActive: radioValue,
   });
   return axios({
     method: 'PUT',

@@ -147,23 +147,23 @@ const addrole = () => {
                 }, 1000);
               })
               .catch((err) => {
-                console.log('err', err);
+                console.log('err111', err);
                 notification.error({
-                  message: 'Something went wrong, Please Try again later',
+                  message: err.response.data.errors[0].msg,
                 });
-                setTimeout(() => {
-                  history.push('/userroles/userroleslist');
-                }, 1000);
+                // setTimeout(() => {
+                //   history.push('/userroles/userroleslist');
+                // }, 1000);
               });
           })
           .catch((err) => {
-            console.log('err', err);
+            console.log('err22', err.response.data.errors[0].msg);
             notification.error({
-              message: 'Something went wrong, Please Try again later',
+              message: err.response.data.errors[0].msg,
             });
-            setTimeout(() => {
-              history.push('/userroles/userroleslist');
-            }, 1000);
+            // setTimeout(() => {
+            //   history.push('/userroles/userroleslist');
+            // }, 1000);
           });
       }
     }
