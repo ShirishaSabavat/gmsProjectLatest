@@ -3,7 +3,7 @@
 /* eslint-disable no-sequences */
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { rejectRTAList } from 'services/axios';
@@ -20,28 +20,54 @@ const transferjama = () => {
   } = location.state;
   const [rejectfor, setrejectfor] = useState(0);
   const [rejectforRemark, setrejectforRemark] = useState('');
-
+  const [remarksError, setRemarksError] = useState('');
   useEffect(() => {
     console.log(id);
   }, []);
 
-  const RejectRTAListMethod = () => {
-    console.log(visitcategory);
-    let tempvisitid = 0;
-    if (visitcategory === '1' || visitcategory === 1) {
-      tempvisitid = 1;
-    } else if (visitcategory === '2' || visitcategory === 1) {
-      tempvisitid = 2;
+  const validateFormData = () => {
+    const RemarkError = {};
+    let isValid = true;
+    if (rejectforRemark.trim().length === 0) {
+      RemarkError.err = 'Rejection reason not selected.';
+      isValid = false;
     }
-    rejectRTAList(id, visitcategory, rejectfor, rejectforRemark)
-      .then((res) => {
-        console.log('res', res);
-        alert('Jama Rejected successfully');
-        window.location.href = '#/rta/carlistrta';
-      })
-      .catch((err) => {
-        console.log('err', err);
-      });
+    // if (garageSeries.trim().length === 0) {
+    //   garageSeriesNameError.err = 'Garage series can not be empty';
+    //   isValid = false;
+    // }
+    // if (userSeries.trim().length === 0) {
+    //   userSeriesNameError.err = 'User series can not be empty';
+    //   isValid = false;
+    // }
+
+    setRemarksError(RemarkError);
+    return isValid;
+  };
+
+  const RejectRTAListMethod = () => {
+    const resp = validateFormData();
+    console.log(resp);
+    if (resp) {
+      console.log(visitcategory);
+      let tempvisitid = 0;
+      if (visitcategory === '1' || visitcategory === 1) {
+        tempvisitid = 1;
+      } else if (visitcategory === '2' || visitcategory === 1) {
+        tempvisitid = 2;
+      }
+      rejectRTAList(id, visitcategory, rejectfor, rejectforRemark)
+        .then((res) => {
+          console.log('res', res);
+          notification.success({
+            message: 'Jama Rejected successfully',
+          });
+          window.location.href = '#/rta/carlistrta';
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
+    }
   };
   return (
     <>
@@ -84,6 +110,11 @@ const transferjama = () => {
                 Transfer to Fitness Queue
               </Button>
             </div>
+            {Object.keys(remarksError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {remarksError[key]}
+              </div>
+            ))}
           </div>
           <div className="col-12 flex flex-row justify-center my-3">
             <Button

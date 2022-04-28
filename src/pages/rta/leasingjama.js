@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Input, Button } from 'antd';
+import { Input, Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
 import { addRTAList } from 'services/axios';
 import { Link, useLocation } from 'react-router-dom';
@@ -21,28 +21,56 @@ const carslistrta = () => {
   } = location.state;
   const [remarks, setRemarks] = useState('');
   const [GarageID, setGarageID] = useState('');
+  const [remarksError, setRemarksError] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageID(tempGarageID);
     console.log(id);
   }, []);
-  const AddRTAListMethod = () => {
-    console.log(visitcategory);
-    let tempvisitid = 0;
-    if (visitcategory === '1' || visitcategory === 1) {
-      tempvisitid = 1;
-    } else if (visitcategory === '2' || visitcategory === 1) {
-      tempvisitid = 2;
+
+  const validateFormData = () => {
+    const RemarkError = {};
+    let isValid = true;
+    if (remarks.trim().length === 0) {
+      RemarkError.err = 'Please enter proper remarks.';
+      isValid = false;
     }
-    addRTAList(visitcategory, GarageID, true, remarks)
-      .then((res) => {
-        console.log('res', res);
-        alert('Jama Added successfully');
-        window.location.href = '#/rta/carlistrta';
-      })
-      .catch((err) => {
-        console.log('err', err);
-      });
+    // if (garageSeries.trim().length === 0) {
+    //   garageSeriesNameError.err = 'Garage series can not be empty';
+    //   isValid = false;
+    // }
+    // if (userSeries.trim().length === 0) {
+    //   userSeriesNameError.err = 'User series can not be empty';
+    //   isValid = false;
+    // }
+
+    setRemarksError(RemarkError);
+    return isValid;
+  };
+
+  const AddRTAListMethod = () => {
+    const resp = validateFormData();
+    console.log(resp);
+    if (resp) {
+      console.log(visitcategory);
+      let tempvisitid = 0;
+      if (visitcategory === '1' || visitcategory === 1) {
+        tempvisitid = 1;
+      } else if (visitcategory === '2' || visitcategory === 1) {
+        tempvisitid = 2;
+      }
+      addRTAList(id, GarageID, true, remarks)
+        .then((res) => {
+          console.log('res', res);
+          notification.success({
+            message: 'Jama added successfully',
+          });
+          window.location.href = '#/rta/carlistrta';
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
+    }
   };
 
   return (
@@ -87,6 +115,11 @@ const carslistrta = () => {
               />
 
             </div>
+            {Object.keys(remarksError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {remarksError[key]}
+              </div>
+            ))}
           </div>
           <div className="col-12 flex flex-row justify-center my-3">
             <Button
