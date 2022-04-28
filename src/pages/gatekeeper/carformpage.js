@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import {
-  Input, Radio, Button, Dropdown,
+  Input, Radio, Button, Dropdown, notification,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
@@ -28,6 +28,7 @@ const carformpage = () => {
   const [radioValue, setRadioValue] = useState(true);
   const [isFocused, setisFocused] = useState(false);
   const [CarsList, setCarsList] = useState([]);
+  const [cityID, setcityID] = useState('');
   const [DriverName, setDriverName] = useState('');
   const [DriverContact, setDriverContact] = useState('');
   const [DriverManagerName, setDriverManagerName] = useState('');
@@ -69,14 +70,18 @@ const carformpage = () => {
 
   useEffect(() => {
     if (carId === -1) {
-      getCarsListEverest().then((resp) => {
+      const tempcityID = localStorage.getItem('cityid');
+      setcityID(tempcityID);
+      getCarsListEverest(tempcityID).then((resp) => {
         console.log(resp?.data);
         setCarsList(resp?.data);
         const tempGarageID = localStorage.getItem('garageid');
         const tempLocationID = localStorage.getItem('locationid');
+
         setGarageID(tempGarageID);
         setLocationID(tempLocationID);
         setVisitCategory(visitcategory);
+
         // setCarsList(resp?.data);
       })
         .catch((err) => {
@@ -99,18 +104,28 @@ const carformpage = () => {
     const driverVisitCategoryError = {};
     let isValid = true;
 
-    if (SelectedCarNumber.trim() === '') {
-      selectedcarnumbererror.err = 'Please Select Car.';
-      isValid = false;
+    if (carId === -1) {
+      if (SelectedCarNumber.trim() === '' || SelectedCarNumber === 'Enter Car Number Here...') {
+        selectedcarnumbererror.err = 'Please Select Car.';
+        isValid = false;
+      }
+
+      if (VisitCategory === 10) {
+        driverVisitCategoryError.err = 'Please select reason for visit';
+        isValid = false;
+      }
+
+      setDriverSelectedCarNumberError(selectedcarnumbererror);
+      setDriverVisitCategoryError(driverVisitCategoryError);
+    } else {
+      if (VisitCategory === 10) {
+        driverVisitCategoryError.err = 'Please select reason for visit';
+        isValid = false;
+      }
+
+      setDriverVisitCategoryError(driverVisitCategoryError);
     }
 
-    if (VisitCategory === 10) {
-      driverVisitCategoryError.err = 'Please select reason for visit';
-      isValid = false;
-    }
-
-    setDriverSelectedCarNumberError(selectedcarnumbererror);
-    setDriverVisitCategoryError(driverVisitCategoryError);
     return isValid;
   };
 
@@ -136,11 +151,16 @@ const carformpage = () => {
         )
           .then((res) => {
             console.log('res', res);
-            alert('Visit Added successfully');
+            notification.success({
+              message: 'Visit Added successfully',
+            });
             window.location.href = '#/gatekeeper/homepage';
           })
           .catch((err) => {
-            console.log('err', err);
+            console.log('err', err.response);
+            notification.error({
+              message: err.response.data.message,
+            });
           });
       } else {
         editCarVisit(
@@ -157,7 +177,9 @@ const carformpage = () => {
         )
           .then((res) => {
             console.log('res', res);
-            alert('Visit Edited successfully');
+            notification.success({
+              message: 'Visit Edited successfully',
+            });
             window.location.href = '#/gatekeeper/homepage';
           })
           .catch((err) => {
@@ -188,6 +210,10 @@ const carformpage = () => {
 
   const handleOnSelect = (item) => {
     // the item selected
+    getCarDetails(item.id);
+    setSelectedCarID(item.id);
+    setSelectedCarNumber(item.name);
+    setisFocused(false);
   };
 
   const handleOnFocus = () => {
@@ -215,6 +241,7 @@ const carformpage = () => {
               <div className="bg-white">
                 <ReactSearchAutocomplete
                   placeholder="Enter Car Number Here..."
+                  inputSearchString={SelectedCarNumber === '' || SelectedCarNumber === 'Enter Car Number Here...' ? '' : SelectedCarNumber}
                   styling={{
                     height: '40px', backgroundColor: '#F5F8FC', border: '2px', fontSize: '12px',
                   }}
@@ -225,6 +252,7 @@ const carformpage = () => {
                   onClear={() => setisFocused(false)}
                   onFocus={handleOnFocus}
                   autoFocus
+                  maxResults={10}
                   formatResult={formatResult}
                 />
               </div>
@@ -244,39 +272,45 @@ const carformpage = () => {
               </Radio.Group>
             </div>
           </div>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Name</p>
-          <div className="flex flex-nonwrap bg-white">
-            <Input
-              value={DriverName}
-              placeholder="Enter Name Here..."
-              style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-              }}
-            />
+          {radioValue === true
+            ? (
+              <div>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Name</p>
+                <div className="flex flex-nonwrap bg-white">
+                  <Input
+                    value={DriverName}
+                    placeholder="Enter Name Here..."
+                    style={{
+                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                    }}
+                  />
 
-          </div>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Contact Number</p>
-          <div className="flex flex-nonwrap bg-white">
-            <Input
-              value={DriverContact}
-              placeholder="Enter Contact Here..."
-              style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-              }}
-            />
+                </div>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Contact Number</p>
+                <div className="flex flex-nonwrap bg-white">
+                  <Input
+                    value={DriverContact}
+                    placeholder="Enter Contact Here..."
+                    style={{
+                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                    }}
+                  />
 
-          </div>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Manager Name</p>
-          <div className="flex flex-nonwrap bg-white">
-            <Input
-              value={DriverManagerName}
-              placeholder="Enter Name Here..."
-              style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-              }}
-            />
+                </div>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Manager Name</p>
+                <div className="flex flex-nonwrap bg-white">
+                  <Input
+                    value={DriverManagerName}
+                    placeholder="Enter Name Here..."
+                    style={{
+                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                    }}
+                  />
 
-          </div>
+                </div>
+              </div>
+            )
+            : <div />}
         </div>
         <div className="bg-white p-4">
           <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Reason for Visit</p>
