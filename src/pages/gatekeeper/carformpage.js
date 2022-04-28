@@ -209,14 +209,6 @@ const carformpage = () => {
     setisFocused(false);
   };
 
-  const handleOnSelect = (item) => {
-    // the item selected
-    getCarDetails(item.id);
-    setSelectedCarID(item.id);
-    setSelectedCarNumber(item.name);
-    setisFocused(false);
-  };
-
   const handleOnFocus = () => {
     console.log('Focused');
   };
@@ -242,6 +234,7 @@ const carformpage = () => {
               <div className="bg-white">
                 <ReactSearchAutocomplete
                   placeholder="Enter Car Number Here..."
+                  resultStringKeyName='name'
                   inputSearchString={SelectedCarNumber === "" || SelectedCarNumber === "Enter Car Number Here..." ? "" : SelectedCarNumber}
                   styling={{
                     height: '40px', backgroundColor: '#F5F8FC', border: '2px', fontSize: '12px',
@@ -249,10 +242,8 @@ const carformpage = () => {
                   items={CarsList}
                   onSearch={handleOnSearch}
                   onHover={handleOnHover}
-                  onSelect={handleOnSelect}
                   onClear={() => setisFocused(false)}
                   onFocus={handleOnFocus}
-                  autoFocus
                   maxResults={10}
                   formatResult={formatResult}
                 />
