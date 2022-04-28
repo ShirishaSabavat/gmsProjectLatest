@@ -46,27 +46,27 @@ const carformpage = () => {
   const [SelectedDriverManagerID, setSelectedDriverManagerID] = useState('');
   const [isCarWithDriver, setisCarWithDriver] = useState(true);
 
-  const getCarDetails = (id) => {
-    getCarDetailsList(id).then((resp) => {
-      console.log(resp?.data);
-      if (resp?.data.length > 0) {
-        setDriverName(resp?.data[0].driver_name);
-        setDriverContact(resp?.data[0].mobile);
-        setDriverManagerName(resp?.data[0].manager_name);
-        setSelectedDriverID(resp?.data[0].driver_id);
-        setSelectedDriverManagerID(resp?.data[0].manager_id);
-      } else {
-        setDriverName('');
-        setDriverContact('');
-        setDriverManagerName('');
-        setSelectedDriverID(0);
-        setSelectedDriverManagerID('');
-      }
-    })
-      .catch((err) => {
-        console.log('err', err);
-      });
-  };
+  // const getCarDetails = (id) => {
+  //   getCarDetailsList(id).then((resp) => {
+  //     console.log(resp?.data);
+  //     if (resp?.data.length > 0) {
+  //       setDriverName(resp?.data[0].driver_name);
+  //       setDriverContact(resp?.data[0].mobile);
+  //       setDriverManagerName(resp?.data[0].manager_name);
+  //       setSelectedDriverID(resp?.data[0].driver_id);
+  //       setSelectedDriverManagerID(resp?.data[0].manager_id);
+  //     } else {
+  //       setDriverName('');
+  //       setDriverContact('');
+  //       setDriverManagerName('');
+  //       setSelectedDriverID(0);
+  //       setSelectedDriverManagerID('');
+  //     }
+  //   })
+  //     .catch((err) => {
+  //       console.log('err', err);
+  //     });
+  // };
 
   useEffect(() => {
     if (carId === -1) {
@@ -92,7 +92,7 @@ const carformpage = () => {
       const tempLocationID = localStorage.getItem('locationid');
       setGarageID(tempGarageID);
       setLocationID(tempLocationID);
-      getCarDetails(carId);
+      // getCarDetails(carId);
       setVisitCategory(visitcategory);
     }
   }, []);
@@ -202,7 +202,7 @@ const carformpage = () => {
 
   const handleOnHover = (result) => {
     // the item hovered
-    getCarDetails(result.id);
+    // getCarDetails(result.id);
     setSelectedCarID(result.id);
     setSelectedCarNumber(result.name);
     setisFocused(false);
@@ -210,7 +210,7 @@ const carformpage = () => {
 
   const handleOnSelect = (item) => {
     // the item selected
-    getCarDetails(item.id);
+    // getCarDetails(item.id);
     setSelectedCarID(item.id);
     setSelectedCarNumber(item.name);
     setisFocused(false);
@@ -279,6 +279,7 @@ const carformpage = () => {
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverName}
+                    onChange={(e) => setDriverName(e.target.value)}
                     placeholder="Enter Name Here..."
                     style={{
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
@@ -290,6 +291,7 @@ const carformpage = () => {
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverContact}
+                    onChange={(e) => setDriverContact(e.target.value)}
                     placeholder="Enter Contact Here..."
                     style={{
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
@@ -301,6 +303,7 @@ const carformpage = () => {
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverManagerName}
+                    onChange={(e) => setDriverManagerName(e.target.value)}
                     placeholder="Enter Name Here..."
                     style={{
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',

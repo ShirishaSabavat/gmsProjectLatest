@@ -21,14 +21,14 @@ export const loginApi = async (userData) => {
     console.log(user.roles[0].role);
     localStorage.setItem('token', token);
     localStorage.setItem('user', user?.first_name);
-    localStorage.setItem('role', user?.roles[0].role);
-    if (!(user?.roles[0].role === null || user?.roles[0].role === undefined || user?.roles[0].role === 'Super Admin')) {
-      localStorage.setItem('empid', user?.user_profile?.emp_id);
-      localStorage.setItem('garageid', user?.teams[0].garageId);
-      localStorage.setItem('createdby', user?.id);
-      localStorage.setItem('locationid', user?.teams[0].locationId);
-      localStorage.setItem('cityid', user?.user_profile?.cityId);
-    }
+    localStorage.setItem('role', user?.roles[0]?.role);
+    // if (!(user?.roles[0]?.role === null || user?.roles[0]?.role === undefined || user?.roles[0]?.role === 'Super Admin')) {
+    localStorage.setItem('empid', user?.user_profile?.emp_id);
+    localStorage.setItem('garageid', user?.user_profile?.garageId);
+    localStorage.setItem('createdby', user?.id);
+    localStorage.setItem('locationid', user?.user_profile?.locationId);
+    localStorage.setItem('cityid', user?.user_profile?.cityId);
+    // }
     return resp;
   } catch (err) {
     console.log(err);
