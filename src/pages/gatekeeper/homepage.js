@@ -3,7 +3,7 @@
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 const nestedPath = [
@@ -26,6 +26,7 @@ const homepage = () => {
   const goToCarListPage = () => {
     window.location.href = '#/gatekeeper/carslist';
   };
+  const history = useHistory();
   return (
     <>
       <Helmet title="Dashboard" />
@@ -36,13 +37,20 @@ const homepage = () => {
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
-        <div className="flex bg-white rounded-lg my-3 mx-8 justify-center">
+        {/* <div className="flex bg-white rounded-lg my-3 mx-8 justify-center">
           <div>
             <div className="flex flex-row justify-center">
-              <img className="w-28 h-28 my-3 rounded-full align-middle" alt="" src={require('../../components/layouts/defaultperson.jpg')} />
+              <img
+                className="w-28 h-28 my-3 rounded-full align-middle" alt=""
+                src={require('../../components/layouts/defaultperson.jpg')}
+              />
             </div>
             <h1 className="font-quicksand-bold text-xl mt-6 text-center">{username}</h1>
-            <h1 className="font-quicksand-semi-bold text-base mt-3 text-center">Gatekeeper Auditor</h1>
+            <h1
+              className="font-quicksand-semi-bold text-base mt-3 text-center"
+            >
+              Gatekeeper Auditor
+            </h1>
             <div className="flex flex-row justify-center mb-6">
               <h1 className="font-quicksand-semi-bold text-base mt-3">ID: </h1>
               <h1 className="font-quicksand-semi-bold text-base mt-3 text-teal-300">
@@ -50,28 +58,20 @@ const homepage = () => {
                 {empid}
               </h1>
             </div>
-            {/* <div className="flex flex-row justify-center">
-              <h1 className="font-quicksand-semi-bold text-base my-3">Last Login: </h1>
-              <h1
-                className="font-quicksand-semi-bold text-base my-3 text-teal-300
-              >
-                17/01/2022 10:52:20
-              </h1>
-            </div> */}
           </div>
-        </div>
-        <div className="flex bg-white rounded-lg my-3 mx-8 justify-center py-24">
+        </div> */}
+        <div div className="flex bg-white rounded-lg my-3 mx-8 justify-center py-24">
           <div>
             <div className="col-12 flex flex-row justify-end">
-              <Link
-                to={{ pathname: 'carformpage', state: { carId: -1, carnumber: -1, visitcategory: -1 } }}
+              <div
+                onClick={() => history.push('/gatekeeper/carformpage/-1')}
                 className="font-quicksand-medium"
                 style={{
                   marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px',
                 }}
               >
                 New Car Visit
-              </Link>
+              </div>
             </div>
             <div className="col-12 flex flex-row justify-end mt-10">
               <Button
