@@ -5,7 +5,7 @@ import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
 import { getCarsList } from 'services/axios';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const nestedPath = [
   'Home',
@@ -23,13 +23,16 @@ const carslist = () => {
     setCreatedBy(tempcreatedbyid);
     getCarsList(tempgarageid, tempcreatedbyid).then((resp) => {
       console.log(`garageid: ${tempgarageid}, createdbyid: ${tempcreatedbyid}`);
-      console.log(resp);
+      console.log('RESP', resp);
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {
         console.log('err', err);
       });
   }, []);
+
+  const history = useHistory();
+
   return (
     <>
       <Helmet title="Dashboard" />
@@ -61,8 +64,8 @@ const carslist = () => {
         </div>
         <div>
           {CarsList.map((item) => (
-            <Link
-              to={{ pathname: 'carformpage', state: { carId: item.carId, carnumber: item.car_number, visitcategory: item.visit_category } }}
+            <div
+              onClick={() => history.push(`/gatekeeper/carformpage/${item.id}`)}
               className="bg-white"
             >
               <div className="bg-white rounded-lg my-3 mx-2">
@@ -78,7 +81,7 @@ const carslist = () => {
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
 
           ))}
         </div>

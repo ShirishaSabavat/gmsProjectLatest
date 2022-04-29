@@ -1,6 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import axios from 'axios';
+import Cookies from 'js-cookie';
+
+let headers = {
+  Authorization: `Bearer ${Cookies.get('token')}`,
+  'Content-Type': 'application/json',
+};
 
 export const loginApi = async (userData) => {
   const { variables: { userName, password } } = userData;
@@ -19,6 +25,11 @@ export const loginApi = async (userData) => {
     });
     const { user, token } = resp?.data?.results || {};
     console.log(user.roles[0].role);
+    Cookies.set('token', token);
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${Cookies.get('token') || token}`,
+    };
     localStorage.setItem('token', token);
     localStorage.setItem('user', user?.first_name);
     localStorage.setItem('role', user?.roles[0]?.role);
@@ -34,11 +45,6 @@ export const loginApi = async (userData) => {
     console.log(err);
     return false;
   }
-};
-
-const headers = {
-  Authorization: `Bearer ${localStorage.getItem('token')}`,
-  'Content-Type': 'application/json',
 };
 
 export const addModule = (moduleName, radioValue) => {
@@ -86,6 +92,18 @@ export const getGarages = (page) => axios({
 export const getAllGarages = () => axios({
   method: 'GET',
   url: 'http://13.126.183.78:8086/api/v1/garage',
+  headers,
+});
+
+export const getAllGaragesByCityId = (cityId) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/garage/?city_id=${cityId}`,
+  headers,
+});
+
+export const getLocationsByGarageId = (garageId) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/pickupLocation/?garage_id=${garageId}`,
   headers,
 });
 
@@ -406,6 +424,7 @@ export const addUserProfile = (userProfileData, userId) => {
     userId,
     cityId: userProfileData.cityId,
     garageId: userProfileData.garageId,
+    locationId: userProfileData.locationId,
   });
   return axios({
     method: 'POST',
@@ -473,6 +492,7 @@ export const editUserProfile = (userProfileData, userId) => {
     userId,
     cityId: userProfileData.cityId,
     garageId: userProfileData.garageId,
+    locationId: userProfileData.locationId,
   });
   return axios({
     method: 'PUT',
@@ -518,6 +538,12 @@ export const getCarDetailsList = (id) => axios({
   headers,
 });
 
+export const getVisitingCarDetails = (id) => axios({
+  method: 'GET',
+  url: `http://13.126.183.78:8086/api/v1/visitingCars/${id}`,
+  headers,
+});
+
 export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
   const data = JSON.stringify({
     visit_category: visitcat,
@@ -542,7 +568,7 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
   });
 };
 
-export const editCarVisit = (visitcat, carid, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
+export const editCarVisit = (visitCarId, visitcat, carid, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
   const data = JSON.stringify({
     visit_category: visitcat,
     carId: carid,
@@ -558,8 +584,8 @@ export const editCarVisit = (visitcat, carid, garageid, isdriverwithcar, driverI
   });
   console.log(data);
   return axios({
-    method: 'POST',
-    url: 'http://13.126.183.78:8086/api/v1/visitingCars',
+    method: 'PUT',
+    url: `http://13.126.183.78:8086/api/v1/visitingCars/${visitCarId}`,
     headers,
     data,
   });

@@ -10,7 +10,18 @@ import {
 import { CaretDownOutlined } from '@ant-design/icons';
 import { useParams, useHistory } from 'react-router-dom';
 import {
-  editUserData, editUserProfile, getModules, getRoles, getAllCities, getAllGarages, addUserData, addUserProfile, addUserRole, addUserProcess, getUserProfile,
+  editUserData,
+  editUserProfile,
+  getModules,
+  getRoles,
+  getAllCities,
+  getAllGaragesByCityId,
+  getLocationsByGarageId,
+  addUserData,
+  addUserProfile,
+  addUserRole,
+  addUserProcess,
+  getUserProfile,
 } from 'services/axios';
 import moment from 'moment';
 
@@ -47,7 +58,9 @@ const addrole = () => {
   const [cityDropdown, setCityDropDown] = useState([]);
   const [citySelect, setCitySelect] = useState('');
   const [garageDropdown, setGarageDropDown] = useState([]);
+  const [locationDropDown, setLocationDropDown] = useState([]);
   const [garageSelect, setGarageSelect] = useState('');
+  const [locationSelect, setLocationSelect] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [checkboxList, setCheckboxList] = useState([]);
@@ -63,6 +76,7 @@ const addrole = () => {
   const [licenseValidityError, setLicenseValidityError] = useState({});
   const [cityError, setCityError] = useState({});
   const [garageError, setGarageError] = useState({});
+  const [locationError, setLocationError] = useState({});
   const [userNameError, setUserNameError] = useState({});
   const [passwordError, setPasswordError] = useState({});
   const [processError, setProcessError] = useState({});
@@ -70,7 +84,6 @@ const addrole = () => {
   const userRoleMenu = (
     <Menu onClick={(e) => setRoleSelect(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
       {userRoleDropDown?.map((data) => (
-        // eslint-disable-next-line react/no-array-index-key
         <Menu.Item key={data.id}>
           {data.role}
         </Menu.Item>
@@ -81,7 +94,6 @@ const addrole = () => {
   const cityMenu = (
     <Menu onClick={(e) => setCitySelect(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
       {cityDropdown?.map((data) => (
-        // eslint-disable-next-line react/no-array-index-key
         <Menu.Item key={data.id}>
           {data.name}
         </Menu.Item>
@@ -92,7 +104,16 @@ const addrole = () => {
   const garageMenu = (
     <Menu onClick={(e) => setGarageSelect(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
       {garageDropdown?.map((data) => (
-        // eslint-disable-next-line react/no-array-index-key
+        <Menu.Item key={data.id}>
+          {data.name}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
+  const locationMenu = (
+    <Menu onClick={(e) => setLocationSelect(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
+      {locationDropDown?.map((data) => (
         <Menu.Item key={data.id}>
           {data.name}
         </Menu.Item>
@@ -139,6 +160,28 @@ const addrole = () => {
   }, []);
 
   useEffect(() => {
+    getAllGaragesByCityId(citySelect || 0)
+      .then((res) => {
+        console.log('garageResp', res?.data?.results);
+        setGarageDropDown(res?.data?.results?.pageData);
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }, [citySelect || 0]);
+
+  useEffect(() => {
+    getLocationsByGarageId(garageSelect || 0)
+      .then((res) => {
+        console.log('locationResp', res?.data?.results);
+        setLocationDropDown(res?.data?.results?.pageData);
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }, [garageSelect || 0]);
+
+  useEffect(() => {
     getUserProfile(Number(id))
       .then((res) => {
         console.log('getProfResp1', res?.data?.results);
@@ -158,21 +201,11 @@ const addrole = () => {
         setRoleSelect(res?.data?.results?.roles[0]?.id);
         setCitySelect(res?.data?.results?.user_profile?.cityId);
         setGarageSelect(res?.data?.results?.user_profile?.garageId);
+        setLocationSelect(res?.data?.results?.user_profile?.locationId);
         let data = res?.data?.results?.processes;
         console.log('dataaaaaaa', data);
         data = data.map((obj) => obj);
         setCheckboxValue(data);
-      })
-      .catch((err) => {
-        console.log('err', err);
-      });
-  }, []);
-
-  useEffect(() => {
-    getAllGarages()
-      .then((res) => {
-        console.log('garageResp', res?.data?.results);
-        setGarageDropDown(res?.data?.results?.pageData);
       })
       .catch((err) => {
         console.log('err', err);
@@ -225,14 +258,15 @@ const addrole = () => {
     const userRoleSelectErr = {};
     const emailErr = {};
     const mobileErr = {};
-    const addressErr = {};
-    const licenseErr = {};
-    const licenseValidityErr = {};
+    // const addressErr = {};
+    // const licenseErr = {};
+    // const licenseValidityErr = {};
     const citySelectErr = {};
     const garageSelectErr = {};
+    const locationSelectErr = {};
     const userNameErr = {};
     const passwordErr = {};
-    const processErr = {};
+    // const processErr = {};
     const regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
     const numCheck = /^[0-9\b]+$/;
 
@@ -283,15 +317,15 @@ const addrole = () => {
     //   isValid = false;
     // }
 
-    if (license.trim().length === 0) {
-      licenseErr.licenseErr = 'Driving License can not be empty';
-      isValid = false;
-    }
+    // if (license.trim().length === 0) {
+    //   licenseErr.licenseErr = 'Driving License can not be empty';
+    //   isValid = false;
+    // }
 
-    if (licenseValidity === '') {
-      licenseValidityErr.err = 'License Expiry Date can not be empty';
-      isValid = false;
-    }
+    // if (licenseValidity === '') {
+    //   licenseValidityErr.err = 'License Expiry Date can not be empty';
+    //   isValid = false;
+    // }
 
     if (!citySelect) {
       citySelectErr.err = 'Please Select City';
@@ -300,6 +334,11 @@ const addrole = () => {
 
     if (!garageSelect) {
       garageSelectErr.err = 'Please Select Garage';
+      isValid = false;
+    }
+
+    if (!locationSelect) {
+      locationSelectErr.err = 'Please Select Location';
       isValid = false;
     }
 
@@ -313,10 +352,10 @@ const addrole = () => {
       isValid = false;
     }
 
-    if (checkboxValue.length === 0) {
-      processErr.err = 'Please select at least one process';
-      isValid = false;
-    }
+    // if (checkboxValue.length === 0) {
+    //   processErr.err = 'Please select at least one process';
+    //   isValid = false;
+    // }
 
     setFNameError(fNameErr);
     setLNameError(lNameErr);
@@ -324,13 +363,14 @@ const addrole = () => {
     setEmailError(emailErr);
     setMobileError(mobileErr);
     // setAddressError(addressErr);
-    setLicenseError(licenseErr);
-    setLicenseValidityError(licenseValidityErr);
+    // setLicenseError(licenseErr);
+    // setLicenseValidityError(licenseValidityErr);
     setCityError(citySelectErr);
     setGarageError(garageSelectErr);
+    setLocationError(locationSelectErr);
     setUserNameError(userNameErr);
     setPasswordError(passwordErr);
-    setProcessError(processErr);
+    // setProcessError(processErr);
     return isValid;
   };
 
@@ -362,6 +402,7 @@ const addrole = () => {
       licenseValidity: moment(licenseValidity).format('YYYY-MM-DD'),
       cityId: citySelect,
       garageId: garageSelect,
+      locationId: locationSelect,
     };
 
     const userRoleData = {
@@ -511,16 +552,26 @@ const addrole = () => {
         </div>
 
         <div className="bg-white p-4">
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>User Name</p>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <div className="flex basis-1/3 mx-1">
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>First Name</p>
+            </div>
+            <div className="flex basis-1/3 mx-1">
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Middle Name</p>
+            </div>
+            <div className="flex basis-1/3 mx-1">
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Last Name</p>
+            </div>
+          </div>
           <div className="flex flex-row flex-nonwrap bg-white">
             <div className="flex flex-col basis-1/3">
-              <div className="flex">
+              <div className="flex basis-3/4 mx-1">
                 <Input
                   placeholder="First Name"
                   value={fName}
                   onChange={(e) => setFName(e.target.value)}
                   style={{
-                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC',
                   }}
                 />
               </div>
@@ -532,26 +583,26 @@ const addrole = () => {
             </div>
 
             <div className="flex flex-col basis-1/3">
-              <div className="flex">
+              <div className="flex basis-3/4 mx-1">
                 <Input
                   placeholder="Middle Name"
                   value={mName}
                   onChange={(e) => setMName(e.target.value)}
                   style={{
-                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC',
                   }}
                 />
               </div>
             </div>
 
             <div className="flex flex-col basis-1/3">
-              <div className="flex">
+              <div className="flex basis-3/4 mx-1">
                 <Input
                   placeholder="Last Name"
                   value={lName}
                   onChange={(e) => setLName(e.target.value)}
                   style={{
-                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC',
                   }}
                 />
               </div>
@@ -588,6 +639,156 @@ const addrole = () => {
               {userRoleError[key]}
             </div>
           ))}
+        </div>
+
+        <div className="bg-white p-4">
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <div className="flex basis-1/2">
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>User Name</p>
+            </div>
+            {id === '-1' && (
+              <div className="flex basis-1/2">
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Password</p>
+              </div>
+            )}
+          </div>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <Input
+                  placeholder="Username"
+                  value={userName}
+                  disabled={id !== '-1'}
+                  onChange={(e) => setUserName(e.target.value)}
+                  style={{
+                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                  }}
+                />
+              </div>
+              {Object.keys(userNameError).map((key) => (
+                <div style={{ color: 'red' }}>
+                  {userNameError[key]}
+                </div>
+              ))}
+            </div>
+            {id === '-1' && (
+              <div className="flex flex-col basis-1/2">
+                <div className="flex">
+                  <Input
+                    placeholder="********"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    style={{
+                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
+                    }}
+                  />
+                </div>
+                {Object.keys(passwordError).map((key) => (
+                  <div style={{ color: 'red' }}>
+                    {passwordError[key]}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="bg-white p-4">
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <div className="flex basis-1/2">
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Select City</p>
+            </div>
+            <div className="flex basis-1/2">
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Select Garage</p>
+            </div>
+          </div>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <Dropdown overlay={cityMenu}>
+                  <Button
+                    style={{
+                      backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A', width: '85%',
+                    }}
+                  >
+                    <div className="row">
+                      <div span={22} className="col-6 text-start font-quicksand-medium">
+                        {cityDropdown.find((x) => x.id === citySelect)?.name || 'Select City'}
+                      </div>
+                      <div span={2} className="col-6 text-end">
+                        <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
+                      </div>
+                    </div>
+                  </Button>
+                </Dropdown>
+              </div>
+              {Object.keys(cityError).map((key) => (
+                <div style={{ color: 'red' }}>
+                  {cityError[key]}
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <Dropdown overlay={garageMenu}>
+                  <Button
+                    style={{
+                      backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A', width: '85%',
+                    }}
+                  >
+                    <div className="row">
+                      <div span={22} className="col-6 text-start font-quicksand-medium">
+                        {garageDropdown.find((x) => x.id === garageSelect)?.name || 'Select Garage'}
+                      </div>
+                      <div span={2} className="col-6 text-end">
+                        <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
+                      </div>
+                    </div>
+                  </Button>
+                </Dropdown>
+              </div>
+              {Object.keys(garageError).map((key) => (
+                <div style={{ color: 'red' }}>
+                  {garageError[key]}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-4">
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <div className="flex basis-1/2">
+              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Select Location</p>
+            </div>
+          </div>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <div className="flex flex-col basis-1/2">
+              <div className="flex">
+                <Dropdown overlay={locationMenu}>
+                  <Button
+                    style={{
+                      backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A', width: '85%',
+                    }}
+                  >
+                    <div className="row">
+                      <div span={22} className="col-6 text-start font-quicksand-medium">
+                        {locationDropDown.find((x) => x.id === locationSelect)?.name || 'Select Location'}
+                      </div>
+                      <div span={2} className="col-6 text-end">
+                        <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
+                      </div>
+                    </div>
+                  </Button>
+                </Dropdown>
+              </div>
+              {Object.keys(locationError).map((key) => (
+                <div style={{ color: 'red' }}>
+                  {locationError[key]}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="bg-white p-4">
@@ -701,121 +902,6 @@ const addrole = () => {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-4">
-          <div className="flex flex-row flex-nonwrap bg-white">
-            <div className="flex basis-1/2">
-              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Select City</p>
-            </div>
-            <div className="flex basis-1/2">
-              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Select Garage</p>
-            </div>
-          </div>
-          <div className="flex flex-row flex-nonwrap bg-white">
-            <div className="flex flex-col basis-1/2">
-              <div className="flex">
-                <Dropdown overlay={cityMenu}>
-                  <Button
-                    style={{
-                      backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A', width: '85%',
-                    }}
-                  >
-                    <div className="row">
-                      <div span={22} className="col-6 text-start font-quicksand-medium">
-                        {cityDropdown.find((x) => x.id === citySelect)?.name || 'Select City'}
-                      </div>
-                      <div span={2} className="col-6 text-end">
-                        <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
-                      </div>
-                    </div>
-                  </Button>
-                </Dropdown>
-              </div>
-              {Object.keys(cityError).map((key) => (
-                <div style={{ color: 'red' }}>
-                  {cityError[key]}
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col basis-1/2">
-              <div className="flex">
-                <Dropdown overlay={garageMenu}>
-                  <Button
-                    style={{
-                      backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', height: '40px', color: '#53565A', width: '85%',
-                    }}
-                  >
-                    <div className="row">
-                      <div span={22} className="col-6 text-start font-quicksand-medium">
-                        {garageDropdown.find((x) => x.id === garageSelect)?.name || 'Select Garage'}
-                      </div>
-                      <div span={2} className="col-6 text-end">
-                        <CaretDownOutlined className="text-end" style={{ color: '#74D1D8' }} />
-                      </div>
-                    </div>
-                  </Button>
-                </Dropdown>
-              </div>
-              {Object.keys(garageError).map((key) => (
-                <div style={{ color: 'red' }}>
-                  {garageError[key]}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-4">
-          <div className="flex flex-row flex-nonwrap bg-white">
-            <div className="flex basis-1/2">
-              <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>User Name</p>
-            </div>
-            {id === '-1' && (
-              <div className="flex basis-1/2">
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Password</p>
-              </div>
-            )}
-          </div>
-          <div className="flex flex-row flex-nonwrap bg-white">
-            <div className="flex flex-col basis-1/2">
-              <div className="flex">
-                <Input
-                  placeholder="Username"
-                  value={userName}
-                  disabled={id !== '-1'}
-                  onChange={(e) => setUserName(e.target.value)}
-                  style={{
-                    padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-                  }}
-                />
-              </div>
-              {Object.keys(userNameError).map((key) => (
-                <div style={{ color: 'red' }}>
-                  {userNameError[key]}
-                </div>
-              ))}
-            </div>
-            {id === '-1' && (
-              <div className="flex flex-col basis-1/2">
-                <div className="flex">
-                  <Input
-                    placeholder="********"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    style={{
-                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '85%',
-                    }}
-                  />
-                </div>
-                {Object.keys(passwordError).map((key) => (
-                  <div style={{ color: 'red' }}>
-                    {passwordError[key]}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         </div>
 

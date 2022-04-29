@@ -55,7 +55,7 @@ const routes = [
     Component: lazy(() => import('pages/gatekeeper/carslist')),
   },
   {
-    path: '/gatekeeper/carformpage',
+    path: '/gatekeeper/carformpage/:id?',
     key: 'GATEKEEPER CARFORM',
     exact: true,
     Component: lazy(() => import('pages/gatekeeper/carformpage')),
