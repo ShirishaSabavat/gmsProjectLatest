@@ -97,13 +97,13 @@ export const getAllGarages = () => axios({
 
 export const getAllGaragesByCityId = (cityId) => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/garage/?city_id=${cityId}`,
+  url: `http://13.126.183.78:8086/api/v1/garage/?cityId=${cityId}`,
   headers,
 });
 
 export const getLocationsByGarageId = (garageId) => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/pickupLocation/?garage_id=${garageId}`,
+  url: `http://13.126.183.78:8086/api/v1/pickupLocation/?garageId=${garageId}`,
   headers,
 });
 
@@ -115,7 +115,7 @@ export const getGarageById = (id) => axios({
 
 export const getTeamGarages = (page, garageid) => axios({
   method: 'GET',
-  url: `http://13.126.183.78:8086/api/v1/team/?garage_id=${garageid}page=${page}&size=10`,
+  url: `http://13.126.183.78:8086/api/v1/team/?garageId=${garageid}page=${page}&size=10`,
   headers,
 });
 export const editModule = (moduleName, radioValue, moduleId) => {
