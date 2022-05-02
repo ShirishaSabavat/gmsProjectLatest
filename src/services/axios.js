@@ -26,7 +26,6 @@ export const loginApi = async (userData) => {
       data,
     });
     const { user, token } = resp?.data?.results || {};
-    console.log(user.roles[0].role);
     Cookies.set('token', token);
     headers = {
       ...headers,
@@ -530,7 +529,7 @@ export const getCarsListEverest = (cityid) => axios({
 
 export const getCarsListJama = (garageid) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1,2&status=1`,
+  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1&visit_category[]=2&status=1`,
   headers,
 });
 
