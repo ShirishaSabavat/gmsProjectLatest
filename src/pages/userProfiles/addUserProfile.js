@@ -24,6 +24,7 @@ import {
   getUserProfile,
 } from 'services/axios';
 import moment from 'moment';
+import validator from 'validator';
 
 const { TextArea } = Input;
 
@@ -287,7 +288,7 @@ const addrole = () => {
       isValid = false;
     }
 
-    if (!regexEmail.test(email)) {
+    if (validator.isEmail(email)) {
       emailErr.emailErr = 'The email must be a valid email address.';
       isValid = false;
     }
