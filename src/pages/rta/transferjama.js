@@ -6,7 +6,7 @@ import Breadcrumb from 'components/layouts/breadcrumb';
 import { Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { rejectRTAList } from 'services/axios';
+import { addRTAList, rejectRTAList } from 'services/axios';
 
 const nestedPath = [
   'Home',
@@ -16,12 +16,15 @@ const nestedPath = [
 const transferjama = () => {
   const location = useLocation();
   const {
-    id, visitcategory,
+    id, visitcategory, remarks,
   } = location.state;
   const [rejectfor, setrejectfor] = useState(0);
   const [rejectforRemark, setrejectforRemark] = useState('');
+  const [GarageID, setGarageID] = useState('');
   const [remarksError, setRemarksError] = useState('');
   useEffect(() => {
+    const tempGarageID = localStorage.getItem('garageid');
+    setGarageID(tempGarageID);
     console.log(id);
   }, []);
 
@@ -51,22 +54,42 @@ const transferjama = () => {
     if (resp) {
       console.log(visitcategory);
       let tempvisitid = 0;
+      let isLeasing = true;
       if (visitcategory === '1' || visitcategory === 1) {
         tempvisitid = 1;
+        isLeasing = false;
       } else if (visitcategory === '2' || visitcategory === 1) {
         tempvisitid = 2;
+        isLeasing = true;
       }
-      rejectRTAList(id, visitcategory, rejectfor, rejectforRemark)
+      addRTAList(id, GarageID, isLeasing, remarks, 2)
         .then((res) => {
-          console.log('res', res);
-          notification.success({
-            message: 'Jama Rejected successfully',
-          });
-          window.location.href = '#/rta/carlistrta';
+          rejectRTAList(id, visitcategory, rejectfor, 'roadtest_reject')
+            .then((innerRes) => {
+              console.log('inner_res', innerRes);
+              notification.success({
+                message: 'Jama Rejected successfully',
+              });
+              window.location.href = '#/rta/carlistrta';
+            })
+            .catch((err) => {
+              console.log('err', err);
+            });
         })
         .catch((err) => {
           console.log('err', err);
         });
+      // rejectRTAList(id, visitcategory, rejectfor, rejectforRemark)
+      //   .then((res) => {
+      //     console.log('res', res);
+      //     notification.success({
+      //       message: 'Jama Rejected successfully',
+      //     });
+      //     window.location.href = '#/rta/carlistrta';
+      //   })
+      //   .catch((err) => {
+      //     console.log('err', err);
+      //   });
     }
   };
   return (
