@@ -54,12 +54,15 @@ const carslistrta = () => {
     if (resp) {
       console.log(visitcategory);
       let tempvisitid = 0;
+      let isLeasing = true;
       if (visitcategory === '1' || visitcategory === 1) {
         tempvisitid = 1;
+        isLeasing = false;
       } else if (visitcategory === '2' || visitcategory === 1) {
         tempvisitid = 2;
+        isLeasing = true;
       }
-      addRTAList(id, GarageID, true, remarks)
+      addRTAList(id, GarageID, isLeasing, remarks, 1)
         .then((res) => {
           console.log('res', res);
           notification.success({
@@ -134,7 +137,7 @@ const carslistrta = () => {
           </div>
           <div className="col-12 flex flex-row justify-center">
             <Link
-              to={{ pathname: 'transferjama', state: { id, visitcategory } }}
+              to={{ pathname: 'transferjama', state: { id, visitcategory, remarks } }}
               className="font-quicksand-medium"
               style={{
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px',

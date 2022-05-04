@@ -39,7 +39,7 @@ const MainLayout = ({
         <AppHeader />
       </Header>
       <Layout>
-        {role === 'Super Admin' ? (
+        {role === 'Super Admin' || role === 'undefined' ? (
           <Sider
             width={270}
             className="h-screen sticky top-0 font-mulish-semi-bold text-xs border-r-4 border-gray-100"

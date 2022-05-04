@@ -8,7 +8,7 @@ let headers = {
   'Content-Type': 'application/json',
 };
 
-const baseUrl = 'http://13.126.183.78:8086/api/v1';
+const baseUrl = 'http://staging.everestfleet.com:5000/api/v1';
 
 export const loginApi = async (userData) => {
   const { variables: { userName, password } } = userData;
@@ -26,7 +26,6 @@ export const loginApi = async (userData) => {
       data,
     });
     const { user, token } = resp?.data?.results || {};
-    console.log(user.roles[0].role);
     Cookies.set('token', token);
     headers = {
       ...headers,
@@ -530,7 +529,7 @@ export const getCarsListEverest = (cityid) => axios({
 
 export const getCarsListJama = (garageid) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1,2&status=1`,
+  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1&visit_category[]=2&status=1`,
   headers,
 });
 
@@ -593,13 +592,13 @@ export const editCarVisit = (visitCarId, visitcat, carid, garageid, isdriverwith
   });
 };
 
-export const addRTAList = (visitid, garageid, isleasing, roadtestcomment) => {
+export const addRTAList = (visitid, garageid, isleasing, roadtestcomment, jamaStatus) => {
   const data = JSON.stringify({
     visitId: visitid,
     garageId: garageid,
     is_leasing: isleasing,
     road_test_comments: roadtestcomment,
-    jama_status: 1,
+    jama_status: jamaStatus,
   });
   console.log(data);
   return axios({
@@ -616,7 +615,6 @@ export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) =>
     previousAudit: visitcategory,
     currentAudit: rejectid,
     transfer_reason: rejectreason,
-    jama_status: 2,
   });
   console.log(data);
   return axios({

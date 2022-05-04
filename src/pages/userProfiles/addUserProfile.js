@@ -400,7 +400,7 @@ const addrole = () => {
       email,
       contactNo,
       license,
-      licenseValidity: moment(licenseValidity).format('YYYY-MM-DD'),
+      licenseValidity: licenseValidity === '' ? null : moment(licenseValidity).format('YYYY-MM-DD'),
       cityId: citySelect,
       garageId: garageSelect,
       locationId: locationSelect,

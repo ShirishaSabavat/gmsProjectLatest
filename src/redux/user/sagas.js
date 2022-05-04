@@ -43,7 +43,7 @@ function* LOGIN(userAction) {
       yield history.push('/gatekeeper/homepage');
     } else if (temprole === 'Road Test Auditor') {
       yield history.push('/rta/carlistrta');
-    } else if (temprole === 'test1234') {
+    } else if (temprole === 'undefined') {
       yield history.push('/home/dashboard');
     }
 
