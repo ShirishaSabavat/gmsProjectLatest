@@ -45,6 +45,10 @@ function* LOGIN(userAction) {
       yield history.push('/rta/carlistrta');
     } else if (temprole === 'undefined') {
       yield history.push('/home/dashboard');
+    } else if (temprole === '60:40 Queue Operator') {
+      yield history.push('/sixtyfortyjama/jamacarlist');
+    } else if (temprole === 'Leasing Queue Operator') {
+      yield history.push('/LeasingJama/leasingJamaCarlist');
     }
 
     // console.log('history', history);
