@@ -8,7 +8,7 @@ let headers = {
   'Content-Type': 'application/json',
 };
 
-const baseUrl = 'http://staging.everestfleet.com:5000/api/v1';
+const baseUrl = 'http://13.126.183.78:8086/api/v1';
 
 export const loginApi = async (userData) => {
   const { variables: { userName, password } } = userData;
