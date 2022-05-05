@@ -6,14 +6,14 @@ import { useHistory } from 'react-router-dom';
 
 const nestedPath = [
   'Home',
-  'Leasing Jama',
+  'Servicing Audit',
 ];
 
-const LeasingBatteryAudit = () => {
+const ServiceAuditCarDetails = () => {
   const [radioValue, setRadioValue] = useState("");
   const history = useHistory();
-  const goToTyreAudit = () => {
-    history.push('/LeasingJama/LeasingTyreAudit');
+  const goToBatteryAudit = () => {
+    history.push('/ServiceAudit/ServiceBatteryAudit');
   }
   return (
     <>
@@ -21,7 +21,7 @@ const LeasingBatteryAudit = () => {
       <div className="flex flex-col space-y-12 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Leasing Jama
+            Servicing Audit
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -46,9 +46,9 @@ const LeasingBatteryAudit = () => {
           <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300 ml-12">John Doe</h1>
         </div>
       </div>
-      <div className="bg-white p-5 m-2">
-        <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Battery Audit</p>
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Number</p>
+      <div className="bg-white p-5">
+        <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Driver Reported Vehicle Issue*</p>
+        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Enter Issue Here</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             placeholder="Enter Name Here..."
@@ -57,22 +57,11 @@ const LeasingBatteryAudit = () => {
             }}
           />
         </div>
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Audit</p>
-        <div className="bg-white">
-          <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Powerzone">Powerzone</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Panasonic">Panasonic</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Exide">Exide</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Liveguard">Liveguard</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Tata</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Amaron</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Other</Radio>
-          </Radio.Group>
-        </div>
       </div>
+
       <div className="col-12 flex flex-row justify-end">
         <Button
-          onClick={goToTyreAudit}
+          onClick={goToBatteryAudit}
           className="font-quicksand-medium"
           style={{
             marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '100px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
@@ -84,4 +73,4 @@ const LeasingBatteryAudit = () => {
     </>
   )
 }
-export default LeasingBatteryAudit;
+export default ServiceAuditCarDetails;

@@ -73,7 +73,7 @@ const carformpage = () => {
       const tempcityID = localStorage.getItem('cityid');
       setcityID(tempcityID);
       getCarsListEverest(tempcityID).then((resp) => {
-        console.log(resp?.data);
+        console.log("Resp: " + resp?.data);
         setCarsList(resp?.data);
         const tempGarageID = localStorage.getItem('garageid');
         const tempLocationID = localStorage.getItem('locationid');

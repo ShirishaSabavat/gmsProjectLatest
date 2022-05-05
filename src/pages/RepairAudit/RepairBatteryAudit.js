@@ -6,14 +6,14 @@ import { useHistory } from 'react-router-dom';
 
 const nestedPath = [
   'Home',
-  'Leasing Jama',
+  'Repair Audit',
 ];
 
-const LeasingBatteryAudit = () => {
+const RepairBatteryAudit = () => {
   const [radioValue, setRadioValue] = useState("");
   const history = useHistory();
   const goToTyreAudit = () => {
-    history.push('/LeasingJama/LeasingTyreAudit');
+    history.push('/RepairAudit/RepairTyreAudit');
   }
   return (
     <>
@@ -21,7 +21,7 @@ const LeasingBatteryAudit = () => {
       <div className="flex flex-col space-y-12 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Leasing Jama
+            Repair Audit
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -84,4 +84,4 @@ const LeasingBatteryAudit = () => {
     </>
   )
 }
-export default LeasingBatteryAudit;
+export default RepairBatteryAudit;
