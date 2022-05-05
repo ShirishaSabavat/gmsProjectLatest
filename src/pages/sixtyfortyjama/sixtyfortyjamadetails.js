@@ -1,5 +1,6 @@
+/* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { Radio, Button } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -10,11 +11,11 @@ const nestedPath = [
 ];
 
 const sixtyfortyjamadetails = () => {
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
   const goToBatteryAudit = () => {
     history.push('/sixtyfortyjama/BatteryAudit');
-  }
+  };
   return (
     <>
       <Helmet title="Dashboard" />
@@ -53,26 +54,56 @@ const sixtyfortyjamadetails = () => {
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Family/Personal obligations">Family/Personal obligations</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Going to Village">Going to Village</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Payment Issue">Payment Issue</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Don't want to drive Uber">Don't want to drive Uber</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Don't want to drive with Everest">Don't want to drive with Everest</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Don't want to drive Uber">Don&apos;t want to drive Uber</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Don't want to drive with Everest">Don&apos;t want to drive with Everest</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold flex mt-2" value="60:40 issue">60:40 issue</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold flex mt-2" value="ID Block">ID Block{"\n"}</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold flex mt-2" value="ID Block">
+              ID Block
+              {'\n'}
+            </Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Defaulter - Misuse">Defaulter - Misuse</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Defaulter - Outstanding">Defaulter - Outstanding</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Defaulter - Low Performance(Low Online hrs/Trips)">Defaulter - Low Performance(Low Online hrs/Trips)</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Car Issue">Car Issue{"\n"}</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Health Issue">Health Issue{"\n"}</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="DM Issue">DM Issue{"\n"}</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Come from repair">Come from repair{"\n"}</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Car Issue">
+              Car Issue
+              {'\n'}
+            </Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Health Issue">
+              Health Issue
+              {'\n'}
+            </Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="DM Issue">
+              DM Issue
+              {'\n'}
+            </Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Come from repair">
+              Come from repair
+              {'\n'}
+            </Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Come from insurance">Come from insurance</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Come from leasing">Come from leasing{"\n"}</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Come from leasing">
+              Come from leasing
+              {'\n'}
+            </Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Come from B2B">Come from B2B</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Come from fitness">Come from fitness</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Come from Vinay Bhai">Come from Vinay Bhai</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Come from Miraki">Come from Miraki{"\n"}</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="New Car">New Car{"\n"}</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Moving to leasing">Moving to leasing{"\n"}</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Car swap">Car swap{"\n"}</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Come from Miraki">
+              Come from Miraki
+              {'\n'}
+            </Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="New Car">
+              New Car
+              {'\n'}
+            </Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Moving to leasing">
+              Moving to leasing
+              {'\n'}
+            </Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Car swap">
+              Car swap
+              {'\n'}
+            </Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Car not registered in Ola">Car not registered in Ola</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Leasing rent too high">Leasing rent too high</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Move to 60:40">Move to 60:40</Radio>
@@ -91,6 +122,6 @@ const sixtyfortyjamadetails = () => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
 export default sixtyfortyjamadetails;

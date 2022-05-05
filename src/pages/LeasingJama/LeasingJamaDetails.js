@@ -1,5 +1,6 @@
+/* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -10,11 +11,11 @@ const nestedPath = [
 ];
 
 const LeasingJamaDetails = () => {
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
   const goToBatteryAudit = () => {
     history.push('/LeasingJama/LeasingBatteryAudit');
-  }
+  };
   return (
     <>
       <Helmet title="Dashboard" />
@@ -133,6 +134,6 @@ const LeasingJamaDetails = () => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
 export default LeasingJamaDetails;

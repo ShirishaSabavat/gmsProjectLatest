@@ -9,9 +9,9 @@ import { getCarsListJama } from 'services/axios';
 const jamacarlist = () => {
   const [CarsList, setCarsList] = useState([
     {
-      car_number: "MH 04 DR 1564",
-      visitId: "sdafsdfg8465465"
-    }
+      car_number: 'MH 04 DR 1564',
+      visitId: 'sdafsdfg8465465',
+    },
   ]);
   const [garageid, setGarageid] = useState('');
   useEffect(() => {

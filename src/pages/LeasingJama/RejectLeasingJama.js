@@ -18,7 +18,7 @@ const RejectLeasingCarJama = () => {
   const [rejectfor, setrejectfor] = useState(0);
   const [rejectforRemark, setrejectforRemark] = useState('');
   const [remarksError, setRemarksError] = useState('');
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState('');
   // const validateFormData = () => {
   //   const RemarkError = {};
   //   let isValid = true;
