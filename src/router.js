@@ -270,6 +270,30 @@ const routes = [
     exact: true,
     Component: lazy(() => import('pages/roadTrial/roadTrial')),
   },
+  {
+    path: '/breakdown/breakdownHome',
+    key: 'Breakdown Home',
+    exact: true,
+    Component: lazy(() => import('pages/breakdown/breakdownHome')),
+  },
+  {
+    path: '/breakdown/breakdownForm/:id?',
+    key: 'Breakdown Add',
+    exact: true,
+    Component: lazy(() => import('pages/breakdown/breakdownForm')),
+  },
+  {
+    path: '/insurance/insuranceHome',
+    key: 'Insurance Home',
+    exact: true,
+    Component: lazy(() => import('pages/insurance/insuranceHome')),
+  },
+  {
+    path: '/insurance/insuranceForm/:id?',
+    key: 'Insurance Add',
+    exact: true,
+    Component: lazy(() => import('pages/insurance/insuranceForm')),
+  },
 ];
 
 const Router = ({ history }) => (

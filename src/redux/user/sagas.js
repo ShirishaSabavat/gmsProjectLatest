@@ -49,6 +49,10 @@ function* LOGIN(userAction) {
       yield history.push('/sixtyfortyjama/jamacarlist');
     } else if (temprole === 'Leasing Queue Operator') {
       yield history.push('/LeasingJama/leasingJamaCarlist');
+    } else if (temprole === 'Breakdown') {
+      yield history.push('/breakdown/breakdownHome');
+    } else if (temprole === 'Insurance') {
+      yield history.push('/insurance/insuranceHome');
     }
 
     // console.log('history', history);

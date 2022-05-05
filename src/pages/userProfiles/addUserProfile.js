@@ -288,7 +288,7 @@ const addrole = () => {
       isValid = false;
     }
 
-    if (validator.isEmail(email)) {
+    if (!regexEmail.test(email)) {
       emailErr.emailErr = 'The email must be a valid email address.';
       isValid = false;
     }
