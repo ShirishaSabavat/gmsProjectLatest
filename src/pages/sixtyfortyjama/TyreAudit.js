@@ -10,7 +10,7 @@ const nestedPath = [
 ];
 
 const TyreAudit = () => {
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState("Apollo");
   const history = useHistory();
   const goToCarInfoAudit = () => {
     history.push('/sixtyfortyjama/CarInfoAudit');

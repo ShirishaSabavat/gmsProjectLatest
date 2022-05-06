@@ -10,7 +10,7 @@ const nestedPath = [
 ];
 
 const sixtyfortyjamadetails = () => {
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState("Family/Personal obligations");
   const history = useHistory();
   const goToBatteryAudit = () => {
     history.push('/sixtyfortyjama/BatteryAudit');

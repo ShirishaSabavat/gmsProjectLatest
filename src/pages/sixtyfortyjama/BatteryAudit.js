@@ -10,7 +10,7 @@ const nestedPath = [
 ];
 
 const BatteryAudit = () => {
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState("Powerzone");
   const history = useHistory();
   const goToTyreAudit = () => {
     history.push('/sixtyfortyjama/TyreAudit');
