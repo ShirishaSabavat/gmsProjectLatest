@@ -10,7 +10,7 @@ import {
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
-  addCarVisit, editCarVisit, getCarDetailsList, getCarsListEverest, getVisitingCarDetails,
+  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getBreakdownDetails,
 } from 'services/axios';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { useParams, useHistory } from 'react-router-dom';
@@ -34,25 +34,31 @@ const carformpage = () => {
   const [breakdownType, setBreakdownType] = useState(true);
   const [isFocused, setisFocused] = useState(false);
   const [CarsList, setCarsList] = useState([]);
-  const [cityID, setcityID] = useState('');
+  const [cityID, setcityID] = useState(localStorage.getItem('cityid'));
   const [DriverName, setDriverName] = useState('');
   const [DriverContact, setDriverContact] = useState('');
-  const [DriverManagerName, setDriverManagerName] = useState('');
+  const [DriverManagerName, setDriverManagerName] = useState('DEMO');
   const [DriverNameError, setDriverNameError] = useState('');
   const [DriverContactError, setDriverContactError] = useState('');
   const [DriverManagerNameError, setDriverManagerNameError] = useState('');
   const [DriverVisitCategoryError, setDriverVisitCategoryError] = useState('');
   const [DriverSelectedCarNumberError, setDriverSelectedCarNumberError] = useState('');
   const [VisitCategory, setVisitCategory] = useState(10);
-  const [SelectedCarID, setSelectedCarID] = useState(0);
-  const [SelectedCarNumber, setSelectedCarNumber] = useState('');
-  const [GarageID, setGarageID] = useState('');
-  const [LocationID, setLocationID] = useState('');
+  const [SelectedCarID, setSelectedCarID] = useState(1);
+  const [SelectedCarNumber, setSelectedCarNumber] = useState('MH02-1234');
+  const [GarageID, setGarageID] = useState(localStorage.getItem('garageid'));
+  const [LocationID, setLocationID] = useState(localStorage.getItem('locationid'));
   const [SelectedDriverID, setSelectedDriverID] = useState(0);
-  const [SelectedDriverManagerID, setSelectedDriverManagerID] = useState('');
+  const [SelectedDriverManagerID, setSelectedDriverManagerID] = useState(0);
   const [carNumber, setcarNumber] = useState('');
   const [locationName, setLocationName] = useState('');
   const [locationNameError, setLocationNameError] = useState([]);
+  // const tempcityID = localStorage.getItem('cityid');
+  // const tempGarageID = localStorage.getItem('garageid');
+  // const tempLocationID = localStorage.getItem('locationid');
+  // setcityID(tempcityID);
+  // setGarageID(tempGarageID);
+  // setLocationID(tempLocationID);
 
   const getCarDetails = (carId) => {
     getCarDetailsList(carId).then((resp) => {
@@ -75,67 +81,51 @@ const carformpage = () => {
   };
 
   useEffect(() => {
-    getVisitingCarDetails(id)
+    getBreakdownDetails(id)
       .then((res) => {
         console.log('CarResp', res?.data?.results);
         setcarNumber(res?.data?.results?.car_number);
         setCarWithDriver(res?.data?.results?.is_with_driver);
         setDriverName(res?.data?.results?.driver_name);
-        setDriverContact(res?.data?.results?.drive_contact_number);
+        setDriverContact(res?.data?.results?.driver_contact_number || '');
         setSelectedDriverManagerID(res?.data?.results?.driverManagerId);
         setDriverManagerName(res?.data?.results?.driver_manager_name);
         setVisitCategory(res?.data?.results?.visit_category);
         setSelectedCarID(res?.data?.results?.carId);
+        setLocationName(res?.data?.results?.breakdown_location);
+        setBreakdownType(res?.data?.results?.breakdown_type === 1);
       })
       .catch((err) => {
         console.log('err1', err);
       });
   }, []);
 
-  useEffect(() => {
-    const tempcityID = localStorage.getItem('cityid');
-    setcityID(tempcityID);
-    getCarsListEverest(tempcityID).then((resp) => {
-      console.log('resp', resp?.data);
-      setCarsList(resp?.data);
-      const tempGarageID = localStorage.getItem('garageid');
-      const tempLocationID = localStorage.getItem('locationid');
-      setGarageID(tempGarageID);
-      setLocationID(tempLocationID);
-    })
-      .catch((err) => {
-        console.log('err', err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const tempcityID = localStorage.getItem('cityid');
+  //   setcityID(tempcityID);
+  //   getCarsListEverest(tempcityID).then((resp) => {
+  //     console.log('resp', resp?.data);
+  //     setCarsList(resp?.data);
+  //     const tempGarageID = localStorage.getItem('garageid');
+  //     const tempLocationID = localStorage.getItem('locationid');
+  //     setGarageID(tempGarageID);
+  //     setLocationID(tempLocationID);
+  //   })
+  //     .catch((err) => {
+  //       console.log('err', err);
+  //     });
+  // }, []);
 
   useEffect(() => {
     if (id === '-1') {
-      const tempcityID = localStorage.getItem('cityid');
-      setcityID(tempcityID);
-      getCarsListEverest(tempcityID).then((resp) => {
+      getCarsListEverest(cityID).then((resp) => {
         console.log(resp?.data);
         setCarsList(resp?.data);
-        const tempGarageID = localStorage.getItem('garageid');
-        const tempLocationID = localStorage.getItem('locationid');
-
-        setGarageID(tempGarageID);
-        setLocationID(tempLocationID);
-        setVisitCategory(visitcategory);
-
-        // setCarsList(resp?.data);
       })
         .catch((err) => {
           console.log('err', err);
         });
     }
-    // else {
-    //   const tempGarageID = localStorage.getItem('garageid');
-    //   const tempLocationID = localStorage.getItem('locationid');
-    //   setGarageID(tempGarageID);
-    //   setLocationID(tempLocationID);
-    //   getCarDetails(SelectedCarID);
-    //   setVisitCategory(VisitCategory);
-    // }
   }, []);
 
   const validateFormData = () => {
@@ -164,10 +154,6 @@ const carformpage = () => {
       setDriverVisitCategoryError(driverVisitCategoryError);
     } else {
       console.log('else');
-      if (VisitCategory === 10) {
-        driverVisitCategoryError.err = 'Please select reason for visit';
-        isValid = false;
-      }
       if (carWithDriver) {
         if (DriverContact.trim().length < 10 || DriverContact.trim().length > 10) {
           mobileErr.pinErr = 'Mobile Number should be of 10 digits only';
@@ -209,26 +195,28 @@ const carformpage = () => {
     console.log(resp);
 
     if (resp) {
+      const breakdownData = {
+        carId: SelectedCarID,
+        carNumber: SelectedCarNumber,
+        isDriverWithCar: carWithDriver,
+        driverId: SelectedDriverID,
+        driverName: DriverName,
+        contactNo: DriverContact,
+        driverManagerId: SelectedDriverManagerID,
+        driverManagerName: DriverManagerName,
+        breakdownType: breakdownType === true ? 1 : 2,
+        breakdownLocation: locationName,
+        garageId: Number(GarageID),
+      };
+      console.log('breakdownData', breakdownData);
       if (id === '-1') {
-        addCarVisit(
-          VisitCategory,
-          SelectedCarID,
-          SelectedCarNumber,
-          GarageID,
-          carWithDriver,
-          SelectedDriverID,
-          DriverName,
-          DriverContact,
-          SelectedDriverManagerID,
-          DriverManagerName,
-          LocationID,
-        )
+        addBreakdown(breakdownData)
           .then((res) => {
             console.log('res', res);
             notification.success({
-              message: 'Visit Added successfully',
+              message: 'Breakdown Added successfully',
             });
-            window.location.href = '#/gatekeeper/homepage';
+            window.location.href = '#/breakdown/breakdownHome';
           })
           .catch((err) => {
             console.log('err', err.response);
@@ -237,25 +225,13 @@ const carformpage = () => {
             });
           });
       } else {
-        editCarVisit(
-          id,
-          VisitCategory,
-          SelectedCarID,
-          GarageID,
-          carWithDriver,
-          SelectedDriverID,
-          DriverName,
-          DriverContact,
-          SelectedDriverManagerID,
-          DriverManagerName,
-          LocationID,
-        )
+        editBreakdown(id, breakdownData)
           .then((res) => {
             console.log('res', res);
             notification.success({
-              message: 'Visit Edited successfully',
+              message: 'Breakdown Edited successfully',
             });
-            window.location.href = '#/gatekeeper/homepage';
+            window.location.href = '#/breakdown/breakdownHome';
           })
           .catch((err) => {
             console.log('err', err);
@@ -411,8 +387,8 @@ const carformpage = () => {
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Type of Breakdown</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <Radio.Group onChange={(e) => setBreakdownType(e.target.value)} value={breakdownType}>
-              <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value>Yes</Radio>
-              <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>No</Radio>
+              <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value>Jumpstart</Radio>
+              <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>Mechanical</Radio>
             </Radio.Group>
           </div>
         </div>

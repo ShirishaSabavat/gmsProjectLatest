@@ -61,7 +61,7 @@ const homepage = () => {
                 onClick={() => history.push('/breakdown/breakdownForm/-1')}
                 className="font-quicksand-medium"
                 style={{
-                  marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', width: '90%', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px',
+                  marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', width: '90%', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px', cursor: 'pointer',
                 }}
               >
                 Add Breakdown
@@ -72,7 +72,7 @@ const homepage = () => {
                 onClick={() => history.push('/breakdown/breakdownList')}
                 className="font-quicksand-medium"
                 style={{
-                  marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '90%', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
+                  marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '90%', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px', cursor: 'pointer',
                 }}
               >
                 Edit Breakdown

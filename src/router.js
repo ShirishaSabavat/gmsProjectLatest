@@ -283,6 +283,12 @@ const routes = [
     Component: lazy(() => import('pages/breakdown/breakdownForm')),
   },
   {
+    path: '/breakdown/breakdownList',
+    key: 'Breakdown List',
+    exact: true,
+    Component: lazy(() => import('pages/breakdown/breakdownList')),
+  },
+  {
     path: '/insurance/insuranceHome',
     key: 'Insurance Home',
     exact: true,
