@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import client from 'services/apollo_link';
 import { store, history } from 'redux/store';
 import Router from 'router';
+import JamaProvider from 'context/sixtyFortyJamaContext';
 
 import 'global.scss';
 import 'components/kit/vendors/antd/mixins.less';
@@ -16,7 +17,9 @@ if (process.env.REACT_APP_NODE_ENV !== 'development') console.log = function () 
 const App = () => (
   <ApolloProvider client={client}>
     <Provider store={store}>
-      <Router history={history} />
+      <JamaProvider>
+        <Router history={history} />
+      </JamaProvider>
     </Provider>
   </ApolloProvider>
 );

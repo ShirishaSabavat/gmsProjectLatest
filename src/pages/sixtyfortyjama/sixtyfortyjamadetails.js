@@ -3,6 +3,7 @@ import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
 import { Radio, Button } from 'antd';
 import { useState } from 'react';
+import { useJamaContext } from 'context/sixtyFortyJamaContext';
 import { useHistory } from 'react-router-dom';
 
 const nestedPath = [
@@ -11,14 +12,31 @@ const nestedPath = [
 ];
 
 const sixtyfortyjamadetails = () => {
-  const [radioValue, setRadioValue] = useState('');
+  const { carReturnReason, setCarReturnReason } = useJamaContext();
+
+  const [carReturnError, setCarReturnError] = useState({});
   const history = useHistory();
+
+  const validateFormData = () => {
+    let isValid = true;
+    const errors = {};
+    if (!carReturnReason.carReturnReasonValue) {
+      errors.carReturnReason = 'Please select a reason for returning the car';
+      isValid = false;
+    }
+    setCarReturnError(errors);
+    return isValid;
+  };
+
   const goToBatteryAudit = () => {
-    history.push('/sixtyfortyjama/BatteryAudit');
+    const resp = validateFormData();
+    if (resp) {
+      history.push('/sixtyfortyjama/BatteryAudit');
+    }
   };
   return (
     <>
-      <Helmet title="Dashboard" />
+      <Helmet title="60:40 Jama" />
       <div className="flex flex-col space-y-12 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
@@ -50,7 +68,10 @@ const sixtyfortyjamadetails = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Reason for Returning Car*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
+          <Radio.Group
+            onChange={(e) => setCarReturnReason({ carReturnReasonValue: e.target.value })}
+            value={carReturnReason.carReturnReasonValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Family/Personal obligations">Family/Personal obligations</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Going to Village">Going to Village</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Payment Issue">Payment Issue</Radio>
@@ -108,6 +129,11 @@ const sixtyfortyjamadetails = () => {
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Leasing rent too high">Leasing rent too high</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Move to 60:40">Move to 60:40</Radio>
           </Radio.Group>
+          {Object.keys(carReturnError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {carReturnError[key]}
+            </div>
+          ))}
         </div>
       </div>
       <div className="col-12 flex flex-row justify-end">
