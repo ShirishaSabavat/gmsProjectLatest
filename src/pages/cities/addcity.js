@@ -99,11 +99,11 @@ const addcity = () => {
           .catch((err) => {
             console.log('err', err);
             notification.error({
-              message: 'Something went wrong',
+              message: err.response.data.errors[0].msg,
             });
-            setTimeout(() => {
-              history.push('/cities/citieslist');
-            }, 1000);
+            // setTimeout(() => {
+            //   history.push('/cities/citieslist');
+            // }, 1000);
           });
       } else {
         console.log('in add');
@@ -118,13 +118,13 @@ const addcity = () => {
             }, 1000);
           })
           .catch((err) => {
-            console.log('err111', err.data);
+            console.log('err22', err.response.data.errors[0].msg);
             notification.error({
-              message: 'Something went wrong',
+              message: err.response.data.errors[0].msg,
             });
-            setTimeout(() => {
-              history.push('/cities/citieslist');
-            }, 1000);
+            // setTimeout(() => {
+            //   history.push('/cities/citieslist');
+            // }, 1000);
           });
       }
     }

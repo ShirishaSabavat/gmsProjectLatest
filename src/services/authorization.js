@@ -49,7 +49,7 @@ export const currentAccountLoad = async () => {
 
 // logout and remove all the cookies
 export const logout = async () => {
-  Cookies.remove('appToken');
+  Cookies.remove('token');
   Cookies.remove('appUserId');
   localStorage.clear();
   return false;

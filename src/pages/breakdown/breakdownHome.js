@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 const nestedPath = [
   'Home',
-  'Dashboard',
+  'Breakdown',
 ];
 
 const homepage = () => {
@@ -20,20 +20,14 @@ const homepage = () => {
     setUserName(tempUserName);
     setEmpID(tempempid);
   }, []);
-  const goToCarFormPage = () => {
-    window.location.href = '#/gatekeeper/carformpage';
-  };
-  const goToCarListPage = () => {
-    window.location.href = '#/gatekeeper/carslist';
-  };
   const history = useHistory();
   return (
     <>
-      <Helmet title="Dashboard" />
+      <Helmet title="Home" />
       <div className="flex flex-col space-y-12 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Gatekeeper
+            Breakdown
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -64,25 +58,25 @@ const homepage = () => {
           <div>
             <div className="col-12 flex flex-row justify-end">
               <div
-                onClick={() => history.push('/gatekeeper/carformpage/-1')}
+                onClick={() => history.push('/breakdown/breakdownForm/-1')}
                 className="font-quicksand-medium"
                 style={{
-                  marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px',
+                  marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', width: '90%', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px', cursor: 'pointer',
                 }}
               >
-                New Car Visit
+                Add Breakdown
               </div>
             </div>
             <div className="col-12 flex flex-row justify-end mt-10">
-              <Button
-                onClick={goToCarListPage}
+              <div
+                onClick={() => history.push('/breakdown/breakdownList')}
                 className="font-quicksand-medium"
                 style={{
-                  marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '150px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
+                  marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '90%', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px', cursor: 'pointer',
                 }}
               >
-                Modify Visit
-              </Button>
+                Edit Breakdown
+              </div>
             </div>
           </div>
         </div>

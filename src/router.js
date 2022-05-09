@@ -55,7 +55,7 @@ const routes = [
     Component: lazy(() => import('pages/gatekeeper/carslist')),
   },
   {
-    path: '/gatekeeper/carformpage',
+    path: '/gatekeeper/carformpage/:id?',
     key: 'GATEKEEPER CARFORM',
     exact: true,
     Component: lazy(() => import('pages/gatekeeper/carformpage')),
@@ -271,7 +271,7 @@ const routes = [
     Component: lazy(() => import('pages/garage/addgarage')),
   },
   {
-    path: '/garage/addteam/:teamId?/:garageId?/:locationId?/:garageName?/:team_name?/:team_description?',
+    path: '/garage/addteam/:teamId?/:garageId?/:locationId?/:garageName?/:team_name?/:team_description?/:isActive?',
     key: 'TEAMS',
     exact: true,
     Component: lazy(() => import('pages/garage/addteam')),
@@ -353,6 +353,36 @@ const routes = [
     key: 'Road Trial',
     exact: true,
     Component: lazy(() => import('pages/roadTrial/roadTrial')),
+  },
+  {
+    path: '/breakdown/breakdownHome',
+    key: 'Breakdown Home',
+    exact: true,
+    Component: lazy(() => import('pages/breakdown/breakdownHome')),
+  },
+  {
+    path: '/breakdown/breakdownForm/:id?',
+    key: 'Breakdown Add',
+    exact: true,
+    Component: lazy(() => import('pages/breakdown/breakdownForm')),
+  },
+  {
+    path: '/breakdown/breakdownList',
+    key: 'Breakdown List',
+    exact: true,
+    Component: lazy(() => import('pages/breakdown/breakdownList')),
+  },
+  {
+    path: '/insurance/insuranceHome',
+    key: 'Insurance Home',
+    exact: true,
+    Component: lazy(() => import('pages/insurance/insuranceHome')),
+  },
+  {
+    path: '/insurance/insuranceForm/:id?',
+    key: 'Insurance Add',
+    exact: true,
+    Component: lazy(() => import('pages/insurance/insuranceForm')),
   },
 ];
 

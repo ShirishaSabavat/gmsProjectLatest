@@ -1,5 +1,6 @@
+/* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -10,11 +11,11 @@ const nestedPath = [
 ];
 
 const LeasingTyreAudit = () => {
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
   const goToCarInfoAudit = () => {
     history.push('/LeasingJama/LeasingCarInfo');
-  }
+  };
   return (
     <>
       <Helmet title="Dashboard" />
@@ -64,7 +65,7 @@ const LeasingTyreAudit = () => {
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{"<3"}</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="4">4</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="5">5</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="6">6</Radio>
@@ -109,7 +110,7 @@ const LeasingTyreAudit = () => {
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{"<3"}</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="4">4</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="5">5</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="6">6</Radio>
@@ -154,7 +155,7 @@ const LeasingTyreAudit = () => {
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{"<3"}</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="4">4</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="5">5</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="6">6</Radio>
@@ -199,7 +200,7 @@ const LeasingTyreAudit = () => {
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{"<3"}</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="4">4</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="5">5</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="6">6</Radio>
@@ -273,6 +274,6 @@ const LeasingTyreAudit = () => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
 export default LeasingTyreAudit;

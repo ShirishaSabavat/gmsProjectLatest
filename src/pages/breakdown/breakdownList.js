@@ -4,12 +4,12 @@ import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
-import { getCarsList } from 'services/axios';
+import { getBreakdownList } from 'services/axios';
 import { useHistory } from 'react-router-dom';
 
 const nestedPath = [
   'Home',
-  'Modify Visit',
+  'Edit Brekadown',
 ];
 
 const carslist = () => {
@@ -21,7 +21,7 @@ const carslist = () => {
     const tempcreatedbyid = localStorage.getItem('createdby');
     setGarageID(tempgarageid);
     setCreatedBy(tempcreatedbyid);
-    getCarsList(tempgarageid, tempcreatedbyid).then((resp) => {
+    getBreakdownList().then((resp) => {
       console.log(`garageid: ${tempgarageid}, createdbyid: ${tempcreatedbyid}`);
       console.log('RESP', resp);
       setCarsList(resp.data?.results.pageData);
@@ -39,7 +39,7 @@ const carslist = () => {
       <div className="flex flex-col space-y-12 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            General Queue : Modify Visit
+            Edit Brekadown
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -65,7 +65,7 @@ const carslist = () => {
         <div>
           {CarsList.map((item) => (
             <div
-              onClick={() => history.push(`/gatekeeper/carformpage/${item.id}`)}
+              onClick={() => history.push(`/breakdown/breakdownForm/${item.id}`)}
               className="bg-white"
             >
               <div className="bg-white rounded-lg my-3 mx-2">
@@ -76,7 +76,6 @@ const carslist = () => {
                     <h1 className="font-quicksand-semi-bold text-sm mt-1">Maruti Suzuki Drive Vxi CNG</h1>
                     <div className="flex flex-row">
                       <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-                      <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{item.visitId}</h1>
                     </div>
                   </div>
                 </div>

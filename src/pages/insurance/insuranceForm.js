@@ -16,10 +16,6 @@ import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { useParams, useHistory } from 'react-router-dom';
 
 const { TextArea } = Input;
-const nestedPath = [
-  'Home',
-  'New Car Visit',
-];
 
 const carformpage = () => {
   // const location = useLocation();
@@ -29,7 +25,12 @@ const carformpage = () => {
   const { id } = useParams();
   const history = useHistory();
 
-  const [radioValue, setRadioValue] = useState(true);
+  const nestedPath = [
+    'Home',
+    `${id === '-1' ? 'Add Insurance' : 'Edit Insurance'}`,
+  ];
+
+  const [carWithDriver, setCarWithDriver] = useState(true);
   const [isFocused, setisFocused] = useState(false);
   const [CarsList, setCarsList] = useState([]);
   const [cityID, setcityID] = useState('');
@@ -49,6 +50,8 @@ const carformpage = () => {
   const [SelectedDriverID, setSelectedDriverID] = useState(0);
   const [SelectedDriverManagerID, setSelectedDriverManagerID] = useState('');
   const [carNumber, setcarNumber] = useState('');
+  const [locationName, setLocationName] = useState('');
+  const [locationNameError, setLocationNameError] = useState([]);
 
   const getCarDetails = (carId) => {
     getCarDetailsList(carId).then((resp) => {
@@ -75,7 +78,7 @@ const carformpage = () => {
       .then((res) => {
         console.log('CarResp', res?.data?.results);
         setcarNumber(res?.data?.results?.car_number);
-        setRadioValue(res?.data?.results?.is_with_driver);
+        setCarWithDriver(res?.data?.results?.is_with_driver);
         setDriverName(res?.data?.results?.driver_name);
         setDriverContact(res?.data?.results?.drive_contact_number);
         setSelectedDriverManagerID(res?.data?.results?.driverManagerId);
@@ -109,7 +112,7 @@ const carformpage = () => {
       const tempcityID = localStorage.getItem('cityid');
       setcityID(tempcityID);
       getCarsListEverest(tempcityID).then((resp) => {
-        console.log("Resp: " + resp?.data);
+        console.log(resp?.data);
         setCarsList(resp?.data);
         const tempGarageID = localStorage.getItem('garageid');
         const tempLocationID = localStorage.getItem('locationid');
@@ -139,6 +142,7 @@ const carformpage = () => {
     const selectedcarnumbererror = {};
     const driverManagerError = {};
     const driverVisitCategoryError = {};
+    const locationError = {};
     const mobileErr = {};
     const numCheck = /^[0-9\b]+$/;
     let isValid = true;
@@ -163,7 +167,7 @@ const carformpage = () => {
         driverVisitCategoryError.err = 'Please select reason for visit';
         isValid = false;
       }
-      if (radioValue) {
+      if (carWithDriver) {
         if (DriverContact.trim().length < 10 || DriverContact.trim().length > 10) {
           mobileErr.pinErr = 'Mobile Number should be of 10 digits only';
           isValid = false;
@@ -183,11 +187,16 @@ const carformpage = () => {
           driverNameError.pinErr = 'This field can not be empty';
           isValid = false;
         }
+        if (locationName.trim().length === 0) {
+          locationError.Err = 'This field can not be empty';
+          isValid = false;
+        }
       }
 
       setDriverVisitCategoryError(driverVisitCategoryError);
       setDriverContactError(mobileErr);
       setDriverNameError(driverNameError);
+      setLocationNameError(locationError);
     }
 
     return isValid;
@@ -205,7 +214,7 @@ const carformpage = () => {
           SelectedCarID,
           SelectedCarNumber,
           GarageID,
-          radioValue,
+          carWithDriver,
           SelectedDriverID,
           DriverName,
           DriverContact,
@@ -232,7 +241,7 @@ const carformpage = () => {
           VisitCategory,
           SelectedCarID,
           GarageID,
-          radioValue,
+          carWithDriver,
           SelectedDriverID,
           DriverName,
           DriverContact,
@@ -283,11 +292,11 @@ const carformpage = () => {
   );
   return (
     <>
-      <Helmet title="Teams" />
+      <Helmet title="Breakdown" />
       <div className="flex flex-col space-y-12 mx-4">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-xl mr-3.5">
-            {id === '-1' ? 'New Car Visit' : 'Edit Car Visit'}
+            {id === '-1' ? 'Add Insurance' : 'Edit Insurance'}
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -323,13 +332,13 @@ const carformpage = () => {
           <div className={isFocused === true ? 'bg-white pt-80 pb-5' : 'bg-white py-5'}>
             <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Is Car with Driver?</p>
             <div className="flex flex-row flex-nonwrap bg-white">
-              <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
+              <Radio.Group onChange={(e) => setCarWithDriver(e.target.value)} value={carWithDriver}>
                 <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value>Yes</Radio>
                 <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>No</Radio>
               </Radio.Group>
             </div>
           </div>
-          {radioValue === true
+          {carWithDriver === true
             ? (
               <div>
                 <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Name</p>
@@ -381,53 +390,23 @@ const carformpage = () => {
             : <div />}
         </div>
         <div className="bg-white p-4">
-          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Reason for Visit</p>
-          <div className="flex flex-row flex-nonwrap">
-            <Button
-              onClick={() => setVisitCategory(4)}
-              className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 4 ? 'aqua' : 'white' }}
-            >
-              Servicing
-            </Button>
-            <Button
-              onClick={() => setVisitCategory(5)}
-              className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 5 ? 'aqua' : 'white' }}
-            >
-              Repair
-            </Button>
+          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Location of Breakdown</p>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <TextArea
+              rows={4}
+              placeholder="Location Name"
+              value={locationName}
+              onChange={(e) => setLocationName(e.target.value)}
+              style={{
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              }}
+            />
+            {Object.keys(locationNameError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {locationNameError[key]}
+              </div>
+            ))}
           </div>
-          <div className="flex flex-row flex-nonwrap">
-            <Button
-              onClick={() => setVisitCategory(3)}
-              className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 3 ? 'aqua' : 'white' }}
-            >
-              Regular Audit
-            </Button>
-            <Button
-              onClick={() => setVisitCategory(1)}
-              className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 1 ? 'aqua' : 'white' }}
-            >
-              60:40 Jama
-            </Button>
-          </div>
-          <div className="flex flex-row flex-nonwrap">
-            <Button
-              onClick={() => setVisitCategory(2)}
-              className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 2 ? 'aqua' : 'white' }}
-            >
-              Leasing Car Jama
-            </Button>
-          </div>
-          {Object.keys(DriverVisitCategoryError).map((key) => (
-            <div style={{ color: 'red' }}>
-              {DriverVisitCategoryError[key]}
-            </div>
-          ))}
         </div>
         <div className="col-12 flex flex-row justify-center">
           <Button

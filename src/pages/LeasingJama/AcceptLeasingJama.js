@@ -103,7 +103,7 @@ const AcceptLeasingJama = () => {
             </Button>
           </div>
           <div className="col-12 flex flex-row justify-center">
-            <Link
+            <Button
               onClick={goToRejectRTAListMethod}
               className="font-quicksand-medium"
               style={{
@@ -111,7 +111,7 @@ const AcceptLeasingJama = () => {
               }}
             >
               Reject for Jama
-            </Link>
+            </Button>
           </div>
         </div>
       </div>

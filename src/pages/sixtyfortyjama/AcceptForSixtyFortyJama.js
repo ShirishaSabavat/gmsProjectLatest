@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input, Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
-import { addRTAList } from 'services/axios';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+// import { addRTAList } from 'services/axios';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const nestedPath = [
   'Home',
@@ -103,7 +103,7 @@ const AcceptForSixtyFortyJama = () => {
             </Button>
           </div>
           <div className="col-12 flex flex-row justify-center">
-            <Link
+            <Button
               onClick={goToRejectRTAListMethod}
               className="font-quicksand-medium"
               style={{
@@ -111,7 +111,7 @@ const AcceptForSixtyFortyJama = () => {
               }}
             >
               Reject for Jama
-            </Link>
+            </Button>
           </div>
         </div>
       </div>

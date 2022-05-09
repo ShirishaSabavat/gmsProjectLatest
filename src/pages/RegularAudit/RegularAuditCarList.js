@@ -3,10 +3,11 @@
 import { Helmet } from 'react-helmet';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { getCarsListJama } from 'services/axios';
+import { Link, useHistory } from 'react-router-dom';
+import { getCarsListRegularAudit } from 'services/axios';
 
 const RegularAuditCarList = () => {
+  const history = useHistory();
   const [CarsList, setCarsList] = useState([
     {
       car_number: "MH 04 DR 1564",
@@ -17,7 +18,8 @@ const RegularAuditCarList = () => {
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
-    getCarsListJama(1).then((resp) => {
+    console.log("garageid: " + tempGarageID);
+    getCarsListRegularAudit(tempGarageID).then((resp) => {
       console.log(resp);
       setCarsList(resp.data?.results.pageData);
     })
@@ -58,14 +60,9 @@ const RegularAuditCarList = () => {
             <Link
               to={{
                 pathname: 'RegularAuditCarInfo',
-                // state: {
-                //   id: item.id,
-                //   carId: item.carId,
-                //   carnumber: item.car_number,
-                //   drivername: item.driver_name,
-                //   visitid: item.visitId,
-                //   visitcategory: item.visit_category,
-                // },
+                state: {
+                  id: item.id,
+                },
               }}
               className="bg-white"
             >

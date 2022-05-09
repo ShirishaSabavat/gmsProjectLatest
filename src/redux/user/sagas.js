@@ -43,6 +43,8 @@ function* LOGIN(userAction) {
       yield history.push('/gatekeeper/homepage');
     } else if (temprole === 'Road Test Auditor') {
       yield history.push('/rta/carlistrta');
+    } else if (temprole === 'undefined') {
+      yield history.push('/home/dashboard');
     } else if (temprole === '60:40 Queue Operator') {
       yield history.push('/sixtyfortyjama/jamacarlist');
     } else if (temprole === 'Leasing Queue Operator') {
@@ -53,6 +55,10 @@ function* LOGIN(userAction) {
       yield history.push('/RepairAudit/RepairAuditCarlist');
     } else if (temprole === 'Service Queue Auditor') {
       yield history.push('/ServiceAudit/ServiceAuditCarlist');
+    } else if (temprole === 'Driver Manager') {
+      yield history.push('/breakdown/breakdownHome');
+    } else if (temprole === 'Insurance') {
+      yield history.push('/insurance/insuranceHome');
     }
 
     // console.log('history', history);

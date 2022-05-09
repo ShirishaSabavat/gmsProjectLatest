@@ -1,8 +1,10 @@
+/* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
-import { useState } from 'react';
+import { useJamaContext } from 'context/sixtyFortyJamaContext';
 import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
 
 const nestedPath = [
   'Home',
@@ -10,11 +12,41 @@ const nestedPath = [
 ];
 
 const BatteryAudit = () => {
-  const [radioValue, setRadioValue] = useState("Powerzone");
   const history = useHistory();
+  const [batteryNameError, setBatteryNameError] = useState({});
+  const [batteryBrandError, setBatteryBrandError] = useState({});
+
+  const {
+    batteryName,
+    setBatteryName,
+    batteryBrand,
+    setBatteryBrand,
+  } = useJamaContext();
+
+  const validateFormData = () => {
+    let isValid = true;
+    const batteryBrandErr = {};
+    const batteryNameErr = {};
+
+    if (!batteryName.batteryNameValue) {
+      batteryNameErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
+    if (!batteryBrand.batteryBrandValue) {
+      batteryBrandErr.err = 'Please select a battery brand';
+      isValid = false;
+    }
+    setBatteryNameError(batteryNameErr);
+    setBatteryBrandError(batteryBrandErr);
+    return isValid;
+  };
+
   const goToTyreAudit = () => {
-    history.push('/sixtyfortyjama/TyreAudit');
-  }
+    const resp = validateFormData();
+    if (resp) {
+      history.push('/sixtyfortyjama/TyreAudit');
+    }
+  };
   return (
     <>
       <Helmet title="Dashboard" />
@@ -49,25 +81,45 @@ const BatteryAudit = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Battery Audit</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Number</p>
-        <div className="flex flex-row flex-nonwrap bg-white">
-          <Input
-            placeholder="Enter Name Here..."
-            style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-            }}
-          />
+        <div className="flex flex-col">
+
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <Input
+              placeholder="Enter Name Here..."
+              value={batteryName.batteryNameValue}
+              onChange={(e) => setBatteryName({ batteryNameValue: e.target.value })}
+              style={{
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              }}
+            />
+          </div>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            {Object.keys(batteryNameError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {batteryNameError[key]}
+              </div>
+            ))}
+          </div>
         </div>
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Audit</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Brand</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Powerzone">Powerzone</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Panasonic">Panasonic</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Exide">Exide</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Liveguard">Liveguard</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Tata</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Amaron</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Other</Radio>
+          <Radio.Group
+            onChange={(e) => setBatteryBrand({ batteryBrandValue: e.target.value })}
+            value={batteryBrand.batteryBrandValue}
+          >
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Powerzone</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Panasonic</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>Exide</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={4}>Liveguard</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={5}>Tata</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={6}>Amaron</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={7}>Other</Radio>
           </Radio.Group>
+          {Object.keys(batteryBrandError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {batteryBrandError[key]}
+            </div>
+          ))}
         </div>
       </div>
       <div className="col-12 flex flex-row justify-end">
@@ -82,6 +134,6 @@ const BatteryAudit = () => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
 export default BatteryAudit;
