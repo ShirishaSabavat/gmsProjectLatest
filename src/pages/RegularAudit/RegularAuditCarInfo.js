@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { Radio, Button, Input, notification } from 'antd';
 import { useState } from 'react';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
-import { addAuditMaster } from 'services/axios';
+import { addAuditMaster, addAuditDetails } from 'services/axios';
 
 const nestedPath = [
   'Home',
@@ -15,6 +15,7 @@ const RegularAuditCarInfo = () => {
   const {
     id
   } = location.state;
+  const [auditID, setauditID] = useState("");
   const [carKms, setCarKms] = useState("");
   const [currentCarKms, setcurrentCarKms] = useState("");
   const [fasttagBalance, setfasttagBalance] = useState("");
@@ -78,12 +79,40 @@ const RegularAuditCarInfo = () => {
         visitId: id,
         fastagBalance: fasttagBalance,
       };
+      let auditdetails = {}
       addAuditMaster(auditmaster)
         .then((res) => {
+          const tempID = res.data.results.id;
+          console.log('res', tempID);
+          auditdetails = {
+            id: tempID,
+            fuelIndicatorOne: fuelIndicatorPetrolBar === "Yes" ? true : false,
+            fuel_indicator_cng: cng === "Full" ? 1 : cng === "Empty" ? 2 : cng === "Half full and Above" ? 3 : 4,
+            StickerFrontMain: numberPlateStickerStat === "Front Main" ? true : false,
+            StickerBackMain: numberPlateStickerStat === "Front Main" ? true : false,
+            StickerBackRight: numberPlateStickerStat === "Front Main" ? true : false,
+            StickerBackLeft: numberPlateStickerStat === "Front Main" ? true : false,
+            jack: jackStat === "Yes" ? true : false,
+            panna: panaStat === "Yes" ? true : false,
+            tommy: tommyStat === "Yes" ? true : false,
+            engineOil: engineoil === "Sufficient" ? true : false,
+            breakOil: brakeoil === "Sufficient" ? true : false,
+            coolant: coolant === "Sufficient" ? true : false,
+            batteryCharge: batteryCharge === "Okay" ? true : false,
+            horn: horn === "Okay" ? true : false,
+          };
+
+        })
+        .catch((err) => {
+          console.log('err', err.response);
+        });
+      addAuditDetails(auditdetails)
+        .then((res) => {
           console.log('res', res);
-          notification.error({
+          notification.success({
             message: "Audit submitted successfully.",
           });
+          history.push('/RegularAudit/RegularAuditCarList');
         })
         .catch((err) => {
           console.log('err', err.response);
@@ -91,41 +120,10 @@ const RegularAuditCarInfo = () => {
             message: err.response.data.message,
           });
         });
+
     } else {
 
     }
-  }
-
-  const addAuditDetails = () => {
-    const auditdetails = {
-      id: id,
-      fuelIndicatorOne: fuelIndicatorPetrolBar === "Yes" ? true : false,
-      fuel_indicator_cng: cng === "Full" ? 1 : cng === "Empty" ? 2 : cng === "Half full and Above" ? 3 : 4,
-      StickerFrontMain: numberPlateStickerStat === "Front Main" ? true : false,
-      StickerBackMain: numberPlateStickerStat === "Front Main" ? true : false,
-      StickerBackRight: numberPlateStickerStat === "Front Main" ? true : false,
-      StickerBackLeft: numberPlateStickerStat === "Front Main" ? true : false,
-      jack: jackStat === "Yes" ? true : false,
-      panna: panaStat === "Yes" ? true : false,
-      tommy: tommyStat === "Yes" ? true : false,
-      engineOil: engineoil === "Sufficient" ? true : false,
-      breakOil: brakeoil === "Sufficient" ? true : false,
-      coolant: coolant === "Sufficient" ? true : false,
-      batteryCharge: batteryCharge === "Okay" ? true : false,
-      horn: horn === "Okay" ? true : false,
-    };
-    addAuditDetails(auditdetails)
-      .then((res) => {
-        console.log('res', res);
-
-        history.push('/LeasingJama/AcceptLeasingJama');
-      })
-      .catch((err) => {
-        console.log('err', err.response);
-        notification.error({
-          message: err.response.data.message,
-        });
-      });
   }
 
   return (
