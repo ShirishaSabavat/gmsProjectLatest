@@ -13,7 +13,9 @@ const nestedPath = [
 
 const sixtyfortyjamadetails = () => {
   const { carReturnReason, setCarReturnReason } = useJamaContext();
-
+  const [carKmsError, setCarKmsError] = useState("");
+  const [currentCarKmsError, setcurrentCarKmsError] = useState("");
+  const [fasttagBalanceError, setfasttagBalanceError] = useState("");
   const [carReturnError, setCarReturnError] = useState({});
   const history = useHistory();
 
@@ -65,7 +67,7 @@ const sixtyfortyjamadetails = () => {
           <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300 ml-12">John Doe</h1>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-5 m-3">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Reason for Returning Car*</p>
         <div className="bg-white">
           <Radio.Group
@@ -73,18 +75,18 @@ const sixtyfortyjamadetails = () => {
             value={carReturnReason.carReturnReasonValue}
           >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Family/Personal obligations">Family/Personal obligations</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Going to Village">Going to Village</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Payment Issue">Payment Issue</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2 flex-1" value="Going to Village">Going to Village</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2 flex-1" value="Payment Issue">Payment Issue{'\n'}</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Don't want to drive Uber">Don&apos;t want to drive Uber</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Don't want to drive with Everest">Don&apos;t want to drive with Everest</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold flex mt-2" value="60:40 issue">60:40 issue</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold flex mt-2" value="60:40 issue">60:40 issue{'\t'}</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold flex mt-2" value="ID Block">
               ID Block
               {'\n'}
             </Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Defaulter - Misuse">Defaulter - Misuse</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Defaulter - Outstanding">Defaulter - Outstanding</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Defaulter - Low Performance(Low Online hrs/Trips)">Defaulter - Low Performance(Low Online hrs/Trips)</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2 mr-10" value="Defaulter - Low Performance(Low Online hrs/Trips)">Defaulter - Low Performance(Low Online hrs/Trips)</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mt-2" value="Car Issue">
               Car Issue
               {'\n'}
