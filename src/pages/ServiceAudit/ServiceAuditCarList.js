@@ -3,10 +3,16 @@
 import { Helmet } from 'react-helmet';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { getCarsListJama } from 'services/axios';
+import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
 const ServiceAuditCarList = () => {
+  const {
+    selectedCarID,
+    setselectedCarID
+  } = useJamaContext();
+  const history = useHistory();
   const [CarsList, setCarsList] = useState([
     {
       car_number: "MH 04 DR 1564",
@@ -55,18 +61,8 @@ const ServiceAuditCarList = () => {
         </div>
         <div>
           {CarsList.map((item) => (
-            <Link
-              to={{
-                pathname: 'ServiceAuditCarDetails',
-                // state: {
-                //   id: item.id,
-                //   carId: item.carId,
-                //   carnumber: item.car_number,
-                //   drivername: item.driver_name,
-                //   visitid: item.visitId,
-                //   visitcategory: item.visit_category,
-                // },
-              }}
+            <div
+              onClick={() => { setselectedCarID(item.id), history.push(`/ServiceAudit/ServiceAuditCarDetails`) }}
               className="bg-white"
             >
               <div className="bg-white rounded-lg my-3 mx-2">
@@ -82,7 +78,7 @@ const ServiceAuditCarList = () => {
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
 
           ))}
         </div>

@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
 const nestedPath = [
   'Home',
@@ -10,11 +11,27 @@ const nestedPath = [
 ];
 
 const ServiceAuditCarDetails = () => {
+  const { driverReportedIssue, setdriverReportedIssue } = useJamaContext();
   const [radioValue, setRadioValue] = useState("");
   const history = useHistory();
+  const [carReturnError, setCarReturnError] = useState({});
+  const validateFormData = () => {
+    let isValid = true;
+    const errors = {};
+    if (!driverReportedIssue.driverReportedIssueValue) {
+      errors.carReturnReason = 'Please enter driver issues.';
+      isValid = false;
+    }
+    setCarReturnError(errors);
+    return isValid;
+  };
+
   const goToBatteryAudit = () => {
-    history.push('/ServiceAudit/ServiceBatteryAudit');
-  }
+    const resp = validateFormData();
+    if (resp) {
+      history.push('/ServiceAudit/ServiceBatteryAudit');
+    }
+  };
   return (
     <>
       <Helmet title="Dashboard" />
@@ -51,12 +68,19 @@ const ServiceAuditCarDetails = () => {
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Enter Issue Here</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
+            value={driverReportedIssue.driverReportedIssueValue}
+            onChange={(e) => setdriverReportedIssue({ driverReportedIssueValue: e.target.value })}
             placeholder="Enter Name Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
           />
         </div>
+        {Object.keys(carReturnError).map((key) => (
+          <div style={{ color: 'red' }}>
+            {carReturnError[key]}
+          </div>
+        ))}
       </div>
 
       <div className="col-12 flex flex-row justify-end">

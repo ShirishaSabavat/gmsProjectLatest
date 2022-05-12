@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
 const nestedPath = [
   'Home',
@@ -16,6 +17,12 @@ const LeasingBatteryAudit = () => {
   const goToTyreAudit = () => {
     history.push('/LeasingJama/LeasingTyreAudit');
   };
+  const {
+    batteryName,
+    setBatteryName,
+    batteryBrand,
+    setBatteryBrand,
+  } = useJamaContext();
   return (
     <>
       <Helmet title="Dashboard" />
@@ -52,6 +59,8 @@ const LeasingBatteryAudit = () => {
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Number</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
+            value={batteryName.batteryNameValue}
+            onChange={(e) => setBatteryName({ batteryNameValue: e.target.value })}
             placeholder="Enter Name Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
@@ -60,7 +69,8 @@ const LeasingBatteryAudit = () => {
         </div>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Audit</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
+          <Radio.Group onChange={(e) => setBatteryBrand({ batteryBrandValue: e.target.value })}
+            value={batteryBrand.batteryBrandValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Powerzone">Powerzone</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Panasonic">Panasonic</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Exide">Exide</Radio>

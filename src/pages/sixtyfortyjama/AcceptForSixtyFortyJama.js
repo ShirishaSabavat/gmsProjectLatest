@@ -211,6 +211,7 @@ const AcceptForSixtyFortyJama = () => {
           </div>
           <div className="col-12 flex flex-row justify-center my-3">
             <Button
+              onClick={createAudit}
               className="font-quicksand-medium"
               style={{
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
@@ -221,7 +222,6 @@ const AcceptForSixtyFortyJama = () => {
           </div>
           <div className="col-12 flex flex-row justify-center">
             <Button
-              onClick={createAudit}
               className="font-quicksand-medium"
               style={{
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px',

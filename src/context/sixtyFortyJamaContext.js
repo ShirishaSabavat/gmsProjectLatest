@@ -3,6 +3,7 @@ import { createContext, useState, useContext } from 'react';
 
 const JamaContext = createContext(
   {
+    driverReportedIssueValue: '',
     selectedCarIDValue: 0,
     carReturnReasonValue: 'Family/Personal obligations',
     batteryNumberValue: '',
@@ -44,6 +45,9 @@ const JamaContext = createContext(
 );
 
 const JamaProvider = ({ children }) => {
+  const [driverReportedIssue, setdriverReportedIssue] = useState({
+    driverReportedIssueValue: '',
+  });
   const [selectedCarID, setselectedCarID] = useState({
     selectedCarIDValue: 0,
   });
@@ -158,6 +162,8 @@ const JamaProvider = ({ children }) => {
 
   return (
     <JamaContext.Provider value={{
+      driverReportedIssue,
+      setdriverReportedIssue,
       selectedCarID,
       setselectedCarID,
       carReturnReason,

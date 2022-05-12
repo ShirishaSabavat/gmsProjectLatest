@@ -4,8 +4,10 @@ import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input, Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
-import { addRTAList } from 'services/axios';
+import { addOtherAuditDetails, addOtherAuditMaster, addRTAList } from 'services/axios';
 import { Link, useLocation, useHistory } from 'react-router-dom';
+import { useRepairContext } from 'context/RepairAuditContext';
+import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
 const nestedPath = [
   'Home',
@@ -20,29 +22,144 @@ const RepairSubmit = () => {
   const [GarageID, setGarageID] = useState('');
   const [remarksError, setRemarksError] = useState('');
 
-  // const validateFormData = () => {
-  //   const RemarkError = {};
-  //   let isValid = true;
-  //   if (remarks.trim().length === 0) {
-  //     RemarkError.err = 'Please enter proper remarks.';
-  //     isValid = false;
-  //   }
-  //   // if (garageSeries.trim().length === 0) {
-  //   //   garageSeriesNameError.err = 'Garage series can not be empty';
-  //   //   isValid = false;
-  //   // }
-  //   // if (userSeries.trim().length === 0) {
-  //   //   userSeriesNameError.err = 'User series can not be empty';
-  //   //   isValid = false;
-  //   // }
+  const {
+    carReturnReason,
+    selectedCarID,
+    fRTyreBrand,
+    fRWornOut,
+    fRPressure,
+    fRTyreNumber,
+    rRTyreBrand,
+    rRWornOut,
+    rRPressure,
+    rRTyreNumber,
+    fLTyreBrand,
+    fLWornOut,
+    fLPressure,
+    fLTyreNumber,
+    rLTyreBrand,
+    rLWornOut,
+    rLPressure,
+    rLTyreNumber,
+    stepnyPresent,
+    stepnyBrand,
+    stepnyTyreNumber,
+    carKms,
+    currentCarKms,
+    fasttagBalance,
+    fuelIndicatorPetrolBar,
+    cng,
+    numberPlateStickerStat,
+    jackStat,
+    panaStat,
+    tommyStat,
+    engineoil,
+    brakeoil,
+    coolant,
+    batteryCharge,
+    horn,
+  } = useJamaContext();
 
-  //   setRemarksError(RemarkError);
-  //   return isValid;
-  // };
-  const history = useHistory();
-  const goToRejectRTAListMethod = () => {
-    history.push('/LeasingJama/RejectLeasingJama');
+  const validateFormData = () => {
+    const RemarkError = {};
+    let isValid = true;
+    if (remarks.trim().length === 0) {
+      RemarkError.err = 'Please enter proper remarks.';
+      isValid = false;
+    }
+    // if (garageSeries.trim().length === 0) {
+    //   garageSeriesNameError.err = 'Garage series can not be empty';
+    //   isValid = false;
+    // }
+    // if (userSeries.trim().length === 0) {
+    //   userSeriesNameError.err = 'User series can not be empty';
+    //   isValid = false;
+    // }
+
+    setRemarksError(RemarkError);
+    return isValid;
   };
+  const history = useHistory();
+
+  const createAudit = (event) => {
+    event.preventDefault();
+    const resp = validateFormData();
+    console.log(resp);
+
+    if (resp) {
+      const auditmaster = {
+        visitId: selectedCarID,
+        driverReportedIssue: carReturnReason.carReturnReasonValue,
+        carReturnReason: "",
+        fastagBalance: fasttagBalance.fasttagBalanceValue,
+      };
+      let auditdetails = {}
+      addOtherAuditMaster(auditmaster)
+        .then((res) => {
+          const tempID = res.data.results.id;
+          console.log('res', tempID);
+          auditdetails = {
+            id: tempID,
+            frWornOut: fRWornOut.fRWornOutValue === "<3" ? 1 : fRWornOut.fRWornOutValue === "4" ? 2 : fRWornOut.fRWornOutValue === "5" ? 3 : fRWornOut.fRWornOutValue === "4" ? 4 : 5,
+            fLWornOut: fLWornOut.fLWornOutValue === "<3" ? 1 : fLWornOut.fLWornOutValue === "4" ? 2 : fLWornOut.fLWornOutValue === "5" ? 3 : fLWornOut.fLWornOutValue === "4" ? 4 : 5,
+            rrWornOut: rRWornOut.rRWornOutValue === "<3" ? 1 : rRWornOut.rRWornOutValue === "4" ? 2 : rRWornOut.rRWornOutValue === "5" ? 3 : rRWornOut.rRWornOutValue === "4" ? 4 : 5,
+            rLWornOut: rLWornOut.rLWornOutValue === "<3" ? 1 : rLWornOut.rLWornOutValue === "4" ? 2 : rLWornOut.rLWornOutValue === "5" ? 3 : rLWornOut.rLWornOutValue === "4" ? 4 : 5,
+            frBrand: fRTyreBrand.fRTyreBrandValue === "Apollo" ? 1 : fRTyreBrand.fRTyreBrandValue === "Ceat" ? 2 : fRTyreBrand.fRTyreBrandValue === "JK" ? 3 :
+              fRTyreBrand.fRTyreBrandValue === "BridgeStone" ? 4 : fRTyreBrand.fRTyreBrandValue === "MRF" ? 5 : fRTyreBrand.fRTyreBrandValue === "Firestone" ? 6 :
+                fRTyreBrand.fRTyreBrandValue === "Kelly" ? 7 : 8,
+            fLBrand: fLTyreBrand.fLTyreBrandValue === "Apollo" ? 1 : fLTyreBrand.fLTyreBrandValue === "Ceat" ? 2 : fLTyreBrand.fLTyreBrandValue === "JK" ? 3 :
+              fLTyreBrand.fLTyreBrandValue === "BridgeStone" ? 4 : fLTyreBrand.fLTyreBrandValue === "MRF" ? 5 : fLTyreBrand.fLTyreBrandValue === "Firestone" ? 6 :
+                fLTyreBrand.fLTyreBrandValue === "Kelly" ? 7 : 8,
+            rrBrand: rRTyreBrand.rRTyreBrandValue === "Apollo" ? 1 : rRTyreBrand.rRTyreBrandValue === "Ceat" ? 2 : rRTyreBrand.rRTyreBrandValue === "JK" ? 3 :
+              rRTyreBrand.rRTyreBrandValue === "BridgeStone" ? 4 : rRTyreBrand.rRTyreBrandValue === "MRF" ? 5 : rRTyreBrand.rRTyreBrandValue === "Firestone" ? 6 :
+                rRTyreBrand.rRTyreBrandValue === "Kelly" ? 7 : 8,
+            rLBrand: rLTyreBrand.rLTyreBrandValue === "Apollo" ? 1 : rLTyreBrand.rLTyreBrandValue === "Ceat" ? 2 : rLTyreBrand.rLTyreBrandValue === "JK" ? 3 :
+              rLTyreBrand.rLTyreBrandValue === "BridgeStone" ? 4 : rLTyreBrand.rLTyreBrandValue === "MRF" ? 5 : rLTyreBrand.rLTyreBrandValue === "Firestone" ? 6 :
+                rLTyreBrand.rLTyreBrandValue === "Kelly" ? 7 : 8,
+            frPressure: fRPressure.fRPressureValue,
+            fLPressure: rRPressure.rRPressureValue,
+            rrPressure: fLPressure.fLPressureValue,
+            rLPressure: rLPressure.rLPressureValue,
+            frNumber: fRTyreNumber.fRTyreNumberValue,
+            fLNumber: fLTyreNumber.fLTyreNumberValue,
+            rrNumber: rRTyreNumber.rRTyreNumberValue,
+            rLNumber: rLTyreNumber.rLTyreNumberValue,
+            fuelIndicatorOne: fuelIndicatorPetrolBar.fuelIndicatorPetrolBarValue === "Yes" ? true : false,
+            fuel_indicator_cng: cng.cngValue === "Full" ? 1 : cng.cngValue === "Empty" ? 2 : cng.cngValue === "Half full and Above" ? 3 : 4,
+            StickerFrontMain: numberPlateStickerStat.numberPlateStickerStatValue === "Front Main" ? true : false,
+            StickerBackMain: numberPlateStickerStat.numberPlateStickerStatValue === "Front Main" ? true : false,
+            StickerBackRight: numberPlateStickerStat.numberPlateStickerStatValue === "Front Main" ? true : false,
+            StickerBackLeft: numberPlateStickerStat.numberPlateStickerStatValue === "Front Main" ? true : false,
+            jack: jackStat.jackStatValue === "Yes" ? true : false,
+            panna: panaStat.panaStatValue === "Yes" ? true : false,
+            tommy: tommyStat.tommyStatValue === "Yes" ? true : false,
+            engineOil: engineoil.engineoilValue === "Sufficient" ? true : false,
+            breakOil: brakeoil.brakeoilValue === "Sufficient" ? true : false,
+            coolant: coolant.coolantValue === "Sufficient" ? true : false,
+            batteryCharge: batteryCharge.batteryChargeValue === "Okay" ? true : false,
+            horn: horn.hornValue === "Okay" ? true : false,
+          };
+          addOtherAuditDetails(auditdetails)
+            .then((res) => {
+              console.log('res', res);
+              notification.success({
+                message: "Audit submitted successfully.",
+              });
+              history.push('/RepairAudit/RepairAuditCarList');
+            })
+            .catch((err) => {
+              console.log('err', err.response);
+            });
+        })
+        .catch((err) => {
+          console.log('err', err.response);
+        });
+
+
+    } else {
+
+    }
+  }
 
   return (
     <>
@@ -94,6 +211,7 @@ const RepairSubmit = () => {
           </div>
           <div className="col-12 flex flex-row justify-center my-3">
             <Button
+              onClick={createAudit}
               className="font-quicksand-medium"
               style={{
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
