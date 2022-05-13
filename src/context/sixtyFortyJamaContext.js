@@ -22,6 +22,9 @@ const JamaContext = createContext(
     rLWornOutValue: 3,
     rLPressureValue: '',
     rLTyreNumberValue: '',
+    stephanyPresentValue: true,
+    sTyreBrandValue: 1,
+    sTyreNumberValue: '',
   },
 );
 
@@ -83,6 +86,15 @@ const JamaProvider = ({ children }) => {
   const [rLTyreNumber, setrLTyreNumber] = useState({
     rLTyreNumberValue: '',
   });
+  const [stephanyPresent, setStephanyPresent] = useState({
+    stephanyPresentValue: true,
+  });
+  const [sTyreBrand, setsTyreBrand] = useState({
+    sTyreBrandValue: 1,
+  });
+  const [sTyreNumber, setsTyreNumber] = useState({
+    sTyreNumberValue: '',
+  });
 
   return (
     <JamaContext.Provider value={{
@@ -124,6 +136,12 @@ const JamaProvider = ({ children }) => {
       setrLPressure,
       rLTyreNumber,
       setrLTyreNumber,
+      stephanyPresent,
+      setStephanyPresent,
+      sTyreBrand,
+      setsTyreBrand,
+      sTyreNumber,
+      setsTyreNumber,
     }}
     >
       {children}
