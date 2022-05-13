@@ -3,6 +3,8 @@ import { createContext, useState, useContext } from 'react';
 
 const JamaContext = createContext(
   {
+    driverReportedIssueValue: '',
+    selectedCarIDValue: 0,
     carReturnReasonValue: 'Family/Personal obligations',
     batteryNumberValue: '',
     batteryBrandValue: 1,
@@ -22,13 +24,33 @@ const JamaContext = createContext(
     rLWornOutValue: 3,
     rLPressureValue: '',
     rLTyreNumberValue: '',
-    stephanyPresentValue: true,
-    sTyreBrandValue: 1,
-    sTyreNumberValue: '',
+    stepnyPresentValue: 1,
+    stepnyBrandValue: 1,
+    stepnyTyreNumberValue: '',
+    carKmsValue: '',
+    currentCarKmsValue: '',
+    fasttagBalanceValue: '',
+    fuelIndicatorPetrolBarValue: 'Yes',
+    cngValue: 'Full',
+    numberPlateStickerStatValue: 'Front Main',
+    jackStatValue: 'Yes',
+    panaStatValue: 'Yes',
+    tommyStatValue: 'Yes',
+    engineoilValue: 'Sufficient',
+    brakeoilValue: 'Sufficient',
+    coolantValue: 'Sufficient',
+    batteryChargeValue: 'Okay',
+    hornValue: 'Okay',
   },
 );
 
 const JamaProvider = ({ children }) => {
+  const [driverReportedIssue, setdriverReportedIssue] = useState({
+    driverReportedIssueValue: '',
+  });
+  const [selectedCarID, setselectedCarID] = useState({
+    selectedCarIDValue: 0,
+  });
   const [carReturnReason, setCarReturnReason] = useState({
     carReturnReasonValue: 'Family/Personal obligations',
   });
@@ -42,7 +64,7 @@ const JamaProvider = ({ children }) => {
     fRTyreBrandValue: 1,
   });
   const [fRWornOut, setfRWornOut] = useState({
-    fRWornOutValue: 3,
+    fRWornOutValue: '<3',
   });
   const [fRPressure, setfRPressure] = useState({
     fRPressureValue: '',
@@ -54,7 +76,7 @@ const JamaProvider = ({ children }) => {
     rRTyreBrandValue: 1,
   });
   const [rRWornOut, setrRWornOut] = useState({
-    rRWornOutValue: 3,
+    rRWornOutValue: '<3',
   });
   const [rRPressure, setrRPressure] = useState({
     rRPressureValue: '',
@@ -66,7 +88,7 @@ const JamaProvider = ({ children }) => {
     fLTyreBrandValue: 1,
   });
   const [fLWornOut, setfLWornOut] = useState({
-    fLWornOutValue: 3,
+    fLWornOutValue: '<3',
   });
   const [fLPressure, setfLPressure] = useState({
     fLPressureValue: '',
@@ -78,7 +100,7 @@ const JamaProvider = ({ children }) => {
     rLTyreBrandValue: 1,
   });
   const [rLWornOut, setrLWornOut] = useState({
-    rLWornOutValue: 3,
+    rLWornOutValue: '<3',
   });
   const [rLPressure, setrLPressure] = useState({
     rLPressureValue: '',
@@ -86,18 +108,64 @@ const JamaProvider = ({ children }) => {
   const [rLTyreNumber, setrLTyreNumber] = useState({
     rLTyreNumberValue: '',
   });
-  const [stephanyPresent, setStephanyPresent] = useState({
-    stephanyPresentValue: true,
+  const [stepnyPresent, setStepnyPresent] = useState({
+    stepnyPresentValue: 1,
   });
-  const [sTyreBrand, setsTyreBrand] = useState({
-    sTyreBrandValue: 1,
+  const [stepnyBrand, setStepnyBrand] = useState({
+    stepnyBrandValue: 1,
   });
-  const [sTyreNumber, setsTyreNumber] = useState({
-    sTyreNumberValue: '',
+  const [stepnyTyreNumber, setStepnyTyreNumber] = useState({
+    stepnyTyreNumberValue: '',
+  });
+  const [carKms, setCarKms] = useState({
+    carKmsValue: '',
+  });
+  const [currentCarKms, setcurrentCarKms] = useState({
+    currentCarKmsValue: '',
+  });
+  const [fasttagBalance, setfasttagBalance] = useState({
+    fasttagBalanceValue: '',
+  });
+  const [fuelIndicatorPetrolBar, setfuelIndicatorPetrolBar] = useState({
+    fuelIndicatorPetrolBarValue: 'Yes',
+  });
+  const [cng, setCng] = useState({
+    cngValue: 'Full',
+  });
+  const [numberPlateStickerStat, setnumberPlateStickerStat] = useState({
+    numberPlateStickerStatValue: 'Front Main',
+  });
+  const [jackStat, setJackStat] = useState({
+    jackStatValue: 'Yes',
+  });
+  const [panaStat, setPanaStat] = useState({
+    panaStatValue: 'Yes',
+  });
+  const [tommyStat, setTommyStat] = useState({
+    tommyStatValue: 'Yes',
+  });
+  const [engineoil, setEngineOil] = useState({
+    engineoilValue: 'Sufficient',
+  });
+  const [brakeoil, setBrakeOil] = useState({
+    brakeoilValue: 'Sufficient',
+  });
+  const [coolant, setCoolant] = useState({
+    coolantValue: 'Sufficient',
+  });
+  const [batteryCharge, setBatteryCharge] = useState({
+    batteryChargeValue: 'Okay',
+  });
+  const [horn, setHorn] = useState({
+    hornValue: 'Okay',
   });
 
   return (
     <JamaContext.Provider value={{
+      driverReportedIssue,
+      setdriverReportedIssue,
+      selectedCarID,
+      setselectedCarID,
       carReturnReason,
       setCarReturnReason,
       batteryName,
@@ -136,12 +204,40 @@ const JamaProvider = ({ children }) => {
       setrLPressure,
       rLTyreNumber,
       setrLTyreNumber,
-      stephanyPresent,
-      setStephanyPresent,
-      sTyreBrand,
-      setsTyreBrand,
-      sTyreNumber,
-      setsTyreNumber,
+      stepnyPresent,
+      setStepnyPresent,
+      stepnyBrand,
+      setStepnyBrand,
+      stepnyTyreNumber,
+      setStepnyTyreNumber,
+      carKms,
+      setCarKms,
+      currentCarKms,
+      setcurrentCarKms,
+      fasttagBalance,
+      setfasttagBalance,
+      fuelIndicatorPetrolBar,
+      setfuelIndicatorPetrolBar,
+      cng,
+      setCng,
+      numberPlateStickerStat,
+      setnumberPlateStickerStat,
+      jackStat,
+      setJackStat,
+      panaStat,
+      setPanaStat,
+      tommyStat,
+      setTommyStat,
+      engineoil,
+      setEngineOil,
+      brakeoil,
+      setBrakeOil,
+      coolant,
+      setCoolant,
+      batteryCharge,
+      setBatteryCharge,
+      horn,
+      setHorn,
     }}
     >
       {children}

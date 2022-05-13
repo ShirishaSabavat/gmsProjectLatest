@@ -1,6 +1,5 @@
-/* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -8,15 +7,15 @@ import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
 const nestedPath = [
   'Home',
-  'Leasing Jama',
+  'Servicing Audit',
 ];
 
-const LeasingCarInfo = () => {
-  const [radioValue, setRadioValue] = useState('');
+const ServiceCarInfo = () => {
+  const [radioValue, setRadioValue] = useState("");
   const history = useHistory();
   const goToTyreAudit = () => {
-    history.push('/LeasingJama/AcceptLeasingJama');
-  };
+    history.push('/ServiceAudit/ServiceSubmit');
+  }
   const {
     carKms,
     currentCarKms,
@@ -53,7 +52,7 @@ const LeasingCarInfo = () => {
       <div className="flex flex-col space-y-12 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Leasing Jama
+            Servicing Audit
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -110,7 +109,7 @@ const LeasingCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      {/* <div className="bg-white p-5">
+      <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Fastag Balance*</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
@@ -122,7 +121,7 @@ const LeasingCarInfo = () => {
             }}
           />
         </div>
-      </div> */}
+      </div>
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>CNG*</p>
         <div className="bg-white">
@@ -229,6 +228,6 @@ const LeasingCarInfo = () => {
         </Button>
       </div>
     </>
-  );
-};
-export default LeasingCarInfo;
+  )
+}
+export default ServiceCarInfo;

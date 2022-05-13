@@ -1,22 +1,21 @@
-/* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useRepairContext } from 'context/RepairAuditContext';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
 const nestedPath = [
   'Home',
-  'Leasing Jama',
+  'Repair Audit',
 ];
 
-const LeasingTyreAudit = () => {
-  const [radioValue, setRadioValue] = useState('');
+const RepairTyreAudit = () => {
   const history = useHistory();
   const goToCarInfoAudit = () => {
-    history.push('/LeasingJama/LeasingCarInfo');
-  };
+    history.push('/RepairAudit/RepairCarInfo');
+  }
   const {
     fRTyreBrand,
     fRWornOut,
@@ -63,7 +62,7 @@ const LeasingTyreAudit = () => {
       <div className="flex flex-col space-y-12 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Leasing Jama
+            Repair Audit
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -333,6 +332,6 @@ const LeasingTyreAudit = () => {
         </Button>
       </div>
     </>
-  );
-};
-export default LeasingTyreAudit;
+  )
+}
+export default RepairTyreAudit;

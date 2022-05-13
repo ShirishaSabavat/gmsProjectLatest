@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
 const nestedPath = [
   'Home',
@@ -11,10 +12,26 @@ const nestedPath = [
 ];
 
 const LeasingJamaDetails = () => {
+  const { driverReportedIssue, setdriverReportedIssue, fasttagBalance, setfasttagBalance } = useJamaContext();
   const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
+  const [carReturnError, setCarReturnError] = useState({});
+  const validateFormData = () => {
+    let isValid = true;
+    const errors = {};
+    if (!driverReportedIssue.driverReportedIssueValue) {
+      errors.carReturnReason = 'Please enter more details.';
+      isValid = false;
+    }
+    setCarReturnError(errors);
+    return isValid;
+  };
+
   const goToBatteryAudit = () => {
-    history.push('/LeasingJama/LeasingBatteryAudit');
+    const resp = validateFormData();
+    if (resp) {
+      history.push('/LeasingJama/LeasingBatteryAudit');
+    }
   };
   return (
     <>
@@ -89,6 +106,8 @@ const LeasingJamaDetails = () => {
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Fastag Balance</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
+            value={fasttagBalance.fasttagBalanceValue}
+            onChange={(e) => setfasttagBalance({ fasttagBalanceValue: e.target.value })}
             placeholder="Enter Name Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
@@ -114,12 +133,19 @@ const LeasingJamaDetails = () => {
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>More details of penalty</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
+            value={driverReportedIssue.driverReportedIssueValue}
+            onChange={(e) => setdriverReportedIssue({ driverReportedIssueValue: e.target.value })}
             placeholder="Enter Name Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
           />
         </div>
+        {Object.keys(carReturnError).map((key) => (
+          <div style={{ color: 'red' }}>
+            {carReturnError[key]}
+          </div>
+        ))}
       </div>
 
       <div className="col-12 flex flex-row justify-end">

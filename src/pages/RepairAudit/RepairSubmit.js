@@ -4,25 +4,26 @@ import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input, Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
-// import { addRTAList } from 'services/axios';
-import { useLocation, useHistory } from 'react-router-dom';
+import { addOtherAuditDetails, addOtherAuditMaster, addRTAList } from 'services/axios';
+import { Link, useLocation, useHistory } from 'react-router-dom';
+import { useRepairContext } from 'context/RepairAuditContext';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
-import { addOtherAuditDetails, addOtherAuditMaster } from 'services/axios';
 
 const nestedPath = [
   'Home',
-  '60:40 Jama',
+  'Repair Audit',
 ];
 
 const { TextArea } = Input;
 
-const AcceptForSixtyFortyJama = () => {
+const RepairSubmit = () => {
   const location = useLocation();
   const [remarks, setRemarks] = useState('');
   const [GarageID, setGarageID] = useState('');
   const [remarksError, setRemarksError] = useState('');
 
   const {
+    carReturnReason,
     selectedCarID,
     fRTyreBrand,
     fRWornOut,
@@ -136,7 +137,7 @@ const AcceptForSixtyFortyJama = () => {
     setCoolant({ coolantValue: "Sufficient" });
     setBatteryCharge({ batteryChargeValue: "Okay" });
     setHorn({ hornValue: "Okay" });
-    history.push('/sixtyfortyjama/jamacarlist');
+    history.push('/RepairAudit/RepairAuditCarList');
   }
 
   const validateFormData = () => {
@@ -158,7 +159,6 @@ const AcceptForSixtyFortyJama = () => {
     setRemarksError(RemarkError);
     return isValid;
   };
-
   const history = useHistory();
 
   const createAudit = (event) => {
@@ -169,7 +169,7 @@ const AcceptForSixtyFortyJama = () => {
     if (resp) {
       const auditmaster = {
         visitId: selectedCarID,
-        driverReportedIssue: "",
+        driverReportedIssue: carReturnReason.carReturnReasonValue,
         carReturnReason: "",
         fastagBalance: fasttagBalance.fasttagBalanceValue,
       };
@@ -247,7 +247,7 @@ const AcceptForSixtyFortyJama = () => {
       <div className="flex flex-col space-y-12 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            60:40 Jama
+            Repair Audit
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -297,23 +297,14 @@ const AcceptForSixtyFortyJama = () => {
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
               }}
             >
-              Accept Car for Jama
+              Submit Audit
             </Button>
           </div>
-          <div className="col-12 flex flex-row justify-center">
-            <Button
-              className="font-quicksand-medium"
-              style={{
-                marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px',
-              }}
-            >
-              Reject for Jama
-            </Button>
-          </div>
+
         </div>
       </div>
     </>
   );
 };
 
-export default AcceptForSixtyFortyJama;
+export default RepairSubmit;

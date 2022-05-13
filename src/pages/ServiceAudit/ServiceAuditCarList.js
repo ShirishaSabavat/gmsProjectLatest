@@ -7,18 +7,18 @@ import { Link, useHistory } from 'react-router-dom';
 import { getCarsListJama } from 'services/axios';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
-const jamacarlist = () => {
+const ServiceAuditCarList = () => {
   const {
     selectedCarID,
     setselectedCarID
   } = useJamaContext();
+  const history = useHistory();
   const [CarsList, setCarsList] = useState([
     {
-      car_number: 'MH 04 DR 1564',
-      visitId: 'sdafsdfg8465465',
-    },
+      car_number: "MH 04 DR 1564",
+      visitId: "sdafsdfg8465465"
+    }
   ]);
-  const history = useHistory();
   const [garageid, setGarageid] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
@@ -37,7 +37,7 @@ const jamacarlist = () => {
       <div className="flex flex-col space-y-12 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Cars: in 60:40 Jama
+            Cars: in Service Queue
           </span>
         </div>
         <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
@@ -62,7 +62,7 @@ const jamacarlist = () => {
         <div>
           {CarsList.map((item) => (
             <div
-              onClick={() => { setselectedCarID(item.id), history.push(`/sixtyfortyjama/sixtyfortyjamadetails`) }}
+              onClick={() => { setselectedCarID(item.id), history.push(`/ServiceAudit/ServiceAuditCarDetails`) }}
               className="bg-white"
             >
               <div className="bg-white rounded-lg my-3 mx-2">
@@ -87,4 +87,4 @@ const jamacarlist = () => {
   );
 };
 
-export default jamacarlist;
+export default ServiceAuditCarList;

@@ -3,10 +3,15 @@
 import { Helmet } from 'react-helmet';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { getCarsListJama } from 'services/axios';
+import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
 const leasingJamacarlist = () => {
+  const {
+    selectedCarID,
+    setselectedCarID
+  } = useJamaContext();
   const [CarsList, setCarsList] = useState([
     {
       car_number: 'MH 04 DR 1564',
@@ -25,6 +30,7 @@ const leasingJamacarlist = () => {
         console.log('err', err);
       });
   }, []);
+  const history = useHistory();
   return (
     <>
       <Helmet title="Dashboard" />
@@ -55,18 +61,8 @@ const leasingJamacarlist = () => {
         </div>
         <div>
           {CarsList.map((item) => (
-            <Link
-              to={{
-                pathname: 'LeasingJamadetails',
-                // state: {
-                //   id: item.id,
-                //   carId: item.carId,
-                //   carnumber: item.car_number,
-                //   drivername: item.driver_name,
-                //   visitid: item.visitId,
-                //   visitcategory: item.visit_category,
-                // },
-              }}
+            <div
+              onClick={() => { setselectedCarID(item.id), history.push(`/LeasingJama/LeasingJamadetails`) }}
               className="bg-white"
             >
               <div className="bg-white rounded-lg my-3 mx-2">
@@ -82,8 +78,7 @@ const leasingJamacarlist = () => {
                   </div>
                 </div>
               </div>
-            </Link>
-
+            </div>
           ))}
         </div>
       </div>

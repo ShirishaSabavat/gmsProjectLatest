@@ -529,7 +529,13 @@ export const getCarsListEverest = (cityid) => axios({
 
 export const getCarsListJama = (garageid) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1&visit_category[]=2&status=1`,
+  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1&status=1`,
+  headers,
+});
+
+export const getCarsListRegularAudit = (garageid) => axios({
+  method: 'GET',
+  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=3&status=1`,
   headers,
 });
 
@@ -693,6 +699,136 @@ export const editBreakdown = (breakdownId, breakdownData) => {
   return axios({
     method: 'PUT',
     url: `${baseUrl}/breakdown/${breakdownId}`,
+    headers,
+    data,
+  });
+};
+
+export const addAuditMaster = (auditmaster) => {
+  const data = JSON.stringify({
+    visitId: auditmaster.visitId,
+    driver_reported_issue: null,
+    car_return_reason: null,
+    fastag_balance: auditmaster.fastagBalance,
+    status: 1,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: `${baseUrl}/auditDetails/auditMaster`,
+    headers,
+    data,
+  });
+};
+
+export const addOtherAuditMaster = (auditmaster) => {
+  const data = JSON.stringify({
+    visitId: auditmaster.visitId,
+    driver_reported_issue: auditmaster.driverReportedIssue,
+    car_return_reason: auditmaster.carReturnReason,
+    fastag_balance: auditmaster.fastagBalance,
+    status: 1,
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: `${baseUrl}/auditDetails/auditMaster`,
+    headers,
+    data,
+  });
+};
+
+export const addAuditDetails = (auditdetails) => {
+  const data = JSON.stringify({
+    auditId: auditdetails.id,
+    car_km: auditdetails.carKm,
+    front_right_tyre_worn_out: null,
+    front_right_tyre_pressure: null,
+    front_right_tyre_brand: null,
+    front_right_tyre_number: null,
+    front_left_tyre_worn_out: null,
+    front_left_tyre_pressure: null,
+    front_left_tyre_brand: null,
+    front_left_tyre_number: null,
+    rear_right_tyre_worn_out: null,
+    rear_right_tyre_pressure: null,
+    rear_right_tyre_brand: null,
+    rear_right_tyre_number: null,
+    rear_left_tyre_worn_out: null,
+    rear_left_tyre_pressure: null,
+    rear_left_tyre_brand: null,
+    rear_left_tyre_number: null,
+    fuel_indicator_petrol: auditdetails.fuelIndicatorOne,
+    fuel_indicator_cng: auditdetails.cng,
+    sticker_front_main: auditdetails.StickerFrontMain,
+    sticker_back_main: auditdetails.StickerBackMain,
+    sticker_back_right: auditdetails.StickerBackRight,
+    sticker_back_left: auditdetails.StickerBackLeft,
+    jack: auditdetails.jack,
+    panna: auditdetails.panna,
+    tommy: auditdetails.tommy,
+    engine_oil: auditdetails.engineOil,
+    break_oil: auditdetails.breakOil,
+    coolant: auditdetails.coolant,
+    stephney_available: false,
+    battery_status: auditdetails.batteryCharge,
+    battery_number: null,
+    battery_brand: null,
+    horn: auditdetails.horn,
+    auditor_comment: null
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: `${baseUrl}/auditDetails`,
+    headers,
+    data,
+  });
+};
+
+export const addOtherAuditDetails = (auditdetails) => {
+  const data = JSON.stringify({
+    auditId: auditdetails.id,
+    car_km: auditdetails.carKm,
+    front_right_tyre_worn_out: auditdetails.frWornOut,
+    front_right_tyre_pressure: auditdetails.frPressure,
+    front_right_tyre_brand: auditdetails.frBrand,
+    front_right_tyre_number: auditdetails.frNumber,
+    front_left_tyre_worn_out: auditdetails.fLWornOut,
+    front_left_tyre_pressure: auditdetails.fLPressure,
+    front_left_tyre_brand: auditdetails.fLBrand,
+    front_left_tyre_number: auditdetails.fLNumber,
+    rear_right_tyre_worn_out: auditdetails.rrWornOut,
+    rear_right_tyre_pressure: auditdetails.rrPressure,
+    rear_right_tyre_brand: auditdetails.rrBrand,
+    rear_right_tyre_number: auditdetails.rrNumber,
+    rear_left_tyre_worn_out: auditdetails.rLWornOut,
+    rear_left_tyre_pressure: auditdetails.rLPressure,
+    rear_left_tyre_brand: auditdetails.rLBrand,
+    rear_left_tyre_number: auditdetails.rLNumber,
+    fuel_indicator_petrol: auditdetails.fuelIndicatorOne,
+    fuel_indicator_cng: auditdetails.cng,
+    sticker_front_main: auditdetails.StickerFrontMain,
+    sticker_back_main: auditdetails.StickerBackMain,
+    sticker_back_right: auditdetails.StickerBackRight,
+    sticker_back_left: auditdetails.StickerBackLeft,
+    jack: auditdetails.jack,
+    panna: auditdetails.panna,
+    tommy: auditdetails.tommy,
+    engine_oil: auditdetails.engineOil,
+    break_oil: auditdetails.breakOil,
+    coolant: auditdetails.coolant,
+    stephney_available: false,
+    battery_status: auditdetails.batteryCharge,
+    battery_number: null,
+    battery_brand: null,
+    horn: auditdetails.horn,
+    auditor_comment: null
+  });
+  console.log(data);
+  return axios({
+    method: 'POST',
+    url: `${baseUrl}/auditDetails`,
     headers,
     data,
   });

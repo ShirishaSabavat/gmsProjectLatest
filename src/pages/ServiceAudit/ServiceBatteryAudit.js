@@ -1,6 +1,5 @@
-/* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -8,15 +7,15 @@ import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
 const nestedPath = [
   'Home',
-  'Leasing Jama',
+  'Servicing Audit',
 ];
 
-const LeasingBatteryAudit = () => {
-  const [radioValue, setRadioValue] = useState('');
+const ServiceBatteryAudit = () => {
+  const [radioValue, setRadioValue] = useState("");
   const history = useHistory();
   const goToTyreAudit = () => {
-    history.push('/LeasingJama/LeasingTyreAudit');
-  };
+    history.push('/ServiceAudit/ServiceTyreAudit');
+  }
   const {
     batteryName,
     setBatteryName,
@@ -29,7 +28,7 @@ const LeasingBatteryAudit = () => {
       <div className="flex flex-col space-y-12 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Leasing Jama
+            Servicing Audit
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
@@ -71,13 +70,13 @@ const LeasingBatteryAudit = () => {
         <div className="bg-white">
           <Radio.Group onChange={(e) => setBatteryBrand({ batteryBrandValue: e.target.value })}
             value={batteryBrand.batteryBrandValue}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Powerzone">Powerzone</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Panasonic">Panasonic</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Exide">Exide</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Liveguard">Liveguard</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Tata</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Amaron</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Other</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Powerzone</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Panasonic</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>Exide</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={4}>Liveguard</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={5}>Tata</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={6}>Amaron</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={7}>Other</Radio>
           </Radio.Group>
         </div>
       </div>
@@ -93,6 +92,6 @@ const LeasingBatteryAudit = () => {
         </Button>
       </div>
     </>
-  );
-};
-export default LeasingBatteryAudit;
+  )
+}
+export default ServiceBatteryAudit;

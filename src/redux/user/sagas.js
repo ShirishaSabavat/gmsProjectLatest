@@ -49,6 +49,12 @@ function* LOGIN(userAction) {
       yield history.push('/sixtyfortyjama/jamacarlist');
     } else if (temprole === 'Leasing Queue Operator') {
       yield history.push('/LeasingJama/leasingJamaCarlist');
+    } else if (temprole === 'Regular Auditor') {
+      yield history.push('/RegularAudit/RegularAuditCarlist');
+    } else if (temprole === 'Repair Queue Auditor') {
+      yield history.push('/RepairAudit/RepairAuditCarlist');
+    } else if (temprole === 'Service Queue Auditor') {
+      yield history.push('/ServiceAudit/ServiceAuditCarlist');
     } else if (temprole === 'Driver Manager') {
       yield history.push('/breakdown/breakdownHome');
     } else if (temprole === 'Insurance') {
