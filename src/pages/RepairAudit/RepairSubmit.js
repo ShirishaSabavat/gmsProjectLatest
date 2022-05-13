@@ -58,7 +58,87 @@ const RepairSubmit = () => {
     coolant,
     batteryCharge,
     horn,
+    setselectedCarID,
+    setdriverReportedIssue,
+    setCarReturnReason,
+    setBatteryName,
+    setBatteryBrand,
+    setfRTyreBrand,
+    setfRWornOut,
+    setfRPressure,
+    setfRTyreNumber,
+    setrRTyreBrand,
+    setrRWornOut,
+    setrRPressure,
+    setrRTyreNumber,
+    setfLTyreBrand,
+    setfLWornOut,
+    setfLPressure,
+    setfLTyreNumber,
+    setrLTyreBrand,
+    setrLWornOut,
+    setrLPressure,
+    setrLTyreNumber,
+    setStepnyPresent,
+    setStepnyBrand,
+    setStepnyTyreNumber,
+    setCarKms,
+    setcurrentCarKms,
+    setfasttagBalance,
+    setfuelIndicatorPetrolBar,
+    setCng,
+    setnumberPlateStickerStat,
+    setJackStat,
+    setPanaStat,
+    setTommyStat,
+    setEngineOil,
+    setBrakeOil,
+    setCoolant,
+    setBatteryCharge,
+    setHorn
   } = useJamaContext();
+
+  const ResetContextValues = () => {
+    setselectedCarID({ selectedCarIDValue: 0 });
+    setdriverReportedIssue({ driverReportedIssueValue: '' });
+    setCarReturnReason({ carReturnReasonValue: 'Family/Personal obligations' });
+    setBatteryName({ batteryNameValue: '' });
+    setBatteryBrand({ batteryBrandValue: 1 });
+    setfRTyreBrand({ fRTyreBrandValue: 1 });
+    setfRWornOut({ fRWornOutValue: '<3' });
+    setfRPressure({ fRPressureValue: '' });
+    setfRTyreNumber({ fRTyreNumberValue: '' });
+    setrRTyreBrand({ rRTyreBrandValue: 1 });
+    setrRWornOut({ rRWornOutValue: '<3' });
+    setrRPressure({ rRPressureValue: '' });
+    setrRTyreNumber({ rRTyreNumberValue: '' });
+    setfLTyreBrand({ fLTyreBrandValue: 1 });
+    setfLWornOut({ fLWornOutValue: '<3' });
+    setfLPressure({ fLPressureValue: '' });
+    setfLTyreNumber({ fLTyreNumberValue: '' });
+    setrLTyreBrand({ rLTyreBrandValue: 1 });
+    setrLWornOut({ rLWornOutValue: '<3' });
+    setrLPressure({ rLPressureValue: '' });
+    setrLTyreNumber({ rLTyreNumberValue: '' });
+    setStepnyPresent({ stepnyPresentValue: 1 });
+    setStepnyBrand({ stepnyBrandValue: 1 });
+    setStepnyTyreNumber({ stepnyTyreNumberValue: '' });
+    setCarKms({ carKmsValue: "" });
+    setcurrentCarKms({ currentCarKmsValue: "" });
+    setfasttagBalance({ fasttagBalanceValue: "" });
+    setfuelIndicatorPetrolBar({ fuelIndicatorPetrolBarValue: "Yes" });
+    setCng({ cngValue: "Full" });
+    setnumberPlateStickerStat({ numberPlateStickerStatValue: "Front Main" });
+    setJackStat({ jackStatValue: "Yes" });
+    setPanaStat({ panaStatValue: "Yes" });
+    setTommyStat({ tommyStatValue: "Yes" });
+    setEngineOil({ engineoilValue: "Sufficient" });
+    setBrakeOil({ brakeoilValue: "Sufficient" });
+    setCoolant({ coolantValue: "Sufficient" });
+    setBatteryCharge({ batteryChargeValue: "Okay" });
+    setHorn({ hornValue: "Okay" });
+    history.push('/RepairAudit/RepairAuditCarList');
+  }
 
   const validateFormData = () => {
     const RemarkError = {};
@@ -145,7 +225,7 @@ const RepairSubmit = () => {
               notification.success({
                 message: "Audit submitted successfully.",
               });
-              history.push('/RepairAudit/RepairAuditCarList');
+              ResetContextValues();
             })
             .catch((err) => {
               console.log('err', err.response);
