@@ -12,7 +12,9 @@ const nestedPath = [
 ];
 
 const LeasingJamaDetails = () => {
-  const { driverReportedIssue, setdriverReportedIssue, fasttagBalance, setfasttagBalance } = useJamaContext();
+  const {
+    driverReportedIssue, setdriverReportedIssue, fasttagBalance, setfasttagBalance,
+  } = useJamaContext();
   const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
   const [carReturnError, setCarReturnError] = useState({});

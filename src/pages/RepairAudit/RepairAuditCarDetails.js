@@ -1,5 +1,7 @@
+/* eslint-disable global-require */
+/* eslint-disable no-unused-vars */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -13,7 +15,7 @@ const nestedPath = [
 
 const RepairAuditCarDetails = () => {
   const { driverReportedIssue, setdriverReportedIssue } = useJamaContext();
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
   const [carReturnError, setCarReturnError] = useState({});
   const validateFormData = () => {
@@ -96,6 +98,6 @@ const RepairAuditCarDetails = () => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
 export default RepairAuditCarDetails;

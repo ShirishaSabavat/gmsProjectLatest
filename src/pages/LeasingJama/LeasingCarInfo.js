@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
@@ -45,7 +47,7 @@ const LeasingCarInfo = () => {
     setBrakeOil,
     setCoolant,
     setBatteryCharge,
-    setHorn
+    setHorn,
   } = useJamaContext();
   return (
     <>

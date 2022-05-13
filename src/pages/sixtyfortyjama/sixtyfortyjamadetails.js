@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
@@ -13,9 +14,9 @@ const nestedPath = [
 
 const sixtyfortyjamadetails = () => {
   const { carReturnReason, setCarReturnReason } = useJamaContext();
-  const [carKmsError, setCarKmsError] = useState("");
-  const [currentCarKmsError, setcurrentCarKmsError] = useState("");
-  const [fasttagBalanceError, setfasttagBalanceError] = useState("");
+  const [carKmsError, setCarKmsError] = useState('');
+  const [currentCarKmsError, setcurrentCarKmsError] = useState('');
+  const [fasttagBalanceError, setfasttagBalanceError] = useState('');
   const [carReturnError, setCarReturnError] = useState({});
   const history = useHistory();
 
@@ -76,10 +77,16 @@ const sixtyfortyjamadetails = () => {
           >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Family/Personal obligations">Family/Personal obligations</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2 flex-1" value="Going to Village">Going to Village</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2 flex-1" value="Payment Issue">Payment Issue{'\n'}</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2 flex-1" value="Payment Issue">
+              Payment Issue
+              {'\n'}
+            </Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Don't want to drive Uber">Don&apos;t want to drive Uber</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Don't want to drive with Everest">Don&apos;t want to drive with Everest</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold flex mt-2" value="60:40 issue">60:40 issue{'\t'}</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold flex mt-2" value="60:40 issue">
+              60:40 issue
+              {'\t'}
+            </Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold flex mt-2" value="ID Block">
               ID Block
               {'\n'}

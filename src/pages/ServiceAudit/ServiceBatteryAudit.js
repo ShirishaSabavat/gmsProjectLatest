@@ -1,5 +1,7 @@
+/* eslint-disable global-require */
+/* eslint-disable no-unused-vars */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,11 +13,11 @@ const nestedPath = [
 ];
 
 const ServiceBatteryAudit = () => {
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
   const goToTyreAudit = () => {
     history.push('/ServiceAudit/ServiceTyreAudit');
-  }
+  };
   const {
     batteryName,
     setBatteryName,
@@ -68,8 +70,10 @@ const ServiceBatteryAudit = () => {
         </div>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Audit</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setBatteryBrand({ batteryBrandValue: e.target.value })}
-            value={batteryBrand.batteryBrandValue}>
+          <Radio.Group
+            onChange={(e) => setBatteryBrand({ batteryBrandValue: e.target.value })}
+            value={batteryBrand.batteryBrandValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Powerzone</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Panasonic</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>Exide</Radio>
@@ -92,6 +96,6 @@ const ServiceBatteryAudit = () => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
 export default ServiceBatteryAudit;

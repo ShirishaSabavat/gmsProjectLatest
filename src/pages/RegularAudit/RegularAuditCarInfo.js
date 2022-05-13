@@ -1,6 +1,11 @@
+/* eslint-disable global-require */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-unused-vars */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from "react-helmet";
-import { Radio, Button, Input, notification } from 'antd';
+import { Helmet } from 'react-helmet';
+import {
+  Radio, Button, Input, notification,
+} from 'antd';
 import { useState } from 'react';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { addAuditMaster, addAuditDetails } from 'services/axios';
@@ -13,30 +18,30 @@ const nestedPath = [
 const RegularAuditCarInfo = () => {
   const location = useLocation();
   const {
-    id
+    id,
   } = location.state;
-  const [auditID, setauditID] = useState("");
-  const [carKms, setCarKms] = useState("");
-  const [currentCarKms, setcurrentCarKms] = useState("");
-  const [fasttagBalance, setfasttagBalance] = useState("");
-  const [carKmsError, setCarKmsError] = useState("");
-  const [currentCarKmsError, setcurrentCarKmsError] = useState("");
-  const [fasttagBalanceError, setfasttagBalanceError] = useState("");
-  const [fuelIndicatorPetrolBar, setfuelIndicatorPetrolBar] = useState("Yes");
-  const [cng, setCng] = useState("Full");
-  const [numberPlateStickerStat, setnumberPlateStickerStat] = useState("Front Main");
-  const [jackStat, setJackStat] = useState("Yes");
-  const [panaStat, setPanaStat] = useState("Yes");
-  const [tommyStat, setTommyStat] = useState("Yes");
-  const [engineoil, setEngineOil] = useState("Sufficient");
-  const [brakeoil, setBrakeOil] = useState("Sufficient");
-  const [coolant, setCoolant] = useState("Sufficient");
-  const [batteryCharge, setBatteryCharge] = useState("Okay");
-  const [horn, setHorn] = useState("Okay");
+  const [auditID, setauditID] = useState('');
+  const [carKms, setCarKms] = useState('');
+  const [currentCarKms, setcurrentCarKms] = useState('');
+  const [fasttagBalance, setfasttagBalance] = useState('');
+  const [carKmsError, setCarKmsError] = useState('');
+  const [currentCarKmsError, setcurrentCarKmsError] = useState('');
+  const [fasttagBalanceError, setfasttagBalanceError] = useState('');
+  const [fuelIndicatorPetrolBar, setfuelIndicatorPetrolBar] = useState('Yes');
+  const [cng, setCng] = useState('Full');
+  const [numberPlateStickerStat, setnumberPlateStickerStat] = useState('Front Main');
+  const [jackStat, setJackStat] = useState('Yes');
+  const [panaStat, setPanaStat] = useState('Yes');
+  const [tommyStat, setTommyStat] = useState('Yes');
+  const [engineoil, setEngineOil] = useState('Sufficient');
+  const [brakeoil, setBrakeOil] = useState('Sufficient');
+  const [coolant, setCoolant] = useState('Sufficient');
+  const [batteryCharge, setBatteryCharge] = useState('Okay');
+  const [horn, setHorn] = useState('Okay');
   const history = useHistory();
   const goToTyreAudit = () => {
     history.push('/LeasingJama/AcceptLeasingJama');
-  }
+  };
 
   const validateFormData = () => {
     const carkmerror = {};
@@ -79,29 +84,28 @@ const RegularAuditCarInfo = () => {
         visitId: id,
         fastagBalance: fasttagBalance,
       };
-      let auditdetails = {}
+      let auditdetails = {};
       addAuditMaster(auditmaster)
         .then((res) => {
           const tempID = res.data.results.id;
           console.log('res', tempID);
           auditdetails = {
             id: tempID,
-            fuelIndicatorOne: fuelIndicatorPetrolBar === "Yes" ? true : false,
-            fuel_indicator_cng: cng === "Full" ? 1 : cng === "Empty" ? 2 : cng === "Half full and Above" ? 3 : 4,
-            StickerFrontMain: numberPlateStickerStat === "Front Main" ? true : false,
-            StickerBackMain: numberPlateStickerStat === "Front Main" ? true : false,
-            StickerBackRight: numberPlateStickerStat === "Front Main" ? true : false,
-            StickerBackLeft: numberPlateStickerStat === "Front Main" ? true : false,
-            jack: jackStat === "Yes" ? true : false,
-            panna: panaStat === "Yes" ? true : false,
-            tommy: tommyStat === "Yes" ? true : false,
-            engineOil: engineoil === "Sufficient" ? true : false,
-            breakOil: brakeoil === "Sufficient" ? true : false,
-            coolant: coolant === "Sufficient" ? true : false,
-            batteryCharge: batteryCharge === "Okay" ? true : false,
-            horn: horn === "Okay" ? true : false,
+            fuelIndicatorOne: fuelIndicatorPetrolBar === 'Yes',
+            fuel_indicator_cng: cng === 'Full' ? 1 : cng === 'Empty' ? 2 : cng === 'Half full and Above' ? 3 : 4,
+            StickerFrontMain: numberPlateStickerStat === 'Front Main',
+            StickerBackMain: numberPlateStickerStat === 'Front Main',
+            StickerBackRight: numberPlateStickerStat === 'Front Main',
+            StickerBackLeft: numberPlateStickerStat === 'Front Main',
+            jack: jackStat === 'Yes',
+            panna: panaStat === 'Yes',
+            tommy: tommyStat === 'Yes',
+            engineOil: engineoil === 'Sufficient',
+            breakOil: brakeoil === 'Sufficient',
+            coolant: coolant === 'Sufficient',
+            batteryCharge: batteryCharge === 'Okay',
+            horn: horn === 'Okay',
           };
-
         })
         .catch((err) => {
           console.log('err', err.response);
@@ -110,7 +114,7 @@ const RegularAuditCarInfo = () => {
         .then((res) => {
           console.log('res', res);
           notification.success({
-            message: "Audit submitted successfully.",
+            message: 'Audit submitted successfully.',
           });
           history.push('/RegularAudit/RegularAuditCarList');
         })
@@ -120,11 +124,8 @@ const RegularAuditCarInfo = () => {
             message: err.response.data.message,
           });
         });
-
-    } else {
-
     }
-  }
+  };
 
   return (
     <>
@@ -193,7 +194,10 @@ const RegularAuditCarInfo = () => {
         ))}
         <p className="font-quicksand-semi-bold mt-2" style={{ fontSize: '12px' }}>Fuel Indicator Petrol (1 bar)*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setfuelIndicatorPetrolBar(e.target.value)} value={fuelIndicatorPetrolBar}>
+          <Radio.Group
+            onChange={(e) => setfuelIndicatorPetrolBar(e.target.value)}
+            value={fuelIndicatorPetrolBar}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="No">No</Radio>
           </Radio.Group>
@@ -231,7 +235,10 @@ const RegularAuditCarInfo = () => {
       <div className="bg-white p-4 m-3">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Number Plate Sticker Status*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setnumberPlateStickerStat(e.target.value)} value={numberPlateStickerStat}>
+          <Radio.Group
+            onChange={(e) => setnumberPlateStickerStat(e.target.value)}
+            value={numberPlateStickerStat}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Front Main">Front Main</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Back Main">Back Main</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Back Right side">Back Right side</Radio>
@@ -323,6 +330,6 @@ const RegularAuditCarInfo = () => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
 export default RegularAuditCarInfo;

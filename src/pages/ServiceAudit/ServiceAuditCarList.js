@@ -10,14 +10,14 @@ import { useJamaContext } from 'context/sixtyFortyJamaContext';
 const ServiceAuditCarList = () => {
   const {
     selectedCarID,
-    setselectedCarID
+    setselectedCarID,
   } = useJamaContext();
   const history = useHistory();
   const [CarsList, setCarsList] = useState([
     {
-      car_number: "MH 04 DR 1564",
-      visitId: "sdafsdfg8465465"
-    }
+      car_number: 'MH 04 DR 1564',
+      visitId: 'sdafsdfg8465465',
+    },
   ]);
   const [garageid, setGarageid] = useState('');
   useEffect(() => {
@@ -62,7 +62,7 @@ const ServiceAuditCarList = () => {
         <div>
           {CarsList.map((item) => (
             <div
-              onClick={() => { setselectedCarID(item.id), history.push(`/ServiceAudit/ServiceAuditCarDetails`) }}
+              onClick={() => { setselectedCarID(item.id); history.push('/ServiceAudit/ServiceAuditCarDetails'); }}
               className="bg-white"
             >
               <div className="bg-white rounded-lg my-3 mx-2">

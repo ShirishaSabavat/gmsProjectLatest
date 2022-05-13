@@ -775,7 +775,7 @@ export const addAuditDetails = (auditdetails) => {
     battery_number: null,
     battery_brand: null,
     horn: auditdetails.horn,
-    auditor_comment: null
+    auditor_comment: null,
   });
   console.log(data);
   return axios({
@@ -823,7 +823,7 @@ export const addOtherAuditDetails = (auditdetails) => {
     battery_number: null,
     battery_brand: null,
     horn: auditdetails.horn,
-    auditor_comment: null
+    auditor_comment: null,
   });
   console.log(data);
   return axios({

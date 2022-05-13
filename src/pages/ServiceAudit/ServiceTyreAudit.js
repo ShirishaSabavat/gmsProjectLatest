@@ -1,5 +1,7 @@
+/* eslint-disable global-require */
+/* eslint-disable no-unused-vars */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,11 +13,11 @@ const nestedPath = [
 ];
 
 const ServiceTyreAudit = () => {
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
   const goToCarInfoAudit = () => {
     history.push('/ServiceAudit/ServiceCarInfo');
-  }
+  };
   const {
     fRTyreBrand,
     fRWornOut,
@@ -91,7 +93,10 @@ const ServiceTyreAudit = () => {
         <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Front Right Tyre Audit</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setfRTyreBrand(e.target.value)} value={fRTyreBrand.fRTyreBrandValue}>
+          <Radio.Group
+            onChange={(e) => setfRTyreBrand(e.target.value)}
+            value={fRTyreBrand.fRTyreBrandValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Apollo</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Ceat</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>JK</Radio>
@@ -104,7 +109,10 @@ const ServiceTyreAudit = () => {
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setfRWornOut(e.target.value)} value={fRWornOut.fRWornOutValue}>
+          <Radio.Group
+            onChange={(e) => setfRWornOut(e.target.value)}
+            value={fRWornOut.fRWornOutValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="4">4</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="5">5</Radio>
@@ -140,7 +148,10 @@ const ServiceTyreAudit = () => {
         <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Rear Right Tyre Audit</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setrRTyreBrand(e.target.value)} value={rRTyreBrand.rRTyreBrandValue}>
+          <Radio.Group
+            onChange={(e) => setrRTyreBrand(e.target.value)}
+            value={rRTyreBrand.rRTyreBrandValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Apollo</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Ceat</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>JK</Radio>
@@ -153,7 +164,10 @@ const ServiceTyreAudit = () => {
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setrRWornOut(e.target.value)} value={rRWornOut.rRWornOutValue}>
+          <Radio.Group
+            onChange={(e) => setrRWornOut(e.target.value)}
+            value={rRWornOut.rRWornOutValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="4">4</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="5">5</Radio>
@@ -189,7 +203,10 @@ const ServiceTyreAudit = () => {
         <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Rear Left Tyre Audit</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setrLTyreBrand(e.target.value)} value={rLTyreBrand.rLTyreBrandValue}>
+          <Radio.Group
+            onChange={(e) => setrLTyreBrand(e.target.value)}
+            value={rLTyreBrand.rLTyreBrandValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Apollo</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Ceat</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>JK</Radio>
@@ -202,7 +219,10 @@ const ServiceTyreAudit = () => {
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setrLWornOut(e.target.value)} value={rLWornOut.rLWornOutValue}>
+          <Radio.Group
+            onChange={(e) => setrLWornOut(e.target.value)}
+            value={rLWornOut.rLWornOutValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="4">4</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="5">5</Radio>
@@ -238,7 +258,10 @@ const ServiceTyreAudit = () => {
         <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Front Left Tyre Audit</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setfLTyreBrand(e.target.value)} value={fLTyreBrand.fLTyreBrandValue}>
+          <Radio.Group
+            onChange={(e) => setfLTyreBrand(e.target.value)}
+            value={fLTyreBrand.fLTyreBrandValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Apollo</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Ceat</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>JK</Radio>
@@ -251,7 +274,10 @@ const ServiceTyreAudit = () => {
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setfLWornOut(e.target.value)} value={fLWornOut.fLWornOutValue}>
+          <Radio.Group
+            onChange={(e) => setfLWornOut(e.target.value)}
+            value={fLWornOut.fLWornOutValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="4">4</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="5">5</Radio>
@@ -286,7 +312,10 @@ const ServiceTyreAudit = () => {
       <div className="bg-white p-5 m-3">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Stephany Present?*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setStepnyPresent(e.target.value)} value={stepnyPresent.stepnyPresentValue}>
+          <Radio.Group
+            onChange={(e) => setStepnyPresent(e.target.value)}
+            value={stepnyPresent.stepnyPresentValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Yes</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>No</Radio>
           </Radio.Group>
@@ -296,7 +325,10 @@ const ServiceTyreAudit = () => {
         <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Stephany Tyre</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setStepnyBrand(e.target.value)} value={stepnyBrand.stepnyBrandValue}>
+          <Radio.Group
+            onChange={(e) => setStepnyBrand(e.target.value)}
+            value={stepnyBrand.stepnyBrandValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Apollo</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Ceat</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>JK</Radio>
@@ -332,6 +364,6 @@ const ServiceTyreAudit = () => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
 export default ServiceTyreAudit;

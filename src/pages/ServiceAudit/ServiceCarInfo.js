@@ -1,5 +1,7 @@
+/* eslint-disable global-require */
+/* eslint-disable no-unused-vars */
 import Breadcrumb from 'components/layouts/breadcrumb';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,11 +13,11 @@ const nestedPath = [
 ];
 
 const ServiceCarInfo = () => {
-  const [radioValue, setRadioValue] = useState("");
+  const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
   const goToTyreAudit = () => {
     history.push('/ServiceAudit/ServiceSubmit');
-  }
+  };
   const {
     carKms,
     currentCarKms,
@@ -44,7 +46,7 @@ const ServiceCarInfo = () => {
     setBrakeOil,
     setCoolant,
     setBatteryCharge,
-    setHorn
+    setHorn,
   } = useJamaContext();
   return (
     <>
@@ -103,7 +105,12 @@ const ServiceCarInfo = () => {
         </div>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Fuel Indicator Petrol (1 bar)*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setfuelIndicatorPetrolBar({ fuelIndicatorPetrolBarValue: e.target.value })} value={fuelIndicatorPetrolBar.fuelIndicatorPetrolBarValue}>
+          <Radio.Group
+            onChange={
+              (e) => setfuelIndicatorPetrolBar({ fuelIndicatorPetrolBarValue: e.target.value })
+            }
+            value={fuelIndicatorPetrolBar.fuelIndicatorPetrolBarValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="No">No</Radio>
           </Radio.Group>
@@ -136,7 +143,12 @@ const ServiceCarInfo = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Number Plate Sticker Status*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setnumberPlateStickerStat({ numberPlateStickerStatValue: e.target.value })} value={numberPlateStickerStat.numberPlateStickerStatValue}>
+          <Radio.Group
+            onChange={
+              (e) => setnumberPlateStickerStat({ numberPlateStickerStatValue: e.target.value })
+            }
+            value={numberPlateStickerStat.numberPlateStickerStatValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Front Main</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="No">Back Main</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Back Right side</Radio>
@@ -147,7 +159,10 @@ const ServiceCarInfo = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Jack Status*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setJackStat({ jackStatValue: e.target.value })} value={jackStat.jackStatValue}>
+          <Radio.Group
+            onChange={(e) => setJackStat({ jackStatValue: e.target.value })}
+            value={jackStat.jackStatValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="No">No</Radio>
           </Radio.Group>
@@ -156,7 +171,10 @@ const ServiceCarInfo = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Pana Status*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setPanaStat({ panaStatValue: e.target.value })} value={panaStat.panaStatValue}>
+          <Radio.Group
+            onChange={(e) => setPanaStat({ panaStatValue: e.target.value })}
+            value={panaStat.panaStatValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="No">No</Radio>
           </Radio.Group>
@@ -165,7 +183,10 @@ const ServiceCarInfo = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Tommy Status*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setTommyStat({ tommyStatValue: e.target.value })} value={tommyStat.tommyStatValue}>
+          <Radio.Group
+            onChange={(e) => setTommyStat({ tommyStatValue: e.target.value })}
+            value={tommyStat.tommyStatValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="No">No</Radio>
           </Radio.Group>
@@ -174,7 +195,10 @@ const ServiceCarInfo = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Engine Oil*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setEngineOil({ carReturnReasonValue: e.target.value })} value={engineoil.engineoilValue}>
+          <Radio.Group
+            onChange={(e) => setEngineOil({ carReturnReasonValue: e.target.value })}
+            value={engineoil.engineoilValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Sufficient">Sufficient</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Not Sufficient">Not Sufficient</Radio>
           </Radio.Group>
@@ -183,7 +207,10 @@ const ServiceCarInfo = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brake Oil*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setBrakeOil({ brakeoilValue: e.target.value })} value={brakeoil.brakeoilValue}>
+          <Radio.Group
+            onChange={(e) => setBrakeOil({ brakeoilValue: e.target.value })}
+            value={brakeoil.brakeoilValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Sufficient">Sufficient</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Not Sufficient">Not Sufficient</Radio>
           </Radio.Group>
@@ -192,7 +219,10 @@ const ServiceCarInfo = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Coolant*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setCoolant({ coolantValue: e.target.value })} value={coolant.coolantValue}>
+          <Radio.Group
+            onChange={(e) => setCoolant({ coolantValue: e.target.value })}
+            value={coolant.coolantValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Sufficient">Sufficient</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Not Sufficient">Not Sufficient</Radio>
           </Radio.Group>
@@ -201,7 +231,10 @@ const ServiceCarInfo = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Charge*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setBatteryCharge({ carReturnReasonValue: e.target.value })} value={batteryCharge.batteryChargeValue}>
+          <Radio.Group
+            onChange={(e) => setBatteryCharge({ carReturnReasonValue: e.target.value })}
+            value={batteryCharge.batteryChargeValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Okay">Okay</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="No Charge">No Charge</Radio>
           </Radio.Group>
@@ -210,7 +243,10 @@ const ServiceCarInfo = () => {
       <div className="bg-white p-5">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Horn*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setHorn({ hornValue: e.target.value })} value={horn.hornValue}>
+          <Radio.Group
+            onChange={(e) => setHorn({ hornValue: e.target.value })}
+            value={horn.hornValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Okay">Okay</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="No Charge">No Charge</Radio>
           </Radio.Group>
@@ -228,6 +264,6 @@ const ServiceCarInfo = () => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
 export default ServiceCarInfo;

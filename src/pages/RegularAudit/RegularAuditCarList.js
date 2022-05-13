@@ -10,15 +10,15 @@ const RegularAuditCarList = () => {
   const history = useHistory();
   const [CarsList, setCarsList] = useState([
     {
-      car_number: "MH 04 DR 1564",
-      visitId: "sdafsdfg8465465"
-    }
+      car_number: 'MH 04 DR 1564',
+      visitId: 'sdafsdfg8465465',
+    },
   ]);
   const [garageid, setGarageid] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
-    console.log("garageid: " + tempGarageID);
+    console.log(`garageid: ${tempGarageID}`);
     getCarsListRegularAudit(tempGarageID).then((resp) => {
       console.log(resp);
       setCarsList(resp.data?.results.pageData);

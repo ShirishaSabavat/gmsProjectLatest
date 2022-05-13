@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
@@ -69,8 +70,10 @@ const LeasingBatteryAudit = () => {
         </div>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Audit</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setBatteryBrand({ batteryBrandValue: e.target.value })}
-            value={batteryBrand.batteryBrandValue}>
+          <Radio.Group
+            onChange={(e) => setBatteryBrand({ batteryBrandValue: e.target.value })}
+            value={batteryBrand.batteryBrandValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Powerzone">Powerzone</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Panasonic">Panasonic</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Exide">Exide</Radio>
