@@ -64,7 +64,7 @@ const RepairAuditCarDetails = () => {
           <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300 ml-12">John Doe</h1>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-5 m-2">
         <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Driver Reported Vehicle Issue*</p>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Enter Issue Here</p>
         <div className="flex flex-row flex-nonwrap bg-white">
