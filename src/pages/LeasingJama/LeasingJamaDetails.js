@@ -15,7 +15,9 @@ const LeasingJamaDetails = () => {
   const {
     driverReportedIssue, setdriverReportedIssue, fasttagBalance, setfasttagBalance,
   } = useJamaContext();
-  const [radioValue, setRadioValue] = useState('');
+  const [rent, setRent] = useState(1);
+  const [penaltyAmount, setPenaltyAmount] = useState(1);
+  const [penaltyReason, setPenaltyReason] = useState(1);
   const history = useHistory();
   const [carReturnError, setCarReturnError] = useState({});
   const validateFormData = () => {
@@ -66,7 +68,7 @@ const LeasingJamaDetails = () => {
           <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300 ml-12">John Doe</h1>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-5 m-2">
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Member Name</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
@@ -95,14 +97,14 @@ const LeasingJamaDetails = () => {
           />
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-5 m-2">
         <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Car Details</p>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Rent for first day</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Family/Personal obligations">Full Rent</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Going to Village">No Rent</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Payment Issue">Half Day Rent</Radio>
+          <Radio.Group onChange={(e) => setRent(e.target.value)} value={rent}>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Full Rent</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>No Rent</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>Half Day Rent</Radio>
           </Radio.Group>
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Fastag Balance</p>
@@ -116,20 +118,20 @@ const LeasingJamaDetails = () => {
             }}
           />
         </div>
-        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Rent for first day</p>
+        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Penalty Amount</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="0">0</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="1000">1000</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="2000">2000</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Other">Other</Radio>
+          <Radio.Group onChange={(e) => setPenaltyAmount(e.target.value)} value={penaltyAmount}>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>0</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>1000</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>2000</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={4}>Other</Radio>
           </Radio.Group>
         </div>
-        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Rent for first day</p>
+        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Penalty Reason</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Accident">Accident</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Damage">Damage</Radio>
+          <Radio.Group onChange={(e) => setPenaltyReason(e.target.value)} value={penaltyReason}>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Accident</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Damage</Radio>
           </Radio.Group>
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>More details of penalty</p>

@@ -80,7 +80,7 @@ const RepairCarInfo = () => {
           <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300 ml-12">John Doe</h1>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Car Details</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Kms*</p>
         <div className="flex flex-row flex-nonwrap bg-white">
@@ -117,7 +117,7 @@ const RepairCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Fastag Balance*</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
@@ -130,7 +130,7 @@ const RepairCarInfo = () => {
           />
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>CNG*</p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setCng({ cngValue: e.target.value })} value={cng.cngValue}>
@@ -141,7 +141,7 @@ const RepairCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Number Plate Sticker Status*</p>
         <div className="bg-white">
           <Radio.Group
@@ -157,7 +157,7 @@ const RepairCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Jack Status*</p>
         <div className="bg-white">
           <Radio.Group
@@ -169,7 +169,7 @@ const RepairCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Pana Status*</p>
         <div className="bg-white">
           <Radio.Group
@@ -181,7 +181,7 @@ const RepairCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Tommy Status*</p>
         <div className="bg-white">
           <Radio.Group
@@ -193,7 +193,7 @@ const RepairCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Engine Oil*</p>
         <div className="bg-white">
           <Radio.Group
@@ -205,7 +205,7 @@ const RepairCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brake Oil*</p>
         <div className="bg-white">
           <Radio.Group
@@ -217,7 +217,7 @@ const RepairCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Coolant*</p>
         <div className="bg-white">
           <Radio.Group
@@ -229,7 +229,7 @@ const RepairCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Charge*</p>
         <div className="bg-white">
           <Radio.Group
@@ -241,7 +241,7 @@ const RepairCarInfo = () => {
           </Radio.Group>
         </div>
       </div>
-      <div className="bg-white p-5">
+      <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Horn*</p>
         <div className="bg-white">
           <Radio.Group

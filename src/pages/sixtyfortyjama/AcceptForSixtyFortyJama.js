@@ -14,7 +14,6 @@ const nestedPath = [
   'Home',
   '60:40 Jama',
 ];
-const history = useHistory();
 
 const { TextArea } = Input;
 
@@ -23,6 +22,8 @@ const AcceptForSixtyFortyJama = () => {
   const [remarks, setRemarks] = useState('');
   const [GarageID, setGarageID] = useState('');
   const [remarksError, setRemarksError] = useState('');
+
+  const history = useHistory();
 
   const {
     selectedCarID,
