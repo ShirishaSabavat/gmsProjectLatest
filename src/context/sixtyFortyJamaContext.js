@@ -3,6 +3,8 @@ import { createContext, useState, useContext } from 'react';
 
 const JamaContext = createContext(
   {
+    selectedCarValue: '',
+    visitIdValue: '',
     driverReportedIssueValue: '',
     selectedCarIDValue: 0,
     carReturnReasonValue: 'Family/Personal obligations',
@@ -45,6 +47,12 @@ const JamaContext = createContext(
 );
 
 const JamaProvider = ({ children }) => {
+  const [selectedCar, setSelectedCar] = useState({
+    selectedCarValue: '',
+  });
+  const [visitId, setVisitId] = useState({
+    visitIdValue: '',
+  });
   const [driverReportedIssue, setdriverReportedIssue] = useState({
     driverReportedIssueValue: '',
   });
@@ -159,9 +167,30 @@ const JamaProvider = ({ children }) => {
   const [horn, setHorn] = useState({
     hornValue: 'Okay',
   });
-
+  const [memberName, setMemberName] = useState({
+    memberNameValue: '',
+  });
+  const [etmId, setEtmId] = useState({
+    etmIdValue: '',
+  });
+  const [driverBal, setDriverBal] = useState({
+    driverBalValue: '',
+  });
+  const [rent, setRent] = useState({
+    rentValue: 1,
+  });
+  const [penaltyAmount, setPenaltyAmount] = useState({
+    penaltyAmountValue: 1,
+  });
+  const [penaltyReason, setPenaltyReason] = useState({
+    penaltyReasonValue: 1,
+  });
   return (
     <JamaContext.Provider value={{
+      selectedCar,
+      setSelectedCar,
+      visitId,
+      setVisitId,
       driverReportedIssue,
       setdriverReportedIssue,
       selectedCarID,
@@ -238,6 +267,18 @@ const JamaProvider = ({ children }) => {
       setBatteryCharge,
       horn,
       setHorn,
+      memberName,
+      setMemberName,
+      etmId,
+      setEtmId,
+      driverBal,
+      setDriverBal,
+      rent,
+      setRent,
+      penaltyAmount,
+      setPenaltyAmount,
+      penaltyReason,
+      setPenaltyReason,
     }}
     >
       {children}

@@ -9,8 +9,9 @@ import { useJamaContext } from 'context/sixtyFortyJamaContext';
 
 const leasingJamacarlist = () => {
   const {
-    selectedCarID,
     setselectedCarID,
+    setSelectedCar,
+    setVisitId,
   } = useJamaContext();
   const [CarsList, setCarsList] = useState([
     {
@@ -62,7 +63,11 @@ const leasingJamacarlist = () => {
         <div>
           {CarsList.map((item) => (
             <div
-              onClick={() => { setselectedCarID(item.id); history.push('/LeasingJama/LeasingJamadetails'); }}
+              onClick={() => {
+                setselectedCarID({ selectedCarIDValue: item.id });
+                setSelectedCar({ selectedCarValue: item.car_number });
+                setVisitId({ visitIdValue: item.visitId }); history.push('/LeasingJama/LeasingJamadetails');
+              }}
               className="bg-white"
             >
               <div className="bg-white rounded-lg my-3 mx-2">

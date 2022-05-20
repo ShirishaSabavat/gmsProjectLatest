@@ -5,6 +5,7 @@ import { Input } from 'antd';
 import { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { getCarsListRegularAudit } from 'services/axios';
+import { useRegularAuditContext } from 'context/RegularAuditContext';
 
 const RegularAuditCarList = () => {
   const history = useHistory();
@@ -14,6 +15,12 @@ const RegularAuditCarList = () => {
       visitId: 'sdafsdfg8465465',
     },
   ]);
+  const {
+    setselectedCarID,
+    setSelectedCar,
+    setVisitId,
+
+  } = useRegularAuditContext();
   const [garageid, setGarageid] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
@@ -57,12 +64,12 @@ const RegularAuditCarList = () => {
         </div>
         <div>
           {CarsList.map((item) => (
-            <Link
-              to={{
-                pathname: 'RegularAuditCarInfo',
-                state: {
-                  id: item.id,
-                },
+            <div
+              onClick={() => {
+                setselectedCarID({ selectedCarIDValue: item.id });
+                setSelectedCar({ selectedCarValue: item.car_number });
+                setVisitId({ visitIdValue: item.visitId });
+                history.push('/RegularAudit/RegularAuditCarInfo');
               }}
               className="bg-white"
             >
@@ -79,7 +86,7 @@ const RegularAuditCarList = () => {
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
 
           ))}
         </div>

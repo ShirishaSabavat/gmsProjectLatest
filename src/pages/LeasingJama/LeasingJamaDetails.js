@@ -13,21 +13,66 @@ const nestedPath = [
 
 const LeasingJamaDetails = () => {
   const {
-    driverReportedIssue, setdriverReportedIssue, fasttagBalance, setfasttagBalance,
+    selectedCar,
+    visitId,
+    driverReportedIssue,
+    setdriverReportedIssue,
+    fasttagBalance,
+    setfasttagBalance,
+    memberName,
+    setMemberName,
+    etmId,
+    setEtmId,
+    driverBal,
+    setDriverBal,
+    rent,
+    setRent,
+    penaltyAmount,
+    setPenaltyAmount,
+    penaltyReason,
+    setPenaltyReason,
   } = useJamaContext();
-  const [rent, setRent] = useState(1);
-  const [penaltyAmount, setPenaltyAmount] = useState(1);
-  const [penaltyReason, setPenaltyReason] = useState(1);
   const history = useHistory();
+  const [memberNameError, setMemberNameError] = useState({});
+  const [etmIdError, setEtmIdError] = useState({});
+  const [driverBalError, setDriverBalError] = useState({});
+  const [fasttagBalanceError, setFasttagBalanceError] = useState({});
   const [carReturnError, setCarReturnError] = useState({});
+
   const validateFormData = () => {
     let isValid = true;
-    const errors = {};
-    if (!driverReportedIssue.driverReportedIssueValue) {
-      errors.carReturnReason = 'Please enter more details.';
+    const memberNamerErr = {};
+    const etmIdErr = {};
+    const driverBalErr = {};
+    const fasttagBalanceErr = {};
+    const carRetrurnErr = {};
+
+    if (memberName.memberNameValue === '') {
+      memberNamerErr.err = 'This field can not be empty';
       isValid = false;
     }
-    setCarReturnError(errors);
+    if (etmId.etmIdValue === '') {
+      etmIdErr.err = 'This field can not be empty';
+      isValid = false;
+    }
+    if (driverBal.driverBalValue === '') {
+      driverBalErr.err = 'This field can not be empty';
+      isValid = false;
+    }
+    if (fasttagBalance.fasttagBalanceValue === '') {
+      fasttagBalanceErr.err = 'This field can not be empty';
+      isValid = false;
+    }
+
+    if (!driverReportedIssue.driverReportedIssueValue) {
+      carRetrurnErr.err = 'This field can not be empty';
+      isValid = false;
+    }
+    setMemberNameError(memberNamerErr);
+    setEtmIdError(etmIdErr);
+    setDriverBalError(driverBalErr);
+    setFasttagBalanceError(fasttagBalanceErr);
+    setCarReturnError(carRetrurnErr);
     return isValid;
   };
 
@@ -52,10 +97,10 @@ const LeasingJamaDetails = () => {
         <div className="flex flex-row flex-nonwrap justify-center">
           <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
           <div>
-            <h1 className="font-quicksand-bold text-xl mt-3">MH04 BJ 1904</h1>
+            <h1 className="font-quicksand-bold text-xl mt-3">{selectedCar.selectedCarValue}</h1>
             <div className="flex flex-row">
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">sgsdfg654654</h1>
+              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
             </div>
             <div className="flex flex-row">
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Time Stamp: </h1>
@@ -73,35 +118,62 @@ const LeasingJamaDetails = () => {
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             placeholder="Enter Name Here..."
+            onChange={(e) => setMemberName({ memberNameValue: e.target.value })}
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
           />
+        </div>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          {Object.keys(memberNameError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {memberNameError[key]}
+            </div>
+          ))}
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>ETM Id</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             placeholder="Enter Name Here..."
+            onChange={(e) => setEtmId({ etmIdValue: e.target.value })}
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
           />
         </div>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          {Object.keys(etmIdError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {etmIdError[key]}
+            </div>
+          ))}
+        </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Driver Ola Balance</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
+            onChange={(e) => setDriverBal({ driverBalValue: e.target.value })}
             placeholder="Enter Name Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
           />
+        </div>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          {Object.keys(driverBalError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {driverBalError[key]}
+            </div>
+          ))}
         </div>
       </div>
       <div className="bg-white p-5 m-2">
         <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Car Details</p>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Rent for first day</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setRent(e.target.value)} value={rent}>
+          <Radio.Group
+            onChange={(e) => setRent({ rentValue: e.target.value })}
+            value={rent.rentValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Full Rent</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>No Rent</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>Half Day Rent</Radio>
@@ -118,9 +190,19 @@ const LeasingJamaDetails = () => {
             }}
           />
         </div>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          {Object.keys(fasttagBalanceError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {fasttagBalanceError[key]}
+            </div>
+          ))}
+        </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Penalty Amount</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setPenaltyAmount(e.target.value)} value={penaltyAmount}>
+          <Radio.Group
+            onChange={(e) => setPenaltyAmount({ penaltyAmountValue: e.target.value })}
+            value={penaltyAmount.penaltyAmountValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>0</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>1000</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>2000</Radio>
@@ -129,7 +211,10 @@ const LeasingJamaDetails = () => {
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Penalty Reason</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setPenaltyReason(e.target.value)} value={penaltyReason}>
+          <Radio.Group
+            onChange={(e) => setPenaltyReason({ penaltyReasonValue: e.target.value })}
+            value={penaltyReason.penaltyReasonValue}
+          >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Accident</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Damage</Radio>
           </Radio.Group>
@@ -139,7 +224,7 @@ const LeasingJamaDetails = () => {
           <Input
             value={driverReportedIssue.driverReportedIssueValue}
             onChange={(e) => setdriverReportedIssue({ driverReportedIssueValue: e.target.value })}
-            placeholder="Enter Name Here..."
+            placeholder="Enter Details Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}

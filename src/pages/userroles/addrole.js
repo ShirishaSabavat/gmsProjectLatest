@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-boolean-value */
 import { React, useState, useEffect } from 'react';
@@ -79,10 +80,10 @@ const addrole = () => {
       isValid = false;
     }
 
-    if (checkboxValue.length === 0) {
-      checkboxValueError.err = 'Please select at least one module';
-      isValid = false;
-    }
+    // if (checkboxValue.length === 0) {
+    //   checkboxValueError.err = 'Please select at least one module';
+    //   isValid = false;
+    // }
 
     setRoleError(roleNameError);
     setCheckboxError(checkboxValueError);
@@ -206,7 +207,7 @@ const addrole = () => {
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>Inactive</Radio>
           </Radio.Group>
         </div>
-        <div className="bg-white p-5">
+        {/* <div className="bg-white p-5">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Add Modules</p>
           <div className="box-border h-100">
             {checkboxList.map((item) => (
@@ -236,7 +237,7 @@ const addrole = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
         <div className="col-12 flex flex-row justify-end">
           <Button
             onClick={onSave}

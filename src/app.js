@@ -4,6 +4,7 @@ import client from 'services/apollo_link';
 import { store, history } from 'redux/store';
 import Router from 'router';
 import JamaProvider from 'context/sixtyFortyJamaContext';
+import RegularAuditProvider from 'context/RegularAuditContext';
 
 import 'global.scss';
 import 'components/kit/vendors/antd/mixins.less';
@@ -18,7 +19,9 @@ const App = () => (
   <ApolloProvider client={client}>
     <Provider store={store}>
       <JamaProvider>
-        <Router history={history} />
+        <RegularAuditProvider>
+          <Router history={history} />
+        </RegularAuditProvider>
       </JamaProvider>
     </Provider>
   </ApolloProvider>

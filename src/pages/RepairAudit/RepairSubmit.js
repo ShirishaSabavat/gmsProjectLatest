@@ -15,8 +15,6 @@ const nestedPath = [
   'Repair Audit',
 ];
 
-const history = useHistory();
-
 const { TextArea } = Input;
 
 const RepairSubmit = () => {
@@ -25,9 +23,13 @@ const RepairSubmit = () => {
   const [GarageID, setGarageID] = useState('');
   const [remarksError, setRemarksError] = useState('');
 
+  const history = useHistory();
+
   const {
-    carReturnReason,
     selectedCarID,
+    selectedCar,
+    visitId,
+    carReturnReason,
     fRTyreBrand,
     fRWornOut,
     fRPressure,
@@ -170,7 +172,7 @@ const RepairSubmit = () => {
 
     if (resp) {
       const auditmaster = {
-        visitId: selectedCarID,
+        visitId: selectedCarID.selectedCarIDValue,
         driverReportedIssue: carReturnReason.carReturnReasonValue,
         carReturnReason: '',
         fastagBalance: fasttagBalance.fasttagBalanceValue,
@@ -254,11 +256,11 @@ const RepairSubmit = () => {
             <div className="flex flex-row flex-nonwrap justify-center">
               <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
               <div>
-                <h1 className="font-quicksand-bold text-xl mt-3">MH01 DR 1836</h1>
+                <h1 className="font-quicksand-bold text-xl mt-3">{selectedCar.selectedCarValue}</h1>
                 <h1 className="font-quicksand-semi-bold text-sm mt-1">Maruti Suzuki Drive Vxi CNG</h1>
                 <div className="flex flex-row justify-center">
                   <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-                  <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">DSFSDFSDF654654</h1>
+                  <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
                 </div>
               </div>
             </div>

@@ -914,7 +914,7 @@ const addrole = () => {
           </Radio.Group>
         </div>
 
-        <div className="bg-white p-4">
+        {/* <div className="bg-white p-4">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Assign Additional Processes</p>
           <div className="box-border h-100">
             {checkboxList.map((item) => (
@@ -986,7 +986,7 @@ const addrole = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         <div className="col-12 flex flex-row justify-end">
           <Button

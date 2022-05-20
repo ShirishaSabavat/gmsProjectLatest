@@ -38,16 +38,16 @@ const Sidebar = ({
       icon: '/assets/images/logo/sidebarLogo/roles.svg',
       key: '/userroles/userroleslist',
     },
-    {
-      title: 'Modules',
-      icon: '/assets/images/logo/sidebarLogo/modules.svg',
-      key: '/modules/modules',
-    },
-    {
-      title: 'Processes',
-      icon: '/assets/images/logo/sidebarLogo/processes.svg',
-      key: '/processes/processes',
-    },
+    // {
+    //   title: 'Modules',
+    //   icon: '/assets/images/logo/sidebarLogo/modules.svg',
+    //   key: '/modules/modules',
+    // },
+    // {
+    //   title: 'Processes',
+    //   icon: '/assets/images/logo/sidebarLogo/processes.svg',
+    //   key: '/processes/processes',
+    // },
     // {
     //   title: 'RoadTrial',
     //   icon: '/assets/images/logo/sidebarLogo/processes.svg',

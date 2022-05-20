@@ -9,6 +9,7 @@ import {
 import { useState } from 'react';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { addAuditMaster, addAuditDetails } from 'services/axios';
+import { useRegularAuditContext } from 'context/RegularAuditContext';
 
 const nestedPath = [
   'Home',
@@ -16,10 +17,17 @@ const nestedPath = [
 ];
 
 const RegularAuditCarInfo = () => {
-  const location = useLocation();
   const {
-    id,
-  } = location.state;
+    selectedCarID,
+    selectedCar,
+    visitId,
+
+  } = useRegularAuditContext();
+
+  const location = useLocation();
+  // const {
+  //   id,
+  // } = location.state;
   const [auditID, setauditID] = useState('');
   const [carKms, setCarKms] = useState('');
   const [currentCarKms, setcurrentCarKms] = useState('');
@@ -81,7 +89,7 @@ const RegularAuditCarInfo = () => {
 
     if (resp) {
       const auditmaster = {
-        visitId: id,
+        visitId: selectedCarID.selectedCarIDValue,
         fastagBalance: fasttagBalance,
       };
       let auditdetails = {};
@@ -142,10 +150,10 @@ const RegularAuditCarInfo = () => {
         <div className="flex flex-row flex-nonwrap justify-center">
           <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
           <div>
-            <h1 className="font-quicksand-bold text-xl mt-3">MH04 BJ 1904</h1>
+            <h1 className="font-quicksand-bold text-xl mt-3">{selectedCar.selectedCarValue}</h1>
             <div className="flex flex-row">
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">sgsdfg654654</h1>
+              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
             </div>
             <div className="flex flex-row">
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Time Stamp: </h1>

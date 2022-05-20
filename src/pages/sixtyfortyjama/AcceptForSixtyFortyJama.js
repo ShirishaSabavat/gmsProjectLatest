@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable global-require */
 /* eslint-disable no-unused-vars */
@@ -27,6 +28,8 @@ const AcceptForSixtyFortyJama = () => {
 
   const {
     selectedCarID,
+    selectedCar,
+    visitId,
     fRTyreBrand,
     fRWornOut,
     fRPressure,
@@ -169,7 +172,7 @@ const AcceptForSixtyFortyJama = () => {
 
     if (resp) {
       const auditmaster = {
-        visitId: selectedCarID,
+        visitId: selectedCarID.selectedCarIDValue,
         driverReportedIssue: '',
         carReturnReason: '',
         fastagBalance: fasttagBalance.fasttagBalanceValue,
@@ -253,17 +256,20 @@ const AcceptForSixtyFortyJama = () => {
             <div className="flex flex-row flex-nonwrap justify-center">
               <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
               <div>
-                <h1 className="font-quicksand-bold text-xl mt-3">MH01 DR 1836</h1>
-                <h1 className="font-quicksand-semi-bold text-sm mt-1">Maruti Suzuki Drive Vxi CNG</h1>
-                <div className="flex flex-row justify-center">
+                <h1 className="font-quicksand-bold text-xl mt-3">{selectedCar.selectedCarValue}</h1>
+                <div className="flex flex-row">
                   <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-                  <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">DSFSDFSDF654654</h1>
+                  <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
+                </div>
+                <div className="flex flex-row">
+                  <h1 className="font-quicksand-semi-bold text-sm mt-1">Time Stamp: </h1>
+                  <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">2022/02/21 13:54</h1>
                 </div>
               </div>
             </div>
-            <div className="flex flex-row justify-center">
-              <h1 className="font-quicksand-semi-bold text-base my-3">Driver Name: </h1>
-              <h1 className="font-quicksand-semi-bold text-base my-3 text-teal-300">John Doe</h1>
+            <div className="flex flex-row ml-12 mt-2">
+              <h1 className="font-quicksand-semi-bold text-sm mt-1">Driver: </h1>
+              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300 ml-12">John Doe</h1>
             </div>
           </div>
           <div className="bg-white p-4 mx-2">
@@ -294,10 +300,10 @@ const AcceptForSixtyFortyJama = () => {
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
               }}
             >
-              Accept Car for Jama
+              Accept
             </Button>
           </div>
-          <div className="col-12 flex flex-row justify-center">
+          {/* <div className="col-12 flex flex-row justify-center">
             <Button
               className="font-quicksand-medium"
               style={{
@@ -306,7 +312,7 @@ const AcceptForSixtyFortyJama = () => {
             >
               Reject for Jama
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

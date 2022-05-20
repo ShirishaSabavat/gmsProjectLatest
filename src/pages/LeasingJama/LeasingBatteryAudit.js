@@ -13,17 +13,44 @@ const nestedPath = [
 ];
 
 const LeasingBatteryAudit = () => {
-  const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
-  const goToTyreAudit = () => {
-    history.push('/LeasingJama/LeasingTyreAudit');
-  };
+  const [batteryNameError, setBatteryNameError] = useState({});
+  const [batteryBrandError, setBatteryBrandError] = useState({});
+
   const {
+    selectedCar,
+    visitId,
     batteryName,
     setBatteryName,
     batteryBrand,
     setBatteryBrand,
   } = useJamaContext();
+
+  const validateFormData = () => {
+    let isValid = true;
+    const batteryBrandErr = {};
+    const batteryNameErr = {};
+
+    if (!batteryName.batteryNameValue) {
+      batteryNameErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
+    if (!batteryBrand.batteryBrandValue) {
+      batteryBrandErr.err = 'Please select a battery brand';
+      isValid = false;
+    }
+    setBatteryNameError(batteryNameErr);
+    setBatteryBrandError(batteryBrandErr);
+    return isValid;
+  };
+
+  const goToTyreAudit = () => {
+    const resp = validateFormData();
+    if (resp) {
+      history.push('/LeasingJama/LeasingTyreAudit');
+    }
+  };
+
   return (
     <>
       <Helmet title="Dashboard" />
@@ -39,10 +66,10 @@ const LeasingBatteryAudit = () => {
         <div className="flex flex-row flex-nonwrap justify-center">
           <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
           <div>
-            <h1 className="font-quicksand-bold text-xl mt-3">MH04 BJ 1904</h1>
+            <h1 className="font-quicksand-bold text-xl mt-3">{selectedCar.selectedCarValue}</h1>
             <div className="flex flex-row">
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">sgsdfg654654</h1>
+              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
             </div>
             <div className="flex flex-row">
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Time Stamp: </h1>
@@ -68,19 +95,26 @@ const LeasingBatteryAudit = () => {
             }}
           />
         </div>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          {Object.keys(batteryNameError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {batteryNameError[key]}
+            </div>
+          ))}
+        </div>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Audit</p>
         <div className="bg-white">
           <Radio.Group
             onChange={(e) => setBatteryBrand({ batteryBrandValue: e.target.value })}
             value={batteryBrand.batteryBrandValue}
           >
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Powerzone">Powerzone</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Panasonic">Panasonic</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Exide">Exide</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Liveguard">Liveguard</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Tata</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Amaron</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Tata">Other</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Powerzone</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Panasonic</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>Exide</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={4}>Liveguard</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={5}>Tata</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={6}>Amaron</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={7}>Other</Radio>
           </Radio.Group>
         </div>
       </div>

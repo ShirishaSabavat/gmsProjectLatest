@@ -13,7 +13,12 @@ const nestedPath = [
 ];
 
 const ServiceAuditCarDetails = () => {
-  const { driverReportedIssue, setdriverReportedIssue } = useJamaContext();
+  const {
+    selectedCar,
+    visitId,
+    driverReportedIssue,
+    setdriverReportedIssue,
+  } = useJamaContext();
   const [radioValue, setRadioValue] = useState('');
   const history = useHistory();
   const [carReturnError, setCarReturnError] = useState({});
@@ -49,10 +54,10 @@ const ServiceAuditCarDetails = () => {
         <div className="flex flex-row flex-nonwrap justify-center">
           <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
           <div>
-            <h1 className="font-quicksand-bold text-xl mt-3">MH04 BJ 1904</h1>
+            <h1 className="font-quicksand-bold text-xl mt-3">{selectedCar.selectedCarValue}</h1>
             <div className="flex flex-row">
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">sgsdfg654654</h1>
+              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
             </div>
             <div className="flex flex-row">
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Time Stamp: </h1>

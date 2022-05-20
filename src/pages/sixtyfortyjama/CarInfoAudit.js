@@ -14,13 +14,14 @@ const nestedPath = [
 ];
 
 const CarInfoAudit = () => {
-  const [radioValue, setRadioValue] = useState('');
+  const [carKmsError, setCarKmsError] = useState({});
+  const [currentCarKmsError, setCurrentCarKmsError] = useState({});
+  const [fasttagBalanceError, setFasttagBalanceError] = useState({});
   const history = useHistory();
-  const goToTyreAudit = () => {
-    history.push('/sixtyfortyjama/AcceptForSixtyFortyJama');
-  };
 
   const {
+    selectedCar,
+    visitId,
     carKms,
     currentCarKms,
     fasttagBalance,
@@ -51,6 +52,38 @@ const CarInfoAudit = () => {
     setHorn,
   } = useJamaContext();
 
+  const validateFormData = () => {
+    let isValid = true;
+    const carKmsErr = {};
+    const currentCarKmsErr = {};
+    const fasttagBalanceErr = {};
+
+    if (!carKms.carKmsValue) {
+      carKmsErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
+    if (!currentCarKms.currentCarKmsValue) {
+      currentCarKmsErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
+    if (!fasttagBalance.fasttagBalanceValue) {
+      fasttagBalanceErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
+
+    setCarKmsError(carKmsErr);
+    setCurrentCarKmsError(currentCarKmsErr);
+    setFasttagBalanceError(fasttagBalanceErr);
+    return isValid;
+  };
+
+  const goToTyreAudit = () => {
+    const resp = validateFormData();
+    if (resp) {
+      history.push('/sixtyfortyjama/AcceptForSixtyFortyJama');
+    }
+  };
+
   return (
     <>
       <Helmet title="Dashboard" />
@@ -66,10 +99,10 @@ const CarInfoAudit = () => {
         <div className="flex flex-row flex-nonwrap justify-center">
           <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
           <div>
-            <h1 className="font-quicksand-bold text-xl mt-3">MH04 BJ 1904</h1>
+            <h1 className="font-quicksand-bold text-xl mt-3">{selectedCar.selectedCarValue}</h1>
             <div className="flex flex-row">
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">sgsdfg654654</h1>
+              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
             </div>
             <div className="flex flex-row">
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Time Stamp: </h1>
@@ -95,6 +128,13 @@ const CarInfoAudit = () => {
             }}
           />
         </div>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          {Object.keys(carKmsError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {carKmsError[key]}
+            </div>
+          ))}
+        </div>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Current Kms*</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
@@ -105,6 +145,13 @@ const CarInfoAudit = () => {
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
           />
+        </div>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          {Object.keys(currentCarKmsError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {currentCarKmsError[key]}
+            </div>
+          ))}
         </div>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Fuel Indicator Petrol (1 bar)*</p>
         <div className="bg-white">
@@ -125,6 +172,13 @@ const CarInfoAudit = () => {
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
           />
+        </div>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          {Object.keys(fasttagBalanceError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {fasttagBalanceError[key]}
+            </div>
+          ))}
         </div>
       </div>
       <div className="bg-white p-4 m-2">
@@ -179,7 +233,7 @@ const CarInfoAudit = () => {
       <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Engine Oil*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setEngineOil({ carReturnReasonValue: e.target.value })} value={engineoil.engineoilValue}>
+          <Radio.Group onChange={(e) => setEngineOil({ engineoilValue: e.target.value })} value={engineoil.engineoilValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Sufficient">Sufficient</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Not Sufficient">Not Sufficient</Radio>
           </Radio.Group>
@@ -206,7 +260,7 @@ const CarInfoAudit = () => {
       <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Charge*</p>
         <div className="bg-white">
-          <Radio.Group onChange={(e) => setBatteryCharge({ carReturnReasonValue: e.target.value })} value={batteryCharge.batteryChargeValue}>
+          <Radio.Group onChange={(e) => setBatteryCharge({ batteryChargeValue: e.target.value })} value={batteryCharge.batteryChargeValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Okay">Okay</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="No Charge">No Charge</Radio>
           </Radio.Group>
