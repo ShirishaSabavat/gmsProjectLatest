@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-undef */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable global-require */
@@ -6,9 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import {
-  Input, Radio, Button, Dropdown, notification,
+  Input, Radio, Button, notification, Select, Spin,
 } from 'antd';
-import { CaretDownOutlined } from '@ant-design/icons';
 import {
   addCarVisit, editCarVisit, getCarDetailsList, getCarsListEverest, getVisitingCarDetails,
 } from 'services/axios';
@@ -92,46 +92,18 @@ const carformpage = () => {
     const tempcityID = localStorage.getItem('cityid');
     setcityID(tempcityID);
     getCarsListEverest(tempcityID).then((resp) => {
-      console.log('resp', resp?.data);
       setCarsList(resp?.data);
       const tempGarageID = localStorage.getItem('garageid');
       const tempLocationID = localStorage.getItem('locationid');
       setGarageID(tempGarageID);
       setLocationID(tempLocationID);
+      if (id === '-1') {
+        setVisitCategory(VisitCategory);
+      }
     })
       .catch((err) => {
         console.log('err', err);
       });
-  }, []);
-
-  useEffect(() => {
-    if (id === '-1') {
-      const tempcityID = localStorage.getItem('cityid');
-      setcityID(tempcityID);
-      getCarsListEverest(tempcityID).then((resp) => {
-        console.log(`Resp: ${resp?.data}`);
-        setCarsList(resp?.data);
-        const tempGarageID = localStorage.getItem('garageid');
-        const tempLocationID = localStorage.getItem('locationid');
-
-        setGarageID(tempGarageID);
-        setLocationID(tempLocationID);
-        setVisitCategory(visitcategory);
-
-        // setCarsList(resp?.data);
-      })
-        .catch((err) => {
-          console.log('err', err);
-        });
-    }
-    // else {
-    //   const tempGarageID = localStorage.getItem('garageid');
-    //   const tempLocationID = localStorage.getItem('locationid');
-    //   setGarageID(tempGarageID);
-    //   setLocationID(tempLocationID);
-    //   getCarDetails(SelectedCarID);
-    //   setVisitCategory(VisitCategory);
-    // }
   }, []);
 
   const validateFormData = () => {
@@ -268,10 +240,12 @@ const carformpage = () => {
   const handleOnHover = (result) => {
     // the item hovered
     // getCarDetails(result.id);
-    setSelectedCarID(result.id);
-    setSelectedCarNumber(result.name);
-    setisFocused(false);
-    getCarDetails(result.id);
+    console.log('hover', result);
+    setSelectedCarID(result);
+    const temp = CarsList.filter((item) => item.id === result);
+    setSelectedCarNumber(temp[0].name);
+    // setisFocused(false);
+    getCarDetails(result);
   };
 
   const handleOnFocus = () => {
@@ -297,21 +271,38 @@ const carformpage = () => {
           {id === '-1'
             ? (
               <div className="bg-white">
-                <ReactSearchAutocomplete
+                {/* <ReactSearchAutocomplete
                   placeholder="Enter Car Number Here..."
                   resultStringKeyName="name"
                   inputSearchString={SelectedCarNumber === '' || SelectedCarNumber === 'Enter Car Number Here...' ? '' : SelectedCarNumber}
-                  styling={{
-                    height: '40px', backgroundColor: '#F5F8FC', border: '2px', fontSize: '12px',
-                  }}
                   items={CarsList}
                   onSearch={handleOnSearch}
                   onHover={handleOnHover}
                   onClear={() => setisFocused(false)}
                   onFocus={handleOnFocus}
+                  autoFocus={isFocused}
                   maxResults={10}
                   formatResult={formatResult}
-                />
+                /> */}
+                <Select
+                  onChange={(e) => {
+                    handleOnHover(e);
+                  }}
+                  style={{ width: '100%', backgroundColor: '#F5F8FC' }}
+                  placeholder="Search Car"
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input, option) => option.children
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0}
+                >
+                  {CarsList.map((items) => (
+                    <Select.Option key={items.id} value={items.id}>
+                      {items.name}
+                    </Select.Option>
+                  ))}
+                </Select>
               </div>
             )
             : <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>{carNumber}</p>}

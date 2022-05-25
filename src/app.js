@@ -5,6 +5,7 @@ import { store, history } from 'redux/store';
 import Router from 'router';
 import JamaProvider from 'context/sixtyFortyJamaContext';
 import RegularAuditProvider from 'context/RegularAuditContext';
+import RTAProvider from 'context/rtaContext';
 
 import 'global.scss';
 import 'components/kit/vendors/antd/mixins.less';
@@ -20,7 +21,9 @@ const App = () => (
     <Provider store={store}>
       <JamaProvider>
         <RegularAuditProvider>
-          <Router history={history} />
+          <RTAProvider>
+            <Router history={history} />
+          </RTAProvider>
         </RegularAuditProvider>
       </JamaProvider>
     </Provider>

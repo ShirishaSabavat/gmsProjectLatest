@@ -3,17 +3,26 @@
 import { Helmet } from 'react-helmet';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getCarsListJama } from 'services/axios';
+import { useRTAContext } from 'context/rtaContext';
 
 const carslistrta = () => {
+  const {
+    setSelectedCarId,
+    setSelectedCarNumber,
+    setSelectedDriverName,
+    setSelectedVisitId,
+    setSelectedVisitCategory,
+  } = useRTAContext();
+  const history = useHistory();
   const [CarsList, setCarsList] = useState([]);
   const [garageid, setGarageid] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
     getCarsListJama(tempGarageID).then((resp) => {
-      console.log(resp);
+      console.log(resp.data?.results.pageData);
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {
@@ -50,17 +59,14 @@ const carslistrta = () => {
         </div>
         <div>
           {CarsList.map((item) => (
-            <Link
-              to={{
-                pathname: 'leasingjama',
-                state: {
-                  id: item.id,
-                  carId: item.carId,
-                  carnumber: item.car_number,
-                  drivername: item.driver_name,
-                  visitid: item.visitId,
-                  visitcategory: item.visit_category,
-                },
+            <div
+              onClick={() => {
+                setSelectedCarId(item.carId);
+                setSelectedCarNumber(item.car_number);
+                setSelectedDriverName(item.driver_name);
+                setSelectedVisitId(item.visitId);
+                setSelectedVisitCategory(item.visitCategory);
+                history.push(`/rta/leasingjama/${item.id}`);
               }}
               className="bg-white"
             >
@@ -77,7 +83,7 @@ const carslistrta = () => {
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
 
           ))}
         </div>

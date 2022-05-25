@@ -5,8 +5,9 @@ import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { addRTAList, rejectRTAList } from 'services/axios';
+import { useRTAContext } from 'context/rtaContext';
 
 const nestedPath = [
   'Home',
@@ -14,10 +15,10 @@ const nestedPath = [
 ];
 
 const transferjama = () => {
-  const location = useLocation();
   const {
-    id, visitcategory, remarks,
-  } = location.state;
+    selectedVisitCategory, remarks,
+  } = useRTAContext;
+  const { id } = useParams();
   const [rejectfor, setrejectfor] = useState(0);
   const [rejectforRemark, setrejectforRemark] = useState('');
   const [GarageID, setGarageID] = useState('');
@@ -52,19 +53,19 @@ const transferjama = () => {
     const resp = validateFormData();
     console.log(resp);
     if (resp) {
-      console.log(visitcategory);
+      console.log(selectedVisitCategory);
       let tempvisitid = 0;
       let isLeasing = true;
-      if (visitcategory === '1' || visitcategory === 1) {
+      if (selectedVisitCategory === '1' || selectedVisitCategory === 1) {
         tempvisitid = 1;
         isLeasing = false;
-      } else if (visitcategory === '2' || visitcategory === 1) {
+      } else if (selectedVisitCategory === '2' || selectedVisitCategory === 1) {
         tempvisitid = 2;
         isLeasing = true;
       }
       addRTAList(id, GarageID, isLeasing, remarks, 2)
         .then((res) => {
-          rejectRTAList(id, visitcategory, rejectfor, 'roadtest_reject')
+          rejectRTAList(id, selectedVisitCategory, rejectfor, 'roadtest_reject')
             .then((innerRes) => {
               console.log('inner_res', innerRes);
               notification.success({
@@ -79,7 +80,7 @@ const transferjama = () => {
         .catch((err) => {
           console.log('err', err);
         });
-      // rejectRTAList(id, visitcategory, rejectfor, rejectforRemark)
+      // rejectRTAList(id, selectedVisitCategory, rejectfor, rejectforRemark)
       //   .then((res) => {
       //     console.log('res', res);
       //     notification.success({

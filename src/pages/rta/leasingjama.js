@@ -5,7 +5,8 @@ import Breadcrumb from 'components/layouts/breadcrumb';
 import { Input, Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
 import { addRTAList } from 'services/axios';
-import { Link, useLocation } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { useRTAContext } from 'context/rtaContext';
 
 const nestedPath = [
   'Home',
@@ -15,25 +16,32 @@ const nestedPath = [
 const { TextArea } = Input;
 
 const carslistrta = () => {
-  const location = useLocation();
+  const { id } = useParams();
+  const history = useHistory();
   const {
-    id, carId, carnumber, drivername, visitid, visitcategory,
-  } = location.state;
-  const [remarks, setRemarks] = useState('');
+    selectedCarNumber,
+    selectedDriverName,
+    selectedVisitId,
+    selectedVisitCategory,
+    remarks,
+    setRemarks,
+  } = useRTAContext();
   const [GarageID, setGarageID] = useState('');
-  const [remarksError, setRemarksError] = useState('');
+  const [remarksError, setRemarksError] = useState({});
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageID(tempGarageID);
     console.log(id);
   }, []);
 
-  const validateFormData = () => {
+  const validateFormData = (rejectFlag) => {
     const RemarkError = {};
     let isValid = true;
-    if (remarks.trim().length === 0) {
-      RemarkError.err = 'Please enter proper remarks.';
-      isValid = false;
+    if (rejectFlag) {
+      if (!remarks.remarksValue) {
+        RemarkError.err = 'Please enter proper remarks.';
+        isValid = false;
+      }
     }
     // if (garageSeries.trim().length === 0) {
     //   garageSeriesNameError.err = 'Garage series can not be empty';
@@ -48,31 +56,35 @@ const carslistrta = () => {
     return isValid;
   };
 
-  const AddRTAListMethod = () => {
-    const resp = validateFormData();
-    console.log(resp);
-    if (resp) {
-      console.log(visitcategory);
-      let tempvisitid = 0;
-      let isLeasing = true;
-      if (visitcategory === '1' || visitcategory === 1) {
-        tempvisitid = 1;
-        isLeasing = false;
-      } else if (visitcategory === '2' || visitcategory === 1) {
-        tempvisitid = 2;
-        isLeasing = true;
-      }
-      addRTAList(id, GarageID, isLeasing, remarks, 1)
-        .then((res) => {
-          console.log('res', res);
-          notification.success({
-            message: 'Jama added successfully',
+  const AddRTAListMethod = (rejectFlag) => {
+    const resp = validateFormData(rejectFlag);
+    console.log(resp, rejectFlag);
+    if (!rejectFlag) {
+      if (resp) {
+        console.log(selectedVisitCategory);
+        let tempvisitid = 0;
+        let isLeasing = true;
+        if (selectedVisitCategory === '1' || selectedVisitCategory === 1) {
+          tempvisitid = 1;
+          isLeasing = false;
+        } else if (selectedVisitCategory === '2' || selectedVisitCategory === 1) {
+          tempvisitid = 2;
+          isLeasing = true;
+        }
+        addRTAList(id, GarageID, isLeasing, remarks.remarksValue, 1)
+          .then((res) => {
+            console.log('res', res);
+            notification.success({
+              message: 'Jama added successfully',
+            });
+            window.location.href = '#/rta/carlistrta';
+          })
+          .catch((err) => {
+            console.log('err', err);
           });
-          window.location.href = '#/rta/carlistrta';
-        })
-        .catch((err) => {
-          console.log('err', err);
-        });
+      }
+    } else if (resp) {
+      history.push(`/rta/transferjama/${id}`);
     }
   };
 
@@ -91,17 +103,17 @@ const carslistrta = () => {
             <div className="flex flex-row flex-nonwrap justify-center">
               <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
               <div>
-                <h1 className="font-quicksand-bold text-xl mt-3">{carnumber}</h1>
+                <h1 className="font-quicksand-bold text-xl mt-3">{selectedCarNumber}</h1>
                 <h1 className="font-quicksand-semi-bold text-sm mt-1">Maruti Suzuki Drive Vxi CNG</h1>
                 <div className="flex flex-row justify-center">
                   <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-                  <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitid}</h1>
+                  <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{selectedVisitId}</h1>
                 </div>
               </div>
             </div>
             <div className="flex flex-row justify-center">
               <h1 className="font-quicksand-semi-bold text-base my-3">Driver Name: </h1>
-              <h1 className="font-quicksand-semi-bold text-base my-3 text-teal-300">{drivername}</h1>
+              <h1 className="font-quicksand-semi-bold text-base my-3 text-teal-300">{selectedDriverName}</h1>
             </div>
           </div>
           <div className="bg-white p-4 mx-2">
@@ -110,8 +122,8 @@ const carslistrta = () => {
               <TextArea
                 rows={4}
                 placeholder="Enter Remarks Here..."
-                value={remarks}
-                onChange={(e) => setRemarks(e.target.value)}
+                value={remarks.remarksValue}
+                onChange={(e) => setRemarks({ remarksValue: e.target.value })}
                 style={{
                   padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
                 }}
@@ -126,7 +138,7 @@ const carslistrta = () => {
           </div>
           <div className="col-12 flex flex-row justify-center my-3">
             <Button
-              onClick={() => AddRTAListMethod()}
+              onClick={() => AddRTAListMethod(false)}
               className="font-quicksand-medium"
               style={{
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
@@ -136,15 +148,17 @@ const carslistrta = () => {
             </Button>
           </div>
           <div className="col-12 flex flex-row justify-center">
-            <Link
-              to={{ pathname: 'transferjama', state: { id, visitcategory, remarks } }}
+            <div
+              onClick={() => {
+                AddRTAListMethod(true);
+              }}
               className="font-quicksand-medium"
               style={{
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#74d1d8', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 25px',
               }}
             >
               Reject for Jama
-            </Link>
+            </div>
           </div>
         </div>
       </div>

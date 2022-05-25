@@ -67,13 +67,13 @@ const routes = [
     Component: lazy(() => import('pages/rta/carlistrta')),
   },
   {
-    path: '/rta/leasingjama',
+    path: '/rta/leasingjama/:id?',
     key: 'RTA LEASINGJAMA',
     exact: true,
     Component: lazy(() => import('pages/rta/leasingjama')),
   },
   {
-    path: '/rta/transferjama',
+    path: '/rta/transferjama/:id?',
     key: 'RTA TRANSFERJAMA',
     exact: true,
     Component: lazy(() => import('pages/rta/transferjama')),
