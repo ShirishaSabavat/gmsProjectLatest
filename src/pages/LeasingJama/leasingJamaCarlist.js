@@ -23,7 +23,7 @@ const leasingJamacarlist = () => {
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
-    getCarsListJama(1).then((resp) => {
+    getCarsListJama(tempGarageID, 2).then((resp) => {
       console.log(resp);
       setCarsList(resp.data?.results.pageData);
     })

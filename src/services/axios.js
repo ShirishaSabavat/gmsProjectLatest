@@ -527,9 +527,9 @@ export const getCarsListEverest = (cityid) => axios({
   headers,
 });
 
-export const getCarsListJama = (garageid) => axios({
+export const getCarsListJama = (garageid, visitcategory) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1&status=1`,
+  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=${visitcategory}&status=1`,
   headers,
 });
 

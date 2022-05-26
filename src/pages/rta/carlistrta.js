@@ -21,7 +21,7 @@ const carslistrta = () => {
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
-    getCarsListJama(tempGarageID).then((resp) => {
+    getCarsListJama(tempGarageID, 3).then((resp) => {
       console.log(resp.data?.results.pageData);
       setCarsList(resp.data?.results.pageData);
     })
