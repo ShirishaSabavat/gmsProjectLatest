@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getCarsListJama } from 'services/axios';
+import { getCarsListRoadTest } from 'services/axios';
 import { useRTAContext } from 'context/rtaContext';
 
 const carslistrta = () => {
@@ -21,7 +21,7 @@ const carslistrta = () => {
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
-    getCarsListJama(tempGarageID, 3).then((resp) => {
+    getCarsListRoadTest(tempGarageID).then((resp) => {
       console.log(resp.data?.results.pageData);
       setCarsList(resp.data?.results.pageData);
     })

@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { getCarsListRegularAudit } from 'services/axios';
+import { getQueueCarsList } from 'services/axios';
 import { useRegularAuditContext } from 'context/RegularAuditContext';
 
 const RegularAuditCarList = () => {
@@ -26,7 +26,7 @@ const RegularAuditCarList = () => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
     console.log(`garageid: ${tempGarageID}`);
-    getCarsListRegularAudit(tempGarageID).then((resp) => {
+    getQueueCarsList(tempGarageID, 3, 1).then((resp) => {
       console.log(resp);
       setCarsList(resp.data?.results.pageData);
     })

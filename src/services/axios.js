@@ -527,15 +527,15 @@ export const getCarsListEverest = (cityid) => axios({
   headers,
 });
 
-export const getCarsListJama = (garageid, visitcategory) => axios({
+export const getQueueCarsList = (garageid, visitcategory, status) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=${visitcategory}&status=1`,
+  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=${visitcategory}&status=${status}`,
   headers,
 });
 
-export const getCarsListRegularAudit = (garageid) => axios({
+export const getCarsListRoadTest = (garageid) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=3&status=1`,
+  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1&visit_category[]=2&status=1`,
   headers,
 });
 
