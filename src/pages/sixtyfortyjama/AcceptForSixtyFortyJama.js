@@ -101,6 +101,9 @@ const AcceptForSixtyFortyJama = () => {
     setCoolant,
     setBatteryCharge,
     setHorn,
+    carReturnReason,
+    batteryBrand,
+    batteryName,
   } = useJamaContext();
 
   const ResetContextValues = () => {
@@ -174,7 +177,7 @@ const AcceptForSixtyFortyJama = () => {
       const auditmaster = {
         visitId: selectedCarID.selectedCarIDValue,
         driverReportedIssue: '',
-        carReturnReason: '',
+        carReturnReason: carReturnReason.carReturnReasonValue,
         fastagBalance: fasttagBalance.fasttagBalanceValue,
       };
       let auditdetails = {};
@@ -183,45 +186,42 @@ const AcceptForSixtyFortyJama = () => {
           const tempID = res.data.results.id;
           console.log('res', tempID);
           auditdetails = {
-            id: tempID,
-            frWornOut: fRWornOut.fRWornOutValue === '<3' ? 1 : fRWornOut.fRWornOutValue === '4' ? 2 : fRWornOut.fRWornOutValue === '5' ? 3 : fRWornOut.fRWornOutValue === '4' ? 4 : 5,
-            fLWornOut: fLWornOut.fLWornOutValue === '<3' ? 1 : fLWornOut.fLWornOutValue === '4' ? 2 : fLWornOut.fLWornOutValue === '5' ? 3 : fLWornOut.fLWornOutValue === '4' ? 4 : 5,
-            rrWornOut: rRWornOut.rRWornOutValue === '<3' ? 1 : rRWornOut.rRWornOutValue === '4' ? 2 : rRWornOut.rRWornOutValue === '5' ? 3 : rRWornOut.rRWornOutValue === '4' ? 4 : 5,
-            rLWornOut: rLWornOut.rLWornOutValue === '<3' ? 1 : rLWornOut.rLWornOutValue === '4' ? 2 : rLWornOut.rLWornOutValue === '5' ? 3 : rLWornOut.rLWornOutValue === '4' ? 4 : 5,
-            frBrand: fRTyreBrand.fRTyreBrandValue === 'Apollo' ? 1 : fRTyreBrand.fRTyreBrandValue === 'Ceat' ? 2 : fRTyreBrand.fRTyreBrandValue === 'JK' ? 3
-              : fRTyreBrand.fRTyreBrandValue === 'BridgeStone' ? 4 : fRTyreBrand.fRTyreBrandValue === 'MRF' ? 5 : fRTyreBrand.fRTyreBrandValue === 'Firestone' ? 6
-                : fRTyreBrand.fRTyreBrandValue === 'Kelly' ? 7 : 8,
-            fLBrand: fLTyreBrand.fLTyreBrandValue === 'Apollo' ? 1 : fLTyreBrand.fLTyreBrandValue === 'Ceat' ? 2 : fLTyreBrand.fLTyreBrandValue === 'JK' ? 3
-              : fLTyreBrand.fLTyreBrandValue === 'BridgeStone' ? 4 : fLTyreBrand.fLTyreBrandValue === 'MRF' ? 5 : fLTyreBrand.fLTyreBrandValue === 'Firestone' ? 6
-                : fLTyreBrand.fLTyreBrandValue === 'Kelly' ? 7 : 8,
-            rrBrand: rRTyreBrand.rRTyreBrandValue === 'Apollo' ? 1 : rRTyreBrand.rRTyreBrandValue === 'Ceat' ? 2 : rRTyreBrand.rRTyreBrandValue === 'JK' ? 3
-              : rRTyreBrand.rRTyreBrandValue === 'BridgeStone' ? 4 : rRTyreBrand.rRTyreBrandValue === 'MRF' ? 5 : rRTyreBrand.rRTyreBrandValue === 'Firestone' ? 6
-                : rRTyreBrand.rRTyreBrandValue === 'Kelly' ? 7 : 8,
-            rLBrand: rLTyreBrand.rLTyreBrandValue === 'Apollo' ? 1 : rLTyreBrand.rLTyreBrandValue === 'Ceat' ? 2 : rLTyreBrand.rLTyreBrandValue === 'JK' ? 3
-              : rLTyreBrand.rLTyreBrandValue === 'BridgeStone' ? 4 : rLTyreBrand.rLTyreBrandValue === 'MRF' ? 5 : rLTyreBrand.rLTyreBrandValue === 'Firestone' ? 6
-                : rLTyreBrand.rLTyreBrandValue === 'Kelly' ? 7 : 8,
-            frPressure: fRPressure.fRPressureValue,
-            fLPressure: rRPressure.rRPressureValue,
-            rrPressure: fLPressure.fLPressureValue,
-            rLPressure: rLPressure.rLPressureValue,
-            frNumber: fRTyreNumber.fRTyreNumberValue,
-            fLNumber: fLTyreNumber.fLTyreNumberValue,
-            rrNumber: rRTyreNumber.rRTyreNumberValue,
-            rLNumber: rLTyreNumber.rLTyreNumberValue,
-            fuelIndicatorOne: fuelIndicatorPetrolBar.fuelIndicatorPetrolBarValue === 'Yes',
+            auditId: tempID,
+            auditor_comment: remarks,
+            battery_brand: batteryBrand.batteryBrandValue,
+            battery_number: batteryName.batteryNameValue,
+            battery_status: batteryCharge.batteryChargeValue === 'Okay',
+            break_oil: brakeoil.brakeoilValue === 'Sufficient',
+            car_km: carKms.carKmsValue,
+            coolant: coolant.coolantValue === 'Sufficient',
+            engine_oil: engineoil.engineoilValue === 'Sufficient',
+            front_left_tyre_brand: fLTyreBrand.fLTyreBrandValue,
+            front_left_tyre_number: fLTyreNumber.fLTyreNumberValue,
+            front_left_tyre_pressure: fLPressure.fLPressureValue,
+            front_left_tyre_worn_out: fLWornOut.fLWornOutValue === '<3' ? 3 : fLWornOut.fLWornOutValue === '4' ? 4 : fLWornOut.fLWornOutValue === '5' ? 5 : fLWornOut.fLWornOutValue === '6' ? 6 : 7,
+            front_right_tyre_brand: fRTyreBrand.fRTyreBrandValue,
+            front_right_tyre_number: fRTyreNumber.fRTyreNumberValue,
+            front_right_tyre_pressure: fRPressure.fRPressureValue,
+            front_right_tyre_worn_out: fRWornOut.fRWornOutValue === '<3' ? 3 : fRWornOut.fRWornOutValue === '4' ? 4 : fRWornOut.fRWornOutValue === '5' ? 5 : fRWornOut.fRWornOutValue === '6' ? 6 : 7,
+            fuel_indicator_petrol: fuelIndicatorPetrolBar.fuelIndicatorPetrolBarValue === 'Yes',
             fuel_indicator_cng: cng.cngValue === 'Full' ? 1 : cng.cngValue === 'Empty' ? 2 : cng.cngValue === 'Half full and Above' ? 3 : 4,
-            StickerFrontMain: numberPlateStickerStat.numberPlateStickerStatValue === 'Front Main',
-            StickerBackMain: numberPlateStickerStat.numberPlateStickerStatValue === 'Front Main',
-            StickerBackRight: numberPlateStickerStat.numberPlateStickerStatValue === 'Front Main',
-            StickerBackLeft: numberPlateStickerStat.numberPlateStickerStatValue === 'Front Main',
+            horn: horn.hornValue === 'Okay',
             jack: jackStat.jackStatValue === 'Yes',
             panna: panaStat.panaStatValue === 'Yes',
+            rear_left_tyre_brand: rLTyreBrand.rLTyreBrandValue,
+            rear_left_tyre_number: rLTyreNumber.rLTyreNumberValue,
+            rear_left_tyre_pressure: rLPressure.rLPressureValue,
+            rear_left_tyre_worn_out: rLWornOut.rLWornOutValue === '<3' ? 3 : rLWornOut.rLWornOutValue === '4' ? 4 : rLWornOut.rLWornOutValue === '5' ? 5 : rLWornOut.rLWornOutValue === '6' ? 6 : 7,
+            rear_right_tyre_brand: rRTyreBrand.rRTyreBrandValue,
+            rear_right_tyre_number: rRTyreNumber.rRTyreNumberValue,
+            rear_right_tyre_pressure: rRPressure.rRPressureValue,
+            rear_right_tyre_worn_out: rRWornOut.rRWornOutValue === '<3' ? 3 : rRWornOut.rRWornOutValue === '4' ? 4 : rRWornOut.rRWornOutValue === '5' ? 5 : rRWornOut.rRWornOutValue === '6' ? 6 : 7,
+            stephney_available: stepnyPresent.stepnyPresentValue === 1,
+            sticker_back_left: numberPlateStickerStat.numberPlateStickerStatValue === 'Back left side',
+            sticker_back_main: numberPlateStickerStat.numberPlateStickerStatValue === 'Back Main',
+            sticker_back_right: numberPlateStickerStat.numberPlateStickerStatValue === 'Back Right side',
+            sticker_front_main: numberPlateStickerStat.numberPlateStickerStatValue === 'Front Main',
             tommy: tommyStat.tommyStatValue === 'Yes',
-            engineOil: engineoil.engineoilValue === 'Sufficient',
-            breakOil: brakeoil.brakeoilValue === 'Sufficient',
-            coolant: coolant.coolantValue === 'Sufficient',
-            batteryCharge: batteryCharge.batteryChargeValue === 'Okay',
-            horn: horn.hornValue === 'Okay',
           };
           addOtherAuditDetails(auditdetails)
             .then((resp3) => {

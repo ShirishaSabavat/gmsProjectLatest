@@ -306,7 +306,7 @@ const LeasingTyreAudit = () => {
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
           <Radio.Group
-            onChange={(e) => setrLTyreBrand(e.target.value)}
+            onChange={(e) => setrLTyreBrand({ rLTyreBrandValue: e.target.value })}
             value={rLTyreBrand.rLTyreBrandValue}
           >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Apollo</Radio>
@@ -322,7 +322,7 @@ const LeasingTyreAudit = () => {
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
         <div className="bg-white">
           <Radio.Group
-            onChange={(e) => setrLWornOut(e.target.value)}
+            onChange={(e) => setrLWornOut({ rLWornOutValue: e.target.value })}
             value={rLWornOut.rLWornOutValue}
           >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>
@@ -374,7 +374,7 @@ const LeasingTyreAudit = () => {
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
           <Radio.Group
-            onChange={(e) => setfLTyreBrand(e.target.value)}
+            onChange={(e) => setfLTyreBrand({ fLTyreBrandValue: e.target.value })}
             value={fLTyreBrand.fLTyreBrandValue}
           >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Apollo</Radio>
@@ -390,7 +390,7 @@ const LeasingTyreAudit = () => {
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
         <div className="bg-white">
           <Radio.Group
-            onChange={(e) => setfLWornOut(e.target.value)}
+            onChange={(e) => setfLWornOut({ fLWornOutValue: e.target.value })}
             value={fLWornOut.fLWornOutValue}
           >
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>

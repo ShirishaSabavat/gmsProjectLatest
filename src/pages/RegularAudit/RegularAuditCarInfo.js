@@ -8,7 +8,7 @@ import {
 } from 'antd';
 import { useState } from 'react';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
-import { addAuditMaster, addAuditDetails } from 'services/axios';
+import { addOtherAuditMaster, addOtherAuditDetails } from 'services/axios';
 import { useRegularAuditContext } from 'context/RegularAuditContext';
 
 const nestedPath = [
@@ -90,47 +90,72 @@ const RegularAuditCarInfo = () => {
     if (resp) {
       const auditmaster = {
         visitId: selectedCarID.selectedCarIDValue,
+        driver_reported_issue: null,
+        car_return_reason: null,
         fastagBalance: fasttagBalance,
       };
+      console.log(auditmaster);
       let auditdetails = {};
-      addAuditMaster(auditmaster)
+      addOtherAuditMaster(auditmaster)
         .then((res) => {
           const tempID = res.data.results.id;
           console.log('res', tempID);
           auditdetails = {
-            id: tempID,
-            fuelIndicatorOne: fuelIndicatorPetrolBar === 'Yes',
+            auditId: tempID,
+            auditor_comment: null,
+            battery_brand: null,
+            battery_number: null,
+            battery_status: null,
+            break_oil: brakeoil === 'Sufficient',
+            car_km: carKms,
+            coolant: coolant === 'Sufficient',
+            engine_oil: engineoil === 'Sufficient',
+            front_left_tyre_brand: null,
+            front_left_tyre_number: null,
+            front_left_tyre_pressure: null,
+            front_left_tyre_worn_out: null,
+            front_right_tyre_brand: null,
+            front_right_tyre_number: null,
+            front_right_tyre_pressure: null,
+            front_right_tyre_worn_out: null,
+            fuel_indicator_petrol: fuelIndicatorPetrolBar === 'Yes',
             fuel_indicator_cng: cng === 'Full' ? 1 : cng === 'Empty' ? 2 : cng === 'Half full and Above' ? 3 : 4,
-            StickerFrontMain: numberPlateStickerStat === 'Front Main',
-            StickerBackMain: numberPlateStickerStat === 'Front Main',
-            StickerBackRight: numberPlateStickerStat === 'Front Main',
-            StickerBackLeft: numberPlateStickerStat === 'Front Main',
+            horn: horn === 'Okay',
             jack: jackStat === 'Yes',
             panna: panaStat === 'Yes',
+            rear_left_tyre_brand: null,
+            rear_left_tyre_number: null,
+            rear_left_tyre_pressure: null,
+            rear_left_tyre_worn_out: null,
+            rear_right_tyre_brand: null,
+            rear_right_tyre_number: null,
+            rear_right_tyre_pressure: null,
+            rear_right_tyre_worn_out: null,
+            stephney_available: null,
+            sticker_back_left: numberPlateStickerStat === 'Back left side',
+            sticker_back_main: numberPlateStickerStat === 'Back Main',
+            sticker_back_right: numberPlateStickerStat === 'Back Right side',
+            sticker_front_main: numberPlateStickerStat === 'Front Main',
             tommy: tommyStat === 'Yes',
-            engineOil: engineoil === 'Sufficient',
-            breakOil: brakeoil === 'Sufficient',
-            coolant: coolant === 'Sufficient',
-            batteryCharge: batteryCharge === 'Okay',
-            horn: horn === 'Okay',
           };
+          console.log(auditdetails);
+          addOtherAuditDetails(auditdetails)
+            .then((respp) => {
+              console.log('respp', respp);
+              notification.success({
+                message: 'Audit submitted successfully.',
+              });
+              history.push('/RegularAudit/RegularAuditCarList');
+            })
+            .catch((err) => {
+              console.log('err', err.response);
+              notification.error({
+                message: err.response.data.message,
+              });
+            });
         })
         .catch((err) => {
           console.log('err', err.response);
-        });
-      addAuditDetails(auditdetails)
-        .then((res) => {
-          console.log('res', res);
-          notification.success({
-            message: 'Audit submitted successfully.',
-          });
-          history.push('/RegularAudit/RegularAuditCarList');
-        })
-        .catch((err) => {
-          console.log('err', err.response);
-          notification.error({
-            message: err.response.data.message,
-          });
         });
     }
   };
@@ -322,7 +347,7 @@ const RegularAuditCarInfo = () => {
         <div className="bg-white">
           <Radio.Group onChange={(e) => setHorn(e.target.value)} value={horn}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Okay">Okay</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="No Charge">No Charge</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Not Okay">Not Okay</Radio>
           </Radio.Group>
         </div>
       </div>
