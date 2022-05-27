@@ -43,6 +43,10 @@ const JamaContext = createContext(
     coolantValue: 'Sufficient',
     batteryChargeValue: 'Okay',
     hornValue: 'Okay',
+    frontMainStickerValue: false,
+    backMainStickerValue: false,
+    backRightStickerValue: false,
+    backLeftStickerValue: false,
   },
 );
 
@@ -185,6 +189,18 @@ const JamaProvider = ({ children }) => {
   const [penaltyReason, setPenaltyReason] = useState({
     penaltyReasonValue: 1,
   });
+  const [frontMainSticker, setFrontMainSticker] = useState({
+    frontMainStickerValue: false,
+  });
+  const [backMainSticker, setBackMainSticker] = useState({
+    backMainStickerValue: false,
+  });
+  const [backRightSticker, setBackRightSticker] = useState({
+    backRightStickerValue: false,
+  });
+  const [backLeftSticker, setBackLeftSticker] = useState({
+    backLeftStickerValue: false,
+  });
   return (
     <JamaContext.Provider value={{
       selectedCar,
@@ -279,6 +295,14 @@ const JamaProvider = ({ children }) => {
       setPenaltyAmount,
       penaltyReason,
       setPenaltyReason,
+      frontMainSticker,
+      setFrontMainSticker,
+      backMainSticker,
+      setBackMainSticker,
+      backRightSticker,
+      setBackRightSticker,
+      backLeftSticker,
+      setBackLeftSticker,
     }}
     >
       {children}

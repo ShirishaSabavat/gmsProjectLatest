@@ -103,6 +103,14 @@ const ServiceSubmit = () => {
     batteryBrand,
     batteryName,
     driverReportedIssue,
+    frontMainSticker,
+    setFrontMainSticker,
+    backMainSticker,
+    setBackMainSticker,
+    backRightSticker,
+    setBackRightSticker,
+    backLeftSticker,
+    setBackLeftSticker,
   } = useJamaContext();
 
   const ResetContextValues = () => {
@@ -144,6 +152,10 @@ const ServiceSubmit = () => {
     setCoolant({ coolantValue: 'Sufficient' });
     setBatteryCharge({ batteryChargeValue: 'Okay' });
     setHorn({ hornValue: 'Okay' });
+    setFrontMainSticker({ frontMainStickerValue: false });
+    setBackMainSticker({ backMainStickerValue: false });
+    setBackRightSticker({ backRightStickerValue: false });
+    setBackLeftSticker({ backLeftStickerValue: false });
     history.push('/ServiceAudit/ServiceAuditCarList');
   };
 
@@ -216,10 +228,10 @@ const ServiceSubmit = () => {
             rear_right_tyre_pressure: rRPressure.rRPressureValue,
             rear_right_tyre_worn_out: rRWornOut.rRWornOutValue === '<3' ? 3 : rRWornOut.rRWornOutValue === '4' ? 4 : rRWornOut.rRWornOutValue === '5' ? 5 : rRWornOut.rRWornOutValue === '6' ? 6 : 7,
             stephney_available: stepnyPresent.stepnyPresentValue === 1,
-            sticker_back_left: numberPlateStickerStat.numberPlateStickerStatValue === 'Back left side',
-            sticker_back_main: numberPlateStickerStat.numberPlateStickerStatValue === 'Back Main',
-            sticker_back_right: numberPlateStickerStat.numberPlateStickerStatValue === 'Back Right side',
-            sticker_front_main: numberPlateStickerStat.numberPlateStickerStatValue === 'Front Main',
+            sticker_back_left: backLeftSticker.backLeftStickerValue,
+            sticker_back_main: backMainSticker.backMainStickerValue,
+            sticker_back_right: backRightSticker.backRightStickerValue,
+            sticker_front_main: frontMainSticker.frontMainStickerValue,
             tommy: tommyStat.tommyStatValue === 'Yes',
           };
           addOtherAuditDetails(auditdetails)

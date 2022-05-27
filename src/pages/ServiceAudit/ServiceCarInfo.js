@@ -2,7 +2,9 @@
 /* eslint-disable no-unused-vars */
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
-import { Radio, Button, Input } from 'antd';
+import {
+  Radio, Button, Input, Checkbox,
+} from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
@@ -49,6 +51,14 @@ const ServiceCarInfo = () => {
     setCoolant,
     setBatteryCharge,
     setHorn,
+    frontMainSticker,
+    setFrontMainSticker,
+    backMainSticker,
+    setBackMainSticker,
+    backRightSticker,
+    setBackRightSticker,
+    backLeftSticker,
+    setBackLeftSticker,
   } = useJamaContext();
 
   const validateFormData = () => {
@@ -199,17 +209,10 @@ const ServiceCarInfo = () => {
       <div className="bg-white p-4 m-2">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Number Plate Sticker Status*</p>
         <div className="bg-white">
-          <Radio.Group
-            onChange={
-              (e) => setnumberPlateStickerStat({ numberPlateStickerStatValue: e.target.value })
-            }
-            value={numberPlateStickerStat.numberPlateStickerStatValue}
-          >
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Front Main">Front Main</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Back Main">Back Main</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Back Right side">Back Right side</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Back left side">Back left side</Radio>
-          </Radio.Group>
+          <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setFrontMainSticker({ frontMainStickerValue: !frontMainSticker.frontMainStickerValue })}>Front Main</Checkbox>
+          <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setBackMainSticker({ backMainStickerValue: !backMainSticker.backMainStickerValue })}>Back Main</Checkbox>
+          <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setBackRightSticker({ backRightStickerValue: !backRightSticker.backRightStickerValue })}>Back Right side</Checkbox>
+          <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setBackLeftSticker({ backLeftStickerValue: !backLeftSticker.backLeftStickerValue })}>Back left side</Checkbox>
         </div>
       </div>
       <div className="bg-white p-4 m-2">

@@ -4,7 +4,7 @@
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
 import {
-  Radio, Button, Input, notification,
+  Radio, Button, Input, notification, Checkbox,
 } from 'antd';
 import { useState } from 'react';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
@@ -46,6 +46,10 @@ const RegularAuditCarInfo = () => {
   const [coolant, setCoolant] = useState('Sufficient');
   const [batteryCharge, setBatteryCharge] = useState('Okay');
   const [horn, setHorn] = useState('Okay');
+  const [frontMainSticker, setFrontMainSticker] = useState(false);
+  const [backMainSticker, setBackMainSticker] = useState(false);
+  const [backRightSticker, setBackRightSticker] = useState(false);
+  const [backLeftSticker, setBackLeftSticker] = useState(false);
   const history = useHistory();
   const goToTyreAudit = () => {
     history.push('/LeasingJama/AcceptLeasingJama');
@@ -132,10 +136,10 @@ const RegularAuditCarInfo = () => {
             rear_right_tyre_pressure: null,
             rear_right_tyre_worn_out: null,
             stephney_available: null,
-            sticker_back_left: numberPlateStickerStat === 'Back left side',
-            sticker_back_main: numberPlateStickerStat === 'Back Main',
-            sticker_back_right: numberPlateStickerStat === 'Back Right side',
-            sticker_front_main: numberPlateStickerStat === 'Front Main',
+            sticker_back_left: backLeftSticker,
+            sticker_back_main: backMainSticker,
+            sticker_back_right: backRightSticker,
+            sticker_front_main: frontMainSticker,
             tommy: tommyStat === 'Yes',
           };
           console.log(auditdetails);
@@ -268,15 +272,10 @@ const RegularAuditCarInfo = () => {
       <div className="bg-white p-4 m-3">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Number Plate Sticker Status*</p>
         <div className="bg-white">
-          <Radio.Group
-            onChange={(e) => setnumberPlateStickerStat(e.target.value)}
-            value={numberPlateStickerStat}
-          >
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Front Main">Front Main</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Back Main">Back Main</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Back Right side">Back Right side</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Back left side">Back left side</Radio>
-          </Radio.Group>
+          <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setFrontMainSticker(!frontMainSticker)}>Front Main</Checkbox>
+          <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setBackMainSticker(!backMainSticker)}>Back Main</Checkbox>
+          <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setBackRightSticker(!backRightSticker)}>Back Right side</Checkbox>
+          <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setBackLeftSticker(!backLeftSticker)}>Back left side</Checkbox>
         </div>
       </div>
       <div className="bg-white p-4 m-3">
