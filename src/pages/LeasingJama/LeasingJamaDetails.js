@@ -77,6 +77,7 @@ const LeasingJamaDetails = () => {
   };
 
   const goToBatteryAudit = () => {
+    console.log(penaltyAmount, penaltyReason);
     const resp = validateFormData();
     if (resp) {
       history.push('/LeasingJama/LeasingBatteryAudit');
@@ -215,8 +216,8 @@ const LeasingJamaDetails = () => {
             onChange={(e) => setPenaltyReason({ penaltyReasonValue: e.target.value })}
             value={penaltyReason.penaltyReasonValue}
           >
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Accident</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>Damage</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={0}>Accident</Radio>
+            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={1}>Damage</Radio>
           </Radio.Group>
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>More details of penalty</p>

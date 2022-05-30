@@ -42,8 +42,8 @@ const Listitemgarage = ({
           {garage_name.length > 15 ? '...' : ''}
         </h1>
         <h1 className="text-base font-quicksand-semi-bold font-medium basis-1/3 bg-white h-16 p-4 mr-1">
-          {garage_members.length > 15 ? garage_members.substring(0, 13) : garage_members}
-          {garage_members.length > 13 ? '...' : ''}
+          {garage_members?.length > 15 ? garage_members?.substring(0, 13) : garage_members}
+          {garage_members?.length > 13 ? '...' : ''}
         </h1>
         <h1 className={status === 'true' ? 'text-[#74D1D8] text-base font-quicksand-semi-bold font-medium basis-1/4 bg-white h-16 p-4 mr-0.5 mr-1' : 'text-base font-quicksand-semi-bold font-medium basis-1/4 h-16 bg-white p-4 mr-0.5 mr-1'}>{status === 'true' ? 'Active' : 'Inactive'}</h1>
         <div className="flex flex-row basis-1/6 bg-white p-4 mr-1 pt-4 h-16">

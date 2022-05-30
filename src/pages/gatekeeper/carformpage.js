@@ -10,7 +10,7 @@ import {
   Input, Radio, Button, notification, Select, Spin,
 } from 'antd';
 import {
-  addCarVisit, editCarVisit, getCarDetailsList, getCarsListEverest, getVisitingCarDetails,
+  addCarVisit, editCarVisit, getCarDetailsList, getCarsListEverest, getVisitingCarDetails, checkExistingCarDetails,
 } from 'services/axios';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { useParams, useHistory } from 'react-router-dom';
@@ -73,15 +73,16 @@ const carformpage = () => {
   useEffect(() => {
     getVisitingCarDetails(id)
       .then((res) => {
-        console.log('CarResp', res?.data?.results);
-        setcarNumber(res?.data?.results?.car_number);
-        setRadioValue(res?.data?.results?.is_with_driver);
-        setDriverName(res?.data?.results?.driver_name);
-        setDriverContact(res?.data?.results?.drive_contact_number);
-        setSelectedDriverManagerID(res?.data?.results?.driverManagerId);
-        setDriverManagerName(res?.data?.results?.driver_manager_name);
-        setVisitCategory(res?.data?.results?.visit_category);
-        setSelectedCarID(res?.data?.results?.carId);
+        const respData = res?.data?.results[0];
+        console.log('CarResp', res?.data?.results[0]);
+        setcarNumber(respData?.car_number);
+        setRadioValue(respData?.is_with_driver);
+        setDriverName(respData?.driver_name);
+        setDriverContact(respData?.drive_contact_number);
+        setSelectedDriverManagerID(respData?.driverManagerId);
+        setDriverManagerName(respData?.driver_manager_name);
+        setVisitCategory(respData?.visit_category);
+        setSelectedCarID(respData?.carId);
       })
       .catch((err) => {
         console.log('err1', err);
@@ -239,13 +240,23 @@ const carformpage = () => {
 
   const handleOnHover = (result) => {
     // the item hovered
-    // getCarDetails(result.id);
-    console.log('hover', result);
-    setSelectedCarID(result);
-    const temp = CarsList.filter((item) => item.id === result);
-    setSelectedCarNumber(temp[0].name);
-    // setisFocused(false);
-    getCarDetails(result);
+    checkExistingCarDetails(result)
+      .then((res) => {
+        if (res.data === false) {
+          setSelectedCarID(result);
+          const temp = CarsList.filter((item) => item.id === result);
+          setSelectedCarNumber(temp[0].name);
+          // setisFocused(false);
+          getCarDetails(result);
+        } else {
+          notification.error({
+            message: 'Car is already in the Audit Queue',
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleOnFocus = () => {

@@ -63,6 +63,7 @@ const AcceptLeasingJama = () => {
     batteryCharge,
     horn,
     setselectedCarID,
+    driverReportedIssue,
     setdriverReportedIssue,
     setCarReturnReason,
     setBatteryName,
@@ -110,6 +111,10 @@ const AcceptLeasingJama = () => {
     setBackRightSticker,
     backLeftSticker,
     setBackLeftSticker,
+    penaltyAmount,
+    setPenaltyAmount,
+    penaltyReason,
+    setPenaltyReason,
   } = useJamaContext();
 
   const ResetContextValues = () => {
@@ -155,6 +160,8 @@ const AcceptLeasingJama = () => {
     setBackMainSticker({ backMainStickerValue: false });
     setBackRightSticker({ backRightStickerValue: false });
     setBackLeftSticker({ backLeftStickerValue: false });
+    setPenaltyAmount({ penaltyAmountValue: 1 });
+    setPenaltyReason({ penaltyReasonValue: 1 });
     history.push('/LeasingJama/leasingJamaCarlist');
   };
 
@@ -184,11 +191,16 @@ const AcceptLeasingJama = () => {
     console.log(resp);
 
     if (resp) {
+      console.log(penaltyAmount, penaltyReason);
       const auditmaster = {
-        visitId: selectedCarID.selectedCarIDValue,
-        driverReportedIssue: '',
-        carReturnReason: '',
-        fastagBalance: fasttagBalance.fasttagBalanceValue,
+        visit: selectedCarID.selectedCarIDValue,
+        driver_reported_issue: '',
+        car_return_reason: '',
+        fastag_balance: fasttagBalance.fasttagBalanceValue,
+        penalty_amount: penaltyAmount.penaltyAmountValue,
+        penalty_reason: penaltyReason.penaltyReasonValue,
+        penalty_details: driverReportedIssue.driverReportedIssueValue,
+        status: 1,
       };
       let auditdetails = {};
       addOtherAuditMaster(auditmaster)
@@ -196,7 +208,8 @@ const AcceptLeasingJama = () => {
           const tempID = res.data.results.id;
           console.log('res', tempID);
           auditdetails = {
-            auditId: tempID,
+            visit: selectedCarID.selectedCarIDValue,
+            audit: tempID,
             auditor_comment: remarks,
             battery_brand: batteryBrand.batteryBrandValue,
             battery_number: batteryName.batteryNameValue,

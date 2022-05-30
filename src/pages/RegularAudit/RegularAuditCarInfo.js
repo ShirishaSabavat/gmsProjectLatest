@@ -93,10 +93,14 @@ const RegularAuditCarInfo = () => {
 
     if (resp) {
       const auditmaster = {
-        visitId: selectedCarID.selectedCarIDValue,
+        visit: selectedCarID.selectedCarIDValue,
         driver_reported_issue: null,
         car_return_reason: null,
-        fastagBalance: fasttagBalance,
+        fastag_balance: fasttagBalance,
+        penalty_amount: null,
+        penalty_reason: null,
+        penalty_details: null,
+        status: 1,
       };
       console.log(auditmaster);
       let auditdetails = {};
@@ -105,7 +109,8 @@ const RegularAuditCarInfo = () => {
           const tempID = res.data.results.id;
           console.log('res', tempID);
           auditdetails = {
-            auditId: tempID,
+            visit: selectedCarID.selectedCarIDValue,
+            audit: tempID,
             auditor_comment: null,
             battery_brand: null,
             battery_number: null,

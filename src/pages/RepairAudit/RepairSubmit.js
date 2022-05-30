@@ -187,10 +187,14 @@ const RepairSubmit = () => {
 
     if (resp) {
       const auditmaster = {
-        visitId: selectedCarID.selectedCarIDValue,
-        driverReportedIssue: driverReportedIssue.driverReportedIssueValue,
-        carReturnReason: '',
-        fastagBalance: fasttagBalance.fasttagBalanceValue,
+        visit: selectedCarID.selectedCarIDValue,
+        driver_reported_issue: driverReportedIssue.driverReportedIssueValue,
+        car_return_reason: '',
+        fastag_balance: fasttagBalance.fasttagBalanceValue,
+        penalty_amount: null,
+        penalty_reason: null,
+        penalty_details: null,
+        status: 1,
       };
       let auditdetails = {};
       addOtherAuditMaster(auditmaster)
@@ -198,7 +202,8 @@ const RepairSubmit = () => {
           const tempID = res.data.results.id;
           console.log('res', tempID);
           auditdetails = {
-            auditId: tempID,
+            visit: selectedCarID.selectedCarIDValue,
+            audit: tempID,
             auditor_comment: remarks,
             battery_brand: batteryBrand.batteryBrandValue,
             battery_number: batteryName.batteryNameValue,

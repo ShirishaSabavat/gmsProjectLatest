@@ -4,22 +4,24 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 let headers = {
-  Authorization: `Bearer ${Cookies.get('token')}`,
+  Authorization: `Token ${Cookies.get('token')}`,
   'Content-Type': 'application/json',
 };
 
 const baseUrl = 'http://13.126.183.78:8086/api/v1';
+const basUrl = 'https://staging.everestfleet.com/api/gms';
 
 export const loginApi = async (userData) => {
   const { variables: { userName, password } } = userData;
   const data = JSON.stringify({
-    user_name: userName,
+    username: userName,
     password,
   });
+  console.log(data);
   try {
     const resp = await axios({
       method: 'POST',
-      url: `${baseUrl}/user/login`,
+      url: `${basUrl}/user/login`,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -29,17 +31,17 @@ export const loginApi = async (userData) => {
     Cookies.set('token', token);
     headers = {
       ...headers,
-      Authorization: `Bearer ${Cookies.get('token') || token}`,
+      Authorization: `Token ${Cookies.get('token') || token}`,
     };
     localStorage.setItem('token', token);
     localStorage.setItem('user', user?.first_name);
-    localStorage.setItem('role', user?.roles[0]?.role);
+    localStorage.setItem('role', user?.group?.name);
     // if (!(user?.roles[0]?.role === null || user?.roles[0]?.role === undefined || user?.roles[0]?.role === 'Super Admin')) {
-    localStorage.setItem('empid', user?.user_profile?.emp_id);
-    localStorage.setItem('garageid', user?.user_profile?.garageId);
+    // localStorage.setItem('empid', user?.user_profile?.emp_id); //not available
+    localStorage.setItem('garageid', user?.user_profile?.garage);
     localStorage.setItem('createdby', user?.id);
-    localStorage.setItem('locationid', user?.user_profile?.locationId);
-    localStorage.setItem('cityid', user?.user_profile?.cityId);
+    localStorage.setItem('locationid', user?.user_profile?.location);
+    localStorage.setItem('cityid', user?.user_profile?.city);
     // }
     return resp;
   } catch (err) {
@@ -86,7 +88,7 @@ export const getModule = (page) => axios({
 
 export const getGarages = (page) => axios({
   method: 'GET',
-  url: `${baseUrl}/garage?page=${page}&size=10`,
+  url: `${basUrl}/garage?page=${page}&size=10`,
   headers,
 });
 
@@ -517,37 +519,38 @@ export const getRolesUI = (id) => axios({
 
 export const getCarsList = (garageid, createdby) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&createdBy=${createdby}`,
+  url: `${basUrl}/visitingCars?garage=${garageid}&createdBy=${createdby}`,
   headers,
 });
 
 export const getCarsListEverest = (cityid) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars/fetchCarsFromEverest/${cityid}`,
+  url: `${basUrl}/car_list/${cityid}`,
   headers,
 });
 
 export const getQueueCarsList = (garageid, visitcategory, status) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=${visitcategory}&status=${status}`,
+  url: `${basUrl}/visitedCars?garage=${garageid}&visit_category=${visitcategory}&status=${status}`,
   headers,
 });
 
 export const getCarsListRoadTest = (garageid) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1&visit_category[]=2&status=1`,
+  // url: `${basUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1&visit_category[]=2&status=1`,
+  url: `${basUrl}/visitedCars?garage=${garageid}&visit_category=1,2&status=1`,
   headers,
 });
 
 export const getCarDetailsList = (id) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars/fetchCarDetailsFromEverest/${id}/2022-04-07`,
+  url: `${basUrl}/car_detail/${id}`,
   headers,
 });
 
 export const getVisitingCarDetails = (id) => axios({
   method: 'GET',
-  url: `${baseUrl}/visitingCars/${id}`,
+  url: `${basUrl}/visitingCars/${id}`,
   headers,
 });
 
@@ -556,7 +559,7 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
     visit_category: visitcat,
     carId: carid,
     car_number: carnumber,
-    garageId: garageid,
+    garage: garageid,
     locationId,
     is_with_driver: isdriverwithcar,
     driverId,
@@ -569,7 +572,7 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
   console.log(data);
   return axios({
     method: 'POST',
-    url: `${baseUrl}/visitingCars`,
+    url: `${basUrl}/visitingCars`,
     headers,
     data,
   });
@@ -591,8 +594,8 @@ export const editCarVisit = (visitCarId, visitcat, carid, garageid, isdriverwith
   });
   console.log(data);
   return axios({
-    method: 'PUT',
-    url: `${baseUrl}/visitingCars/${visitCarId}`,
+    method: 'PATCH',
+    url: `${basUrl}/visitingCars/${visitCarId}`,
     headers,
     data,
   });
@@ -600,8 +603,8 @@ export const editCarVisit = (visitCarId, visitcat, carid, garageid, isdriverwith
 
 export const addRTAList = (visitid, garageid, isleasing, roadtestcomment, jamaStatus) => {
   const data = JSON.stringify({
-    visitId: visitid,
-    garageId: garageid,
+    visit: visitid,
+    garage: garageid,
     is_leasing: isleasing,
     road_test_comments: roadtestcomment,
     jama_status: jamaStatus,
@@ -609,7 +612,7 @@ export const addRTAList = (visitid, garageid, isleasing, roadtestcomment, jamaSt
   console.log(data);
   return axios({
     method: 'POST',
-    url: `${baseUrl}/roadTest`,
+    url: `${basUrl}/roadTest`,
     headers,
     data,
   });
@@ -617,7 +620,7 @@ export const addRTAList = (visitid, garageid, isleasing, roadtestcomment, jamaSt
 
 export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) => {
   const data = JSON.stringify({
-    visitId: visitid,
+    visit: visitid,
     previousAudit: visitcategory,
     currentAudit: rejectid,
     transfer_reason: rejectreason,
@@ -625,7 +628,7 @@ export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) =>
   console.log(data);
   return axios({
     method: 'POST',
-    url: `${baseUrl}/auditTransfer`,
+    url: `${basUrl}/auditTransfer`,
     headers,
     data,
   });
@@ -705,13 +708,7 @@ export const editBreakdown = (breakdownId, breakdownData) => {
 };
 
 export const addAuditMaster = (auditmaster) => {
-  const data = JSON.stringify({
-    visitId: auditmaster.visitId,
-    driver_reported_issue: null,
-    car_return_reason: null,
-    fastag_balance: auditmaster.fastagBalance,
-    status: 1,
-  });
+  const data = JSON.stringify(auditmaster);
   console.log(data);
   return axios({
     method: 'POST',
@@ -723,16 +720,19 @@ export const addAuditMaster = (auditmaster) => {
 
 export const addOtherAuditMaster = (auditmaster) => {
   const data = JSON.stringify({
-    visitId: auditmaster.visitId,
+    visit: auditmaster.visitId,
     driver_reported_issue: auditmaster.driverReportedIssue,
     car_return_reason: auditmaster.carReturnReason,
     fastag_balance: auditmaster.fastagBalance,
     status: 1,
+    penalty_amount: auditmaster.penalty_amount,
+    penalty_reason: auditmaster.penalty_reason,
+    penalty_details: auditmaster.penalty_details,
   });
   console.log(data);
   return axios({
     method: 'POST',
-    url: `${baseUrl}/auditDetails/auditMaster`,
+    url: `${basUrl}/auditDetails/auditMaster`,
     headers,
     data,
   });
@@ -787,50 +787,18 @@ export const addAuditDetails = (auditdetails) => {
 };
 
 export const addOtherAuditDetails = (auditdetails) => {
-  // const data = JSON.stringify({
-  // auditId: auditdetails.id,
-  // car_km: auditdetails.carKm,
-  // front_right_tyre_worn_out: auditdetails.frWornOut,
-  // front_right_tyre_pressure: auditdetails.frPressure,
-  // front_right_tyre_brand: auditdetails.frBrand,
-  // front_right_tyre_number: auditdetails.frNumber,
-  // front_left_tyre_worn_out: auditdetails.fLWornOut,
-  // front_left_tyre_pressure: auditdetails.fLPressure,
-  // front_left_tyre_brand: auditdetails.fLBrand,
-  // front_left_tyre_number: auditdetails.fLNumber,
-  // rear_right_tyre_worn_out: auditdetails.rrWornOut,
-  // rear_right_tyre_pressure: auditdetails.rrPressure,
-  // rear_right_tyre_brand: auditdetails.rrBrand,
-  // rear_right_tyre_number: auditdetails.rrNumber,
-  // rear_left_tyre_worn_out: auditdetails.rLWornOut,
-  // rear_left_tyre_pressure: auditdetails.rLPressure,
-  // rear_left_tyre_brand: auditdetails.rLBrand,
-  // rear_left_tyre_number: auditdetails.rLNumber,
-  // fuel_indicator_petrol: auditdetails.fuelIndicatorOne,
-  // fuel_indicator_cng: auditdetails.cng,
-  // sticker_front_main: auditdetails.StickerFrontMain,
-  // sticker_back_main: auditdetails.StickerBackMain,
-  // sticker_back_right: auditdetails.StickerBackRight,
-  // sticker_back_left: auditdetails.StickerBackLeft,
-  // jack: auditdetails.jack,
-  // panna: auditdetails.panna,
-  // tommy: auditdetails.tommy,
-  // engine_oil: auditdetails.engineOil,
-  // break_oil: auditdetails.breakOil,
-  // coolant: auditdetails.coolant,
-  // stephney_available: false,
-  // battery_status: auditdetails.batteryCharge,
-  // battery_number: null,
-  // battery_brand: null,
-  // horn: auditdetails.horn,
-  // auditor_comment: null,
-  // });
   const data = JSON.stringify(auditdetails);
   console.log(data);
   return axios({
     method: 'POST',
-    url: `${baseUrl}/auditDetails`,
+    url: `${basUrl}/auditDetails`,
     headers,
     data,
   });
 };
+
+export const checkExistingCarDetails = (carId) => axios({
+  method: 'GET',
+  url: `${basUrl}/visitstatus?carId=${carId}`,
+  headers,
+});

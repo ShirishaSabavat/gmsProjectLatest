@@ -187,7 +187,7 @@ const JamaProvider = ({ children }) => {
     penaltyAmountValue: 1,
   });
   const [penaltyReason, setPenaltyReason] = useState({
-    penaltyReasonValue: 1,
+    penaltyReasonValue: 0,
   });
   const [frontMainSticker, setFrontMainSticker] = useState({
     frontMainStickerValue: false,
