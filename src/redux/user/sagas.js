@@ -55,7 +55,7 @@ function* LOGIN(userAction) {
       yield history.push('/RepairAudit/RepairAuditCarlist');
     } else if (temprole === 'Service Queue Auditor') {
       yield history.push('/ServiceAudit/ServiceAuditCarlist');
-    } else if (temprole === 'Driver Manager') {
+    } else if (temprole === 'Fleet Managers') {
       yield history.push('/breakdown/breakdownHome');
     } else if (temprole === 'Insurance') {
       yield history.push('/insurance/insuranceHome');

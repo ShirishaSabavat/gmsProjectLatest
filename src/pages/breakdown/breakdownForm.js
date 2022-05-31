@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-undef */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable global-require */
@@ -6,11 +7,11 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
 import {
-  Input, Radio, Button, Dropdown, notification,
+  Input, Radio, Button, Dropdown, notification, Select,
 } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {
-  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getBreakdownDetails,
+  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getBreakdownDetails, checkExistingCarDetails,
 } from 'services/axios';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { useParams, useHistory } from 'react-router-dom';
@@ -37,7 +38,7 @@ const carformpage = () => {
   const [cityID, setcityID] = useState(localStorage.getItem('cityid'));
   const [DriverName, setDriverName] = useState('');
   const [DriverContact, setDriverContact] = useState('');
-  const [DriverManagerName, setDriverManagerName] = useState('DEMO');
+  const [DriverManagerName, setDriverManagerName] = useState('');
   const [DriverNameError, setDriverNameError] = useState('');
   const [DriverContactError, setDriverContactError] = useState('');
   const [DriverManagerNameError, setDriverManagerNameError] = useState('');
@@ -45,7 +46,7 @@ const carformpage = () => {
   const [DriverSelectedCarNumberError, setDriverSelectedCarNumberError] = useState('');
   const [VisitCategory, setVisitCategory] = useState(10);
   const [SelectedCarID, setSelectedCarID] = useState(1);
-  const [SelectedCarNumber, setSelectedCarNumber] = useState('MH02-1234');
+  const [SelectedCarNumber, setSelectedCarNumber] = useState('');
   const [GarageID, setGarageID] = useState(localStorage.getItem('garageid'));
   const [LocationID, setLocationID] = useState(localStorage.getItem('locationid'));
   const [SelectedDriverID, setSelectedDriverID] = useState(0);
@@ -84,7 +85,7 @@ const carformpage = () => {
     getBreakdownDetails(id)
       .then((res) => {
         console.log('CarResp', res?.data?.results);
-        setcarNumber(res?.data?.results?.car_number);
+        setSelectedCarNumber(res?.data?.results?.car_number);
         setCarWithDriver(res?.data?.results?.is_with_driver);
         setDriverName(res?.data?.results?.driver_name);
         setDriverContact(res?.data?.results?.driver_contact_number || '');
@@ -197,16 +198,18 @@ const carformpage = () => {
     if (resp) {
       const breakdownData = {
         carId: SelectedCarID,
-        carNumber: SelectedCarNumber,
-        isDriverWithCar: carWithDriver,
+        car_number: SelectedCarNumber,
+        is_with_driver: carWithDriver,
         driverId: SelectedDriverID,
-        driverName: DriverName,
-        contactNo: DriverContact,
+        driver_name: DriverName,
+        driver_contact_number: DriverContact,
         driverManagerId: SelectedDriverManagerID,
-        driverManagerName: DriverManagerName,
-        breakdownType: breakdownType === true ? 1 : 2,
-        breakdownLocation: locationName,
-        garageId: Number(GarageID),
+        driver_manager_name: DriverManagerName,
+        breakdown_type: breakdownType === true ? 1 : 2,
+        breakdown_location: locationName,
+        garage: Number(GarageID),
+        towing_required: false,
+        status: 1,
       };
       console.log('breakdownData', breakdownData);
       if (id === '-1') {
@@ -253,11 +256,29 @@ const carformpage = () => {
 
   const handleOnHover = (result) => {
     // the item hovered
-    // getCarDetails(result.id);
-    setSelectedCarID(result.id);
-    setSelectedCarNumber(result.name);
-    setisFocused(false);
-    getCarDetails(result.id);
+    setSelectedCarID(result);
+    const temp = CarsList.filter((item) => item.id === result);
+    setSelectedCarNumber(temp[0].name);
+    // setisFocused(false);
+    getCarDetails(result);
+    // checkExistingCarDetails(result)
+    //   .then((res) => {
+    //     console.log(res, 'respppppp');
+    //     if (res.data === false) {
+    //       setSelectedCarID(result);
+    //       const temp = CarsList.filter((item) => item.id === result);
+    //       setSelectedCarNumber(temp[0].name);
+    //       // setisFocused(false);
+    //       getCarDetails(result);
+    //     } else {
+    //       notification.error({
+    //         message: 'Car is already in the Audit Queue',
+    //       });
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const handleOnFocus = () => {
@@ -283,7 +304,7 @@ const carformpage = () => {
           {id === '-1'
             ? (
               <div className="bg-white">
-                <ReactSearchAutocomplete
+                {/* <ReactSearchAutocomplete
                   placeholder="Enter Car Number Here..."
                   resultStringKeyName="name"
                   inputSearchString={SelectedCarNumber === '' || SelectedCarNumber === 'Enter Car Number Here...' ? '' : SelectedCarNumber}
@@ -297,10 +318,29 @@ const carformpage = () => {
                   onFocus={handleOnFocus}
                   maxResults={10}
                   formatResult={formatResult}
-                />
+                /> */}
+                <Select
+                  onChange={(e) => {
+                    handleOnHover(e);
+                  }}
+                  style={{ width: '100%', backgroundColor: '#F5F8FC' }}
+                  placeholder="Search Car"
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input, option) => option.children
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0}
+                >
+                  {CarsList.map((items) => (
+                    <Select.Option key={items.id} value={items.id}>
+                      {items.name}
+                    </Select.Option>
+                  ))}
+                </Select>
               </div>
             )
-            : <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>{carNumber}</p>}
+            : <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>{SelectedCarNumber}</p>}
           {Object.keys(DriverSelectedCarNumberError).map((key) => (
             <div style={{ color: 'red' }}>
               {DriverSelectedCarNumberError[key]}

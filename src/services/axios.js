@@ -647,25 +647,26 @@ export const addTeamMembersBulk = (users) => {
 };
 
 export const addBreakdown = (breakdownData) => {
-  const data = JSON.stringify({
-    carId: breakdownData.carId,
-    car_number: breakdownData.carNumber,
-    is_with_driver: breakdownData.isDriverWithCar,
-    driverId: breakdownData.driverId,
-    driver_name: breakdownData.driverName,
-    driver_contact_number: breakdownData.contactNo,
-    driverManagerId: breakdownData.driverManagerId,
-    driver_manager_name: breakdownData.driverManagerName,
-    breakdown_type: breakdownData.breakdownType,
-    breakdown_location: breakdownData.breakdownLocation,
-    towing_required: false,
-    status: 1,
-    garageId: breakdownData.garageId,
-  });
+  // const data = JSON.stringify({
+  //   carId: breakdownData.carId,
+  //   car_number: breakdownData.carNumber,
+  //   is_with_driver: breakdownData.isDriverWithCar,
+  //   driverId: breakdownData.driverId,
+  //   driver_name: breakdownData.driverName,
+  //   driver_contact_number: breakdownData.contactNo,
+  //   driverManagerId: breakdownData.driverManagerId,
+  //   driver_manager_name: breakdownData.driverManagerName,
+  //   breakdown_type: breakdownData.breakdownType,
+  //   breakdown_location: breakdownData.breakdownLocation,
+  //   towing_required: false,
+  //   status: 1,
+  //   garageId: breakdownData.garageId,
+  // });
+  const data = JSON.stringify(breakdownData);
   console.log(data);
   return axios({
     method: 'POST',
-    url: `${baseUrl}/breakdown`,
+    url: `${basUrl}/breakdown`,
     headers,
     data,
   });
@@ -673,36 +674,37 @@ export const addBreakdown = (breakdownData) => {
 
 export const getBreakdownList = () => axios({
   method: 'GET',
-  url: `${baseUrl}/breakdown`,
+  url: `${basUrl}/breakdown`,
   headers,
 });
 
 export const getBreakdownDetails = (id) => axios({
   method: 'GET',
-  url: `${baseUrl}/breakdown/${id}`,
+  url: `${basUrl}/breakdown/${id}`,
   headers,
 });
 
 export const editBreakdown = (breakdownId, breakdownData) => {
-  const data = JSON.stringify({
-    carId: breakdownData.carId,
-    car_number: breakdownData.carNumber,
-    is_with_driver: breakdownData.isDriverWithCar,
-    driverId: breakdownData.driverId,
-    driver_name: breakdownData.driverName,
-    driver_contact_number: breakdownData.contactNo,
-    driverManagerId: breakdownData.driverManagerId,
-    driver_manager_name: breakdownData.driverManagerName,
-    breakdown_type: breakdownData.breakdownType,
-    breakdown_location: breakdownData.breakdownLocation,
-    towing_required: false,
-    status: 1,
-    garageId: breakdownData.garageId,
-  });
+  // const data = JSON.stringify({
+  //   carId: breakdownData.carId,
+  //   car_number: breakdownData.carNumber,
+  //   is_with_driver: breakdownData.isDriverWithCar,
+  //   driverId: breakdownData.driverId,
+  //   driver_name: breakdownData.driverName,
+  //   driver_contact_number: breakdownData.contactNo,
+  //   driverManagerId: breakdownData.driverManagerId,
+  //   driver_manager_name: breakdownData.driverManagerName,
+  //   breakdown_type: breakdownData.breakdownType,
+  //   breakdown_location: breakdownData.breakdownLocation,
+  //   towing_required: false,
+  //   status: 1,
+  //   garageId: breakdownData.garageId,
+  // });
+  const data = JSON.stringify(breakdownData);
   console.log(data);
   return axios({
-    method: 'PUT',
-    url: `${baseUrl}/breakdown/${breakdownId}`,
+    method: 'PATCH',
+    url: `${basUrl}/breakdown/${breakdownId}`,
     headers,
     data,
   });
