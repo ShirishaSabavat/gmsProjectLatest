@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Breadcrumb from 'components/layouts/breadcrumb';
@@ -80,9 +81,9 @@ function garagelist() {
         <div className="box-border mb-px">
           <div className="flex flex-row flex-nowrap mx-5">
             <h1 className="text-base font-quicksand-medium font-medium basis-1/3 bg-white p-4 mr-1">Garage Name</h1>
-            <h1 className="text-base font-quicksand-medium font-medium basis-1/3 bg-white p-4 mr-1">Garage Series</h1>
-            <h1 className="text-base font-quicksand-medium font-medium basis-1/4 bg-white p-4 mr-1">Status</h1>
-            <h1 className="text-base font-quicksand-medium font-medium basis-1/6 bg-white p-4 mr-1">Action</h1>
+            {/* <h1 className="text-base font-quicksand-medium font-medium basis-1/3 bg-white p-4 mr-1">Garage Series</h1> */}
+            <h1 className="text-base font-quicksand-medium font-medium basis-1/3 bg-white p-4 mr-1">Status</h1>
+            <h1 className="text-base font-quicksand-medium font-medium basis-1/3 bg-white p-4 mr-1">Action</h1>
           </div>
 
         </div>

@@ -18,26 +18,26 @@ const Sidebar = ({
       icon: '/assets/images/logo/sidebarLogo/home.svg',
       key: '/home/dashboard',
     },
-    {
-      title: 'Cities',
-      icon: '/assets/images/logo/sidebarLogo/cities.svg',
-      key: '/cities/citieslist',
-    },
+    // {
+    //   title: 'Cities',
+    //   icon: '/assets/images/logo/sidebarLogo/cities.svg',
+    //   key: '/cities/citieslist',
+    // },
     {
       title: 'Garage',
       icon: '/assets/images/logo/sidebarLogo/garage.svg',
       key: '/garage/garagelist',
     },
-    {
-      title: 'User Profiles',
-      icon: '/assets/images/logo/sidebarLogo/people.svg',
-      key: '/userProfiles/userProfiles',
-    },
-    {
-      title: 'User Roles',
-      icon: '/assets/images/logo/sidebarLogo/roles.svg',
-      key: '/userroles/userroleslist',
-    },
+    // {
+    //   title: 'User Profiles',
+    //   icon: '/assets/images/logo/sidebarLogo/people.svg',
+    //   key: '/userProfiles/userProfiles',
+    // },
+    // {
+    //   title: 'User Roles',
+    //   icon: '/assets/images/logo/sidebarLogo/roles.svg',
+    //   key: '/userroles/userroleslist',
+    // },
     // {
     //   title: 'Modules',
     //   icon: '/assets/images/logo/sidebarLogo/modules.svg',

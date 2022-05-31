@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
@@ -15,8 +16,8 @@ const LeasingJamaDetails = () => {
   const {
     selectedCar,
     visitId,
-    driverReportedIssue,
-    setdriverReportedIssue,
+    // driverReportedIssue,
+    // setdriverReportedIssue,
     fasttagBalance,
     setfasttagBalance,
     memberName,
@@ -27,17 +28,17 @@ const LeasingJamaDetails = () => {
     setDriverBal,
     rent,
     setRent,
-    penaltyAmount,
-    setPenaltyAmount,
-    penaltyReason,
-    setPenaltyReason,
+    // penaltyAmount,
+    // setPenaltyAmount,
+    // penaltyReason,
+    // setPenaltyReason,
   } = useJamaContext();
   const history = useHistory();
   const [memberNameError, setMemberNameError] = useState({});
   const [etmIdError, setEtmIdError] = useState({});
   const [driverBalError, setDriverBalError] = useState({});
   const [fasttagBalanceError, setFasttagBalanceError] = useState({});
-  const [carReturnError, setCarReturnError] = useState({});
+  // const [carReturnError, setCarReturnError] = useState({});
 
   const validateFormData = () => {
     let isValid = true;
@@ -45,7 +46,7 @@ const LeasingJamaDetails = () => {
     const etmIdErr = {};
     const driverBalErr = {};
     const fasttagBalanceErr = {};
-    const carRetrurnErr = {};
+    // const carRetrurnErr = {};
 
     if (memberName.memberNameValue === '') {
       memberNamerErr.err = 'This field can not be empty';
@@ -64,20 +65,20 @@ const LeasingJamaDetails = () => {
       isValid = false;
     }
 
-    if (!driverReportedIssue.driverReportedIssueValue) {
-      carRetrurnErr.err = 'This field can not be empty';
-      isValid = false;
-    }
+    // if (!driverReportedIssue.driverReportedIssueValue) {
+    //   carRetrurnErr.err = 'This field can not be empty';
+    //   isValid = false;
+    // }
     setMemberNameError(memberNamerErr);
     setEtmIdError(etmIdErr);
     setDriverBalError(driverBalErr);
     setFasttagBalanceError(fasttagBalanceErr);
-    setCarReturnError(carRetrurnErr);
+    // setCarReturnError(carRetrurnErr);
     return isValid;
   };
 
   const goToBatteryAudit = () => {
-    console.log(penaltyAmount, penaltyReason);
+    // console.log(penaltyAmount, penaltyReason);
     const resp = validateFormData();
     if (resp) {
       history.push('/LeasingJama/LeasingBatteryAudit');
@@ -198,7 +199,7 @@ const LeasingJamaDetails = () => {
             </div>
           ))}
         </div>
-        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Penalty Amount</p>
+        {/* <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Penalty Amount</p>
         <div className="bg-white">
           <Radio.Group
             onChange={(e) => setPenaltyAmount({ penaltyAmountValue: e.target.value })}
@@ -235,7 +236,7 @@ const LeasingJamaDetails = () => {
           <div style={{ color: 'red' }}>
             {carReturnError[key]}
           </div>
-        ))}
+        ))} */}
       </div>
 
       <div className="col-12 flex flex-row justify-end">

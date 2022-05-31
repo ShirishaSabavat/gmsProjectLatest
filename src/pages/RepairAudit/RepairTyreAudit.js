@@ -23,7 +23,7 @@ const RepairTyreAudit = () => {
   const [fLPressureError, setfLPressureError] = useState({});
   const [fLTyreNumberError, setfLTyreNumberError] = useState({});
   const [stepnyTyreNumberError, setStepnyTyreNumberError] = useState({});
-
+  const [stepnyPressureError, setStepnyPressureError] = useState({});
   const history = useHistory();
 
   const {
@@ -67,6 +67,10 @@ const RepairTyreAudit = () => {
     setStepnyBrand,
     setStepnyPresent,
     setStepnyTyreNumber,
+    stepnyWornOut,
+    setStepnyWornOut,
+    stepnyPressure,
+    setStepnyPressure,
   } = useJamaContext();
 
   const validateFormData = () => {
@@ -80,6 +84,7 @@ const RepairTyreAudit = () => {
     const fLPressureErr = {};
     const setfLTyreNumberErr = {};
     const stepnyTyreNumberErr = {};
+    const stepnyPressureErr = {};
 
     if (!fRPressure.fRPressureValue) {
       fRPressureErr.err = 'This field cannot be empty';
@@ -117,6 +122,10 @@ const RepairTyreAudit = () => {
       stepnyTyreNumberErr.err = 'This field cannot be empty';
       isValid = false;
     }
+    if (stepnyPresent.stepnyPresentValue === 1 && !stepnyPressure.stepnyPressureValue) {
+      stepnyPressureErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
 
     setfRPressureError(fRPressureErr);
     setfRTyreNumberError(setfRTyreNumberErr);
@@ -127,6 +136,7 @@ const RepairTyreAudit = () => {
     setfLPressureError(fLPressureErr);
     setfLTyreNumberError(setfLTyreNumberErr);
     setStepnyTyreNumberError(stepnyTyreNumberErr);
+    setStepnyPressureError(stepnyPressureErr);
     return isValid;
   };
   const goToCarInfoAudit = () => {
@@ -470,6 +480,37 @@ const RepairTyreAudit = () => {
                 <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={7}>Kelly</Radio>
                 <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={8}>Other</Radio>
               </Radio.Group>
+            </div>
+            <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Worn Out*</p>
+            <div className="bg-white">
+              <Radio.Group
+                onChange={(e) => setStepnyWornOut({ stepnyWornOutValue: e.target.value })}
+                value={stepnyWornOut.stepnyWornOutValue}
+              >
+                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="<3">{'<3'}</Radio>
+                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="4">4</Radio>
+                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="5">5</Radio>
+                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="6">6</Radio>
+                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="7">7</Radio>
+              </Radio.Group>
+            </div>
+            <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Tyre Pressure</p>
+            <div className="flex flex-row flex-nonwrap bg-white">
+              <Input
+                value={stepnyPressure.stepnyPressureValue}
+                onChange={(e) => setStepnyPressure({ stepnyPressureValue: e.target.value })}
+                placeholder="Enter Name Here..."
+                style={{
+                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                }}
+              />
+            </div>
+            <div className="flex flex-row flex-nonwrap bg-white">
+              {Object.keys(stepnyPressureError).map((key) => (
+                <div style={{ color: 'red' }}>
+                  {stepnyPressureError[key]}
+                </div>
+              ))}
             </div>
             <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Tyre Number</p>
             <div className="flex flex-row flex-nonwrap bg-white">

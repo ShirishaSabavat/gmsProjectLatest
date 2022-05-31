@@ -112,7 +112,7 @@ export const getLocationsByGarageId = (garageId) => axios({
 
 export const getGarageById = (id) => axios({
   method: 'GET',
-  url: `${baseUrl}/garage/${id}`,
+  url: `${basUrl}/garage/${id}`,
   headers,
 });
 
@@ -163,7 +163,8 @@ export const getCities = (page) => axios({
 
 export const getAllCities = () => axios({
   method: 'GET',
-  url: `${baseUrl}/city?isActive=1`,
+  // url: `${basUrl}/city?isActive=1`,
+  url: `${basUrl}/city`,
   headers,
 });
 
@@ -323,44 +324,44 @@ export const editTeamApi = (name, logourl, description, locationId, garageId, te
   });
 };
 
-export const addGarageApi = (garageTitle, cityId, radioValue) => {
+export const addGarageApi = (garageTitle, city, radioValue) => {
   const data = JSON.stringify({
     name: garageTitle,
-    cityId,
+    city,
     isActive: radioValue,
   });
   return axios({
     method: 'POST',
-    url: `${baseUrl}/garage`,
+    url: `${basUrl}/garage`,
     headers,
     data,
   });
 };
 
-export const editGarageApi = (garageTitle, cityId, radioValue, garageId) => {
+export const editGarageApi = (garageTitle, city, radioValue, garageId) => {
   const data = JSON.stringify({
     name: garageTitle,
-    cityId,
+    city,
     isActive: radioValue,
   });
   return axios({
-    method: 'PUT',
-    url: `${baseUrl}/garage/${garageId}`,
+    method: 'PATCH',
+    url: `${basUrl}/garage/${garageId}`,
     headers,
     data,
   });
 };
 
-export const addPickupLocation = (name, radioValue, garageId) => {
-  console.log(name, radioValue, garageId, 'axios');
+export const addPickupLocation = (name, radioValue, garage) => {
+  console.log(name, radioValue, garage, 'axios');
   const data = JSON.stringify({
     name,
-    garageId,
+    garage,
     isActive: radioValue,
   });
   return axios({
     method: 'POST',
-    url: `${baseUrl}/pickupLocation`,
+    url: `${basUrl}/pickupLocation`,
     headers,
     data,
   });
@@ -374,20 +375,20 @@ export const getPickupLocations = () => axios({
 
 export const getPickupLocation = (locationId) => axios({
   method: 'GET',
-  url: `${baseUrl}/pickupLocation/${locationId}`,
+  url: `${basUrl}/pickupLocation/${locationId}`,
   headers,
 });
 
 // AXIOS FOR PROCESS EDITING
-export const editPickupLocation = (name, radioValue, garageId, locationId) => {
+export const editPickupLocation = (name, radioValue, garage, locationId) => {
   const data = JSON.stringify({
     name,
     isActive: radioValue,
-    garageId,
+    garage,
   });
   return axios({
-    method: 'PUT',
-    url: `${baseUrl}/pickupLocation/${locationId}`,
+    method: 'PATCH',
+    url: `${basUrl}/pickupLocation/${locationId}`,
     headers,
     data,
   });
@@ -395,7 +396,7 @@ export const editPickupLocation = (name, radioValue, garageId, locationId) => {
 
 export const getPickupLocationByGarageId = (garageId) => axios({
   method: 'GET',
-  url: `${baseUrl}/pickupLocation/?garageId=${garageId}`,
+  url: `${basUrl}/pickup_location?garage=${garageId}`,
   headers,
 });
 
@@ -719,16 +720,7 @@ export const addAuditMaster = (auditmaster) => {
 };
 
 export const addOtherAuditMaster = (auditmaster) => {
-  const data = JSON.stringify({
-    visit: auditmaster.visitId,
-    driver_reported_issue: auditmaster.driverReportedIssue,
-    car_return_reason: auditmaster.carReturnReason,
-    fastag_balance: auditmaster.fastagBalance,
-    status: 1,
-    penalty_amount: auditmaster.penalty_amount,
-    penalty_reason: auditmaster.penalty_reason,
-    penalty_details: auditmaster.penalty_details,
-  });
+  const data = JSON.stringify(auditmaster);
   console.log(data);
   return axios({
     method: 'POST',

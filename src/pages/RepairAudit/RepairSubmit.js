@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable global-require */
 /* eslint-disable no-unused-vars */
@@ -112,6 +113,10 @@ const RepairSubmit = () => {
     setBackRightSticker,
     backLeftSticker,
     setBackLeftSticker,
+    stepnyWornOut,
+    setStepnyWornOut,
+    stepnyPressure,
+    setStepnyPressure,
   } = useJamaContext();
 
   const ResetContextValues = () => {
@@ -157,6 +162,8 @@ const RepairSubmit = () => {
     setBackMainSticker({ backMainStickerValue: false });
     setBackRightSticker({ backRightStickerValue: false });
     setBackLeftSticker({ backLeftStickerValue: false });
+    setStepnyWornOut({ stepnyWornOutValue: '<3' });
+    setStepnyPressure({ stepnyPressureValue: '' });
     history.push('/RepairAudit/RepairAuditCarList');
   };
 
@@ -234,6 +241,10 @@ const RepairSubmit = () => {
             rear_right_tyre_pressure: rRPressure.rRPressureValue,
             rear_right_tyre_worn_out: rRWornOut.rRWornOutValue === '<3' ? 3 : rRWornOut.rRWornOutValue === '4' ? 4 : rRWornOut.rRWornOutValue === '5' ? 5 : rRWornOut.rRWornOutValue === '6' ? 6 : 7,
             stephney_available: stepnyPresent.stepnyPresentValue === 1,
+            stephney_tyre_worn_out: stepnyPresent.stepnyPresentValue === 1 ? stepnyWornOut.stepnyWornOutValue === '<3' ? 3 : stepnyWornOut.stepnyWornOutValue === '4' ? 4 : stepnyWornOut.stepnyWornOutValue === '5' ? 5 : stepnyWornOut.stepnyWornOutValue === '6' ? 6 : 7 : null,
+            stephney_tyre_pressure: stepnyPresent.stepnyPresentValue === 1 ? stepnyPressure.stepnyPressureValue : null,
+            stephney_tyre_brand: stepnyPresent.stepnyPresentValue === 1 ? stepnyBrand.stepnyBrandValue : null,
+            stephney_tyre_number: stepnyPresent.stepnyPresentValue === 1 ? stepnyTyreNumber.stepnyTyreNumberValue : null,
             sticker_back_left: backLeftSticker.backLeftStickerValue,
             sticker_back_main: backMainSticker.backMainStickerValue,
             sticker_back_right: backRightSticker.backRightStickerValue,

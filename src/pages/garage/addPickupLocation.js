@@ -26,8 +26,8 @@ const createModules = () => {
     getPickupLocation(locationId)
       .then((res) => {
         console.log(res);
-        setPickupLocationName(res.data.results?.name);
-        setRadioValue(res.data.results?.isActive);
+        setPickupLocationName(res.data.results[0]?.name);
+        setRadioValue(res.data.results[0]?.isActive);
       })
       .catch((err) => {
         console.log('err', err);

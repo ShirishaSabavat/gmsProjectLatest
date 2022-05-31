@@ -50,7 +50,7 @@ const addgarage = () => {
     getAllCities()
       .then((res) => {
         console.log('resp', res?.data?.results);
-        setDropDownMenu(res?.data?.results?.pageData);
+        setDropDownMenu(res?.data?.results);
       })
       .catch((err) => {
         console.log('err', err);
@@ -61,10 +61,10 @@ const addgarage = () => {
     getGarageById(id)
       .then((res) => {
         console.log('getResp', res?.data?.results);
-        setGarageTitle(res?.data?.results?.name);
-        setRadioValue(res?.data?.results?.isActive);
-        // setGarageDescription(res?.data?.results?.description);
-        setSelectedItem(res?.data?.results?.cityId);
+        setGarageTitle(res?.data?.results[0]?.name);
+        setRadioValue(res?.data?.results[0]?.isActive);
+        // setGarageDescription(res?.data?.results[0]?.description);
+        setSelectedItem(res?.data?.results[0]?.city);
       })
       .catch((err) => {
         console.log(err);
