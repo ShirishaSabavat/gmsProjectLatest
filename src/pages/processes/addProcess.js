@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-boolean-value */
 import { React, useState, useEffect } from 'react';
 import {
@@ -39,7 +40,6 @@ const createModules = () => {
   useEffect(() => {
     getModules()
       .then((res) => {
-        console.log('res1', res?.data?.results?.pageData);
         setDropDownMenu(res?.data?.results?.pageData);
       })
       .catch((err) => {
@@ -50,7 +50,6 @@ const createModules = () => {
   useEffect(() => {
     getProcessById(id)
       .then((res) => {
-        console.log('response', res?.data?.results);
         setProcessName(res?.data?.results?.process);
         setSelectedItem(res?.data?.results?.moduleId);
         setRadioValue(res?.data?.results?.isActive);
@@ -80,16 +79,11 @@ const createModules = () => {
 
   const onSave = (event) => {
     event.preventDefault();
-    console.log('radio', radioValue);
-    console.log('pname', processName);
-    console.log('mod', selectedItem);
     const resp = validateFormData();
     if (resp) {
       if (id !== '-1') {
-        console.log('in edit');
         editProcess(processName, radioValue, selectedItem, Number(id))
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Process Edited Successfully',
             });
@@ -98,7 +92,6 @@ const createModules = () => {
             }, 1000);
           })
           .catch((err) => {
-            console.log('err', err);
             notification.error({
               message: 'Something went wrong',
             });
@@ -107,10 +100,8 @@ const createModules = () => {
             }, 1000);
           });
       } else {
-        console.log('in add');
         addProcess(processName, radioValue, selectedItem)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Process Added Successfully',
             });
@@ -119,7 +110,6 @@ const createModules = () => {
             }, 1000);
           })
           .catch((err) => {
-            console.log('err', err);
             notification.error({
               message: err.response.data.errors[0].msg,
             });

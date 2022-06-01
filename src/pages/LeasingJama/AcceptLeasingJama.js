@@ -120,6 +120,12 @@ const AcceptLeasingJama = () => {
     setStepnyWornOut,
     stepnyPressure,
     setStepnyPressure,
+    etmId,
+    setEtmId,
+    driverName,
+    setDriverName,
+    driverBal,
+    setDriverBal,
   } = useJamaContext();
 
   const ResetContextValues = () => {
@@ -169,6 +175,9 @@ const AcceptLeasingJama = () => {
     setPenaltyReason({ penaltyReasonValue: 1 });
     setStepnyWornOut({ stepnyWornOutValue: '<3' });
     setStepnyPressure({ stepnyPressureValue: '' });
+    setEtmId({ etmIdValue: '' });
+    setDriverName({ driverNameValue: '' });
+    setDriverBal({ driverBalValue: '' });
     history.push('/LeasingJama/leasingJamaCarlist');
   };
 
@@ -195,10 +204,8 @@ const AcceptLeasingJama = () => {
   const createAudit = (event) => {
     event.preventDefault();
     const resp = validateFormData();
-    console.log(resp);
 
     if (resp) {
-      console.log(penaltyAmount, penaltyReason);
       const auditmaster = {
         visit: selectedCarID.selectedCarIDValue,
         driver_reported_issue: '',
@@ -208,12 +215,14 @@ const AcceptLeasingJama = () => {
         penalty_reason: null,
         penalty_details: null,
         status: 1,
+        employee_id: etmId.etmIdValue,
+        driver_name: driverName.driverNameValue,
+        driver_ola_balance: driverBal.driverBalValue,
       };
       let auditdetails = {};
       addOtherAuditMaster(auditmaster)
         .then((res) => {
           const tempID = res.data.results.id;
-          console.log('res', tempID);
           auditdetails = {
             visit: selectedCarID.selectedCarIDValue,
             audit: tempID,
@@ -259,7 +268,6 @@ const AcceptLeasingJama = () => {
           };
           addOtherAuditDetails(auditdetails)
             .then((respp) => {
-              console.log('res', respp);
               notification.success({
                 message: 'Audit submitted successfully.',
               });

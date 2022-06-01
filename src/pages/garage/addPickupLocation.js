@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-boolean-value */
 import { React, useState, useEffect } from 'react';
@@ -25,7 +26,6 @@ const createModules = () => {
   useEffect(() => {
     getPickupLocation(locationId)
       .then((res) => {
-        console.log(res);
         setPickupLocationName(res.data.results[0]?.name);
         setRadioValue(res.data.results[0]?.isActive);
       })
@@ -48,17 +48,11 @@ const createModules = () => {
 
   const onSave = (event) => {
     event.preventDefault();
-    console.log('radio', radioValue);
-    console.log('pname', pickupLocationName);
-    console.log('locationid', locationId);
-    console.log('garageId', garageId);
     const resp = validateFormData();
     if (resp) {
       if (locationId !== '-1') {
-        console.log('in edit');
         editPickupLocation(pickupLocationName, radioValue, garageId, locationId)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Location Updated Successfully',
             });
@@ -68,10 +62,8 @@ const createModules = () => {
             console.log('err', err);
           });
       } else {
-        console.log('in add');
         addPickupLocation(pickupLocationName, radioValue, garageId)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Location Added Successfully',
             });

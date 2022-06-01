@@ -18,7 +18,6 @@ function userProfiles() {
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
     getUserProfiles(0).then((res) => {
-      console.log('res', res);
       setProfileList(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
@@ -30,7 +29,6 @@ function userProfiles() {
   function clickNext() {
     if (currentPage + 1 < totalPages) {
       getUserProfiles(currentPage + 1).then((res) => {
-        console.log('res', res);
         setProfileList(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
@@ -42,7 +40,6 @@ function userProfiles() {
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
       getUserProfiles(currentPage - 1).then((res) => {
-        console.log('res', res);
         setProfileList(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })

@@ -182,7 +182,6 @@ const AcceptForSixtyFortyJama = () => {
   const createAudit = (event) => {
     event.preventDefault();
     const resp = validateFormData();
-    console.log(resp);
 
     if (resp) {
       const auditmaster = {
@@ -199,7 +198,6 @@ const AcceptForSixtyFortyJama = () => {
       addOtherAuditMaster(auditmaster)
         .then((res) => {
           const tempID = res.data.results.id;
-          console.log('res', tempID);
           auditdetails = {
             visit: selectedCarID.selectedCarIDValue,
             audit: tempID,
@@ -241,7 +239,6 @@ const AcceptForSixtyFortyJama = () => {
           };
           addOtherAuditDetails(auditdetails)
             .then((resp3) => {
-              console.log('resp3', resp3);
               notification.success({
                 message: 'Audit submitted successfully.',
               });
@@ -277,15 +274,7 @@ const AcceptForSixtyFortyJama = () => {
                   <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
                   <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
                 </div>
-                <div className="flex flex-row">
-                  <h1 className="font-quicksand-semi-bold text-sm mt-1">Time Stamp: </h1>
-                  <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">2022/02/21 13:54</h1>
-                </div>
               </div>
-            </div>
-            <div className="flex flex-row ml-12 mt-2">
-              <h1 className="font-quicksand-semi-bold text-sm mt-1">Driver: </h1>
-              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300 ml-12">John Doe</h1>
             </div>
           </div>
           <div className="bg-white p-4 mx-2">

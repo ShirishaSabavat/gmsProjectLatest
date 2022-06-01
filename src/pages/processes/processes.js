@@ -18,7 +18,6 @@ function ProcessesPage() {
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
     getProcess(0).then((res) => {
-      console.log('res', res);
       setProcessList(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
@@ -30,7 +29,6 @@ function ProcessesPage() {
   function clickNext() {
     if (currentPage + 1 < totalPages) {
       getProcess(currentPage + 1).then((res) => {
-        console.log('res', res);
         setProcessList(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
@@ -42,7 +40,6 @@ function ProcessesPage() {
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
       getProcess(currentPage - 1).then((res) => {
-        console.log('res', res);
         setProcessList(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })

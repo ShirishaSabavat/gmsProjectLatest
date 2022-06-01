@@ -32,7 +32,6 @@ const addrole = () => {
   useEffect(() => {
     getRolesUI(Number(id))
       .then((res) => {
-        console.log('resp', res?.data?.results?.modules?.pageData);
         const data = res?.data?.results?.modules?.pageData.map((item) => ({
           Module_ID: item.id,
           Module_Name: item.module,
@@ -48,7 +47,6 @@ const addrole = () => {
   useEffect(() => {
     getRole(Number(id))
       .then((res) => {
-        console.log('mod', res?.data?.results);
         setRoleTitle(res?.data?.results?.role);
         setRadioValue(res?.data?.results?.isActive);
         let data = res?.data?.results?.modules.map((item) => ({
@@ -92,19 +90,13 @@ const addrole = () => {
 
   const onSave = (event) => {
     event.preventDefault();
-    console.log('radio', radioValue);
-    console.log('roleTitle', roleTitle);
-    console.log('chkval', checkboxValue);
     const resp = validateFormData();
     if (resp) {
       if (id !== '-1') {
-        console.log('in edit');
         editRole(roleTitle, Number(id), radioValue)
           .then((res) => {
-            console.log('res', res);
             addRoleModule(Number(id), checkboxValue)
               .then((response) => {
-                console.log('edit', response);
                 notification.success({
                   message: 'Role Updated Successfully',
                 });
@@ -113,7 +105,6 @@ const addrole = () => {
                 }, 1000);
               })
               .catch((err) => {
-                console.log('err', err);
                 notification.error({
                   message: 'Something went wrong, Please Try again later',
                 });
@@ -123,7 +114,6 @@ const addrole = () => {
               });
           })
           .catch((err) => {
-            console.log('err', err);
             notification.error({
               message: 'Something went wrong, Please Try again later',
             });
@@ -132,14 +122,11 @@ const addrole = () => {
             }, 1000);
           });
       } else {
-        console.log('in add');
         addRole(roleTitle, radioValue)
           .then((res) => {
-            console.log('respp', res?.data?.results?.id);
             const data = res?.data?.results?.id;
             addRoleModule(data, checkboxValue)
               .then((response) => {
-                console.log('response', response);
                 notification.success({
                   message: 'Role Added Successfully',
                 });
@@ -148,23 +135,15 @@ const addrole = () => {
                 }, 1000);
               })
               .catch((err) => {
-                console.log('err111', err);
                 notification.error({
                   message: err.response.data.errors[0].msg,
                 });
-                // setTimeout(() => {
-                //   history.push('/userroles/userroleslist');
-                // }, 1000);
               });
           })
           .catch((err) => {
-            console.log('err22', err.response.data.errors[0].msg);
             notification.error({
               message: err.response.data.errors[0].msg,
             });
-            // setTimeout(() => {
-            //   history.push('/userroles/userroleslist');
-            // }, 1000);
           });
       }
     }

@@ -16,7 +16,6 @@ const nestedPath = [
 
 function ProcessesPage() {
   const { garageId } = useParams();
-  console.log(garageId, 'in locations list');
 
   const [locationList, setLocationList] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -24,7 +23,6 @@ function ProcessesPage() {
   useEffect(() => {
     getPickupLocationByGarageId(garageId)
       .then((res) => {
-        console.log('getLocationResp', res);
         setLocationList(res?.data?.results?.pageData);
         setCurrentPage(currentPage - 1);
       })

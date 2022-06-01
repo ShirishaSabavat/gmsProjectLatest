@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable global-require */
 /* eslint-disable no-unused-vars */
 import { Helmet } from 'react-helmet';
@@ -22,7 +23,6 @@ const carslistrta = () => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
     getCarsListRoadTest(tempGarageID).then((resp) => {
-      console.log(resp.data?.results.pageData);
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {
@@ -38,7 +38,7 @@ const carslistrta = () => {
             Road Trial: Cars For Jama
           </span>
         </div>
-        <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
+        {/* <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
           <Input
             size="medium"
             placeholder="Search for anything..."
@@ -56,7 +56,7 @@ const carslistrta = () => {
 
           />
 
-        </div>
+        </div> */}
         <div>
           {CarsList.map((item) => (
             <div

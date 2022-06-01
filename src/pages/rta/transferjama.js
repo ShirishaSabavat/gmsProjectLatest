@@ -26,7 +26,6 @@ const transferjama = () => {
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageID(tempGarageID);
-    console.log(id);
   }, []);
 
   const validateFormData = () => {
@@ -51,9 +50,7 @@ const transferjama = () => {
 
   const RejectRTAListMethod = () => {
     const resp = validateFormData();
-    console.log(resp);
     if (resp) {
-      console.log(selectedVisitCategory);
       let tempvisitid = 0;
       let isLeasing = true;
       if (selectedVisitCategory === '1' || selectedVisitCategory === 1) {
@@ -67,7 +64,6 @@ const transferjama = () => {
         .then((res) => {
           rejectRTAList(id, selectedVisitCategory, rejectfor, 'roadtest_reject')
             .then((innerRes) => {
-              console.log('inner_res', innerRes);
               notification.success({
                 message: 'Jama Rejected successfully',
               });
@@ -80,17 +76,6 @@ const transferjama = () => {
         .catch((err) => {
           console.log('err', err);
         });
-      // rejectRTAList(id, selectedVisitCategory, rejectfor, rejectforRemark)
-      //   .then((res) => {
-      //     console.log('res', res);
-      //     notification.success({
-      //       message: 'Jama Rejected successfully',
-      //     });
-      //     window.location.href = '#/rta/carlistrta';
-      //   })
-      //   .catch((err) => {
-      //     console.log('err', err);
-      //   });
     }
   };
   return (

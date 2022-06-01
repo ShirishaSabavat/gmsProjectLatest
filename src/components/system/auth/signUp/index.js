@@ -44,9 +44,7 @@ const Register = () => {
       const { paths } = keys;
       setErrors(keys);
       inputRefs.current[paths[0]].focus();
-      return;
     }
-    console.log(userRegister);
   };
 
   return (

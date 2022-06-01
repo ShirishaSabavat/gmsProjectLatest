@@ -55,7 +55,6 @@ const carformpage = () => {
 
   const getCarDetails = (carId) => {
     getCarDetailsList(carId).then((resp) => {
-      console.log('resppppp', resp?.data);
       if (resp?.data.length > 0) {
         setDriverManagerName(resp?.data[0]?.team?.name);
         // setSelectedDriverID(resp?.data[0].driver_id);
@@ -76,7 +75,6 @@ const carformpage = () => {
   useEffect(() => {
     getVisitingCarDetails(id)
       .then((res) => {
-        console.log('CarResp', res?.data?.results);
         setcarNumber(res?.data?.results?.car_number);
         setCarWithDriver(res?.data?.results?.is_with_driver);
         setDriverName(res?.data?.results?.driver_name);
@@ -95,7 +93,6 @@ const carformpage = () => {
     const tempcityID = localStorage.getItem('cityid');
     setcityID(tempcityID);
     getCarsListEverest(tempcityID).then((resp) => {
-      console.log('resp', resp?.data);
       setCarsList(resp?.data);
       const tempGarageID = localStorage.getItem('garageid');
       const tempLocationID = localStorage.getItem('locationid');
@@ -112,7 +109,6 @@ const carformpage = () => {
       const tempcityID = localStorage.getItem('cityid');
       setcityID(tempcityID);
       getCarsListEverest(tempcityID).then((resp) => {
-        console.log(resp?.data);
         setCarsList(resp?.data);
         const tempGarageID = localStorage.getItem('garageid');
         const tempLocationID = localStorage.getItem('locationid');
@@ -120,21 +116,11 @@ const carformpage = () => {
         setGarageID(tempGarageID);
         setLocationID(tempLocationID);
         setVisitCategory(visitcategory);
-
-        // setCarsList(resp?.data);
       })
         .catch((err) => {
           console.log('err', err);
         });
     }
-    // else {
-    //   const tempGarageID = localStorage.getItem('garageid');
-    //   const tempLocationID = localStorage.getItem('locationid');
-    //   setGarageID(tempGarageID);
-    //   setLocationID(tempLocationID);
-    //   getCarDetails(SelectedCarID);
-    //   setVisitCategory(VisitCategory);
-    // }
   }, []);
 
   const validateFormData = () => {
@@ -148,7 +134,6 @@ const carformpage = () => {
     let isValid = true;
 
     if (SelectedCarID === -1) {
-      console.log('if');
       if (SelectedCarNumber.trim() === '' || SelectedCarNumber === 'Enter Car Number Here...') {
         selectedcarnumbererror.err = 'Please Select Car.';
         isValid = false;
@@ -162,7 +147,6 @@ const carformpage = () => {
       setDriverSelectedCarNumberError(selectedcarnumbererror);
       setDriverVisitCategoryError(driverVisitCategoryError);
     } else {
-      console.log('else');
       if (VisitCategory === 10) {
         driverVisitCategoryError.err = 'Please select reason for visit';
         isValid = false;
@@ -205,7 +189,6 @@ const carformpage = () => {
   const onSave = (event) => {
     event.preventDefault();
     const resp = validateFormData();
-    console.log(resp);
 
     if (resp) {
       if (id === '-1') {
@@ -223,14 +206,12 @@ const carformpage = () => {
           LocationID,
         )
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Visit Added successfully',
             });
             window.location.href = '#/gatekeeper/homepage';
           })
           .catch((err) => {
-            console.log('err', err.response);
             notification.error({
               message: err.response.data.message,
             });
@@ -250,7 +231,6 @@ const carformpage = () => {
           LocationID,
         )
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Visit Edited successfully',
             });
@@ -266,7 +246,6 @@ const carformpage = () => {
   const handleOnSearch = (string, results) => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
-    console.log(string);
     if (string === '') {
       setisFocused(false);
     } else {
@@ -281,10 +260,6 @@ const carformpage = () => {
     setSelectedCarNumber(result.name);
     setisFocused(false);
     getCarDetails(result.id);
-  };
-
-  const handleOnFocus = () => {
-    console.log('Focused');
   };
 
   const formatResult = (item) => (

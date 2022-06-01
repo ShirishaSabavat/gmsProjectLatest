@@ -31,7 +31,6 @@ const carslistrta = () => {
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageID(tempGarageID);
-    console.log(id);
   }, []);
 
   const validateFormData = (rejectFlag) => {
@@ -58,10 +57,8 @@ const carslistrta = () => {
 
   const AddRTAListMethod = (rejectFlag) => {
     const resp = validateFormData(rejectFlag);
-    console.log(resp, rejectFlag);
     if (!rejectFlag) {
       if (resp) {
-        console.log(selectedVisitCategory);
         let tempvisitid = 0;
         let isLeasing = true;
         if (selectedVisitCategory === '1' || selectedVisitCategory === 1) {
@@ -73,7 +70,6 @@ const carslistrta = () => {
         }
         addRTAList(id, GarageID, isLeasing, remarks.remarksValue, 1)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Jama added successfully',
             });

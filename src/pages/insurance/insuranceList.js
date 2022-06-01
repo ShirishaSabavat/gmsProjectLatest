@@ -22,8 +22,6 @@ const carslist = () => {
     setGarageID(tempgarageid);
     setCreatedBy(tempcreatedbyid);
     getCarsList(tempgarageid, tempcreatedbyid).then((resp) => {
-      console.log(`garageid: ${tempgarageid}, createdbyid: ${tempcreatedbyid}`);
-      console.log('RESP', resp);
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {

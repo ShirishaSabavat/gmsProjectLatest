@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable global-require */
 /* eslint-disable no-unused-vars */
 import { Helmet } from 'react-helmet';
@@ -12,6 +13,7 @@ const leasingJamacarlist = () => {
     setselectedCarID,
     setSelectedCar,
     setVisitId,
+    setMemberName,
   } = useJamaContext();
   const [CarsList, setCarsList] = useState([
     {
@@ -24,7 +26,6 @@ const leasingJamacarlist = () => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
     getQueueCarsList(tempGarageID, 2, 2).then((resp) => {
-      console.log(resp);
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {
@@ -41,7 +42,7 @@ const leasingJamacarlist = () => {
             Leasing Jama
           </span>
         </div>
-        <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
+        {/* <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
           <Input
             size="medium"
             placeholder="Search for anything..."
@@ -59,14 +60,16 @@ const leasingJamacarlist = () => {
 
           />
 
-        </div>
+        </div> */}
         <div>
           {CarsList.map((item) => (
             <div
               onClick={() => {
                 setselectedCarID({ selectedCarIDValue: item.id });
                 setSelectedCar({ selectedCarValue: item.car_number });
-                setVisitId({ visitIdValue: item.visitId }); history.push('/LeasingJama/LeasingJamadetails');
+                setVisitId({ visitIdValue: item.visitId });
+                setMemberName({ memberNameValue: item.driver_manager_name });
+                history.push('/LeasingJama/LeasingJamadetails');
               }}
               className="bg-white"
             >

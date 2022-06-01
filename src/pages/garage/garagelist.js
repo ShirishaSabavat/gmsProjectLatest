@@ -20,7 +20,6 @@ function garagelist() {
 
   useEffect(() => {
     getGarages(0).then((res) => {
-      console.log('resppp', res);
       setGarages(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
@@ -32,7 +31,6 @@ function garagelist() {
   function clickNext() {
     if (currentPage + 1 < totalPages) {
       getGarages(currentPage + 1).then((res) => {
-        console.log('res', res);
         setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
@@ -44,7 +42,6 @@ function garagelist() {
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
       getGarages(currentPage - 1).then((res) => {
-        console.log('res', res);
         setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })

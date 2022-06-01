@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable global-require */
 /* eslint-disable no-unused-vars */
 import { Helmet } from 'react-helmet';
@@ -25,9 +26,7 @@ const RegularAuditCarList = () => {
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
-    console.log(`garageid: ${tempGarageID}`);
     getQueueCarsList(tempGarageID, 3, 1).then((resp) => {
-      console.log(resp);
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {
@@ -43,7 +42,7 @@ const RegularAuditCarList = () => {
             Cars : for Regular Audit
           </span>
         </div>
-        <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
+        {/* <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
           <Input
             size="medium"
             placeholder="Search for anything..."
@@ -61,7 +60,7 @@ const RegularAuditCarList = () => {
 
           />
 
-        </div>
+        </div> */}
         <div>
           {CarsList.map((item) => (
             <div

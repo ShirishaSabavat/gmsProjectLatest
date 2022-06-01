@@ -125,7 +125,6 @@ const addrole = () => {
   useEffect(() => {
     getModules()
       .then((res) => {
-        console.log('mod', res?.data?.results?.pageData);
         const data = res?.data?.results?.pageData.map((item) => ({
           Module_ID: item.id,
           Module_Name: item.module,
@@ -141,7 +140,6 @@ const addrole = () => {
   useEffect(() => {
     getRoles()
       .then((res) => {
-        console.log('rolesResp', res?.data?.results?.pageData);
         setUserRoleDropDown(res?.data?.results?.pageData);
       })
       .catch((err) => {
@@ -152,7 +150,6 @@ const addrole = () => {
   useEffect(() => {
     getAllCities()
       .then((res) => {
-        console.log('resp', res?.data?.results);
         setCityDropDown(res?.data?.results?.pageData);
       })
       .catch((err) => {
@@ -163,7 +160,6 @@ const addrole = () => {
   useEffect(() => {
     getAllGaragesByCityId(citySelect || 0)
       .then((res) => {
-        console.log('garageResp', res?.data?.results);
         setGarageDropDown(res?.data?.results?.pageData);
       })
       .catch((err) => {
@@ -174,7 +170,6 @@ const addrole = () => {
   useEffect(() => {
     getLocationsByGarageId(garageSelect || 0)
       .then((res) => {
-        console.log('locationResp', res?.data?.results);
         setLocationDropDown(res?.data?.results?.pageData);
       })
       .catch((err) => {
@@ -185,7 +180,6 @@ const addrole = () => {
   useEffect(() => {
     getUserProfile(Number(id))
       .then((res) => {
-        console.log('getProfResp1', res?.data?.results);
         setFName(res?.data?.results?.first_name);
         setMName(res?.data?.results?.middle_name);
         setLName(res?.data?.results?.last_name);
@@ -195,7 +189,6 @@ const addrole = () => {
         setLicense(res?.data?.results?.user_profile?.driving_license_no);
         let tempDate = res?.data?.results?.user_profile?.license_validity;
         tempDate = moment(tempDate);
-        console.log('tempDate', tempDate);
         setLicenseValidity(tempDate);
         setEmail(res?.data?.results?.user_profile?.email);
         setContactNo(res?.data?.results?.user_profile?.mobile_no);
@@ -204,7 +197,6 @@ const addrole = () => {
         setGarageSelect(res?.data?.results?.user_profile?.garageId);
         setLocationSelect(res?.data?.results?.user_profile?.locationId);
         let data = res?.data?.results?.processes;
-        console.log('dataaaaaaa', data);
         data = data.map((obj) => obj);
         setCheckboxValue(data);
       })
@@ -224,7 +216,6 @@ const addrole = () => {
       },
     };
     if (e.target.checked) {
-      // console.log(...checkboxValue);
       setCheckboxValue([...checkboxValue, tempDataObj]);
     } else {
       setCheckboxValue(checkboxValue.filter((item) => item.id !== e.target.value));
@@ -240,7 +231,6 @@ const addrole = () => {
         [name]: checked,
       },
     };
-    // console.log(data, dataTemp, 'datadatadata');
     const checkboxValueTemp = checkboxValue.map(({ id: tempId, ...keys }) => (
       tempId === dataTemp.id ? dataTemp : { id: tempId, ...keys }
     ));
@@ -409,27 +399,17 @@ const addrole = () => {
     const userRoleData = {
       roleId: roleSelect,
     };
-    console.log('EDIT RESP', resp);
-    console.log('EDIT USERDATA', userData);
-    console.log('EDIT PROFILE', userProfileData);
-    console.log('EDIT ROLE', userRoleData);
-    console.log('EDIT checkData', checkboxValue);
 
     if (resp) {
       if (id !== '-1') {
-        console.log('in edit');
         editUserData(editUser, Number(id))
           .then((res) => {
-            console.log('res', res);
             editUserProfile(userProfileData, Number(id))
               .then((editUserProfResp) => {
-                console.log('editUserProfResp', editUserProfResp);
                 addUserRole(userRoleData, Number(id))
                   .then((userRoleResp) => {
-                    console.log(userRoleResp);
                     addUserProcess(checkboxValue, Number(id))
                       .then((userProcessResp) => {
-                        console.log(userProcessResp);
                         // alert('User Profile Edited Successfully');
                         notification.success({
                           message: 'User Profile Edited Successfully',
@@ -439,7 +419,6 @@ const addrole = () => {
                         }, 1000);
                       })
                       .catch((err) => {
-                        console.log('err', err);
                         notification.success({
                           message: 'Something went wrong, Please try again later',
                         });
@@ -459,7 +438,6 @@ const addrole = () => {
                   });
               })
               .catch((err) => {
-                console.log('err', err);
                 notification.success({
                   message: 'Something went wrong, Please try again later',
                 });
@@ -469,7 +447,6 @@ const addrole = () => {
               });
           })
           .catch((err) => {
-            console.log('err', err);
             notification.success({
               message: 'Something went wrong, Please try again later',
             });
@@ -480,17 +457,13 @@ const addrole = () => {
       } else {
         addUserData(userData)
           .then((res) => {
-            console.log('userDataResp', res);
             const userId = res?.data?.results?.id;
             addUserProfile(userProfileData, userId)
               .then((userProfileResp) => {
-                console.log(userProfileResp);
                 addUserRole(userRoleData, userId)
                   .then((userRoleResp) => {
-                    console.log(userRoleResp);
                     addUserProcess(checkboxValue, userId)
                       .then((userProcessResp) => {
-                        console.log('USER PROCS RESP', userProcessResp);
                         notification.success({
                           message: 'User added successfully',
                         });
@@ -499,7 +472,6 @@ const addrole = () => {
                         }, 1000);
                       })
                       .catch((err) => {
-                        console.log('err', err);
                         notification.error({
                           message: err.response.data.errors[0].msg,
                         });
@@ -509,23 +481,15 @@ const addrole = () => {
                       });
                   })
                   .catch((err) => {
-                    console.log('err', err);
                     notification.error({
                       message: err.response.data.errors[0].msg,
                     });
-                    // setTimeout(() => {
-                    //   history.push('/userProfiles/userProfiles');
-                    // }, 1000);
                   });
               })
               .catch((err) => {
-                console.log(err);
                 notification.error({
                   message: err.response.data.errors[0].msg,
                 });
-                // setTimeout(() => {
-                //   history.push('/userProfiles/userProfiles');
-                // }, 1000);
               });
           })
           .catch((err) => {

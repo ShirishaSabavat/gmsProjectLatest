@@ -59,24 +59,19 @@ const addteam = () => {
   );
 
   const AddUsersArray = () => {
-    console.log(users_ids.length);
     let i = 0;
     const tempUsers = [];
     for (i = 0; i < users_ids.length; i++) {
       tempUsers.push(users_ids[i].id);
     }
     setSelectedUsers(tempUsers);
-
-    console.log(users_ids);
   };
 
   useEffect(() => {
     getPickupLocationByGarageId(garageId)
       .then((res) => {
-        // console.log('garageList', res);
         setDropDownMenu(res?.data?.results?.pageData);
         getUserProfiles(0).then((resp) => {
-          console.log('res', resp);
           setProfileList(resp.data?.results.pageData);
           setSelectedItem(Number(locationId));
           AddUsersArray();
@@ -96,7 +91,6 @@ const addteam = () => {
 
   const RemoveFromArray = (itemId) => {
     const tempUsers = selectedUsers;
-    console.log(tempUsers);
     const tempindex = tempUsers.indexOf(itemId);
     tempUsers.splice(tempindex, 1);
     setSelectedItem(tempUsers);
@@ -145,7 +139,6 @@ const addteam = () => {
     }
     addTeamMembersBulk(tempUsersArray)
       .then((res) => {
-        console.log('res', res);
         notification.success({
           message,
         });
@@ -167,21 +160,12 @@ const addteam = () => {
   const onSave = (event) => {
     event.preventDefault();
     const resp = validateFormData();
-    console.log(resp);
-    console.log('teamtitle', teamTitle);
-    console.log('teamdescription', teamDescription);
-    console.log('selectedItem', selectedItem);
-    console.log('garageid', garageId);
-    console.log('locationid', Number(locationId));
-    console.log('radioValue', radioValue);
 
     if (resp) {
       if (teamId !== '-1') {
-        console.log('in edit');
         // eslint-disable-next-line max-len
         editTeamApi(teamTitle, '', teamDescription, selectedItem, garageId, teamId, radioValue)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Team edited successfully',
             });
@@ -200,10 +184,8 @@ const addteam = () => {
             }, 1000);
           });
       } else {
-        console.log('in add');
         addTeamApi(teamTitle, teamDescription, selectedItem, garageId, radioValue)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Team added successfully',
             });

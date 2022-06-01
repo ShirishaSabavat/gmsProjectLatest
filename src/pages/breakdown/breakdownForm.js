@@ -63,7 +63,6 @@ const carformpage = () => {
 
   const getCarDetails = (carId) => {
     getCarDetailsList(carId).then((resp) => {
-      console.log('resppppp', resp?.data);
       if (resp?.data.length > 0) {
         setDriverManagerName(resp?.data[0]?.team?.name);
         // setSelectedDriverID(resp?.data[0].driver_id);
@@ -84,7 +83,6 @@ const carformpage = () => {
   useEffect(() => {
     getBreakdownDetails(id)
       .then((res) => {
-        console.log('CarResp', res?.data?.results);
         setSelectedCarNumber(res?.data?.results?.car_number);
         setCarWithDriver(res?.data?.results?.is_with_driver);
         setDriverName(res?.data?.results?.driver_name);
@@ -101,26 +99,9 @@ const carformpage = () => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   const tempcityID = localStorage.getItem('cityid');
-  //   setcityID(tempcityID);
-  //   getCarsListEverest(tempcityID).then((resp) => {
-  //     console.log('resp', resp?.data);
-  //     setCarsList(resp?.data);
-  //     const tempGarageID = localStorage.getItem('garageid');
-  //     const tempLocationID = localStorage.getItem('locationid');
-  //     setGarageID(tempGarageID);
-  //     setLocationID(tempLocationID);
-  //   })
-  //     .catch((err) => {
-  //       console.log('err', err);
-  //     });
-  // }, []);
-
   useEffect(() => {
     if (id === '-1') {
       getCarsListEverest(cityID).then((resp) => {
-        console.log(resp?.data);
         setCarsList(resp?.data);
       })
         .catch((err) => {
@@ -140,7 +121,6 @@ const carformpage = () => {
     let isValid = true;
 
     if (SelectedCarID === -1) {
-      console.log('if');
       if (SelectedCarNumber.trim() === '' || SelectedCarNumber === 'Enter Car Number Here...') {
         selectedcarnumbererror.err = 'Please Select Car.';
         isValid = false;
@@ -154,7 +134,6 @@ const carformpage = () => {
       setDriverSelectedCarNumberError(selectedcarnumbererror);
       setDriverVisitCategoryError(driverVisitCategoryError);
     } else {
-      console.log('else');
       if (carWithDriver) {
         if (DriverContact.trim().length < 10 || DriverContact.trim().length > 10) {
           mobileErr.pinErr = 'Mobile Number should be of 10 digits only';
@@ -193,7 +172,6 @@ const carformpage = () => {
   const onSave = (event) => {
     event.preventDefault();
     const resp = validateFormData();
-    console.log(resp);
 
     if (resp) {
       const breakdownData = {
@@ -211,18 +189,15 @@ const carformpage = () => {
         towing_required: false,
         status: 1,
       };
-      console.log('breakdownData', breakdownData);
       if (id === '-1') {
         addBreakdown(breakdownData)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Breakdown Added successfully',
             });
             window.location.href = '#/breakdown/breakdownHome';
           })
           .catch((err) => {
-            console.log('err', err.response);
             notification.error({
               message: err.response.data.message,
             });
@@ -230,7 +205,6 @@ const carformpage = () => {
       } else {
         editBreakdown(id, breakdownData)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Breakdown Edited successfully',
             });
@@ -246,7 +220,6 @@ const carformpage = () => {
   const handleOnSearch = (string, results) => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
-    console.log(string);
     if (string === '') {
       setisFocused(false);
     } else {
@@ -261,28 +234,6 @@ const carformpage = () => {
     setSelectedCarNumber(temp[0].name);
     // setisFocused(false);
     getCarDetails(result);
-    // checkExistingCarDetails(result)
-    //   .then((res) => {
-    //     console.log(res, 'respppppp');
-    //     if (res.data === false) {
-    //       setSelectedCarID(result);
-    //       const temp = CarsList.filter((item) => item.id === result);
-    //       setSelectedCarNumber(temp[0].name);
-    //       // setisFocused(false);
-    //       getCarDetails(result);
-    //     } else {
-    //       notification.error({
-    //         message: 'Car is already in the Audit Queue',
-    //       });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  };
-
-  const handleOnFocus = () => {
-    console.log('Focused');
   };
 
   const formatResult = (item) => (

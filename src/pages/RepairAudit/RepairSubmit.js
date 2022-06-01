@@ -190,7 +190,6 @@ const RepairSubmit = () => {
   const createAudit = (event) => {
     event.preventDefault();
     const resp = validateFormData();
-    console.log(resp);
 
     if (resp) {
       const auditmaster = {
@@ -207,7 +206,6 @@ const RepairSubmit = () => {
       addOtherAuditMaster(auditmaster)
         .then((res) => {
           const tempID = res.data.results.id;
-          console.log('res', tempID);
           auditdetails = {
             visit: selectedCarID.selectedCarIDValue,
             audit: tempID,
@@ -251,10 +249,8 @@ const RepairSubmit = () => {
             sticker_front_main: frontMainSticker.frontMainStickerValue,
             tommy: tommyStat.tommyStatValue === 'Yes',
           };
-          console.log(auditdetails);
           addOtherAuditDetails(auditdetails)
             .then((resp1) => {
-              console.log('resp1', resp1);
               notification.success({
                 message: 'Audit submitted successfully.',
               });

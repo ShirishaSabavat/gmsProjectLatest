@@ -18,7 +18,6 @@ function modules() {
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
     getModules(0).then((res) => {
-      console.log('res', res);
       setModulesList(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
@@ -30,7 +29,6 @@ function modules() {
   function clickNext() {
     if (currentPage + 1 < totalPages) {
       getModules(currentPage + 1).then((res) => {
-        console.log('res', res);
         setModulesList(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
@@ -42,7 +40,6 @@ function modules() {
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
       getModules(currentPage - 1).then((res) => {
-        console.log('res', res);
         setModulesList(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })

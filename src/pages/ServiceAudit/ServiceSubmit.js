@@ -189,7 +189,6 @@ const ServiceSubmit = () => {
   const createAudit = (event) => {
     event.preventDefault();
     const resp = validateFormData();
-    console.log(resp);
 
     if (resp) {
       const auditmaster = {
@@ -206,7 +205,6 @@ const ServiceSubmit = () => {
       addOtherAuditMaster(auditmaster)
         .then((res) => {
           const tempID = res.data.results.id;
-          console.log('res', tempID);
           auditdetails = {
             visit: selectedCarID.selectedCarIDValue,
             audit: tempID,
@@ -252,7 +250,6 @@ const ServiceSubmit = () => {
           };
           addOtherAuditDetails(auditdetails)
             .then((resp2) => {
-              console.log('resp2', resp2);
               notification.success({
                 message: 'Audit submitted successfully.',
               });

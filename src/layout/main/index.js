@@ -24,7 +24,6 @@ const MainLayout = ({
       }, 150);
     };
     const temprole = localStorage.getItem('role');
-    console.log(temprole);
     setRole(temprole);
     window.addEventListener('resize', onHandleResize);
     return () => window.removeEventListener('resize', onHandleResize);

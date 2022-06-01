@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 import { Helmet } from 'react-helmet';
@@ -22,8 +23,6 @@ const carslist = () => {
     setGarageID(tempgarageid);
     setCreatedBy(tempcreatedbyid);
     getBreakdownList().then((resp) => {
-      console.log(`garageid: ${tempgarageid}, createdbyid: ${tempcreatedbyid}`);
-      console.log('RESP', resp);
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {
@@ -43,7 +42,7 @@ const carslist = () => {
           </span>
           <Breadcrumb nestedPath={nestedPath} />
         </div>
-        <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
+        {/* <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
           <Input
             size="medium"
             placeholder="Search for anything..."
@@ -61,7 +60,7 @@ const carslist = () => {
 
           />
 
-        </div>
+        </div> */}
         <div>
           {CarsList.map((item) => (
             <div

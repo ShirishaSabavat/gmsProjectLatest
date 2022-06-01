@@ -49,7 +49,6 @@ const addgarage = () => {
   useEffect(() => {
     getAllCities()
       .then((res) => {
-        console.log('resp', res?.data?.results);
         setDropDownMenu(res?.data?.results);
       })
       .catch((err) => {
@@ -60,7 +59,6 @@ const addgarage = () => {
   useEffect(() => {
     getGarageById(id)
       .then((res) => {
-        console.log('getResp', res?.data?.results);
         setGarageTitle(res?.data?.results[0]?.name);
         setRadioValue(res?.data?.results[0]?.isActive);
         // setGarageDescription(res?.data?.results[0]?.description);
@@ -110,22 +108,12 @@ const addgarage = () => {
   const onSave = (event) => {
     event.preventDefault();
     const resp = validateFormData();
-    console.log(resp);
-    console.log('garagetitle', garageTitle);
-    // console.log('garagedescription', garageDescription);
-    console.log('selectedItem', selectedItem);
-    console.log('garageseries', garageSeries);
-    console.log('userseries', userSeries);
-    console.log('radioValue', radioValue);
-    console.log('id', id);
 
     if (resp) {
       if (id !== '-1') {
-        console.log('in edit');
         // eslint-disable-next-line max-len
         editGarageApi(garageTitle, selectedItem, radioValue, id)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Garage updated successfully',
             });
@@ -137,10 +125,8 @@ const addgarage = () => {
             console.log('err', err);
           });
       } else {
-        console.log('in add');
         addGarageApi(garageTitle, selectedItem, radioValue)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Garage added successfully',
             });

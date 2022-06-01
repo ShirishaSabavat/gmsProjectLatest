@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import WithPageHandler from 'components/layouts/pageHandler';
 import { Input } from 'antd';
@@ -37,7 +39,7 @@ const Modules = ({
   if (pageState === 'loading' || pageState === 'error') return null;
   return (
     <div className="row mx-2">
-      <div className="col-12 flex flex-row justify-end">
+      {/* <div className="col-12 flex flex-row justify-end">
         <Input
           size="medium"
           placeholder="Search for anything..."
@@ -56,7 +58,7 @@ const Modules = ({
           bordered={false}
           onPressEnter={({ target: { value } }) => globalSearch(value)}
         />
-      </div>
+      </div> */}
       <div className="col-12 mt-3">
         <Table />
       </div>

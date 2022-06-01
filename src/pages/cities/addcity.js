@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-boolean-value */
 import { React, useState, useEffect } from 'react';
@@ -31,7 +32,6 @@ const addcity = () => {
   useEffect(() => {
     getCityData(id)
       .then((res) => {
-        console.log('mod', res?.data?.results);
         setCityName(res?.data?.results?.name);
         // setDescription(res?.data?.results?.description);
         setGarageSeries(res?.data?.results?.garage_series);
@@ -76,19 +76,11 @@ const addcity = () => {
 
   const onSave = (event) => {
     event.preventDefault();
-    console.log('radio', radioValue);
-    console.log('cName', cityName);
-    // console.log('des', description);
-    console.log('garage', garageSeries);
-    console.log('user', userSeries);
     const resp = validateFormData();
-    console.log(resp);
     if (resp) {
       if (id !== '-1') {
-        console.log('in edit');
         editCity(cityName, radioValue, garageSeries, userSeries, id)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'City Edited Successfully',
             });
@@ -97,7 +89,6 @@ const addcity = () => {
             }, 1000);
           })
           .catch((err) => {
-            console.log('err', err);
             notification.error({
               message: err.response.data.errors[0].msg,
             });
@@ -106,10 +97,8 @@ const addcity = () => {
             // }, 1000);
           });
       } else {
-        console.log('in add');
         addCity(cityName, radioValue, garageSeries, userSeries)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'City Added Successfully',
             });
@@ -118,7 +107,6 @@ const addcity = () => {
             }, 1000);
           })
           .catch((err) => {
-            console.log('err22', err.response.data.errors[0].msg);
             notification.error({
               message: err.response.data.errors[0].msg,
             });

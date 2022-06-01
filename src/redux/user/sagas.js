@@ -23,7 +23,6 @@ function* LOGIN(userAction) {
   });
 
   const success = yield call(loginApi, payload);
-  console.log(success);
   if (success.status === 200) {
     yield put({
       type: actions.SET_STATE,
@@ -36,7 +35,6 @@ function* LOGIN(userAction) {
     //   type: 'user/LOAD_CURRENT_ACCOUNT',
     // });
     const temprole = localStorage.getItem('role');
-    console.log(temprole);
     if (temprole === 'Super Admin') {
       yield history.push('/home/dashboard');
     } else if (temprole === 'Gate Keeper') {
@@ -60,8 +58,6 @@ function* LOGIN(userAction) {
     } else if (temprole === 'Insurance') {
       yield history.push('/insurance/insuranceHome');
     }
-
-    // console.log('history', history);
     // notification.success({
     //   message: 'Logged In',
     //   description: 'You have successfully logged in!',

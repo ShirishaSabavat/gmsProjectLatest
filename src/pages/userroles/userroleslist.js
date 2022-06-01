@@ -19,7 +19,6 @@ function userroleslist() {
   const [totalPages, setTotalPages] = useState(0);
   useEffect(() => {
     getUserRoles(0).then((res) => {
-      console.log('res', res);
       setRoles(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
@@ -31,7 +30,6 @@ function userroleslist() {
   function clickNext() {
     if (currentPage + 1 < totalPages) {
       getUserRoles(currentPage + 1).then((res) => {
-        console.log('res', res);
         setRoles(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
@@ -43,7 +41,6 @@ function userroleslist() {
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
       getUserRoles(currentPage - 1).then((res) => {
-        console.log('res', res);
         setRoles(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })

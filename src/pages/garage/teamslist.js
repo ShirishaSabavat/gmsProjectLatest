@@ -22,7 +22,6 @@ function teamslist() {
 
   useEffect(() => {
     getTeamGarages(0, garageId).then((res) => {
-      console.log('res', res);
       setGarages(res.data?.results.pageData);
       setCurrentPage(res.data?.results.currentPage);
       setTotalPages(res.data?.results.totalPages);
@@ -34,7 +33,6 @@ function teamslist() {
   function clickNext() {
     if (currentPage + 1 < totalPages) {
       getTeamGarages(currentPage + 1, garageId).then((res) => {
-        console.log('res', res);
         setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage + 1);
       })
@@ -46,7 +44,6 @@ function teamslist() {
   function clickPrevious() {
     if (currentPage - 1 >= 0) {
       getTeamGarages(currentPage - 1, garageId).then((res) => {
-        console.log('res', res);
         setGarages(res.data?.results.pageData);
         setCurrentPage(currentPage - 1);
       })

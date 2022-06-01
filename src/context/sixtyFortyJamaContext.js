@@ -49,6 +49,7 @@ const JamaContext = createContext(
     backMainStickerValue: false,
     backRightStickerValue: false,
     backLeftStickerValue: false,
+    driverManagerValue: '',
   },
 );
 
@@ -209,6 +210,9 @@ const JamaProvider = ({ children }) => {
   const [backLeftSticker, setBackLeftSticker] = useState({
     backLeftStickerValue: false,
   });
+  const [driverName, setDriverName] = useState({
+    driverNameValue: '',
+  });
   return (
     <JamaContext.Provider value={{
       selectedCar,
@@ -315,6 +319,8 @@ const JamaProvider = ({ children }) => {
       setBackRightSticker,
       backLeftSticker,
       setBackLeftSticker,
+      driverName,
+      setDriverName,
     }}
     >
       {children}

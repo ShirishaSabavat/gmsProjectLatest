@@ -22,7 +22,6 @@ function ProcessesPage() {
   useEffect(() => {
     getPickupLocation(0, garageId)
       .then((res) => {
-        console.log('getLocationResp', res);
         setLocationList(res?.data?.results?.pageData);
         setCurrentPage(currentPage - 1);
       })

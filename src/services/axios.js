@@ -17,7 +17,6 @@ export const loginApi = async (userData) => {
     username: userName,
     password,
   });
-  console.log(data);
   try {
     const resp = await axios({
       method: 'POST',
@@ -35,7 +34,7 @@ export const loginApi = async (userData) => {
     };
     localStorage.setItem('token', token);
     localStorage.setItem('user', user?.first_name);
-    localStorage.setItem('role', user?.group?.name);
+    localStorage.setItem('role', user?.group[0]?.name);
     // if (!(user?.roles[0]?.role === null || user?.roles[0]?.role === undefined || user?.roles[0]?.role === 'Super Admin')) {
     // localStorage.setItem('empid', user?.user_profile?.emp_id); //not available
     localStorage.setItem('garageid', user?.user_profile?.garage);
@@ -51,7 +50,6 @@ export const loginApi = async (userData) => {
 };
 
 export const addModule = (moduleName, radioValue) => {
-  console.log(moduleName);
   const data = JSON.stringify({
     module: moduleName,
     isActive: radioValue,
@@ -135,7 +133,6 @@ export const editModule = (moduleName, radioValue, moduleId) => {
 };
 
 export const addProcess = (processName, radioValue, selectedItem) => {
-  console.log(processName, radioValue, selectedItem, 'axios');
   const data = JSON.stringify({
     process: processName,
     moduleId: selectedItem,
@@ -236,7 +233,6 @@ export const getCityData = (cityId) => axios({
 // User Roles axios
 
 export const addRole = (roleTitle, radioValue) => {
-  console.log(roleTitle);
   const data = JSON.stringify({
     role: roleTitle,
     isActive: radioValue,
@@ -353,7 +349,6 @@ export const editGarageApi = (garageTitle, city, radioValue, garageId) => {
 };
 
 export const addPickupLocation = (name, radioValue, garage) => {
-  console.log(name, radioValue, garage, 'axios');
   const data = JSON.stringify({
     name,
     garage,
@@ -570,7 +565,6 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
     driver_manager_name: drivermanagername,
     status: 1,
   });
-  console.log(data);
   return axios({
     method: 'POST',
     url: `${basUrl}/visitingCars`,
@@ -593,7 +587,6 @@ export const editCarVisit = (visitCarId, visitcat, carid, garageid, isdriverwith
     driver_manager_name: drivermanagername,
     status: 1,
   });
-  console.log(data);
   return axios({
     method: 'PATCH',
     url: `${basUrl}/visitingCars/${visitCarId}`,
@@ -610,7 +603,6 @@ export const addRTAList = (visitid, garageid, isleasing, roadtestcomment, jamaSt
     road_test_comments: roadtestcomment,
     jama_status: jamaStatus,
   });
-  console.log(data);
   return axios({
     method: 'POST',
     url: `${basUrl}/roadTest`,
@@ -626,7 +618,6 @@ export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) =>
     currentAudit: rejectid,
     transfer_reason: rejectreason,
   });
-  console.log(data);
   return axios({
     method: 'POST',
     url: `${basUrl}/auditTransfer`,
@@ -637,7 +628,6 @@ export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) =>
 
 export const addTeamMembersBulk = (users) => {
   const data = JSON.stringify(users);
-  console.log(data);
   return axios({
     method: 'POST',
     url: `${baseUrl}/team/bulkUserTeam`,
@@ -663,7 +653,6 @@ export const addBreakdown = (breakdownData) => {
   //   garageId: breakdownData.garageId,
   // });
   const data = JSON.stringify(breakdownData);
-  console.log(data);
   return axios({
     method: 'POST',
     url: `${basUrl}/breakdown`,
@@ -701,7 +690,6 @@ export const editBreakdown = (breakdownId, breakdownData) => {
   //   garageId: breakdownData.garageId,
   // });
   const data = JSON.stringify(breakdownData);
-  console.log(data);
   return axios({
     method: 'PATCH',
     url: `${basUrl}/breakdown/${breakdownId}`,
@@ -712,7 +700,6 @@ export const editBreakdown = (breakdownId, breakdownData) => {
 
 export const addAuditMaster = (auditmaster) => {
   const data = JSON.stringify(auditmaster);
-  console.log(data);
   return axios({
     method: 'POST',
     url: `${baseUrl}/auditDetails/auditMaster`,
@@ -723,7 +710,6 @@ export const addAuditMaster = (auditmaster) => {
 
 export const addOtherAuditMaster = (auditmaster) => {
   const data = JSON.stringify(auditmaster);
-  console.log(data);
   return axios({
     method: 'POST',
     url: `${basUrl}/auditDetails/auditMaster`,
@@ -771,7 +757,6 @@ export const addAuditDetails = (auditdetails) => {
     horn: auditdetails.horn,
     auditor_comment: null,
   });
-  console.log(data);
   return axios({
     method: 'POST',
     url: `${baseUrl}/auditDetails`,
@@ -782,7 +767,6 @@ export const addAuditDetails = (auditdetails) => {
 
 export const addOtherAuditDetails = (auditdetails) => {
   const data = JSON.stringify(auditdetails);
-  console.log(data);
   return axios({
     method: 'POST',
     url: `${basUrl}/auditDetails`,
@@ -794,5 +778,11 @@ export const addOtherAuditDetails = (auditdetails) => {
 export const checkExistingCarDetails = (carId) => axios({
   method: 'GET',
   url: `${basUrl}/visitstatus?carId=${carId}`,
+  headers,
+});
+
+export const getEmployeeList = (cityId) => axios({
+  method: 'GET',
+  url: `${basUrl}/driver_list/${cityId}`,
   headers,
 });

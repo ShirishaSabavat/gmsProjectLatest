@@ -2,10 +2,13 @@
 /* eslint-disable global-require */
 import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
-import { Radio, Button, Input } from 'antd';
-import { useState } from 'react';
+import {
+  Radio, Button, Input, Select,
+} from 'antd';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
+import { getEmployeeList } from 'services/axios';
 
 const nestedPath = [
   'Home',
@@ -21,13 +24,13 @@ const LeasingJamaDetails = () => {
     fasttagBalance,
     setfasttagBalance,
     memberName,
-    setMemberName,
-    etmId,
     setEtmId,
     driverBal,
     setDriverBal,
     rent,
     setRent,
+    driverName,
+    setDriverName,
     // penaltyAmount,
     // setPenaltyAmount,
     // penaltyReason,
@@ -35,15 +38,33 @@ const LeasingJamaDetails = () => {
   } = useJamaContext();
   const history = useHistory();
   const [memberNameError, setMemberNameError] = useState({});
-  const [etmIdError, setEtmIdError] = useState({});
+  const [employeeList, setEmployeeList] = useState([]);
+  // const [etmIdError, setEtmIdError] = useState({});
   const [driverBalError, setDriverBalError] = useState({});
   const [fasttagBalanceError, setFasttagBalanceError] = useState({});
   // const [carReturnError, setCarReturnError] = useState({});
 
+  useEffect(() => {
+    const tempcityID = localStorage.getItem('cityid');
+    // setcityID(tempcityID);
+    getEmployeeList(tempcityID).then((resp) => {
+      setEmployeeList(resp?.data);
+    })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }, []);
+
+  const handleOnHover = (result) => {
+    setEtmId({ etmIdValue: result });
+    const temp = employeeList.filter((item) => item.id === result);
+    setDriverName({ driverNameValue: temp[0].name });
+  };
+
   const validateFormData = () => {
     let isValid = true;
     const memberNamerErr = {};
-    const etmIdErr = {};
+    // const etmIdErr = {};
     const driverBalErr = {};
     const fasttagBalanceErr = {};
     // const carRetrurnErr = {};
@@ -52,10 +73,10 @@ const LeasingJamaDetails = () => {
       memberNamerErr.err = 'This field can not be empty';
       isValid = false;
     }
-    if (etmId.etmIdValue === '') {
-      etmIdErr.err = 'This field can not be empty';
-      isValid = false;
-    }
+    // if (etmId.etmIdValue === '') {
+    //   etmIdErr.err = 'This field can not be empty';
+    //   isValid = false;
+    // }
     if (driverBal.driverBalValue === '') {
       driverBalErr.err = 'This field can not be empty';
       isValid = false;
@@ -70,7 +91,7 @@ const LeasingJamaDetails = () => {
     //   isValid = false;
     // }
     setMemberNameError(memberNamerErr);
-    setEtmIdError(etmIdErr);
+    // setEtmIdError(etmIdErr);
     setDriverBalError(driverBalErr);
     setFasttagBalanceError(fasttagBalanceErr);
     // setCarReturnError(carRetrurnErr);
@@ -78,7 +99,6 @@ const LeasingJamaDetails = () => {
   };
 
   const goToBatteryAudit = () => {
-    // console.log(penaltyAmount, penaltyReason);
     const resp = validateFormData();
     if (resp) {
       history.push('/LeasingJama/LeasingBatteryAudit');
@@ -104,23 +124,16 @@ const LeasingJamaDetails = () => {
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
               <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
             </div>
-            <div className="flex flex-row">
-              <h1 className="font-quicksand-semi-bold text-sm mt-1">Time Stamp: </h1>
-              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">2022/02/21 13:54</h1>
-            </div>
           </div>
-        </div>
-        <div className="flex flex-row ml-12 mt-2">
-          <h1 className="font-quicksand-semi-bold text-sm mt-1">Driver: </h1>
-          <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300 ml-12">John Doe</h1>
         </div>
       </div>
       <div className="bg-white p-5 m-2">
-        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Member Name</p>
+        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Team Name</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             placeholder="Enter Name Here..."
-            onChange={(e) => setMemberName({ memberNameValue: e.target.value })}
+            value={memberName.memberNameValue}
+            readOnly
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -134,7 +147,7 @@ const LeasingJamaDetails = () => {
           ))}
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>ETM Id</p>
-        <div className="flex flex-row flex-nonwrap bg-white">
+        {/* <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             placeholder="Enter Name Here..."
             onChange={(e) => setEtmId({ etmIdValue: e.target.value })}
@@ -149,6 +162,35 @@ const LeasingJamaDetails = () => {
               {etmIdError[key]}
             </div>
           ))}
+        </div> */}
+        <Select
+          onChange={(e) => {
+            handleOnHover(e);
+          }}
+          style={{ width: '100%', backgroundColor: '#F5F8FC' }}
+          placeholder="Search Employee"
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) => option.children
+            .toString()
+            .toLowerCase()
+            .indexOf(input.toLowerCase()) >= 0}
+        >
+          {employeeList.map((items) => (
+            <Select.Option key={items.id} value={items.id}>
+              {items.employee_id}
+            </Select.Option>
+          ))}
+        </Select>
+        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Driver Name</p>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          <Input
+            readOnly
+            value={driverName.driverNameValue}
+            style={{
+              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+            }}
+          />
         </div>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Driver Ola Balance</p>
         <div className="flex flex-row flex-nonwrap bg-white">

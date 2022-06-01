@@ -46,7 +46,6 @@ const UserProfile = ({
   const onFetchList = async () => {
     try {
       const res = await getUsers(filter);
-      console.log(res);
       setList(res);
     } catch (error) {
       console.log(error);
@@ -79,7 +78,6 @@ const UserProfile = ({
       key: 'emp_id',
       render: (value, record) => (
         <span className="font-quicksand-medium">{`${record.user_profile?.emp_id}`}</span>
-        // console.log(record.user_profile?.emp_id)
       ),
     },
     {
@@ -93,7 +91,6 @@ const UserProfile = ({
       key: 'mobile_no',
       render: (value, record) => (
         <span className="font-quicksand-medium">{`${record.user_profile?.mobile_no}`}</span>
-        // console.log(record.user_profile?.emp_id)
       ),
     },
     {
@@ -102,7 +99,6 @@ const UserProfile = ({
       key: 'driving_license_no',
       render: (value, record) => (
         <span className="font-quicksand-medium">{`${record.user_profile?.driving_license_no}`}</span>
-        // console.log(record.user_profile?.emp_id)
       ),
     },
     {

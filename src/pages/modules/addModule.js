@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-boolean-value */
 import { React, useState, useEffect } from 'react';
 import {
@@ -23,7 +24,6 @@ const addModules = () => {
   useEffect(() => {
     getModuleById(Number(id))
       .then((res) => {
-        console.log(res);
         setModuleName(res.data?.results?.module);
         setRadioValue(res.data?.results?.isActive);
       })
@@ -46,14 +46,11 @@ const addModules = () => {
 
   const onSave = (event) => {
     event.preventDefault();
-    console.log('radio', radioValue);
-    console.log('error', moduleName);
     const resp = validateFormData();
     if (resp) {
       if (id !== '-1') {
         editModule(moduleName, radioValue, Number(id))
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Module Edited Successfully',
             });
@@ -62,7 +59,6 @@ const addModules = () => {
             }, 1000);
           })
           .catch((err) => {
-            console.log('err', err);
             notification.error({
               message: 'Something went wrong',
             });
@@ -73,7 +69,6 @@ const addModules = () => {
       } else {
         addModule(moduleName, radioValue)
           .then((res) => {
-            console.log('res', res);
             notification.success({
               message: 'Module Added Successfully',
             });
@@ -82,7 +77,6 @@ const addModules = () => {
             }, 1000);
           })
           .catch((err) => {
-            console.log('err', err);
             notification.error({
               message: err.response.data.errors[0].msg,
             });

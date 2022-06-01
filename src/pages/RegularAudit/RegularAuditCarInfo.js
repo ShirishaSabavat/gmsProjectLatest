@@ -89,7 +89,6 @@ const RegularAuditCarInfo = () => {
   const createAudit = (event) => {
     event.preventDefault();
     const resp = validateFormData();
-    console.log(resp);
 
     if (resp) {
       const auditmaster = {
@@ -102,12 +101,10 @@ const RegularAuditCarInfo = () => {
         penalty_details: null,
         status: 1,
       };
-      console.log(auditmaster);
       let auditdetails = {};
       addOtherAuditMaster(auditmaster)
         .then((res) => {
           const tempID = res.data.results.id;
-          console.log('res', tempID);
           auditdetails = {
             visit: selectedCarID.selectedCarIDValue,
             audit: tempID,
@@ -151,17 +148,14 @@ const RegularAuditCarInfo = () => {
             sticker_front_main: frontMainSticker,
             tommy: tommyStat === 'Yes',
           };
-          console.log(auditdetails);
           addOtherAuditDetails(auditdetails)
             .then((respp) => {
-              console.log('respp', respp);
               notification.success({
                 message: 'Audit submitted successfully.',
               });
               history.push('/RegularAudit/RegularAuditCarList');
             })
             .catch((err) => {
-              console.log('err', err.response);
               notification.error({
                 message: err.response.data.message,
               });
@@ -193,15 +187,7 @@ const RegularAuditCarInfo = () => {
               <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
               <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
             </div>
-            <div className="flex flex-row">
-              <h1 className="font-quicksand-semi-bold text-sm mt-1">Time Stamp: </h1>
-              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">2022/02/21 13:54</h1>
-            </div>
           </div>
-        </div>
-        <div className="flex flex-row ml-12 mt-2 my-3">
-          <h1 className="font-quicksand-semi-bold text-sm mt-1">Driver: </h1>
-          <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300 ml-12">John Doe</h1>
         </div>
       </div>
       <div className="bg-white p-4 m-3">
