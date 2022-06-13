@@ -24,7 +24,6 @@ import {
   getUserProfile,
 } from 'services/axios';
 import moment from 'moment';
-import validator from 'validator';
 
 const { TextArea } = Input;
 

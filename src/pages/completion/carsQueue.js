@@ -1,50 +1,50 @@
 /* eslint-disable max-len */
 /* eslint-disable global-require */
 /* eslint-disable no-unused-vars */
+// TEST COMMIT
 import { Helmet } from 'react-helmet';
 import { Input } from 'antd';
 import { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { getQueueCarsList } from 'services/axios';
-import { useRepairContext } from 'context/RepairAuditContext';
-import { useJamaContext } from 'context/sixtyFortyJamaContext';
+import { useCompletionContext } from 'context/CompletionContext';
 import moment from 'moment';
 
-const RepairAuditCarList = () => {
+const carsQueue = () => {
   const {
-    setselectedCarID,
-    setSelectedCar,
-    setVisitId,
-    setDriverName,
+    operator,
+    setOperator,
     setCardObject,
     ResetContextValues,
-  } = useJamaContext();
+  } = useCompletionContext();
   const history = useHistory();
-  const [CarsList, setCarsList] = useState([
-    {
-      car_number: 'MH 04 DR 1564',
-      visitId: 'sdafsdfg8465465',
-    },
-  ]);
-
+  const { id } = useParams();
+  const [CarsList, setCarsList] = useState([]);
   const [garageid, setGarageid] = useState('');
+  // const [operator, setOperator] = useState(0);
+
+  const tempGarageID = localStorage.getItem('garageid');
+  // const tempOperator = localStorage.getItem('role');
   useEffect(() => {
-    const tempGarageID = localStorage.getItem('garageid');
+    setOperator(id);
     setGarageid(tempGarageID);
-    getQueueCarsList(tempGarageID, 5, 1).then((resp) => {
-      setCarsList(resp.data?.results.pageData);
-    })
+  }, []);
+  useEffect(() => {
+    getQueueCarsList(tempGarageID, operator, 3)
+      .then((resp) => {
+        setCarsList(resp.data?.results.pageData);
+      })
       .catch((err) => {
         console.log('err', err);
       });
-  }, []);
+  }, [operator]);
   return (
     <>
       <Helmet title="Dashboard" />
       <div className="flex flex-col space-y-2 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Cars: in Repair Queue
+            Completion Queue
           </span>
         </div>
         {/* <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
@@ -71,11 +71,12 @@ const RepairAuditCarList = () => {
             <>
               {/* <div
                 onClick={() => {
-                  setselectedCarID({ selectedCarIDValue: item.id });
-                  setSelectedCar({ selectedCarValue: item.car_number });
-                  setVisitId({ visitIdValue: item.visitId });
-                  setDriverName({ driverNameValue: item.driver_name });
-                  history.push('/RepairAudit/RepairAuditCarDetails');
+                  setSelectedCarId(item.carId);
+                  setSelectedCarNumber(item.car_number);
+                  setSelectedDriverName(item.driver_name);
+                  setSelectedVisitId(item.visitId);
+                  setSelectedVisitCategory(item.visitCategory);
+                  history.push(`/rta/leasingjama/${item.id}`);
                 }}
                 className="bg-white"
               >
@@ -96,13 +97,9 @@ const RepairAuditCarList = () => {
               <div
                 className="px-2 py-0 my-3 max-w-sm bg-white rounded-lg border shadow-md sm:p-6"
                 onClick={() => {
-                  setselectedCarID({ selectedCarIDValue: item.id });
-                  setSelectedCar({ selectedCarValue: item.car_number });
-                  setVisitId({ visitIdValue: item.visitId });
-                  setDriverName({ driverNameValue: item.driver_name });
                   setCardObject({ ...item });
                   ResetContextValues();
-                  history.push('/RepairAudit/RepairAuditCarDetails');
+                  history.push('/completion/CarsQueueDetails');
                 }}
               >
                 <div
@@ -158,4 +155,4 @@ const RepairAuditCarList = () => {
   );
 };
 
-export default RepairAuditCarList;
+export default carsQueue;

@@ -5,6 +5,7 @@ const RegularAuditContext = createContext({
   selectedCarValue: '',
   selectedCarIDValue: 0,
   visitIdValue: '',
+  driverNameValue: '',
 });
 
 const RegularAuditProvider = ({ children }) => {
@@ -27,10 +28,10 @@ const RegularAuditProvider = ({ children }) => {
     fasttagBalanceValue: '',
   });
   const [fuelIndicatorPetrolBar, setfuelIndicatorPetrolBar] = useState({
-    fuelIndicatorPetrolBarValue: 'Yes',
+    fuelIndicatorPetrolBarValue: 0,
   });
   const [cng, setCng] = useState({
-    cngValue: 'Full',
+    cngValue: '',
   });
   const [numberPlateStickerStat, setnumberPlateStickerStat] = useState({
     numberPlateStickerStatValue: 'Front Main',
@@ -58,6 +59,11 @@ const RegularAuditProvider = ({ children }) => {
   });
   const [horn, setHorn] = useState({
     hornValue: 'Okay',
+  });
+  const [driverName, setDriverName] = useState({
+    driverNameValue: '',
+  });
+  const [cardObject, setCardObject] = useState({
   });
   return (
     <RegularAuditContext.Provider value={{
@@ -95,6 +101,10 @@ const RegularAuditProvider = ({ children }) => {
       setBatteryCharge,
       horn,
       setHorn,
+      driverName,
+      setDriverName,
+      cardObject,
+      setCardObject,
     }}
     >
       {children}

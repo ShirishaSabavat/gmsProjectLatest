@@ -5,32 +5,24 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
 import {
   Input, Radio, Button, notification, Select, Spin,
 } from 'antd';
 import {
-  addCarVisit, editCarVisit, getCarDetailsList, getCarsListEverest, getVisitingCarDetails, checkExistingCarDetails,
+  addCarVisit, editCarVisit, getCarDetailsList, getCarsListEverest, getVisitingCarDetails, checkExistingCarDetails, getEmployeeList,
 } from 'services/axios';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
-import { useParams, useHistory } from 'react-router-dom';
-
-const { TextArea } = Input;
-const nestedPath = [
-  'Home',
-  'New Car Visit',
-];
+// import { useHistory } from 'react-router-dom';
 
 const carformpage = () => {
   // const location = useLocation();
   // const {
   //   carId, carnumber, visitcategory, driverName, driveContactNumber,
   // } = location.state;
-  const { id } = useParams();
-  const history = useHistory();
+  // const { id } = useParams();
+  // const history = useHistory();
 
   const [radioValue, setRadioValue] = useState(true);
-  const [isFocused, setisFocused] = useState(false);
   const [CarsList, setCarsList] = useState([]);
   const [cityID, setcityID] = useState('');
   const [DriverName, setDriverName] = useState('');
@@ -49,6 +41,25 @@ const carformpage = () => {
   const [SelectedDriverID, setSelectedDriverID] = useState(0);
   const [SelectedDriverManagerID, setSelectedDriverManagerID] = useState('');
   const [carNumber, setcarNumber] = useState('');
+  const [etmId, setEtmId] = useState('');
+  const [employeeList, setEmployeeList] = useState([]);
+  const [visitId, setVisitId] = useState('-1');
+
+  const resetData = () => {
+    setRadioValue(true);
+    setDriverName('');
+    setDriverContact('');
+    setDriverManagerName('');
+    setVisitCategory(10);
+    setSelectedCarID(0);
+    setSelectedCarNumber('');
+    // setGarageID('');
+    // setLocationID('');
+    setSelectedDriverID(0);
+    setSelectedDriverManagerID('');
+    setcarNumber('');
+    setEtmId('');
+  };
 
   const getCarDetails = (carId) => {
     getCarDetailsList(carId).then((resp) => {
@@ -69,23 +80,23 @@ const carformpage = () => {
       });
   };
 
-  useEffect(() => {
-    getVisitingCarDetails(id)
-      .then((res) => {
-        const respData = res?.data?.results[0];
-        setcarNumber(respData?.car_number);
-        setRadioValue(respData?.is_with_driver);
-        setDriverName(respData?.driver_name);
-        setDriverContact(respData?.drive_contact_number);
-        setSelectedDriverManagerID(respData?.driverManagerId);
-        setDriverManagerName(respData?.driver_manager_name);
-        setVisitCategory(respData?.visit_category);
-        setSelectedCarID(respData?.carId);
-      })
-      .catch((err) => {
-        console.log('err1', err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   getVisitingCarDetails(id)
+  //     .then((res) => {
+  //       const respData = res?.data?.results[0];
+  //       setcarNumber(respData?.car_number);
+  //       setRadioValue(respData?.is_with_driver);
+  //       setDriverName(respData?.driver_name);
+  //       setDriverContact(respData?.drive_contact_number);
+  //       setSelectedDriverManagerID(respData?.driverManagerId);
+  //       setDriverManagerName(respData?.driver_manager_name);
+  //       setVisitCategory(respData?.visit_category);
+  //       setSelectedCarID(respData?.carId);
+  //     })
+  //     .catch((err) => {
+  //       console.log('err1', err);
+  //     });
+  // }, []);
 
   useEffect(() => {
     const tempcityID = localStorage.getItem('cityid');
@@ -99,6 +110,17 @@ const carformpage = () => {
       if (id === '-1') {
         setVisitCategory(VisitCategory);
       }
+    })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }, []);
+
+  useEffect(() => {
+    const tempcityID = localStorage.getItem('cityid');
+    // setcityID(tempcityID);
+    getEmployeeList(tempcityID).then((resp) => {
+      setEmployeeList(resp?.data);
     })
       .catch((err) => {
         console.log('err', err);
@@ -167,7 +189,7 @@ const carformpage = () => {
     const resp = validateFormData();
 
     if (resp) {
-      if (id === '-1') {
+      if (visitId === '-1') {
         addCarVisit(
           VisitCategory,
           SelectedCarID,
@@ -180,12 +202,15 @@ const carformpage = () => {
           SelectedDriverManagerID,
           DriverManagerName,
           LocationID,
+          etmId,
         )
           .then((res) => {
             notification.success({
               message: 'Visit Added successfully',
             });
-            window.location.href = '#/gatekeeper/homepage';
+            resetData();
+            setSelectedCarID(0);
+            // window.location.href = '#/gatekeeper/carformpage';
           })
           .catch((err) => {
             notification.error({
@@ -194,7 +219,7 @@ const carformpage = () => {
           });
       } else {
         editCarVisit(
-          id,
+          visitId,
           VisitCategory,
           SelectedCarID,
           GarageID,
@@ -205,12 +230,15 @@ const carformpage = () => {
           SelectedDriverManagerID,
           DriverManagerName,
           LocationID,
+          etmId,
         )
           .then((res) => {
             notification.success({
               message: 'Visit Edited successfully',
             });
-            window.location.href = '#/gatekeeper/homepage';
+            resetData();
+            setSelectedCarID(0);
+            // window.location.href = '#/gatekeeper/carformpage';
           })
           .catch((err) => {
             console.log('err', err);
@@ -219,30 +247,37 @@ const carformpage = () => {
     }
   };
 
-  const handleOnSearch = (string, results) => {
-    // onSearch will have as the first callback parameter
-    // the string searched and for the second the results.
-    if (string === '') {
-      setisFocused(false);
-    } else {
-      setisFocused(true);
-    }
-  };
-
   const handleOnHover = (result) => {
     // the item hovered
+    resetData();
     checkExistingCarDetails(result)
-      .then((res) => {
-        if (res.data === false) {
+      .then((resp) => {
+        if (resp.data === false) {
           setSelectedCarID(result);
           const temp = CarsList.filter((item) => item.id === result);
           setSelectedCarNumber(temp[0].name);
-          // setisFocused(false);
           getCarDetails(result);
         } else {
-          notification.error({
-            message: 'Car is already in the Audit Queue',
-          });
+          getVisitingCarDetails(result)
+            .then((res) => {
+              const respData = res?.data?.results[0];
+              setcarNumber(respData?.car_number);
+              setRadioValue(respData?.is_with_driver);
+              setDriverName(respData?.driver_name);
+              setDriverContact(respData?.drive_contact_number);
+              setSelectedDriverManagerID(respData?.driverManagerId);
+              setDriverManagerName(respData?.driver_manager_name);
+              setVisitCategory(respData?.visit_category);
+              setSelectedCarID(respData?.carId?.id);
+              setVisitId(respData?.id);
+              setEtmId(respData?.employee_id);
+            })
+            .catch((err) => {
+              console.log('err1', err);
+            });
+          // notification.error({
+          //   message: 'Car is already in the Audit Queue',
+          // });
         }
       })
       .catch((err) => {
@@ -250,66 +285,50 @@ const carformpage = () => {
       });
   };
 
-  const formatResult = (item) => (
-    <span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>
-  );
+  const handleOnEtmChange = (result) => {
+    const temp = employeeList.filter((item) => item.id === result);
+    setEtmId(temp[0].employee_id);
+    setDriverName(temp[0].name);
+  };
+
   return (
     <>
       <Helmet title="Teams" />
-      <div className="flex flex-col space-y-12 mx-4">
+      <div className="flex flex-col space-y-2 mx-4">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-xl mr-3.5">
-            {id === '-1' ? 'New Car Visit' : 'Edit Car Visit'}
+            Car Visit
           </span>
-          <Breadcrumb nestedPath={nestedPath} />
         </div>
         <div className="bg-white p-4">
-          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Car Details</p>
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Number</p>
-          {id === '-1'
-            ? (
-              <div className="bg-white">
-                {/* <ReactSearchAutocomplete
-                  placeholder="Enter Car Number Here..."
-                  resultStringKeyName="name"
-                  inputSearchString={SelectedCarNumber === '' || SelectedCarNumber === 'Enter Car Number Here...' ? '' : SelectedCarNumber}
-                  items={CarsList}
-                  onSearch={handleOnSearch}
-                  onHover={handleOnHover}
-                  onClear={() => setisFocused(false)}
-                  onFocus={handleOnFocus}
-                  autoFocus={isFocused}
-                  maxResults={10}
-                  formatResult={formatResult}
-                /> */}
-                <Select
-                  onChange={(e) => {
-                    handleOnHover(e);
-                  }}
-                  style={{ width: '100%', backgroundColor: '#F5F8FC' }}
-                  placeholder="Search Car"
-                  showSearch
-                  optionFilterProp="children"
-                  filterOption={(input, option) => option.children
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0}
-                >
-                  {CarsList.map((items) => (
-                    <Select.Option key={items.id} value={items.id}>
-                      {items.name}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </div>
-            )
-            : <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>{carNumber}</p>}
+          <div className="bg-white">
+            <Select
+              onChange={(e) => {
+                handleOnHover(e);
+              }}
+              style={{ width: '100%', backgroundColor: '#F5F8FC' }}
+              placeholder="Search Car"
+              showSearch
+              optionFilterProp="children"
+              filterOption={(input, option) => option.children
+                .toString()
+                .toLowerCase()
+                .indexOf(input.toLowerCase()) >= 0}
+            >
+              {CarsList.map((items) => (
+                <Select.Option key={items.id} value={items.id}>
+                  {items.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </div>
           {Object.keys(DriverSelectedCarNumberError).map((key) => (
             <div style={{ color: 'red' }}>
               {DriverSelectedCarNumberError[key]}
             </div>
           ))}
-          <div className={isFocused === true ? 'bg-white pt-80 pb-5' : 'bg-white py-5'}>
+          <div className="bg-white py-5">
             <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Is Car with Driver?</p>
             <div className="flex flex-row flex-nonwrap bg-white">
               <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
@@ -321,22 +340,44 @@ const carformpage = () => {
           {radioValue === true
             ? (
               <div>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>ETM Id</p>
+                <Select
+                  onChange={(e) => {
+                    handleOnEtmChange(e);
+                  }}
+                  style={{ width: '100%', backgroundColor: '#F5F8FC' }}
+                  placeholder="Search Employee"
+                  value={etmId || undefined}
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input, option) => option.children
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0}
+                >
+                  {employeeList.map((items) => (
+                    <Select.Option key={items.id} value={items.id}>
+                      {items.employee_id}
+                    </Select.Option>
+                  ))}
+                </Select>
                 <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Name</p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverName}
-                    onChange={(e) => setDriverName(e.target.value)}
-                    placeholder="Enter Name Here..."
+                    readOnly
+                    // onChange={(e) => setDriverName(e.target.value)}
+                    placeholder="Enter Driver Name Here..."
                     style={{
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
                     }}
                   />
-                  {Object.keys(DriverNameError).map((key) => (
-                    <div style={{ color: 'red' }}>
-                      {DriverNameError[key]}
-                    </div>
-                  ))}
                 </div>
+                {Object.keys(DriverNameError).map((key) => (
+                  <div style={{ color: 'red' }}>
+                    {DriverNameError[key]}
+                  </div>
+                ))}
                 <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Contact Number</p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
@@ -347,17 +388,17 @@ const carformpage = () => {
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
                     }}
                   />
-                  {Object.keys(DriverContactError).map((key) => (
-                    <div style={{ color: 'red' }}>
-                      {DriverContactError[key]}
-                    </div>
-                  ))}
                 </div>
+                {Object.keys(DriverContactError).map((key) => (
+                  <div style={{ color: 'red' }}>
+                    {DriverContactError[key]}
+                  </div>
+                ))}
                 <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Team</p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverManagerName}
-                    placeholder="Enter Name Here..."
+                    placeholder="Enter Team Name Here..."
                     readOnly
                     style={{
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',

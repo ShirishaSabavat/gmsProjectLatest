@@ -221,7 +221,7 @@ const addteam = () => {
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Team Title</p>
           <div className="flex flex-nonwrap bg-white">
             <Input
-              placeholder="Enter Name Here..."
+              placeholder="Enter Team Title Here..."
               value={teamTitle}
               onChange={(e) => setTeamTitle(e.target.value)}
               style={{

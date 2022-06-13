@@ -26,20 +26,20 @@ const ServiceAuditContext = createContext(
     stepnyPresentValue: 1,
     stepnyBrandValue: 1,
     stepnyTyreNumberValue: '',
-    carKmsValue: "",
-    currentCarKmsValue: "",
-    fasttagBalanceValue: "",
-    fuelIndicatorPetrolBarValue: "Yes",
-    cngValue: "Full",
-    numberPlateStickerStatValue: "Front Main",
-    jackStatValue: "Yes",
-    panaStatValue: "Yes",
-    tommyStatValue: "Yes",
-    engineoilValue: "Sufficient",
-    brakeoilValue: "Sufficient",
-    coolantValue: "Sufficient",
-    batteryChargeValue: "Okay",
-    hornValue: "Okay"
+    carKmsValue: '',
+    currentCarKmsValue: '',
+    fasttagBalanceValue: '',
+    fuelIndicatorPetrolBarValue: 'Yes',
+    cngValue: 'Full',
+    numberPlateStickerStatValue: 'Front Main',
+    jackStatValue: 'Yes',
+    panaStatValue: 'Yes',
+    tommyStatValue: 'Yes',
+    engineoilValue: 'Sufficient',
+    brakeoilValue: 'Sufficient',
+    coolantValue: 'Sufficient',
+    batteryChargeValue: 'Okay',
+    hornValue: 'Okay',
   },
 );
 
@@ -114,46 +114,46 @@ const ServiceProvider = ({ children }) => {
     stepnyTyreNumberValue: '',
   });
   const [carKms, setCarKms] = useState({
-    carKmsValue: ""
+    carKmsValue: '',
   });
   const [currentCarKms, setcurrentCarKms] = useState({
-    currentCarKmsValue: ""
+    currentCarKmsValue: '',
   });
   const [fasttagBalance, setfasttagBalance] = useState({
-    fasttagBalanceValue: ""
+    fasttagBalanceValue: '',
   });
   const [fuelIndicatorPetrolBar, setfuelIndicatorPetrolBar] = useState({
-    fuelIndicatorPetrolBarValue: "Yes"
+    fuelIndicatorPetrolBarValue: 0,
   });
   const [cng, setCng] = useState({
-    cngValue: "Full"
+    cngValue: '',
   });
   const [numberPlateStickerStat, setnumberPlateStickerStat] = useState({
-    numberPlateStickerStatValue: "Front Main"
+    numberPlateStickerStatValue: 'Front Main',
   });
   const [jackStat, setJackStat] = useState({
-    jackStatValue: "Yes"
+    jackStatValue: 'Yes',
   });
   const [panaStat, setPanaStat] = useState({
-    panaStatValue: "Yes"
+    panaStatValue: 'Yes',
   });
   const [tommyStat, setTommyStat] = useState({
-    tommyStatValue: "Yes"
+    tommyStatValue: 'Yes',
   });
   const [engineoil, setEngineOil] = useState({
-    engineoilValue: "Sufficient"
+    engineoilValue: 'Sufficient',
   });
   const [brakeoil, setBrakeOil] = useState({
-    brakeoilValue: "Sufficient"
+    brakeoilValue: 'Sufficient',
   });
   const [coolant, setCoolant] = useState({
-    coolantValue: "Sufficient"
+    coolantValue: 'Sufficient',
   });
   const [batteryCharge, setBatteryCharge] = useState({
-    batteryChargeValue: "Okay"
+    batteryChargeValue: 'Okay',
   });
   const [horn, setHorn] = useState({
-    hornValue: "Okay"
+    hornValue: 'Okay',
   });
 
   return (

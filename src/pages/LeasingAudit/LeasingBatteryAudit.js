@@ -1,21 +1,22 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
-import { useJamaContext } from 'context/sixtyFortyJamaContext';
-import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useJamaContext } from 'context/sixtyFortyJamaContext';
 import moment from 'moment';
 
-const BatteryAudit = () => {
+const LeasingBatteryAudit = () => {
   const history = useHistory();
   const [batteryNameError, setBatteryNameError] = useState({});
 
   const {
+    cardObject,
     batteryName,
     setBatteryName,
     batteryBrand,
     setBatteryBrand,
-    cardObject,
   } = useJamaContext();
 
   const validateFormData = () => {
@@ -37,9 +38,10 @@ const BatteryAudit = () => {
   const goToTyreAudit = () => {
     const resp = validateFormData();
     if (resp) {
-      history.push('/sixtyfortyjama/TyreAudit');
+      history.push('/LeasingAudit/LeasingTyreAudit');
     }
   };
+
   return (
     <>
       <Helmet title="Dashboard" />
@@ -92,29 +94,26 @@ const BatteryAudit = () => {
       <div className="bg-white p-3 m-2">
         <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Battery Audit</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Number</p>
-        <div className="flex flex-col">
-
-          <div className="flex flex-row flex-nonwrap bg-white">
-            <Input
-              placeholder="Enter Battery Number Here..."
-              value={batteryName.batteryNameValue}
-              onChange={(e) => setBatteryName({ batteryNameValue: e.target.value })}
-              maxLength={5}
-              style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-              }}
-            />
-          </div>
-          <div className="flex flex-row flex-nonwrap bg-white">
-            {Object.keys(batteryNameError).map((key) => (
-              <div style={{ color: 'red' }}>
-                {batteryNameError[key]}
-              </div>
-            ))}
-          </div>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          <Input
+            value={batteryName.batteryNameValue}
+            onChange={(e) => setBatteryName({ batteryNameValue: e.target.value })}
+            placeholder="Enter Battery Number Here..."
+            maxLength={5}
+            style={{
+              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+            }}
+          />
+        </div>
+        <div className="flex flex-row flex-nonwrap bg-white mb-2">
+          {Object.keys(batteryNameError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {batteryNameError[key]}
+            </div>
+          ))}
         </div>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Brand</p>
-        <div className="bg-white mb-2">
+        <div className="bg-white">
           <Radio.Group
             onChange={(e) => setBatteryBrand({ batteryBrandValue: e.target.value })}
             value={batteryBrand.batteryBrandValue}
@@ -131,7 +130,7 @@ const BatteryAudit = () => {
       </div>
       <div className="col-12 flex flex-row justify-between mt-3">
         <Button
-          onClick={() => history.push('/sixtyfortyjama/sixtyfortyjamadetails')}
+          onClick={() => history.push('/LeasingAudit/LeasingJamaCarReturn')}
           className="font-quicksand-medium"
           style={{
             marginLeft: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '100px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
@@ -152,4 +151,4 @@ const BatteryAudit = () => {
     </>
   );
 };
-export default BatteryAudit;
+export default LeasingBatteryAudit;

@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
 import moment from 'moment';
 
-const CarInfoAudit = () => {
+const LeasingCarInfo = () => {
   const [carKmsError, setCarKmsError] = useState({});
   const [currentCarKmsError, setCurrentCarKmsError] = useState({});
   const [fasttagBalanceError, setFasttagBalanceError] = useState({});
@@ -18,8 +18,7 @@ const CarInfoAudit = () => {
   const history = useHistory();
 
   const {
-    selectedCar,
-    visitId,
+    cardObject,
     carKms,
     currentCarKms,
     fasttagBalance,
@@ -36,7 +35,6 @@ const CarInfoAudit = () => {
     horn,
     setCarKms,
     setcurrentCarKms,
-    setfasttagBalance,
     setfuelIndicatorPetrolBar,
     setCng,
     setnumberPlateStickerStat,
@@ -56,27 +54,24 @@ const CarInfoAudit = () => {
     setBackRightSticker,
     backLeftSticker,
     setBackLeftSticker,
-    driverName,
-    cardObject,
+    setfasttagBalance,
   } = useJamaContext();
-
   const validateFormData = () => {
     let isValid = true;
     const carKmsErr = {};
     const currentCarKmsErr = {};
     const fasttagBalanceErr = {};
     const cngErr = {};
-
     if (!carKms.carKmsValue) {
       carKmsErr.err = 'This field cannot be empty';
       isValid = false;
     }
-    if (Number(currentCarKms.currentCarKmsValue) <= Number(carKms.carKmsValue)) {
-      currentCarKmsErr.err = 'Current KMs should be greater than Car KMs';
-      isValid = false;
-    }
     if (!currentCarKms.currentCarKmsValue) {
       currentCarKmsErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
+    if (Number(currentCarKms.currentCarKmsValue) <= Number(carKms.carKmsValue)) {
+      currentCarKmsErr.err = 'Current KMs should be greater than Car KMs';
       isValid = false;
     }
     if (!fasttagBalance.fasttagBalanceValue) {
@@ -87,7 +82,6 @@ const CarInfoAudit = () => {
       cngErr.err = 'This field cannot be empty';
       isValid = false;
     }
-
     setCarKmsError(carKmsErr);
     setCurrentCarKmsError(currentCarKmsErr);
     setFasttagBalanceError(fasttagBalanceErr);
@@ -98,13 +92,32 @@ const CarInfoAudit = () => {
   const goToTyreAudit = () => {
     const resp = validateFormData();
     if (resp) {
-      history.push('/sixtyfortyjama/AcceptForSixtyFortyJama');
+      history.push('/LeasingAudit/AcceptLeasingJama');
     }
   };
-
   return (
     <>
       <Helmet title="Dashboard" />
+      {/* <div className="flex flex-col space-y-12 mx-3">
+        <div className="space-y-2 ml-3">
+          <span className="font-quicksand-semi-bold text-xl">
+            Leasing Jama
+          </span>
+          <Breadcrumb nestedPath={nestedPath} />
+        </div>
+      </div>
+      <div className="bg-white rounded-lg my-3 mx-2">
+        <div className="flex flex-row flex-nonwrap justify-start">
+          <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
+          <div>
+            <h1 className="font-quicksand-bold text-xl mt-3">{selectedCar.selectedCarValue}</h1>
+            <div className="flex flex-row">
+              <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
+              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
+            </div>
+          </div>
+        </div>
+      </div> */}
       <div className="px-2 py-0 mb-3 mx-1 max-w-sm bg-white rounded-lg border shadow-md sm:p-6">
         <div
           className=" my-2 flex items-center p-2 text-base font-bold text-gray-900 rounded-lg"
@@ -118,10 +131,10 @@ const CarInfoAudit = () => {
           style={{ backgroundColor: '#f4fcfc' }}
         >
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-quicksand-medium text-gray-900 truncate my-1">
+            <p className="text-sm font-quicksand-medium text-gray-900 truncate mb-1">
               Team:
               {' '}
-              <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
+              <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate mb-1">
                 {cardObject.driver_manager_name}
               </p>
             </p>
@@ -136,13 +149,13 @@ const CarInfoAudit = () => {
               Mobile:
               {' '}
               <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
-                mobile
+                {cardObject.drive_contact_number || 'mobile'}
               </p>
             </p>
-            <p className="text-sm font-quicksand-medium text-gray-900 truncate my-1">
+            <p className="text-sm font-bold font-quicksand-medium text-gray-900 truncate mt-1 mb-0">
               In-Time:
               {' '}
-              <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
+              <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate mt-1 mb-0">
                 {moment(
                   cardObject.createdAt,
                 ).format('DD-MM-YYYY, h:mm:ss a')}
@@ -330,7 +343,7 @@ const CarInfoAudit = () => {
       </div>
       <div className="col-12 flex flex-row justify-between mt-3">
         <Button
-          onClick={() => history.push('/sixtyfortyjama/TyreAudit')}
+          onClick={() => history.push('/LeasingAudit/LeasingTyreAudit')}
           className="font-quicksand-medium"
           style={{
             marginLeft: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '100px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
@@ -351,4 +364,4 @@ const CarInfoAudit = () => {
     </>
   );
 };
-export default CarInfoAudit;
+export default LeasingCarInfo;

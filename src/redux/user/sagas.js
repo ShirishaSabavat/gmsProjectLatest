@@ -38,7 +38,7 @@ function* LOGIN(userAction) {
     if (temprole === 'Super Admin') {
       yield history.push('/home/dashboard');
     } else if (temprole === 'Gate Keeper') {
-      yield history.push('/gatekeeper/homepage');
+      yield history.push('/gatekeeper/carformpage');
     } else if (temprole === 'Road Test Auditor') {
       yield history.push('/rta/carlistrta');
     } else if (temprole === 'undefined') {
@@ -46,7 +46,7 @@ function* LOGIN(userAction) {
     } else if (temprole === '60:40 Queue Operator') {
       yield history.push('/sixtyfortyjama/jamacarlist');
     } else if (temprole === 'Leasing Queue Operator') {
-      yield history.push('/LeasingJama/leasingJamaCarlist');
+      yield history.push('/LeasingAudit/leasingJamaCarlist');
     } else if (temprole === 'Regular Auditor') {
       yield history.push('/RegularAudit/RegularAuditCarlist');
     } else if (temprole === 'Repair Queue Auditor') {
@@ -57,6 +57,18 @@ function* LOGIN(userAction) {
       yield history.push('/breakdown/breakdownHome');
     } else if (temprole === 'Insurance') {
       yield history.push('/insurance/insuranceHome');
+    } else if (temprole === 'Leasing Jama') {
+      yield history.push('/LeasingJama/leasingJamaCarlist');
+    } else if (temprole === 'Service Completion  Queue Operator') {
+      yield history.push('/completion/CarsQueue/4');
+    } else if (temprole === 'Repair Completion Queue Operator') {
+      yield history.push('/completion/CarsQueue/5');
+    } else if (temprole === 'Regular Audit Completion') {
+      yield history.push('/completion/CarsQueue/3');
+    } else if (temprole === 'Leasing Completion Queue Operator') {
+      yield history.push('/completion/CarsQueue/2');
+    } else if (temprole === '60: 40 Completion Queue Operator') {
+      yield history.push('/completion/CarsQueue/1');
     }
     // notification.success({
     //   message: 'Logged In',

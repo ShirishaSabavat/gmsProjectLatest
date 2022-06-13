@@ -35,6 +35,7 @@ export const loginApi = async (userData) => {
     localStorage.setItem('token', token);
     localStorage.setItem('user', user?.first_name);
     localStorage.setItem('role', user?.group[0]?.name);
+    localStorage.setItem('roleGroup', JSON.stringify(user?.group));
     // if (!(user?.roles[0]?.role === null || user?.roles[0]?.role === undefined || user?.roles[0]?.role === 'Super Admin')) {
     // localStorage.setItem('empid', user?.user_profile?.emp_id); //not available
     localStorage.setItem('garageid', user?.user_profile?.garage);
@@ -550,7 +551,7 @@ export const getVisitingCarDetails = (id) => axios({
   headers,
 });
 
-export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
+export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId, etmId) => {
   const data = JSON.stringify({
     visit_category: visitcat,
     carId: carid,
@@ -563,6 +564,7 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
     drive_contact_number: drivercontactnumber,
     driverManagerId: drivermanagerid,
     driver_manager_name: drivermanagername,
+    employee_id: etmId,
     status: 1,
   });
   return axios({
@@ -573,7 +575,7 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
   });
 };
 
-export const editCarVisit = (visitCarId, visitcat, carid, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId) => {
+export const editCarVisit = (visitCarId, visitcat, carid, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId, etmId) => {
   const data = JSON.stringify({
     visit_category: visitcat,
     carId: carid,
@@ -585,6 +587,7 @@ export const editCarVisit = (visitCarId, visitcat, carid, garageid, isdriverwith
     drive_contact_number: drivercontactnumber,
     driverManagerId: drivermanagerid,
     driver_manager_name: drivermanagername,
+    employee_id: etmId,
     status: 1,
   });
   return axios({
@@ -786,3 +789,15 @@ export const getEmployeeList = (cityId) => axios({
   url: `${basUrl}/driver_list/${cityId}`,
   headers,
 });
+
+export const addCompletion = (status, garageId) => {
+  const data = JSON.stringify({
+    status,
+  });
+  return axios({
+    method: 'PATCH',
+    url: `${basUrl}/garage/${garageId}`,
+    headers,
+    data,
+  });
+};

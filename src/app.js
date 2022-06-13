@@ -6,6 +6,7 @@ import Router from 'router';
 import JamaProvider from 'context/sixtyFortyJamaContext';
 import RegularAuditProvider from 'context/RegularAuditContext';
 import RTAProvider from 'context/rtaContext';
+import CompletionProvider from 'context/CompletionContext';
 
 import 'global.scss';
 import 'components/kit/vendors/antd/mixins.less';
@@ -19,13 +20,15 @@ if (process.env.REACT_APP_NODE_ENV !== 'development') console.log = function () 
 const App = () => (
   <ApolloProvider client={client}>
     <Provider store={store}>
-      <JamaProvider>
-        <RegularAuditProvider>
-          <RTAProvider>
-            <Router history={history} />
-          </RTAProvider>
-        </RegularAuditProvider>
-      </JamaProvider>
+      <CompletionProvider>
+        <JamaProvider>
+          <RegularAuditProvider>
+            <RTAProvider>
+              <Router history={history} />
+            </RTAProvider>
+          </RegularAuditProvider>
+        </JamaProvider>
+      </CompletionProvider>
     </Provider>
   </ApolloProvider>
 );

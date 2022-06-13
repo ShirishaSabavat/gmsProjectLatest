@@ -1,15 +1,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import { useState } from 'react';
-import { Input, Popover, Button } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import {
+  Input, Popover, Button, Modal,
+} from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { userLogout } from 'redux/user/actions';
+import { useHistory } from 'react-router-dom';
 // import { webLogo } from './images/Web-Logo.png';
 import './styles.css';
 
 const Header = ({ logout }) => {
   const [searchLoading, setSearchLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const history = useHistory();
 
   // global search input on enter
   const globalSearch = () => {
@@ -19,15 +24,109 @@ const Header = ({ logout }) => {
 
   const showUserProfile = () => { };
   const user = localStorage.getItem('user');
+  const roleGroup = localStorage.getItem('roleGroup');
+  const roleGroupArray = JSON.parse(roleGroup);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const renderPage = (role) => {
+    if (role === 'Super Admin') {
+      history.push('/home/dashboard');
+      handleCancel();
+    } else if (role === 'Gate Keeper') {
+      history.push('/gatekeeper/carformpage');
+      handleCancel();
+    } else if (role === 'Road Test Auditor') {
+      history.push('/rta/carlistrta');
+      handleCancel();
+    } else if (role === 'undefined') {
+      history.push('/home/dashboard');
+      handleCancel();
+    } else if (role === '60:40 Queue Operator') {
+      history.push('/sixtyfortyjama/jamacarlist');
+      handleCancel();
+    } else if (role === 'Leasing Queue Operator') {
+      history.push('/LeasingAudit/leasingJamaCarlist');
+      handleCancel();
+    } else if (role === 'Regular Auditor') {
+      history.push('/RegularAudit/RegularAuditCarlist');
+      handleCancel();
+    } else if (role === 'Repair Queue Auditor') {
+      history.push('/RepairAudit/RepairAuditCarlist');
+      handleCancel();
+    } else if (role === 'Service Queue Auditor') {
+      history.push('/ServiceAudit/ServiceAuditCarlist');
+      handleCancel();
+    } else if (role === 'Fleet Managers') {
+      history.push('/breakdown/breakdownHome');
+      handleCancel();
+    } else if (role === 'Insurance') {
+      history.push('/insurance/insuranceHome');
+      handleCancel();
+    } else if (role === 'Leasing Jama') {
+      history.push('/LeasingJama/leasingJamaCarlist');
+      handleCancel();
+    } else if (role === 'Service Completion  Queue Operator') {
+      history.push('/completion/CarsQueue');
+      handleCancel();
+    } else if (role === 'Repair Completion Queue Operator') {
+      history.push('/completion/CarsQueue');
+      handleCancel();
+    } else if (role === 'Regular Audit Completion') {
+      history.push('/completion/CarsQueue');
+      handleCancel();
+    } else if (role === 'Leasing Completion Queue Operator') {
+      history.push('/completion/CarsQueue');
+      handleCancel();
+    } else if (role === '60: 40 Completion Queue Operator') {
+      history.push('/completion/CarsQueue');
+      handleCancel();
+    }
+  };
+
+  const renderTitle = () => {
+    <div className="flex justify-between">
+      <Button
+        onClick={logout}
+        type="primary"
+      >
+        Sign Out
+      </Button>
+    </div>;
+    alert('Please select a role');
+  };
+
+  const renderModalContent = () => roleGroupArray.map((role) => (
+    <p onClick={() => renderPage(role.name)}>{role.name.replace('Operator', '')}</p>
+  ));
+
+  const renderFooter = () => (
+    <div className="flex justify-start">
+      <Button
+        onClick={logout}
+        type="primary"
+      >
+        Sign Out
+      </Button>
+    </div>
+  );
 
   return (
     <div className="flex justify-between" style={{ margin: 'auto', height: 64 }}>
-      <img
-        src="/assets/images/logo/Web-Logo.png"
-        alt="app-logo"
-        className="h-8"
-        style={{ margin: '1% 0 0 3%' }}
-      />
+      <div className="flex items-center">
+        <img
+          src="/assets/images/logo/Web-Logo.png"
+          alt="app-logo"
+          className="h-8"
+          style={{ margin: '1% 0 0 3%' }}
+        />
+      </div>
       {/* <Input
         size="medium"
         placeholder="Search for anything..."
@@ -70,12 +169,12 @@ const Header = ({ logout }) => {
             </div>
           </div>
         </div> */}
-        <div id="Jessica_Smith">
+        {/* <div id="Jessica_Smith">
           <span>{user}</span>
-        </div>
-        <Popover
+        </div> */}
+        {/* <Popover
           placement="bottomRight"
-          title="Profile"
+          title={user}
           content={(
             <Button
               onClick={logout}
@@ -85,22 +184,36 @@ const Header = ({ logout }) => {
             </Button>
           )}
           trigger="click"
+          className="truncate"
+          style={{ fontSize: '14px', fontWeight: 'bold' }}
+        > */}
+        {/* <img
+          style={{
+            cursor: 'pointer',
+            width: '32px',
+            height: '32px',
+            left: '122px',
+            top: '0px',
+            overflow: 'visible',
+          }}
+          onClick={showModal}
+          src="/assets/images/logo/profile.png"
+          alt="user"
+          className="mr-4"
+        /> */}
+        <MenuOutlined
+          onClick={showModal}
+          className="mr-4"
+        />
+        {/* </Popover> */}
+        <Modal
+          title={user}
+          visible={isModalVisible}
+          onCancel={handleCancel}
+          footer={renderFooter()}
         >
-          <img
-            style={{
-              cursor: 'pointer',
-              width: '32px',
-              height: '32px',
-              left: '122px',
-              top: '0px',
-              overflow: 'visible',
-            }}
-            onClick={showUserProfile}
-            src="/assets/images/logo/profile.png"
-            alt="user"
-            className="mr-4"
-          />
-        </Popover>
+          {renderModalContent()}
+        </Modal>
       </div>
     </div>
   );

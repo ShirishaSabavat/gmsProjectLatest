@@ -2,22 +2,16 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-sequences */
 import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
 import { Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { addRTAList, rejectRTAList } from 'services/axios';
 import { useRTAContext } from 'context/rtaContext';
 
-const nestedPath = [
-  'Home',
-  'Road Trip Audit',
-];
-
 const transferjama = () => {
   const {
-    selectedVisitCategory, remarks,
-  } = useRTAContext;
+    cardObject, remarks,
+  } = useRTAContext();
   const { id } = useParams();
   const [rejectfor, setrejectfor] = useState(0);
   const [rejectforRemark, setrejectforRemark] = useState('');
@@ -51,18 +45,15 @@ const transferjama = () => {
   const RejectRTAListMethod = () => {
     const resp = validateFormData();
     if (resp) {
-      let tempvisitid = 0;
       let isLeasing = true;
-      if (selectedVisitCategory === '1' || selectedVisitCategory === 1) {
-        tempvisitid = 1;
+      if (cardObject.visit_category === 1) {
         isLeasing = false;
-      } else if (selectedVisitCategory === '2' || selectedVisitCategory === 1) {
-        tempvisitid = 2;
+      } else if (cardObject.visit_category === 2) {
         isLeasing = true;
       }
-      addRTAList(id, GarageID, isLeasing, remarks, 2)
+      addRTAList(id, GarageID, isLeasing, remarks.remarksValue, 2)
         .then((res) => {
-          rejectRTAList(id, selectedVisitCategory, rejectfor, 'roadtest_reject')
+          rejectRTAList(id, cardObject.visit_category, rejectfor, 'roadtest_reject')
             .then((innerRes) => {
               notification.success({
                 message: 'Jama Rejected successfully',
@@ -81,19 +72,18 @@ const transferjama = () => {
   return (
     <>
       <Helmet title="Dashboard" />
-      <div className="flex flex-col space-y-12 mx-3">
+      <div className="flex flex-col space-y-2 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Leasing Jama: Road Trip Audit
+            Road Trial: Car Transfer
           </span>
-          <Breadcrumb nestedPath={nestedPath} />
         </div>
         <div>
           <div className="bg-white p-4">
             <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Select Reject Option</p>
             <div className="flex flex-row flex-nonwrap">
               <Button
-                onClick={() => { setrejectfor(4), setrejectforRemark('Transfer to Repair'); }}
+                onClick={() => { setrejectfor(5), setrejectforRemark('Transfer to Repair'); }}
                 className="font-quicksand-medium"
                 style={{ marginTop: '10px', marginLeft: '10px' }}
               >
@@ -103,7 +93,7 @@ const transferjama = () => {
             </div>
             <div className="flex flex-row flex-nonwrap">
               <Button
-                onClick={() => { setrejectfor(5), setrejectforRemark('Transfer to Servicing'); }}
+                onClick={() => { setrejectfor(4), setrejectforRemark('Transfer to Servicing'); }}
                 className="font-quicksand-medium"
                 style={{ marginTop: '10px', marginLeft: '10px' }}
               >
@@ -133,7 +123,7 @@ const transferjama = () => {
                 marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
               }}
             >
-              Submit
+              Transfer
             </Button>
           </div>
         </div>

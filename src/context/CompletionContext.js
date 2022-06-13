@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { createContext, useState, useContext } from 'react';
 
-const RTAContext = createContext(
+const CompletionContext = createContext(
   {
     selectedCarIdValue: '',
     selectedCarNumberValue: '',
@@ -12,7 +12,7 @@ const RTAContext = createContext(
   },
 );
 
-const RTAProvider = ({ children }) => {
+const CompletionProvider = ({ children }) => {
   const [selectedCarId, setSelectedCarId] = useState({
     selectedCarIdValue: '',
   });
@@ -33,6 +33,7 @@ const RTAProvider = ({ children }) => {
   });
   const [cardObject, setCardObject] = useState({
   });
+  const [operator, setOperator] = useState(0);
 
   const ResetContextValues = () => {
     setSelectedCarId({
@@ -56,7 +57,7 @@ const RTAProvider = ({ children }) => {
   };
 
   return (
-    <RTAContext.Provider value={{
+    <CompletionContext.Provider value={{
       selectedCarId,
       setSelectedCarId,
       selectedCarNumber,
@@ -72,12 +73,14 @@ const RTAProvider = ({ children }) => {
       cardObject,
       setCardObject,
       ResetContextValues,
+      operator,
+      setOperator,
     }}
     >
       {children}
-    </RTAContext.Provider>
+    </CompletionContext.Provider>
   );
 };
 
-export const useRTAContext = () => useContext(RTAContext);
-export default RTAProvider;
+export const useCompletionContext = () => useContext(CompletionContext);
+export default CompletionProvider;

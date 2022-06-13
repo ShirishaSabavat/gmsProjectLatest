@@ -7,7 +7,7 @@ import { useJamaContext } from 'context/sixtyFortyJamaContext';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 
-const sixtyfortyjamadetails = () => {
+const LeasingCarReturn = () => {
   const {
     selectedCar,
     visitId,
@@ -37,12 +37,12 @@ const sixtyfortyjamadetails = () => {
   const goToBatteryAudit = () => {
     const resp = validateFormData();
     if (resp) {
-      history.push('/sixtyfortyjama/BatteryAudit');
+      history.push('/LeasingAudit/LeasingBatteryAudit');
     }
   };
   return (
     <>
-      <Helmet title="60:40 Jama" />
+      <Helmet title="Leasing Car Return" />
       <div className="px-2 py-0 mb-3 mx-1 max-w-sm bg-white rounded-lg border shadow-md sm:p-6">
         <div
           className=" my-2 flex items-center p-2 text-base font-bold text-gray-900 rounded-lg"
@@ -159,7 +159,7 @@ const sixtyfortyjamadetails = () => {
         <Button
           onClick={() => {
             ResetContextValues();
-            history.push('/sixtyfortyjama/jamacarlist');
+            history.push('/LeasingAudit/leasingJamaCarlist');
           }}
           className="font-quicksand-medium"
           style={{
@@ -181,4 +181,4 @@ const sixtyfortyjamadetails = () => {
     </>
   );
 };
-export default sixtyfortyjamadetails;
+export default LeasingCarReturn;

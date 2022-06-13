@@ -155,7 +155,7 @@ const addgarage = () => {
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Garage Title</p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <Input
-              placeholder="Enter Name Here..."
+              placeholder="Enter Garage Name Here..."
               value={garageTitle}
               onChange={(e) => setGarageTitle(e.target.value)}
               style={{

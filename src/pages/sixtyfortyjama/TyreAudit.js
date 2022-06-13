@@ -1,16 +1,13 @@
+/* eslint-disable max-len */
+/* eslint-disable no-restricted-globals */
 /* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
-import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
-
-const nestedPath = [
-  'Home',
-  '60:40 Jama',
-];
+import moment from 'moment';
 
 const TyreAudit = () => {
   const [fRPressureError, setfRPressureError] = useState({});
@@ -22,6 +19,7 @@ const TyreAudit = () => {
   const [fLPressureError, setfLPressureError] = useState({});
   const [fLTyreNumberError, setfLTyreNumberError] = useState({});
   const [stepnyTyreNumberError, setStepnyTyreNumberError] = useState({});
+  const [stepnyPressureError, setStepnyPressureError] = useState({});
 
   const history = useHistory();
 
@@ -66,6 +64,10 @@ const TyreAudit = () => {
     setStepnyBrand,
     setStepnyPresent,
     setStepnyTyreNumber,
+    stepnyPressure,
+    setStepnyPressure,
+    driverName,
+    cardObject,
   } = useJamaContext();
 
   const validateFormData = () => {
@@ -79,9 +81,14 @@ const TyreAudit = () => {
     const fLPressureErr = {};
     const setfLTyreNumberErr = {};
     const stepnyTyreNumberErr = {};
+    const stepnyPressureErr = {};
 
     if (!fRPressure.fRPressureValue) {
       fRPressureErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
+    if (!fRTyreNumber.fRTyreNumberValue || fRTyreNumber.fRTyreNumberValue.length < 4) {
+      setfRTyreNumberErr.err = 'Tyre Number must be of 4 digits';
       isValid = false;
     }
     if (!fRTyreNumber.fRTyreNumberValue) {
@@ -92,12 +99,20 @@ const TyreAudit = () => {
       rRPressureErr.err = 'This field cannot be empty';
       isValid = false;
     }
+    if (!rRTyreNumber.rRTyreNumberValue || rRTyreNumber.rRTyreNumberValue.length < 4) {
+      setrRTyreNumberErr.err = 'Tyre Number must be of 4 digits';
+      isValid = false;
+    }
     if (!rRTyreNumber.rRTyreNumberValue) {
       setrRTyreNumberErr.err = 'This field cannot be empty';
       isValid = false;
     }
     if (!rLPressure.rLPressureValue) {
       rLPressureErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
+    if (!rLTyreNumber.rLTyreNumberValue || rLTyreNumber.rLTyreNumberValue.length < 4) {
+      setrLTyreNumberErr.err = 'Tyre Number must be of 4 digits';
       isValid = false;
     }
     if (!rLTyreNumber.rLTyreNumberValue) {
@@ -108,12 +123,25 @@ const TyreAudit = () => {
       fLPressureErr.err = 'This field cannot be empty';
       isValid = false;
     }
+    if (!fLTyreNumber.fLTyreNumberValue || fLTyreNumber.fLTyreNumberValue.length < 4) {
+      setfLTyreNumberErr.err = 'Tyre Number must be of 4 digits';
+      isValid = false;
+    }
     if (!fLTyreNumber.fLTyreNumberValue) {
       setfLTyreNumberErr.err = 'This field cannot be empty';
       isValid = false;
     }
+    if (stepnyPresent.stepnyPresentValue === 1
+      && (!stepnyPresent.stepnyPresentValue || stepnyPresent.stepnyPresentValue.length < 4)) {
+      stepnyTyreNumberErr.err = 'Tyre Number must be of 4 digits';
+      isValid = false;
+    }
     if (stepnyPresent.stepnyPresentValue === 1 && !stepnyTyreNumber.stepnyTyreNumberValue) {
       stepnyTyreNumberErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
+    if (stepnyPresent.stepnyPresentValue === 1 && !stepnyPressure.stepnyPressureValue) {
+      stepnyPressureErr.err = 'This field cannot be empty';
       isValid = false;
     }
 
@@ -126,6 +154,7 @@ const TyreAudit = () => {
     setfLPressureError(fLPressureErr);
     setfLTyreNumberError(setfLTyreNumberErr);
     setStepnyTyreNumberError(stepnyTyreNumberErr);
+    setStepnyPressureError(stepnyPressureErr);
     return isValid;
   };
   const goToCarInfoAudit = () => {
@@ -138,28 +167,54 @@ const TyreAudit = () => {
   return (
     <>
       <Helmet title="Dashboard" />
-      <div className="flex flex-col space-y-12 mx-3">
-        <div className="space-y-2 ml-3">
-          <span className="font-quicksand-semi-bold text-xl">
-            60:40 Jama
-          </span>
-          <Breadcrumb nestedPath={nestedPath} />
+      <div className="px-2 py-0 mb-3 mx-1 max-w-sm bg-white rounded-lg border shadow-md sm:p-6">
+        <div
+          className=" my-2 flex items-center p-2 text-base font-bold text-gray-900 rounded-lg"
+          style={{ backgroundColor: '#f4fcfc' }}
+        >
+          <span className="flex-1 ml-3 font-quicksand-bold text-xl whitespace-nowrap">{cardObject.car_number}</span>
+          <span className=" font-quicksand-semi-bold px-2 py-0.5 ml-3 text-xs text-gray-500 truncate">{cardObject.carId?.model?.name}</span>
         </div>
-      </div>
-      <div className="bg-white rounded-lg my-3 mx-3">
-        <div className="flex flex-row flex-nonwrap justify-center">
-          <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
-          <div>
-            <h1 className="font-quicksand-bold text-xl mt-3">{selectedCar.selectedCarValue}</h1>
-            <div className="flex flex-row">
-              <h1 className="font-quicksand-semi-bold text-sm mt-1">Visit ID: </h1>
-              <h1 className="font-quicksand-semi-bold text-sm mt-1 text-teal-300">{visitId.visitIdValue}</h1>
-            </div>
+        <div
+          className=" my-2 flex items-center p-2 text-base font-bold text-gray-900 rounded-lg"
+          style={{ backgroundColor: '#f4fcfc' }}
+        >
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-quicksand-medium text-gray-900 truncate my-1">
+              Team:
+              {' '}
+              <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
+                {cardObject.driver_manager_name}
+              </p>
+            </p>
+            <p className="text-sm font-quicksand-medium text-gray-900 truncate my-1">
+              Driver:
+              {' '}
+              <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
+                {cardObject.driver_name}
+              </p>
+            </p>
+            <p className="text-sm font-quicksand-medium text-gray-900 truncate my-1">
+              Mobile:
+              {' '}
+              <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
+                mobile
+              </p>
+            </p>
+            <p className="text-sm font-quicksand-medium text-gray-900 truncate my-1">
+              In-Time:
+              {' '}
+              <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
+                {moment(
+                  cardObject.createdAt,
+                ).format('DD-MM-YYYY, h:mm:ss a')}
+              </p>
+            </p>
           </div>
         </div>
       </div>
-      <div className="bg-white p-5 m-3">
-        <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Front Right Tyre Audit</p>
+      <div className="bg-white p-3 m-3">
+        <p className="font-quicksand-bold text-sm mt-4">Front Right Tyre Audit</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
           <Radio.Group
@@ -194,7 +249,7 @@ const TyreAudit = () => {
           <Input
             value={fRPressure.fRPressureValue}
             onChange={(e) => setfRPressure({ fRPressureValue: e.target.value })}
-            placeholder="Enter Name Here..."
+            placeholder="Enter Tyre Pressure Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -211,8 +266,14 @@ const TyreAudit = () => {
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={fRTyreNumber.fRTyreNumberValue}
-            onChange={(e) => setfRTyreNumber({ fRTyreNumberValue: e.target.value })}
-            placeholder="Enter Name Here..."
+            onChange={(e) => setfRTyreNumber({
+              fRTyreNumberValue: e.target.value.replace(
+                /\D/g,
+                '',
+              ),
+            })}
+            placeholder="Enter Tyre Number Here..."
+            maxLength={4}
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -227,8 +288,8 @@ const TyreAudit = () => {
         </div>
 
       </div>
-      <div className="bg-white p-5 m-3">
-        <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Rear Right Tyre Audit</p>
+      <div className="bg-white p-3 m-3">
+        <p className="font-quicksand-bold text-sm mt-4">Rear Right Tyre Audit</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
           <Radio.Group
@@ -263,7 +324,7 @@ const TyreAudit = () => {
           <Input
             value={rRPressure.rRPressureValue}
             onChange={(e) => setrRPressure({ rRPressureValue: e.target.value })}
-            placeholder="Enter Name Here..."
+            placeholder="Enter Tyre Pressure Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -280,8 +341,14 @@ const TyreAudit = () => {
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={rRTyreNumber.rRTyreNumberValue}
-            onChange={(e) => setrRTyreNumber({ rRTyreNumberValue: e.target.value })}
-            placeholder="Enter Name Here..."
+            onChange={(e) => setrRTyreNumber({
+              rRTyreNumberValue: e.target.value.replace(
+                /\D/g,
+                '',
+              ),
+            })}
+            maxLength={4}
+            placeholder="Enter Tyre Number Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -295,8 +362,8 @@ const TyreAudit = () => {
           ))}
         </div>
       </div>
-      <div className="bg-white p-5 m-3">
-        <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Rear Left Tyre Audit</p>
+      <div className="bg-white p-3 m-3">
+        <p className="font-quicksand-bold text-sm mt-4">Rear Left Tyre Audit</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
           <Radio.Group
@@ -331,7 +398,7 @@ const TyreAudit = () => {
           <Input
             value={rLPressure.rLPressureValue}
             onChange={(e) => setrLPressure({ rLPressureValue: e.target.value })}
-            placeholder="Enter Name Here..."
+            placeholder="Enter Tyre Pressure Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -348,8 +415,14 @@ const TyreAudit = () => {
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={rLTyreNumber.rLTyreNumberValue}
-            onChange={(e) => setrLTyreNumber({ rLTyreNumberValue: e.target.value })}
-            placeholder="Enter Name Here..."
+            onChange={(e) => setrLTyreNumber({
+              rLTyreNumberValue: e.target.value.replace(
+                /\D/g,
+                '',
+              ),
+            })}
+            maxLength={4}
+            placeholder="Enter Tyre Number Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -363,8 +436,8 @@ const TyreAudit = () => {
           ))}
         </div>
       </div>
-      <div className="bg-white p-5 m-3">
-        <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Front Left Tyre Audit</p>
+      <div className="bg-white p-3 m-3">
+        <p className="font-quicksand-bold text-sm mt-4">Front Left Tyre Audit</p>
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
         <div className="bg-white">
           <Radio.Group
@@ -399,7 +472,7 @@ const TyreAudit = () => {
           <Input
             value={fLPressure.fLPressureValue}
             onChange={(e) => setfLPressure({ fLPressureValue: e.target.value })}
-            placeholder="Enter Name Here..."
+            placeholder="Enter Tyre Pressure Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -416,8 +489,14 @@ const TyreAudit = () => {
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={fLTyreNumber.fLTyreNumberValue}
-            onChange={(e) => setfLTyreNumber({ fLTyreNumberValue: e.target.value })}
-            placeholder="Enter Name Here..."
+            onChange={(e) => setfLTyreNumber({
+              fLTyreNumberValue: e.target.value.replace(
+                /\D/g,
+                '',
+              ),
+            })}
+            maxLength={4}
+            placeholder="Enter Tyre Number Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -431,7 +510,7 @@ const TyreAudit = () => {
           ))}
         </div>
       </div>
-      <div className="bg-white p-5 m-3">
+      <div className="bg-white p-3 m-3">
         <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Stephany Present?*</p>
         <div className="bg-white">
           <Radio.Group
@@ -445,8 +524,8 @@ const TyreAudit = () => {
       </div>
       {stepnyPresent.stepnyPresentValue === 1
         && (
-          <div className="bg-white p-5 m-3">
-            <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Stephany Tyre</p>
+          <div className="bg-white p-3 m-3">
+            <p className="font-quicksand-bold text-sm mt-4">Stephany Tyre</p>
             <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
             <div className="bg-white">
               <Radio.Group
@@ -463,14 +542,38 @@ const TyreAudit = () => {
                 <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={8}>Other</Radio>
               </Radio.Group>
             </div>
+            <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Tyre Pressure</p>
+            <div className="flex flex-row flex-nonwrap bg-white">
+              <Input
+                value={stepnyPressure.stepnyPressureValue}
+                onChange={(e) => setStepnyPressure({ stepnyPressureValue: e.target.value })}
+                placeholder="Enter Tyre Pressure Here..."
+                style={{
+                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                }}
+              />
+            </div>
+            <div className="flex flex-row flex-nonwrap bg-white">
+              {Object.keys(stepnyPressureError).map((key) => (
+                <div style={{ color: 'red' }}>
+                  {stepnyPressureError[key]}
+                </div>
+              ))}
+            </div>
             <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Tyre Number</p>
             <div className="flex flex-row flex-nonwrap bg-white">
               <Input
                 value={stepnyTyreNumber.stepnyTyreNumberValue}
                 onChange={
-                  (e) => setStepnyTyreNumber({ stepnyTyreNumberValue: e.target.value || null })
+                  (e) => setStepnyTyreNumber({
+                    stepnyTyreNumberValue: e.target.value.replace(
+                      /\D/g,
+                      '',
+                    ) || null,
+                  })
                 }
-                placeholder="Enter Name Here..."
+                maxLength={4}
+                placeholder="Enter Tyre Number Here..."
                 style={{
                   padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
                 }}
@@ -485,7 +588,16 @@ const TyreAudit = () => {
             </div>
           </div>
         )}
-      <div className="col-12 flex flex-row justify-end">
+      <div className="col-12 flex flex-row justify-between mt-3">
+        <Button
+          onClick={() => history.push('/sixtyfortyjama/BatteryAudit')}
+          className="font-quicksand-medium"
+          style={{
+            marginLeft: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '100px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
+          }}
+        >
+          Back
+        </Button>
         <Button
           onClick={goToCarInfoAudit}
           className="font-quicksand-medium"

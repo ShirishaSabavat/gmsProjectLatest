@@ -34,8 +34,8 @@ const JamaContext = createContext(
     carKmsValue: '',
     currentCarKmsValue: '',
     fasttagBalanceValue: '',
-    fuelIndicatorPetrolBarValue: 'Yes',
-    cngValue: 'Full',
+    fuelIndicatorPetrolBarValue: 0,
+    cngValue: '',
     numberPlateStickerStatValue: 'Front Main',
     jackStatValue: 'Yes',
     panaStatValue: 'Yes',
@@ -50,6 +50,7 @@ const JamaContext = createContext(
     backRightStickerValue: false,
     backLeftStickerValue: false,
     driverManagerValue: '',
+    driverNameValue: '',
   },
 );
 
@@ -148,10 +149,10 @@ const JamaProvider = ({ children }) => {
     fasttagBalanceValue: '',
   });
   const [fuelIndicatorPetrolBar, setfuelIndicatorPetrolBar] = useState({
-    fuelIndicatorPetrolBarValue: 'Yes',
+    fuelIndicatorPetrolBarValue: 0,
   });
   const [cng, setCng] = useState({
-    cngValue: 'Full',
+    cngValue: '',
   });
   const [numberPlateStickerStat, setnumberPlateStickerStat] = useState({
     numberPlateStickerStatValue: 'Front Main',
@@ -213,6 +214,62 @@ const JamaProvider = ({ children }) => {
   const [driverName, setDriverName] = useState({
     driverNameValue: '',
   });
+  const [cardObject, setCardObject] = useState({
+  });
+
+  const ResetContextValues = () => {
+    setselectedCarID({ selectedCarIDValue: 0 });
+    setdriverReportedIssue({ driverReportedIssueValue: '' });
+    setCarReturnReason({ carReturnReasonValue: 'Family/Personal obligations' });
+    setBatteryName({ batteryNameValue: '' });
+    setBatteryBrand({ batteryBrandValue: 1 });
+    setfRTyreBrand({ fRTyreBrandValue: 1 });
+    setfRWornOut({ fRWornOutValue: '<3' });
+    setfRPressure({ fRPressureValue: '' });
+    setfRTyreNumber({ fRTyreNumberValue: '' });
+    setrRTyreBrand({ rRTyreBrandValue: 1 });
+    setrRWornOut({ rRWornOutValue: '<3' });
+    setrRPressure({ rRPressureValue: '' });
+    setrRTyreNumber({ rRTyreNumberValue: '' });
+    setfLTyreBrand({ fLTyreBrandValue: 1 });
+    setfLWornOut({ fLWornOutValue: '<3' });
+    setfLPressure({ fLPressureValue: '' });
+    setfLTyreNumber({ fLTyreNumberValue: '' });
+    setrLTyreBrand({ rLTyreBrandValue: 1 });
+    setrLWornOut({ rLWornOutValue: '<3' });
+    setrLPressure({ rLPressureValue: '' });
+    setrLTyreNumber({ rLTyreNumberValue: '' });
+    setStepnyPresent({ stepnyPresentValue: 1 });
+    setStepnyBrand({ stepnyBrandValue: 1 });
+    setStepnyTyreNumber({ stepnyTyreNumberValue: '' });
+    setCarKms({ carKmsValue: '' });
+    setcurrentCarKms({ currentCarKmsValue: '' });
+    setfasttagBalance({ fasttagBalanceValue: '' });
+    setfuelIndicatorPetrolBar({ fuelIndicatorPetrolBarValue: 0 });
+    setCng({ cngValue: '' });
+    setnumberPlateStickerStat({ numberPlateStickerStatValue: 'Front Main' });
+    setJackStat({ jackStatValue: 'Yes' });
+    setPanaStat({ panaStatValue: 'Yes' });
+    setTommyStat({ tommyStatValue: 'Yes' });
+    setEngineOil({ engineoilValue: 'Sufficient' });
+    setBrakeOil({ brakeoilValue: 'Sufficient' });
+    setCoolant({ coolantValue: 'Sufficient' });
+    setBatteryCharge({ batteryChargeValue: 'Okay' });
+    setHorn({ hornValue: 'Okay' });
+    setFrontMainSticker({ frontMainStickerValue: false });
+    setBackMainSticker({ backMainStickerValue: false });
+    setBackRightSticker({ backRightStickerValue: false });
+    setBackLeftSticker({ backLeftStickerValue: false });
+    setPenaltyAmount({ penaltyAmountValue: 1 });
+    setPenaltyReason({ penaltyReasonValue: 1 });
+    setStepnyWornOut({ stepnyWornOutValue: '<3' });
+    setStepnyPressure({ stepnyPressureValue: '' });
+    setEtmId({ etmIdValue: '' });
+    setDriverName({ driverNameValue: '' });
+    setDriverBal({ driverBalValue: '' });
+    setRent({ rentValue: 1 });
+  };
+
   return (
     <JamaContext.Provider value={{
       selectedCar,
@@ -321,6 +378,9 @@ const JamaProvider = ({ children }) => {
       setBackLeftSticker,
       driverName,
       setDriverName,
+      cardObject,
+      setCardObject,
+      ResetContextValues,
     }}
     >
       {children}

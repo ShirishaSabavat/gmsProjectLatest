@@ -1,5 +1,5 @@
-/* eslint-disable global-require */
 /* eslint-disable no-unused-vars */
+/* eslint-disable global-require */
 import { Helmet } from 'react-helmet';
 import { Radio, Button, Input } from 'antd';
 import { useState } from 'react';
@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
 import moment from 'moment';
 
-const ServiceTyreAudit = () => {
+const LeasingTyreAudit = () => {
   const [fRPressureError, setfRPressureError] = useState({});
   const [fRTyreNumberError, setfRTyreNumberError] = useState({});
   const [rRPressureError, setrRPressureError] = useState({});
@@ -21,8 +21,7 @@ const ServiceTyreAudit = () => {
   const history = useHistory();
 
   const {
-    selectedCar,
-    visitId,
+    cardObject,
     fRTyreBrand,
     fRWornOut,
     fRPressure,
@@ -65,8 +64,6 @@ const ServiceTyreAudit = () => {
     setStepnyWornOut,
     stepnyPressure,
     setStepnyPressure,
-    driverName,
-    cardObject,
   } = useJamaContext();
 
   const validateFormData = () => {
@@ -157,10 +154,11 @@ const ServiceTyreAudit = () => {
     setStepnyPressureError(stepnyPressureErr);
     return isValid;
   };
+
   const goToCarInfoAudit = () => {
     const resp = validateFormData();
     if (resp) {
-      history.push('/ServiceAudit/ServiceCarInfo');
+      history.push('/LeasingAudit/LeasingCarInfo');
     }
   };
   return (
@@ -175,7 +173,7 @@ const ServiceTyreAudit = () => {
           <span className=" font-quicksand-semi-bold px-2 py-0.5 ml-3 text-xs text-gray-500 truncate">{cardObject.carId?.model?.name}</span>
         </div>
         <div
-          className=" my-2 flex items-center p-2 text-base font-bold text-gray-900 rounded-lg"
+          className=" my-2 flex items-center p-3 text-base font-bold text-gray-900 rounded-lg"
           style={{ backgroundColor: '#f4fcfc' }}
         >
           <div className="flex-1 min-w-0">
@@ -248,7 +246,7 @@ const ServiceTyreAudit = () => {
           <Input
             value={fRPressure.fRPressureValue}
             onChange={(e) => setfRPressure({ fRPressureValue: e.target.value })}
-            placeholder="Enter Tyre Pressure Here..."
+            placeholder="Enter Tyre Pressue Here..."
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -285,7 +283,6 @@ const ServiceTyreAudit = () => {
             </div>
           ))}
         </div>
-
       </div>
       <div className="bg-white p-3 m-3">
         <p className="font-quicksand-bold text-sm mt-4">Rear Right Tyre Audit</p>
@@ -420,8 +417,8 @@ const ServiceTyreAudit = () => {
                 '',
               ),
             })}
-            maxLength={4}
             placeholder="Enter Tyre Number Here..."
+            maxLength={4}
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
@@ -510,7 +507,7 @@ const ServiceTyreAudit = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-3">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Stephany Present?*</p>
+        <p className="font-quicksand-semi-bold text-sm">Stephany Present?*</p>
         <div className="bg-white">
           <Radio.Group
             onChange={(e) => setStepnyPresent({ stepnyPresentValue: e.target.value })}
@@ -524,7 +521,7 @@ const ServiceTyreAudit = () => {
       {stepnyPresent.stepnyPresentValue === 1
         && (
           <div className="bg-white p-3 m-3">
-            <p className="font-quicksand-bold text-sm mt-4">Stephany Tyre</p>
+            <p className="font-quicksand-bold text-5xl mt-4" style={{ fontSize: '12px' }}>Stephany Tyre</p>
             <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brand*</p>
             <div className="bg-white">
               <Radio.Group
@@ -584,8 +581,8 @@ const ServiceTyreAudit = () => {
                     ) || null,
                   })
                 }
-                placeholder="Enter Tyre Number Here..."
                 maxLength={4}
+                placeholder="Enter Tyre Number Here..."
                 style={{
                   padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
                 }}
@@ -602,7 +599,7 @@ const ServiceTyreAudit = () => {
         )}
       <div className="col-12 flex flex-row justify-between mt-3">
         <Button
-          onClick={() => history.push('/ServiceAudit/ServiceBatteryAudit')}
+          onClick={() => history.push('/LeasingAudit/LeasingBatteryAudit')}
           className="font-quicksand-medium"
           style={{
             marginLeft: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '100px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
@@ -623,4 +620,4 @@ const ServiceTyreAudit = () => {
     </>
   );
 };
-export default ServiceTyreAudit;
+export default LeasingTyreAudit;

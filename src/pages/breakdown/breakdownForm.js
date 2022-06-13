@@ -250,7 +250,7 @@ const carformpage = () => {
           <Breadcrumb nestedPath={nestedPath} />
         </div>
         <div className="bg-white p-4">
-          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Car Details</p>
+          <p className="font-quicksand-bold text-sm">Car Details</p>
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Number</p>
           {id === '-1'
             ? (
@@ -314,7 +314,7 @@ const carformpage = () => {
                   <Input
                     value={DriverName}
                     onChange={(e) => setDriverName(e.target.value)}
-                    placeholder="Enter Name Here..."
+                    placeholder="Enter Driver Name Here..."
                     style={{
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
                     }}
@@ -345,7 +345,7 @@ const carformpage = () => {
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverManagerName}
-                    placeholder="Enter Name Here..."
+                    placeholder="Enter Team Name Here..."
                     readOnly
                     style={{
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',

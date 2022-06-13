@@ -6,45 +6,43 @@ import { Input } from 'antd';
 import { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { getQueueCarsList } from 'services/axios';
-import { useRepairContext } from 'context/RepairAuditContext';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
 import moment from 'moment';
 
-const RepairAuditCarList = () => {
+const leasingJamacarlist = () => {
   const {
     setselectedCarID,
     setSelectedCar,
     setVisitId,
-    setDriverName,
+    setMemberName,
     setCardObject,
     ResetContextValues,
   } = useJamaContext();
-  const history = useHistory();
   const [CarsList, setCarsList] = useState([
     {
       car_number: 'MH 04 DR 1564',
       visitId: 'sdafsdfg8465465',
     },
   ]);
-
   const [garageid, setGarageid] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageid(tempGarageID);
-    getQueueCarsList(tempGarageID, 5, 1).then((resp) => {
+    getQueueCarsList(tempGarageID, 2, 2).then((resp) => {
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {
         console.log('err', err);
       });
   }, []);
+  const history = useHistory();
   return (
     <>
       <Helmet title="Dashboard" />
       <div className="flex flex-col space-y-2 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Cars: in Repair Queue
+            Leasing Jama
           </span>
         </div>
         {/* <div className="basis-1/2 flex flex-row flex-nonwrap mr-5">
@@ -74,13 +72,13 @@ const RepairAuditCarList = () => {
                   setselectedCarID({ selectedCarIDValue: item.id });
                   setSelectedCar({ selectedCarValue: item.car_number });
                   setVisitId({ visitIdValue: item.visitId });
-                  setDriverName({ driverNameValue: item.driver_name });
-                  history.push('/RepairAudit/RepairAuditCarDetails');
+                  setMemberName({ memberNameValue: item.driver_manager_name });
+                  history.push('/LeasingJama/LeasingJamadetails');
                 }}
                 className="bg-white"
               >
                 <div className="bg-white rounded-lg my-3 mx-2">
-                  <div className="flex flex-row flex-nonwrap justify-center">
+                  <div className="flex flex-row flex-nonwrap justify-start">
                     <img className="w-20 h-20 my-3 mx-6 rounded-full" alt="" src={require('../../components/layouts/carimage.jpg')} />
                     <div>
                       <h1 className="font-quicksand-bold text-xl mt-3">{item.car_number}</h1>
@@ -93,20 +91,21 @@ const RepairAuditCarList = () => {
                   </div>
                 </div>
               </div> */}
+
               <div
                 className="px-2 py-0 my-3 max-w-sm bg-white rounded-lg border shadow-md sm:p-6"
                 onClick={() => {
                   setselectedCarID({ selectedCarIDValue: item.id });
                   setSelectedCar({ selectedCarValue: item.car_number });
                   setVisitId({ visitIdValue: item.visitId });
-                  setDriverName({ driverNameValue: item.driver_name });
+                  setMemberName({ memberNameValue: item.driver_manager_name });
                   setCardObject({ ...item });
                   ResetContextValues();
-                  history.push('/RepairAudit/RepairAuditCarDetails');
+                  history.push('/LeasingAudit/LeasingJamaCarReturn');
                 }}
               >
                 <div
-                  className=" my-2 flex items-center p-3 text-base font-bold text-gray-900 rounded-lg"
+                  className=" my-2 flex items-center p-2 text-base font-bold text-gray-900 rounded-lg"
                   style={{ backgroundColor: '#f4fcfc' }}
                 >
                   <span className="flex-1 ml-3 font-quicksand-bold text-xl whitespace-nowrap">{item.car_number}</span>
@@ -158,4 +157,4 @@ const RepairAuditCarList = () => {
   );
 };
 
-export default RepairAuditCarList;
+export default leasingJamacarlist;

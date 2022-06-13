@@ -3,12 +3,12 @@
 // import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
 import {
-  Radio, Button, Input, Select, notification,
+  Radio, Button, Input, Select,
 } from 'antd';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
-import { getEmployeeList, addOtherAuditMaster } from 'services/axios';
+import { getEmployeeList } from 'services/axios';
 import moment from 'moment';
 
 // const nestedPath = [
@@ -37,7 +37,6 @@ const LeasingJamaDetails = () => {
     // setPenaltyAmount,
     // penaltyReason,
     // setPenaltyReason,
-    selectedCarID,
     cardObject,
     ResetContextValues,
   } = useJamaContext();
@@ -103,34 +102,10 @@ const LeasingJamaDetails = () => {
     return isValid;
   };
 
-  const submitAuditDetails = () => {
+  const goToBatteryAudit = () => {
     const resp = validateFormData();
     if (resp) {
-      const auditmaster = {
-        visit: selectedCarID.selectedCarIDValue,
-        driver_reported_issue: '',
-        car_return_reason: '',
-        fastag_balance: fasttagBalance.fasttagBalanceValue,
-        penalty_amount: null,
-        penalty_reason: null,
-        penalty_details: null,
-        status: 1,
-        employee_id: etmId.etmIdValue,
-        driver_name: driverName.driverNameValue,
-        driver_ola_balance: driverBal.driverBalValue,
-      };
-      addOtherAuditMaster(auditmaster)
-        .then(() => {
-          notification.success({
-            message: 'Audit submitted successfully.',
-          });
-          ResetContextValues();
-          history.push('/LeasingJama/leasingJamaCarlist');
-        })
-        .catch((err) => {
-          console.log('err', err);
-        });
-      // history.push('/LeasingJama/LeasingBatteryAudit');
+      history.push('/LeasingJama/LeasingBatteryAudit');
     }
   };
   return (
@@ -187,7 +162,7 @@ const LeasingJamaDetails = () => {
           </div>
         </div>
       </div>
-      <div className="bg-white p-3 m-2">
+      <div className="bg-white p-5 m-2">
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Team Name</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
@@ -272,7 +247,7 @@ const LeasingJamaDetails = () => {
           ))}
         </div>
       </div>
-      <div className="bg-white p-3 m-2">
+      <div className="bg-white p-5 m-2">
         <p className="font-quicksand-bold text-sm">Car Details</p>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Rent for first day</p>
         <div className="bg-white">
@@ -357,13 +332,13 @@ const LeasingJamaDetails = () => {
           Back
         </Button>
         <Button
-          onClick={submitAuditDetails}
+          onClick={goToBatteryAudit}
           className="font-quicksand-medium"
           style={{
-            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
+            marginRight: '20px', borderRadius: '4px', fontWeight: '500', backgroundColor: '#013453', color: '#FFFFFF', fontSize: '16px', width: '100px', height: '52px', boxShadow: '0px 8px 16px #005B923D', textDecoration: 'none', padding: '13px 30px',
           }}
         >
-          Submit
+          Next
         </Button>
       </div>
     </>

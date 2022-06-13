@@ -276,7 +276,7 @@ const carformpage = () => {
           <Breadcrumb nestedPath={nestedPath} />
         </div>
         <div className="bg-white p-4">
-          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Car Details</p>
+          <p className="font-quicksand-bold text-sm">Car Details</p>
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Number</p>
           {id === '-1'
             ? (

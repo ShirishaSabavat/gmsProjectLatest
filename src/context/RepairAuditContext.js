@@ -123,10 +123,10 @@ const RepairProvider = ({ children }) => {
     fasttagBalanceValue: '',
   });
   const [fuelIndicatorPetrolBar, setfuelIndicatorPetrolBar] = useState({
-    fuelIndicatorPetrolBarValue: 'Yes',
+    fuelIndicatorPetrolBarValue: 0,
   });
   const [cng, setCng] = useState({
-    cngValue: 'Full',
+    cngValue: '',
   });
   const [numberPlateStickerStat, setnumberPlateStickerStat] = useState({
     numberPlateStickerStatValue: 'Front Main',
