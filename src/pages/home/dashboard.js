@@ -1,11 +1,5 @@
 import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
 import Dashboard from 'components/app/home/dashboard';
-
-const nestedPath = [
-  'Home',
-  'Dashboard',
-];
 
 const DashboardPage = () => (
   <>
@@ -15,7 +9,6 @@ const DashboardPage = () => (
         <span className="font-montserrat-medium text-4xl">
           Dashboard
         </span>
-        <Breadcrumb nestedPath={nestedPath} />
       </div>
       <Dashboard />
     </div>

@@ -4,7 +4,9 @@
 import { Helmet } from 'react-helmet';
 import { Input, Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
-import { addCompletion, rejectRTAList } from 'services/axios';
+import {
+  addCompletion, rejectRTAList, editCarVisit, addCarVisit, editBreakdown,
+} from 'services/axios';
 import { useHistory, useParams } from 'react-router-dom';
 import { useCompletionContext } from 'context/CompletionContext';
 import moment from 'moment';
@@ -28,11 +30,14 @@ const carslistrta = () => {
   } = useCompletionContext();
   // alert(operator);
   const [GarageID, setGarageID] = useState('');
+  const [locationId, setLocationId] = useState('');
   const [driverVisitCategoryError, setDriverVisitCategoryError] = useState({});
   const [transfer, setTransfer] = useState(10);
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageID(tempGarageID);
+    const tempLocationId = localStorage.getItem('locationid');
+    setLocationId(tempLocationId);
   }, []);
 
   const validateFormData = () => {
@@ -51,18 +56,35 @@ const carslistrta = () => {
     const resp = validateFormData();
     if (resp) {
       if (transfer === 7 || transfer === 8) {
-        addCompletion(transfer, GarageID)
-          .then((res) => {
-            notification.success({
-              message: 'Transferred successfully',
+        const editCarVisitData = {
+          status: transfer,
+        };
+        if (cardObject.visit_category === 6 || cardObject.visit_category === 7 || cardObject.visit_category === 8) {
+          editBreakdown(cardObject.id, editCarVisitData)
+            .then((res) => {
+              notification.success({
+                message: 'Transferred successfully',
+              });
+              history.push(`/completion/CarsQueue/${cardObject.visit_category}`);
+            })
+            .catch((err) => {
+              console.log('err', err);
             });
-            history.push(`/completion/CarsQueue/${cardObject.visit_category}`);
-          })
-          .catch((err) => {
-            console.log('err', err);
-          });
+        } else {
+          editCarVisit(cardObject.id, editCarVisitData)
+            .then((res) => {
+              notification.success({
+                message: 'Transferred successfully',
+              });
+              history.push(`/completion/CarsQueue/${cardObject.visit_category}`);
+            })
+            .catch((err) => {
+              console.log('err', err);
+            });
+        }
       } else {
         let rejectReason = '';
+        let isBreakdown = false;
         if (cardObject.visit_category === 4) {
           if (transfer === 1) {
             rejectReason = 'service_sixty';
@@ -113,18 +135,84 @@ const carslistrta = () => {
           } else if (transfer === 5) {
             rejectReason = 'regular_repair';
           }
+        } else if (cardObject.visit_category === 6) {
+          isBreakdown = true;
+          if (transfer === 1) {
+            rejectReason = 'breakdown_sixty';
+          } else if (transfer === 2) {
+            rejectReason = 'breakdown_leasing';
+          } else if (transfer === 3) {
+            rejectReason = 'breakdown_regular';
+          } else if (transfer === 4) {
+            rejectReason = 'breakdown_service';
+          } else if (transfer === 5) {
+            rejectReason = 'breakdown_repair';
+          }
+        } else if (cardObject.visit_category === 7) {
+          isBreakdown = true;
+          if (transfer === 1) {
+            rejectReason = 'insurance_sixty';
+          } else if (transfer === 2) {
+            rejectReason = 'insurance_leasing';
+          } else if (transfer === 3) {
+            rejectReason = 'insurance_regular';
+          } else if (transfer === 4) {
+            rejectReason = 'insurance_service';
+          } else if (transfer === 5) {
+            rejectReason = 'insurance_repair';
+          }
+        } else if (cardObject.visit_category === 8) {
+          isBreakdown = true;
+          if (transfer === 1) {
+            rejectReason = 'car_recovery_sixty';
+          } else if (transfer === 2) {
+            rejectReason = 'car_recovery_leasing';
+          } else if (transfer === 3) {
+            rejectReason = 'car_recovery_regular';
+          } else if (transfer === 4) {
+            rejectReason = 'car_recovery_service';
+          } else if (transfer === 5) {
+            rejectReason = 'car_recovery_repair';
+          }
         }
         // alert(rejectReason);
         history.push(`/completion/CarsQueue/${cardObject.visit_category}`);
-        // rejectRTAList(cardObject.id, cardObject.visit_category, transfer, rejectReason)
-        //   .then((res) => {
-        //     notification.success({
-        //       message: 'Transferred successfully',
-        //     });
-        //   })
-        //   .catch((err) => {
-        //     console.log('err', err);
-        //   });
+        rejectRTAList(cardObject.id, cardObject.visit_category, transfer, rejectReason, isBreakdown)
+          .then((res) => {
+            if (cardObject.visit_category === 6 || cardObject.visit_category === 7 || cardObject.visit_category === 8) {
+              addCarVisit(
+                transfer,
+                cardObject.carId_id,
+                cardObject.car_number,
+                GarageID,
+                cardObject.is_with_driver,
+                cardObject.driverId,
+                cardObject.driver_name,
+                cardObject.drive_contact_number,
+                cardObject.driverManagerId,
+                cardObject.driver_manager_name,
+                locationId,
+                cardObject.employee_id,
+              )
+                .then(() => {
+                  notification.success({
+                    message: 'Transferred successfully',
+                  });
+                  history.push(`/completion/CarsQueue/${cardObject.visit_category}`);
+                })
+                .catch((err) => {
+                  console.log('err', err);
+                });
+            } else {
+              notification.success({
+                message: 'Transferred successfully',
+              });
+              history.push(`/completion/CarsQueue/${cardObject.visit_category}`);
+            }
+          })
+          .catch((err) => {
+            console.log('err', err);
+          });
       }
     }
   };

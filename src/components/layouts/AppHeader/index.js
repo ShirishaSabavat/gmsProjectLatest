@@ -63,29 +63,50 @@ const Header = ({ logout }) => {
     } else if (role === 'Service Queue Auditor') {
       history.push('/ServiceAudit/ServiceAuditCarlist');
       handleCancel();
-    } else if (role === 'Fleet Managers') {
-      history.push('/breakdown/breakdownHome');
+    } else if (role === 'Breakdown Queue Auditor') {
+      history.push('/breakdown/breakdownForm');
       handleCancel();
-    } else if (role === 'Insurance') {
-      history.push('/insurance/insuranceHome');
+    } else if (role === 'Insurance Queue Auditor') {
+      history.push('/insurance/insuranceForm');
       handleCancel();
     } else if (role === 'Leasing Jama') {
       history.push('/LeasingJama/leasingJamaCarlist');
       handleCancel();
     } else if (role === 'Service Completion  Queue Operator') {
-      history.push('/completion/CarsQueue');
+      history.push('/completion/CarsQueue/4');
       handleCancel();
     } else if (role === 'Repair Completion Queue Operator') {
-      history.push('/completion/CarsQueue');
+      history.push('/completion/CarsQueue/5');
       handleCancel();
     } else if (role === 'Regular Audit Completion') {
-      history.push('/completion/CarsQueue');
+      history.push('/completion/CarsQueue/3');
       handleCancel();
     } else if (role === 'Leasing Completion Queue Operator') {
-      history.push('/completion/CarsQueue');
+      history.push('/completion/CarsQueue/2');
       handleCancel();
-    } else if (role === '60: 40 Completion Queue Operator') {
-      history.push('/completion/CarsQueue');
+    } else if (role === '60:40 Completion Queue Operator') {
+      history.push('/completion/CarsQueue/1');
+      handleCancel();
+    } else if (role === 'Car Recovery Queue Auditor') {
+      history.push('/carRecovery/carRecoveryForm');
+      handleCancel();
+    } else if (role === 'Breakdown Queue Operator') {
+      history.push('/breakdown/breakdownQueueList');
+      handleCancel();
+    } else if (role === 'Insurance Queue Operator') {
+      history.push('/insurance/insuranceQueueList');
+      handleCancel();
+    } else if (role === 'Car Recovery Queue Operator') {
+      history.push('/carRecovery/carRecoveryList');
+      handleCancel();
+    } else if (role === 'Breakdown Completion Queue Operator') {
+      history.push('/completion/CarsQueue/6');
+      handleCancel();
+    } else if (role === 'Insurance Completion Queue Operator') {
+      history.push('/completion/CarsQueue/7');
+      handleCancel();
+    } else if (role === 'Car Recovery Completion Queue Operator') {
+      history.push('/completion/CarsQueue/8');
       handleCancel();
     }
   };

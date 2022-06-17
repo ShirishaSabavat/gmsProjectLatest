@@ -2,7 +2,6 @@
 /* eslint-disable max-len */
 import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
 import {
   Input, Menu, Dropdown, Button, Radio, notification,
 } from 'antd';
@@ -30,11 +29,6 @@ const addgarage = () => {
   const [cityError, setCityError] = useState({});
   const [garageSeriesError, setGarageSeriesError] = useState({});
   const [userSeriesError, setUserSeriesError] = useState({});
-
-  const nestedPath = [
-    'Home',
-    `${id === '-1' ? 'Add New Garage' : 'Edit Garage'}`,
-  ];
 
   const menu = (
     <Menu onClick={(e) => setSelectedItem(Number(e.key))} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }}>
@@ -149,7 +143,6 @@ const addgarage = () => {
           <span className="font-quicksand-semi-bold text-4xl mr-3.5">
             {id === '-1' ? 'Add New Garage' : 'Edit Garage'}
           </span>
-          <Breadcrumb nestedPath={nestedPath} />
         </div>
         <div className="bg-white p-5">
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Garage Title</p>

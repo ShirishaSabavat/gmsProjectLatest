@@ -2,17 +2,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
 import Listitemlocation from 'components/layouts/Listitemlocation';
 import { getPickupLocationByGarageId } from 'services/axios';
-
-const nestedPath = [
-  'Home',
-  'Garage',
-  'Locations',
-];
 
 function ProcessesPage() {
   const { garageId } = useParams();
@@ -52,7 +45,6 @@ function ProcessesPage() {
             <span className="font-quicksand-medium text-4xl mr-3.5">
               Locations
             </span>
-            <Breadcrumb nestedPath={nestedPath} />
             <HorizontalSearchHeader Title="" />
           </div>
         </div>

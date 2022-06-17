@@ -22,8 +22,6 @@ const LeasingJamaDetails = () => {
     // visitId,
     // driverReportedIssue,
     // setdriverReportedIssue,
-    fasttagBalance,
-    setfasttagBalance,
     memberName,
     etmId,
     setEtmId,
@@ -46,7 +44,6 @@ const LeasingJamaDetails = () => {
   const [employeeList, setEmployeeList] = useState([]);
   // const [etmIdError, setEtmIdError] = useState({});
   const [driverBalError, setDriverBalError] = useState({});
-  const [fasttagBalanceError, setFasttagBalanceError] = useState({});
   // const [carReturnError, setCarReturnError] = useState({});
 
   useEffect(() => {
@@ -71,7 +68,6 @@ const LeasingJamaDetails = () => {
     const memberNamerErr = {};
     // const etmIdErr = {};
     const driverBalErr = {};
-    const fasttagBalanceErr = {};
     // const carRetrurnErr = {};
 
     if (memberName.memberNameValue === '') {
@@ -86,10 +82,6 @@ const LeasingJamaDetails = () => {
       driverBalErr.err = 'This field can not be empty';
       isValid = false;
     }
-    if (fasttagBalance.fasttagBalanceValue === '') {
-      fasttagBalanceErr.err = 'This field can not be empty';
-      isValid = false;
-    }
 
     // if (!driverReportedIssue.driverReportedIssueValue) {
     //   carRetrurnErr.err = 'This field can not be empty';
@@ -98,7 +90,6 @@ const LeasingJamaDetails = () => {
     setMemberNameError(memberNamerErr);
     // setEtmIdError(etmIdErr);
     setDriverBalError(driverBalErr);
-    setFasttagBalanceError(fasttagBalanceErr);
     // setCarReturnError(carRetrurnErr);
     return isValid;
   };
@@ -110,7 +101,6 @@ const LeasingJamaDetails = () => {
         visit: selectedCarID.selectedCarIDValue,
         driver_reported_issue: '',
         car_return_reason: '',
-        fastag_balance: fasttagBalance.fasttagBalanceValue,
         penalty_amount: null,
         penalty_reason: null,
         penalty_details: null,
@@ -171,7 +161,7 @@ const LeasingJamaDetails = () => {
                 Mobile:
                 {' '}
                 <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
-                  {cardObject.drive_contact_number || 'mobile'}
+                  {cardObject.drive_contact_number}
                 </p>
               </p>
               <p className="text-sm font-bold font-quicksand-medium text-gray-900 truncate mt-1 mb-0">
@@ -284,24 +274,6 @@ const LeasingJamaDetails = () => {
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={2}>No Rent</Radio>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={3}>Half Day Rent</Radio>
           </Radio.Group>
-        </div>
-        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Fastag Balance</p>
-        <div className="flex flex-row flex-nonwrap bg-white">
-          <Input
-            value={fasttagBalance.fasttagBalanceValue}
-            onChange={(e) => setfasttagBalance({ fasttagBalanceValue: e.target.value })}
-            placeholder="Enter Fastag Balance Here..."
-            style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-            }}
-          />
-        </div>
-        <div className="flex flex-row flex-nonwrap bg-white">
-          {Object.keys(fasttagBalanceError).map((key) => (
-            <div style={{ color: 'red' }}>
-              {fasttagBalanceError[key]}
-            </div>
-          ))}
         </div>
         {/* <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Penalty Amount</p>
         <div className="bg-white">

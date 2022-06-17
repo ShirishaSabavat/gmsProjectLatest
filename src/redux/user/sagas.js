@@ -53,10 +53,10 @@ function* LOGIN(userAction) {
       yield history.push('/RepairAudit/RepairAuditCarlist');
     } else if (temprole === 'Service Queue Auditor') {
       yield history.push('/ServiceAudit/ServiceAuditCarlist');
-    } else if (temprole === 'Fleet Managers') {
-      yield history.push('/breakdown/breakdownHome');
-    } else if (temprole === 'Insurance') {
-      yield history.push('/insurance/insuranceHome');
+    } else if (temprole === 'Breakdown Queue Auditor') {
+      yield history.push('/breakdown/breakdownForm');
+    } else if (temprole === 'Insurance Queue Auditor') {
+      yield history.push('/insurance/insuranceForm');
     } else if (temprole === 'Leasing Jama') {
       yield history.push('/LeasingJama/leasingJamaCarlist');
     } else if (temprole === 'Service Completion  Queue Operator') {
@@ -67,8 +67,22 @@ function* LOGIN(userAction) {
       yield history.push('/completion/CarsQueue/3');
     } else if (temprole === 'Leasing Completion Queue Operator') {
       yield history.push('/completion/CarsQueue/2');
-    } else if (temprole === '60: 40 Completion Queue Operator') {
+    } else if (temprole === '60:40 Completion Queue Operator') {
       yield history.push('/completion/CarsQueue/1');
+    } else if (temprole === 'Car Recovery Queue Auditor') {
+      yield history.push('/carRecovery/carRecoveryForm');
+    } else if (temprole === 'Breakdown Queue Operator') {
+      yield history.push('/breakdown/breakdownQueueList');
+    } else if (temprole === 'Insurance Queue Operator') {
+      yield history.push('/insurance/insuranceQueueList');
+    } else if (temprole === 'Car Recovery Queue Operator') {
+      yield history.push('/carRecovery/carRecoveryList');
+    } else if (temprole === 'Breakdown Completion Queue Operator') {
+      yield history.push('/completion/CarsQueue/6');
+    } else if (temprole === 'Insurance Completion Queue Operator') {
+      yield history.push('/completion/CarsQueue/7');
+    } else if (temprole === 'Car Recovery Completion Queue Operator') {
+      yield history.push('/completion/CarsQueue/8');
     }
     // notification.success({
     //   message: 'Logged In',

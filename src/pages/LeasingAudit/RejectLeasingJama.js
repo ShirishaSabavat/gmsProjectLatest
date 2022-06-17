@@ -6,7 +6,6 @@ import Breadcrumb from 'components/layouts/breadcrumb';
 import { Button, Radio } from 'antd';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { rejectRTAList } from 'services/axios';
 
 const nestedPath = [
   'Home',

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
 /* eslint-disable import/no-unresolved */
@@ -8,14 +9,11 @@ import {
   Input, Radio, Button, notification, Select,
 } from 'antd';
 import {
-  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getBreakdownDetails, getEmployeeList, checkExistingCarDetails,
+  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getEmployeeList, checkExistingCarDetails, getBreakdownDetails,
 } from 'services/axios';
 
-const { TextArea } = Input;
-
-const breakdownPage = () => {
+const carRecoveryPage = () => {
   const [carWithDriver, setCarWithDriver] = useState(true);
-  const [breakdownType, setBreakdownType] = useState(1);
   const [CarsList, setCarsList] = useState([]);
   const [DriverName, setDriverName] = useState('');
   const [DriverContact, setDriverContact] = useState('');
@@ -26,23 +24,15 @@ const breakdownPage = () => {
   const [SelectedCarID, setSelectedCarID] = useState(0);
   const [SelectedCarNumber, setSelectedCarNumber] = useState('');
   const [SelectedDriverID, setSelectedDriverID] = useState(0);
-  const [SelectedDriverManagerID, setSelectedDriverManagerID] = useState(0);
-  const [locationName, setLocationName] = useState('');
-  const [locationNameError, setLocationNameError] = useState([]);
+  const [SelectedDriverManagerID, setSelectedDriverManagerID] = useState('');
   const [etmId, setEtmId] = useState('');
   const [employeeList, setEmployeeList] = useState([]);
-  const [breakdownId, setBreakdownId] = useState(-1);
-  // const tempcityID = localStorage.getItem('cityid');
-  // const tempGarageID = localStorage.getItem('garageid');
-  // const tempLocationID = localStorage.getItem('locationid');
-  // setcityID(tempcityID);
-  // setGarageID(tempGarageID);
-  // setLocationID(tempLocationID);
+  const [recoveryId, setRecoveryId] = useState(-1);
+  const [recovery, setRecovery] = useState('Pilot Escaped');
   const [cityID] = useState(localStorage.getItem('cityid'));
 
   const resetData = () => {
     setCarWithDriver(true);
-    setBreakdownType(1);
     setDriverName('');
     setDriverContact('');
     setDriverManagerName('');
@@ -51,40 +41,40 @@ const breakdownPage = () => {
     setSelectedDriverID(0);
     setSelectedDriverManagerID(0);
     setEtmId('');
+    setRecovery('Pilot Escaped');
   };
 
   const getCarDetails = (carId) => {
-    getCarDetailsList(carId).then((resp) => {
-      if (resp?.data.length > 0) {
-        setDriverManagerName(resp?.data[0]?.team?.name);
-        // setSelectedDriverID(resp?.data[0].driver_id);
-        setSelectedDriverManagerID(resp?.data[0]?.team?.id);
-      } else {
-        setDriverName('');
-        setDriverContact('');
-        setDriverManagerName('');
-        setSelectedDriverID(0);
-        setSelectedDriverManagerID('');
-      }
-    })
+    getCarDetailsList(carId)
+      .then((resp) => {
+        if (resp?.data.length > 0) {
+          setDriverManagerName(resp?.data[0]?.team?.name);
+          // setSelectedDriverID(resp?.data[0].driver_id);
+          setSelectedDriverManagerID(resp?.data[0]?.team?.id);
+        } else {
+          setDriverName('');
+          setDriverContact('');
+          setDriverManagerName('');
+          setSelectedDriverID(0);
+          setSelectedDriverManagerID('');
+        }
+      })
       .catch((err) => {
         console.log('err', err);
       });
   };
 
   // useEffect(() => {
-  //   getBreakdownDetails(id)
+  //   getVisitingCarDetails(id)
   //     .then((res) => {
   //       setSelectedCarNumber(res?.data?.results?.car_number);
   //       setCarWithDriver(res?.data?.results?.is_with_driver);
   //       setDriverName(res?.data?.results?.driver_name);
-  //       setDriverContact(res?.data?.results?.driver_contact_number || '');
+  //       setDriverContact(res?.data?.results?.drive_contact_number);
   //       setSelectedDriverManagerID(res?.data?.results?.driverManagerId);
   //       setDriverManagerName(res?.data?.results?.driver_manager_name);
   //       setVisitCategory(res?.data?.results?.visit_category);
   //       setSelectedCarID(res?.data?.results?.carId);
-  //       setLocationName(res?.data?.results?.breakdown_location);
-  //       setBreakdownType(res?.data?.results?.breakdown_type === 1);
   //     })
   //     .catch((err) => {
   //       console.log('err1', err);
@@ -113,8 +103,6 @@ const breakdownPage = () => {
   const validateFormData = () => {
     const driverNameError = {};
     const selectedcarnumbererror = {};
-    const driverVisitCategoryError = {};
-    const locationError = {};
     const mobileErr = {};
     const numCheck = /^[0-9\b]+$/;
     let isValid = true;
@@ -125,13 +113,7 @@ const breakdownPage = () => {
         isValid = false;
       }
 
-      if (VisitCategory === 10) {
-        driverVisitCategoryError.err = 'Please select reason for visit';
-        isValid = false;
-      }
-
       setDriverSelectedCarNumberError(selectedcarnumbererror);
-      setDriverVisitCategoryError(driverVisitCategoryError);
     } else {
       if (carWithDriver) {
         if (DriverContact.trim().length < 10 || DriverContact.trim().length > 10) {
@@ -153,16 +135,10 @@ const breakdownPage = () => {
           driverNameError.pinErr = 'This field can not be empty';
           isValid = false;
         }
-        if (locationName.trim().length === 0) {
-          locationError.Err = 'This field can not be empty';
-          isValid = false;
-        }
       }
 
-      setDriverVisitCategoryError(driverVisitCategoryError);
       setDriverContactError(mobileErr);
       setDriverNameError(driverNameError);
-      setLocationNameError(locationError);
     }
 
     return isValid;
@@ -173,7 +149,7 @@ const breakdownPage = () => {
     const resp = validateFormData();
 
     if (resp) {
-      const breakdownData = {
+      const recoveryData = {
         carId: SelectedCarID,
         car_number: SelectedCarNumber,
         driverId: SelectedDriverID,
@@ -182,37 +158,40 @@ const breakdownPage = () => {
         driver_manager_name: DriverManagerName,
         driverManagerId: SelectedDriverManagerID,
         is_with_driver: carWithDriver,
-        breakdown_type: breakdownType,
-        breakdown_recovery_location: locationName,
         towing_required: false,
         status: 1,
-        addBreakdown: 6,
+        recovery_reason: recovery,
+        visit_category: 8,
         employee_id: etmId,
       };
-      console.log('breakdownData', breakdownData);
-      if (breakdownId === -1) {
-        addBreakdown(breakdownData)
+      console.log(recoveryData);
+      if (recoveryId === -1) {
+        addBreakdown(recoveryData)
           .then(() => {
             notification.success({
-              message: 'Breakdown Added successfully',
+              message: 'Visit Added successfully',
             });
-            // window.location.href = '#/breakdown/breakdownHome';
+            resetData();
+            // window.location.href = '#/gatekeeper/homepage';
           })
           .catch((err) => {
             notification.error({
               message: err.response.data.message,
             });
+            resetData();
           });
       } else {
-        editBreakdown(breakdownId, breakdownData)
+        editBreakdown(recoveryId, recoveryData)
           .then(() => {
             notification.success({
-              message: 'Breakdown Edited successfully',
+              message: 'Visit Edited successfully',
             });
-            // window.location.href = '#/breakdown/breakdownHome';
+            resetData();
+            // window.location.href = '#/gatekeeper/homepage';
           })
           .catch((err) => {
             console.log('err', err);
+            resetData();
           });
       }
     }
@@ -220,32 +199,31 @@ const breakdownPage = () => {
 
   const handleOnHover = (result) => {
     // the item hovered
+    // getCarDetails(result.id);
     resetData();
     getCarDetails(result);
     checkExistingCarDetails(result)
       .then((resp) => {
-        console.log(resp);
+        setSelectedCarID(result);
+        const temp = CarsList.filter((item) => item.id === result);
+        setSelectedCarNumber(temp[0].name);
         if (resp.data === false) {
-          setSelectedCarID(result);
-          const temp = CarsList.filter((item) => item.id === result);
-          setSelectedCarNumber(temp[0].name);
           // getCarDetails(result);
         } else {
           getBreakdownDetails(result)
             .then((res) => {
               const respData = res?.data?.results[0];
-              console.log(respData);
               if (respData) {
-                setBreakdownId(respData?.id);
+                setRecoveryId(respData?.id);
                 setSelectedCarNumber(respData?.car_number);
                 setCarWithDriver(respData?.is_with_driver);
                 setDriverName(respData?.driver_name);
                 setDriverContact(respData?.drive_contact_number);
                 setSelectedDriverManagerID(respData?.driverManagerId);
                 setDriverManagerName(respData?.driver_manager_name);
-                setLocationName(respData?.breakdown_recovery_location);
                 setSelectedCarID(respData?.carId_id);
                 setEtmId(respData?.employee_id);
+                setRecovery(respData?.recovery_reason);
               }
             })
             .catch((err) => {
@@ -264,39 +242,41 @@ const breakdownPage = () => {
     setDriverName(temp[0].name);
   };
 
+  const handleRecoveryChange = (e) => {
+    setRecovery(e.target.value);
+  };
+
   return (
     <>
-      <Helmet title="Breakdown" />
+      <Helmet title="Car Recovery" />
       <div className="flex flex-col space-y-2 mx-4">
         <div className="space-y-2 basic-1/2">
           <span className="font-quicksand-semi-bold text-xl mr-3.5">
-            Car Breakdown
+            Car Recovery
           </span>
         </div>
         <div className="bg-white p-4">
           <p className="font-quicksand-bold text-sm">Car Details</p>
           <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Number</p>
-          <div className="bg-white">
-            <Select
-              onChange={(e) => {
-                handleOnHover(e);
-              }}
-              style={{ width: '100%', backgroundColor: '#F5F8FC' }}
-              placeholder="Search Car"
-              showSearch
-              optionFilterProp="children"
-              filterOption={(input, option) => option.children
-                .toString()
-                .toLowerCase()
-                .indexOf(input.toLowerCase()) >= 0}
-            >
-              {CarsList.map((items) => (
-                <Select.Option key={items.id} value={items.id}>
-                  {items.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </div>
+          <Select
+            onChange={(e) => {
+              handleOnHover(e);
+            }}
+            style={{ width: '100%', backgroundColor: '#F5F8FC' }}
+            placeholder="Search Car"
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) => option.children
+              .toString()
+              .toLowerCase()
+              .indexOf(input.toLowerCase()) >= 0}
+          >
+            {CarsList.map((items) => (
+              <Select.Option key={items.id} value={items.id}>
+                {items.name}
+              </Select.Option>
+            ))}
+          </Select>
           {Object.keys(DriverSelectedCarNumberError).map((key) => (
             <div style={{ color: 'red' }}>
               {DriverSelectedCarNumberError[key]}
@@ -340,8 +320,8 @@ const breakdownPage = () => {
                   <Input
                     value={DriverName}
                     onChange={(e) => setDriverName(e.target.value)}
-                    readOnly
                     placeholder="Enter Driver Name Here..."
+                    readOnly
                     style={{
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
                     }}
@@ -372,7 +352,7 @@ const breakdownPage = () => {
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverManagerName}
-                    placeholder="Enter Team Name Here..."
+                    placeholder="Enter Name Here..."
                     readOnly
                     style={{
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
@@ -385,28 +365,17 @@ const breakdownPage = () => {
             : <div />}
         </div>
         <div className="bg-white p-4">
-          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Location of Breakdown</p>
-          <div className="flex flex-row flex-nonwrap bg-white">
-            <TextArea
-              rows={4}
-              placeholder="Location Name"
-              value={locationName}
-              onChange={(e) => setLocationName(e.target.value)}
-              style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-              }}
-            />
-            {Object.keys(locationNameError).map((key) => (
-              <div style={{ color: 'red' }}>
-                {locationNameError[key]}
-              </div>
-            ))}
-          </div>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Type of Breakdown</p>
-          <div className="flex flex-row flex-nonwrap bg-white">
-            <Radio.Group onChange={(e) => setBreakdownType(e.target.value)} value={breakdownType}>
-              <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={1}>Jumpstart</Radio>
-              <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={2}>Mechanical</Radio>
+          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Car Recovery Reasons</p>
+          <div className="col-12 py-3 px-4 bg-[#FFFFFF] mb-4">
+            <h6 className="text-sm text-[#53565A]">Status</h6>
+            <Radio.Group onChange={handleRecoveryChange} value={recovery}>
+              <Radio style={{ color: '#9193A2' }} value="Pilot Escaped">Pilot Escaped</Radio>
+              <Radio style={{ color: '#9193A2' }} value="Outstanding Defaulter">Outstanding Defaulter</Radio>
+              <Radio style={{ color: '#9193A2' }} value="Performance Defaulter">Performance Defaulter</Radio>
+              <Radio style={{ color: '#9193A2' }} value="Low Performance">Low Performance</Radio>
+              <Radio style={{ color: '#9193A2' }} value="Outstanding/Defaulter">Outstanding/Defaulter</Radio>
+              <Radio style={{ color: '#9193A2' }} value="Driver Behavior Issue">Driver Behavior Issue</Radio>
+              <Radio style={{ color: '#9193A2' }} value="Vehicle Misuse">Vehicle Misuse</Radio>
             </Radio.Group>
           </div>
         </div>
@@ -426,4 +395,4 @@ const breakdownPage = () => {
   );
 };
 
-export default breakdownPage;
+export default carRecoveryPage;

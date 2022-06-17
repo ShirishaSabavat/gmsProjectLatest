@@ -107,7 +107,7 @@ const carformpage = () => {
       const tempLocationID = localStorage.getItem('locationid');
       setGarageID(tempGarageID);
       setLocationID(tempLocationID);
-      if (id === '-1') {
+      if (visitId === '-1') {
         setVisitCategory(VisitCategory);
       }
     })
@@ -206,7 +206,7 @@ const carformpage = () => {
         )
           .then((res) => {
             notification.success({
-              message: 'Visit Added successfully',
+              message: 'Visit Added successfully1',
             });
             resetData();
             setSelectedCarID(0);
@@ -218,20 +218,21 @@ const carformpage = () => {
             });
           });
       } else {
-        editCarVisit(
-          visitId,
-          VisitCategory,
-          SelectedCarID,
-          GarageID,
-          radioValue,
-          SelectedDriverID,
-          DriverName,
-          DriverContact,
-          SelectedDriverManagerID,
-          DriverManagerName,
-          LocationID,
-          etmId,
-        )
+        const editCarVisitData = {
+          visit_category: VisitCategory,
+          carId: SelectedCarID,
+          garageId: GarageID,
+          locationId: LocationID,
+          is_with_driver: radioValue,
+          driverId: SelectedDriverID,
+          driver_name: DriverName,
+          drive_contact_number: DriverContact,
+          driverManagerId: SelectedDriverManagerID,
+          driver_manager_name: DriverManagerName,
+          employee_id: etmId,
+          status: 1,
+        };
+        editCarVisit(visitId, editCarVisitData)
           .then((res) => {
             notification.success({
               message: 'Visit Edited successfully',

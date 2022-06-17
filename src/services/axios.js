@@ -575,21 +575,8 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
   });
 };
 
-export const editCarVisit = (visitCarId, visitcat, carid, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId, etmId) => {
-  const data = JSON.stringify({
-    visit_category: visitcat,
-    carId: carid,
-    garageId: garageid,
-    locationId,
-    is_with_driver: isdriverwithcar,
-    driverId,
-    driver_name: driverName,
-    drive_contact_number: drivercontactnumber,
-    driverManagerId: drivermanagerid,
-    driver_manager_name: drivermanagername,
-    employee_id: etmId,
-    status: 1,
-  });
+export const editCarVisit = (visitCarId, editCarVisitData) => {
+  const data = JSON.stringify(editCarVisitData);
   return axios({
     method: 'PATCH',
     url: `${basUrl}/visitingCars/${visitCarId}`,
@@ -614,12 +601,13 @@ export const addRTAList = (visitid, garageid, isleasing, roadtestcomment, jamaSt
   });
 };
 
-export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason) => {
+export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason, isBreakdown) => {
   const data = JSON.stringify({
     visit: visitid,
     previousAudit: visitcategory,
     currentAudit: rejectid,
     transfer_reason: rejectreason,
+    is_breakdown: isBreakdown,
   });
   return axios({
     method: 'POST',
@@ -658,7 +646,7 @@ export const addBreakdown = (breakdownData) => {
   const data = JSON.stringify(breakdownData);
   return axios({
     method: 'POST',
-    url: `${basUrl}/breakdown`,
+    url: `${basUrl}/breakdown_details`,
     headers,
     data,
   });
@@ -670,9 +658,9 @@ export const getBreakdownList = () => axios({
   headers,
 });
 
-export const getBreakdownDetails = (id) => axios({
+export const getBreakdownDetails = (carId) => axios({
   method: 'GET',
-  url: `${basUrl}/breakdown/${id}`,
+  url: `${basUrl}/breakdown_details/${carId}`,
   headers,
 });
 
@@ -695,7 +683,7 @@ export const editBreakdown = (breakdownId, breakdownData) => {
   const data = JSON.stringify(breakdownData);
   return axios({
     method: 'PATCH',
-    url: `${basUrl}/breakdown/${breakdownId}`,
+    url: `${basUrl}/breakdown_details/${breakdownId}`,
     headers,
     data,
   });
@@ -801,3 +789,9 @@ export const addCompletion = (status, garageId) => {
     data,
   });
 };
+
+export const getQueueOperator = (category, status) => axios({
+  method: 'GET',
+  url: `${basUrl}/breakdown_details?visit_category=${category}&status=${status}`,
+  headers,
+});

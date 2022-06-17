@@ -361,7 +361,7 @@ const routes = [
     Component: lazy(() => import('pages/breakdown/breakdownHome')),
   },
   {
-    path: '/breakdown/breakdownForm/:id?',
+    path: '/breakdown/breakdownForm',
     key: 'Breakdown Add',
     exact: true,
     Component: lazy(() => import('pages/breakdown/breakdownForm')),
@@ -379,7 +379,7 @@ const routes = [
     Component: lazy(() => import('pages/insurance/insuranceHome')),
   },
   {
-    path: '/insurance/insuranceForm/:id?',
+    path: '/insurance/insuranceForm',
     key: 'Insurance Add',
     exact: true,
     Component: lazy(() => import('pages/insurance/insuranceForm')),
@@ -413,6 +413,48 @@ const routes = [
     key: 'Cars Queue Details',
     exact: true,
     Component: lazy(() => import('pages/completion/carsCompletion')),
+  },
+  {
+    path: '/carRecovery/carRecoveryForm',
+    key: 'CarRecovery Add',
+    exact: true,
+    Component: lazy(() => import('pages/carRecovery/carRecoveryForm')),
+  },
+  {
+    path: '/breakdown/breakdownQueueList',
+    key: 'Breakdown List',
+    exact: true,
+    Component: lazy(() => import('pages/queueOperator/breakdown/breakdownList')),
+  },
+  {
+    path: '/breakdown/breakdownQueue',
+    key: 'Breakdown Queue',
+    exact: true,
+    Component: lazy(() => import('pages/queueOperator/breakdown/breakdown')),
+  },
+  {
+    path: '/insurance/insuranceQueueList',
+    key: 'Insurance List',
+    exact: true,
+    Component: lazy(() => import('pages/queueOperator/insurance/insuranceList')),
+  },
+  {
+    path: '/insurance/insuranceQueue',
+    key: 'Insurance Queue',
+    exact: true,
+    Component: lazy(() => import('pages/queueOperator/insurance/insurance')),
+  },
+  {
+    path: '/carRecovery/carRecoveryList',
+    key: 'Car Recovery List',
+    exact: true,
+    Component: lazy(() => import('pages/queueOperator/carRecovery/carRecoveryList')),
+  },
+  {
+    path: '/carRecovery/carRecoveryQueue',
+    key: 'Car Recovery Queue',
+    exact: true,
+    Component: lazy(() => import('pages/queueOperator/carRecovery/carRecovery')),
   },
 ];
 

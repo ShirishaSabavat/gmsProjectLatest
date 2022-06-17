@@ -1,17 +1,11 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import Breadcrumb from 'components/layouts/breadcrumb';
 import HorizontalSearchHeader from 'components/layouts/HorizontalSearchHeader';
 import Listitemgarage from 'components/layouts/Listitemgarage';
 import { Pagination } from 'react-headless-pagination';
 import { useHistory } from 'react-router-dom';
 import { getGarages } from 'services/axios';
-
-const nestedPath = [
-  'Home',
-  'Garages',
-];
 
 function garagelist() {
   const [garages, setGarages] = useState([]);
@@ -54,7 +48,7 @@ function garagelist() {
   return (
     <>
       <Helmet title="Garages" />
-      <div className="absolute right-20 mt-3.5" style={{ fontFamily: 'Quicksand' }}>
+      <div className="absolute right-20 my-3.5" style={{ fontFamily: 'Quicksand' }}>
         <div
           onClick={() => history.push('/garage/addgarage/-1')}
           style={{
@@ -65,12 +59,11 @@ function garagelist() {
         </div>
       </div>
       <div>
-        <div className="flex flex-col space-y-12">
+        <div className="flex flex-col space-y-2">
           <div className="space-y-2 basic-1/2 mx-5">
             <span className="font-quicksand-semi-bold text-4xl mr-3.5">
               Garages
             </span>
-            <Breadcrumb nestedPath={nestedPath} />
             <HorizontalSearchHeader Title="All Garages" />
           </div>
 

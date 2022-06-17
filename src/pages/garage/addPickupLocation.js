@@ -5,7 +5,6 @@ import { React, useState, useEffect } from 'react';
 import {
   Input, Button, Radio, notification,
 } from 'antd';
-import Breadcrumb from 'components/layouts/breadcrumb';
 import {
   addPickupLocation, getPickupLocation, editPickupLocation,
 } from 'services/axios';
@@ -14,10 +13,6 @@ import { useHistory, useParams } from 'react-router-dom';
 const createModules = () => {
   const { locationId, garageId } = useParams();
   const history = useHistory();
-  const nestedPath = [
-    'Home',
-    `${locationId === '-1' ? 'Add Location' : 'Edit Location'}`,
-  ];
 
   const [radioValue, setRadioValue] = useState(true);
   const [pickupLocationName, setPickupLocationName] = useState('');
@@ -82,7 +77,6 @@ const createModules = () => {
         <span className="font-quicksand-semi-bold text-4xl mr-3.5">
           {locationId === '-1' ? 'Add Location' : 'Edit Location'}
         </span>
-        <Breadcrumb nestedPath={nestedPath} />
       </div>
       <div className="col-12 py-3 px-4 bg-[#FFFFFF] mb-4">
         <h6 className="text-sm text-[#53565A] font-quicksand-semi-bold">Location</h6>

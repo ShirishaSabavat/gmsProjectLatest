@@ -1,59 +1,34 @@
 /* eslint-disable max-len */
 /* eslint-disable global-require */
-/* eslint-disable no-unused-vars */
 import { Helmet } from 'react-helmet';
-import { Input } from 'antd';
 import { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { getQueueCarsList, getQueueOperator } from 'services/axios';
-import { useCompletionContext } from 'context/CompletionContext';
+import { useHistory } from 'react-router-dom';
+import { getQueueOperator } from 'services/axios';
+import { useQueueContext } from 'context/QueueContext';
 import moment from 'moment';
 
-const carsQueue = () => {
+const breakdownList = () => {
   const {
-    operator,
-    setOperator,
     setCardObject,
-    ResetContextValues,
-  } = useCompletionContext();
-  const history = useHistory();
-  const { id } = useParams();
+  } = useQueueContext();
   const [CarsList, setCarsList] = useState([]);
-  const [garageid, setGarageid] = useState('');
-  // const [operator, setOperator] = useState(0);
-
-  const tempGarageID = localStorage.getItem('garageid');
-  // const tempOperator = localStorage.getItem('role');
   useEffect(() => {
-    setOperator(id);
-    setGarageid(tempGarageID);
+    getQueueOperator(6, 1)
+      .then((resp) => {
+        setCarsList(resp.data?.results.pageData);
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
   }, []);
-  useEffect(() => {
-    if (operator === '6' || operator === '7' || operator === '8') {
-      getQueueOperator(operator, 3)
-        .then((resp) => {
-          setCarsList(resp.data?.results.pageData);
-        })
-        .catch((err) => {
-          console.log('err', err);
-        });
-    } else {
-      getQueueCarsList(tempGarageID, operator, 3)
-        .then((resp) => {
-          setCarsList(resp.data?.results.pageData);
-        })
-        .catch((err) => {
-          console.log('err', err);
-        });
-    }
-  }, [operator]);
+  const history = useHistory();
   return (
     <>
-      <Helmet title="Dashboard" />
+      <Helmet title="Breakdown List" />
       <div className="flex flex-col space-y-2 mx-3">
         <div className="space-y-2 ml-3">
           <span className="font-quicksand-semi-bold text-xl">
-            Completion Queue
+            Breakdown Queue
           </span>
         </div>
         <div>
@@ -62,12 +37,11 @@ const carsQueue = () => {
               className="px-2 py-0 my-3 max-w-sm bg-white rounded-lg border shadow-md sm:p-6"
               onClick={() => {
                 setCardObject({ ...item });
-                ResetContextValues();
-                history.push('/completion/CarsQueueDetails');
+                history.push('/breakdown/breakdownQueue');
               }}
             >
               <div
-                className=" my-2 flex items-center p-3 text-base font-bold text-gray-900 rounded-lg"
+                className=" my-2 flex items-center p-2 text-base font-bold text-gray-900 rounded-lg"
                 style={{ backgroundColor: '#f4fcfc' }}
               >
                 <span className="flex-1 ml-3 font-quicksand-bold text-xl whitespace-nowrap">{item.car_number}</span>
@@ -118,4 +92,4 @@ const carsQueue = () => {
   );
 };
 
-export default carsQueue;
+export default breakdownList;

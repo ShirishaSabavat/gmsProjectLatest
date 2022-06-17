@@ -7,6 +7,7 @@ import JamaProvider from 'context/sixtyFortyJamaContext';
 import RegularAuditProvider from 'context/RegularAuditContext';
 import RTAProvider from 'context/rtaContext';
 import CompletionProvider from 'context/CompletionContext';
+import QueueProvider from 'context/QueueContext';
 
 import 'global.scss';
 import 'components/kit/vendors/antd/mixins.less';
@@ -24,7 +25,9 @@ const App = () => (
         <JamaProvider>
           <RegularAuditProvider>
             <RTAProvider>
-              <Router history={history} />
+              <QueueProvider>
+                <Router history={history} />
+              </QueueProvider>
             </RTAProvider>
           </RegularAuditProvider>
         </JamaProvider>
