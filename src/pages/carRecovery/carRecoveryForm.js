@@ -9,7 +9,7 @@ import {
   Input, Radio, Button, notification, Select,
 } from 'antd';
 import {
-  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getEmployeeList, checkExistingCarDetails, getBreakdownDetails,
+  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getEmployeeList, checkExistingBreakdownCarDetails, getBreakdownDetails,
 } from 'services/axios';
 
 const carRecoveryPage = () => {
@@ -202,7 +202,7 @@ const carRecoveryPage = () => {
     // getCarDetails(result.id);
     resetData();
     getCarDetails(result);
-    checkExistingCarDetails(result)
+    checkExistingBreakdownCarDetails(result)
       .then((resp) => {
         setSelectedCarID(result);
         const temp = CarsList.filter((item) => item.id === result);

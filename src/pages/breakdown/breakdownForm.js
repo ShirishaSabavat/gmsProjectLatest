@@ -8,7 +8,7 @@ import {
   Input, Radio, Button, notification, Select,
 } from 'antd';
 import {
-  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getBreakdownDetails, getEmployeeList, checkExistingCarDetails,
+  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getBreakdownDetails, getEmployeeList, checkExistingBreakdownCarDetails,
 } from 'services/axios';
 
 const { TextArea } = Input;
@@ -222,7 +222,7 @@ const breakdownPage = () => {
     // the item hovered
     resetData();
     getCarDetails(result);
-    checkExistingCarDetails(result)
+    checkExistingBreakdownCarDetails(result)
       .then((resp) => {
         console.log(resp);
         if (resp.data.car_status === 2) {

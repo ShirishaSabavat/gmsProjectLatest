@@ -9,7 +9,7 @@ import {
   Input, Radio, Button, notification, Select,
 } from 'antd';
 import {
-  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getEmployeeList, checkExistingCarDetails, getBreakdownDetails,
+  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getEmployeeList, checkExistingBreakdownCarDetails, getBreakdownDetails,
 } from 'services/axios';
 
 const insurancePage = () => {
@@ -203,7 +203,7 @@ const insurancePage = () => {
     // getCarDetails(result.id);
     resetData();
     getCarDetails(result);
-    checkExistingCarDetails(result)
+    checkExistingBreakdownCarDetails(result)
       .then((resp) => {
         if (resp.data.car_status === 2) {
           setSelectedCarID(result);

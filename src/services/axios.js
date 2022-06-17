@@ -801,3 +801,9 @@ export const getAuditCount = () => axios({
   url: `${basUrl}/audit_count`,
   headers,
 });
+
+export const checkExistingBreakdownCarDetails = (carId) => axios({
+  method: 'GET',
+  url: `${basUrl}/breakdownstatus?carId=${carId}`,
+  headers,
+});
