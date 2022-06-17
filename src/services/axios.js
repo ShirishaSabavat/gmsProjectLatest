@@ -526,16 +526,16 @@ export const getCarsListEverest = (cityid) => axios({
   headers,
 });
 
-export const getQueueCarsList = (garageid, visitcategory, status) => axios({
+export const getQueueCarsList = (garageid, visitcategory, status, locationId) => axios({
   method: 'GET',
-  url: `${basUrl}/visitedCars?garage=${garageid}&visit_category=${visitcategory}&status=${status}`,
+  url: `${basUrl}/visitedCars?garage=${garageid}&visit_category=${visitcategory}&status=${status}&location=${locationId}`,
   headers,
 });
 
-export const getCarsListRoadTest = (garageid) => axios({
+export const getCarsListRoadTest = (garageid, locationId) => axios({
   method: 'GET',
   // url: `${basUrl}/visitingCars?garageId[]=${garageid}&visit_category[]=1&visit_category[]=2&status=1`,
-  url: `${basUrl}/visitedCars?garage=${garageid}&visit_category=1,2&status=1`,
+  url: `${basUrl}/visitedCars?garage=${garageid}&visit_category=1,2&status=1&location=${locationId}`,
   headers,
 });
 
@@ -793,5 +793,11 @@ export const addCompletion = (status, garageId) => {
 export const getQueueOperator = (category, status) => axios({
   method: 'GET',
   url: `${basUrl}/breakdown_details?visit_category=${category}&status=${status}`,
+  headers,
+});
+
+export const getAuditCount = () => axios({
+  method: 'GET',
+  url: `${basUrl}/audit_count`,
   headers,
 });

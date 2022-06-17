@@ -19,14 +19,13 @@ const carsQueue = () => {
   const history = useHistory();
   const { id } = useParams();
   const [CarsList, setCarsList] = useState([]);
-  const [garageid, setGarageid] = useState('');
   // const [operator, setOperator] = useState(0);
 
   const tempGarageID = localStorage.getItem('garageid');
+  const tempLocationID = localStorage.getItem('locationid');
   // const tempOperator = localStorage.getItem('role');
   useEffect(() => {
     setOperator(id);
-    setGarageid(tempGarageID);
   }, []);
   useEffect(() => {
     if (operator === '6' || operator === '7' || operator === '8') {
@@ -38,7 +37,7 @@ const carsQueue = () => {
           console.log('err', err);
         });
     } else {
-      getQueueCarsList(tempGarageID, operator, 3)
+      getQueueCarsList(tempGarageID, operator, 3, tempLocationID)
         .then((resp) => {
           setCarsList(resp.data?.results.pageData);
         })

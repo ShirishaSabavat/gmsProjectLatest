@@ -18,17 +18,11 @@ const leasingJamacarlist = () => {
     setCardObject,
     ResetContextValues,
   } = useJamaContext();
-  const [CarsList, setCarsList] = useState([
-    {
-      car_number: 'MH 04 DR 1564',
-      visitId: 'sdafsdfg8465465',
-    },
-  ]);
-  const [garageid, setGarageid] = useState('');
+  const [CarsList, setCarsList] = useState([]);
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
-    setGarageid(tempGarageID);
-    getQueueCarsList(tempGarageID, 2, 2).then((resp) => {
+    const tempLocationID = localStorage.getItem('locationid');
+    getQueueCarsList(tempGarageID, 2, 2, tempLocationID).then((resp) => {
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {

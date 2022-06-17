@@ -11,12 +11,7 @@ import moment from 'moment';
 
 const RegularAuditCarList = () => {
   const history = useHistory();
-  const [CarsList, setCarsList] = useState([
-    {
-      car_number: 'MH 04 DR 1564',
-      visitId: 'sdafsdfg8465465',
-    },
-  ]);
+  const [CarsList, setCarsList] = useState([]);
   const {
     setselectedCarID,
     setSelectedCar,
@@ -24,11 +19,10 @@ const RegularAuditCarList = () => {
     setDriverName,
     setCardObject,
   } = useRegularAuditContext();
-  const [garageid, setGarageid] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
-    setGarageid(tempGarageID);
-    getQueueCarsList(tempGarageID, 3, 1).then((resp) => {
+    const tempLocationID = localStorage.getItem('locationid');
+    getQueueCarsList(tempGarageID, 3, 1, tempLocationID).then((resp) => {
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {

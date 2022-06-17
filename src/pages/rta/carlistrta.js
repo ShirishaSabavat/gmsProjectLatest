@@ -20,11 +20,10 @@ const carslistrta = () => {
   } = useRTAContext();
   const history = useHistory();
   const [CarsList, setCarsList] = useState([]);
-  const [garageid, setGarageid] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
-    setGarageid(tempGarageID);
-    getCarsListRoadTest(tempGarageID).then((resp) => {
+    const tempLocationID = localStorage.getItem('locationid');
+    getCarsListRoadTest(tempGarageID, tempLocationID).then((resp) => {
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {

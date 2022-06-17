@@ -25,11 +25,10 @@ const jamacarlist = () => {
     },
   ]);
   const history = useHistory();
-  const [garageid, setGarageid] = useState('');
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
-    setGarageid(tempGarageID);
-    getQueueCarsList(tempGarageID, 1, 2).then((resp) => {
+    const tempLocationID = localStorage.getItem('locationid');
+    getQueueCarsList(tempGarageID, 1, 2, tempLocationID).then((resp) => {
       setCarsList(resp.data?.results.pageData);
     })
       .catch((err) => {

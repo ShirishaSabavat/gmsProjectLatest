@@ -253,12 +253,12 @@ const carformpage = () => {
     resetData();
     checkExistingCarDetails(result)
       .then((resp) => {
-        if (resp.data === false) {
+        if (resp.data.car_status === 2) {
           setSelectedCarID(result);
           const temp = CarsList.filter((item) => item.id === result);
           setSelectedCarNumber(temp[0].name);
           getCarDetails(result);
-        } else {
+        } else if (resp.data.car_status === 0) {
           getVisitingCarDetails(result)
             .then((res) => {
               const respData = res?.data?.results[0];
@@ -279,6 +279,28 @@ const carformpage = () => {
           // notification.error({
           //   message: 'Car is already in the Audit Queue',
           // });
+        } else {
+          let visitQueue = '';
+          if (resp.data.visit_category === 1) {
+            visitQueue = '60:40 Jama';
+          } else if (resp.data.visit_category === 2) {
+            visitQueue = 'Leasing Jama';
+          } else if (resp.data.visit_category === 3) {
+            visitQueue = 'Regular Audit';
+          } else if (resp.data.visit_category === 4) {
+            visitQueue = 'Serciving';
+          } else if (resp.data.visit_category === 5) {
+            visitQueue = 'Repair';
+          } else if (resp.data.visit_category === 6) {
+            visitQueue = 'Breakdown';
+          } else if (resp.data.visit_category === 7) {
+            visitQueue = 'Insurance';
+          } else if (resp.data.visit_category === 8) {
+            visitQueue = 'Car Recovery';
+          }
+          notification.error({
+            message: `Car is already in the ${visitQueue} Queue`,
+          });
         }
       })
       .catch((err) => {
