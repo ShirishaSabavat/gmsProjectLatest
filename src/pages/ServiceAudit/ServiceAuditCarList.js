@@ -88,12 +88,12 @@ const ServiceAuditCarList = () => {
               <div
                 className="px-2 py-0 my-3 max-w-sm bg-white rounded-lg border shadow-md sm:p-6"
                 onClick={() => {
+                  ResetContextValues();
                   setselectedCarID({ selectedCarIDValue: item.id });
                   setSelectedCar({ selectedCarValue: item.car_number });
                   setVisitId({ visitIdValue: item.visitId });
                   setDriverName({ driverNameValue: item.driver_name });
                   setCardObject({ ...item });
-                  ResetContextValues();
                   history.push('/ServiceAudit/ServiceAuditCarDetails');
                 }}
               >

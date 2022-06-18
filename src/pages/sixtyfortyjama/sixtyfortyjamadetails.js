@@ -74,7 +74,7 @@ const sixtyfortyjamadetails = () => {
               Mobile:
               {' '}
               <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
-                mobile
+                {cardObject.drive_contact_number}
               </p>
             </p>
             <p className="text-sm font-quicksand-medium text-gray-900 truncate my-1">

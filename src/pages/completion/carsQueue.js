@@ -60,8 +60,8 @@ const carsQueue = () => {
             <div
               className="px-2 py-0 my-3 max-w-sm bg-white rounded-lg border shadow-md sm:p-6"
               onClick={() => {
-                setCardObject({ ...item });
                 ResetContextValues();
+                setCardObject({ ...item });
                 history.push('/completion/CarsQueueDetails');
               }}
             >

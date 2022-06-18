@@ -89,12 +89,12 @@ const carslistrta = () => {
               <div
                 className="px-2 py-0 my-3 max-w-sm bg-white rounded-lg border shadow-md sm:p-6"
                 onClick={() => {
+                  ResetContextValues();
                   setSelectedCarId(item.carId);
                   setSelectedCarNumber(item.car_number);
                   setSelectedDriverName(item.driver_name);
                   setSelectedVisitId(item.visitId);
                   setCardObject({ ...item });
-                  ResetContextValues();
                   history.push(`/rta/leasingjama/${item.id}`);
                 }}
               >

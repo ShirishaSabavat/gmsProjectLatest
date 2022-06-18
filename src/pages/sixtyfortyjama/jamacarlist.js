@@ -18,12 +18,7 @@ const jamacarlist = () => {
     setCardObject,
     ResetContextValues,
   } = useJamaContext();
-  const [CarsList, setCarsList] = useState([
-    {
-      car_number: 'MH 04 DR 1564',
-      visitId: 'sdafsdfg8465465',
-    },
-  ]);
+  const [CarsList, setCarsList] = useState([]);
   const history = useHistory();
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
@@ -93,12 +88,12 @@ const jamacarlist = () => {
               <div
                 className="p-2 my-3 max-w-sm bg-white rounded-lg border shadow-md sm:p-6"
                 onClick={() => {
+                  ResetContextValues();
                   setselectedCarID({ selectedCarIDValue: item.id });
                   setSelectedCar({ selectedCarValue: item.car_number });
                   setVisitId({ visitIdValue: item.visitId });
                   setDriverName({ driverNameValue: item.driver_name });
                   setCardObject({ ...item });
-                  ResetContextValues();
                   history.push('/sixtyfortyjama/sixtyfortyjamadetails');
                 }}
               >
