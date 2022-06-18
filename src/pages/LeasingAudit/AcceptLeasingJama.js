@@ -161,7 +161,6 @@ const AcceptLeasingJama = () => {
         status: 1,
         employee_id: etmId.etmIdValue,
         driver_name: driverName.driverNameValue,
-        driver_ola_balance: driverBal.driverBalValue,
       };
       let auditdetails = {};
       addOtherAuditMaster(auditmaster)

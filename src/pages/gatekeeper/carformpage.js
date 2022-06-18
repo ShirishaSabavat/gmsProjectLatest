@@ -206,7 +206,7 @@ const carformpage = () => {
         )
           .then((res) => {
             notification.success({
-              message: 'Visit Added successfully1',
+              message: 'Visit Added successfully',
             });
             resetData();
             setSelectedCarID(0);
