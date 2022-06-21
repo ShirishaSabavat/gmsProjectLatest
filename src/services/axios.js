@@ -807,3 +807,21 @@ export const checkExistingBreakdownCarDetails = (carId) => axios({
   url: `${basUrl}/breakdownstatus?carId=${carId}`,
   headers,
 });
+
+export const getVisitCarNumber = (category) => axios({
+  method: 'GET',
+  url: `${basUrl}/visit_car_number?category=${category}`,
+  headers,
+});
+
+export const getBreakdownCarNumber = (category) => axios({
+  method: 'GET',
+  url: `${basUrl}/breakdown_car_number?category=${category}`,
+  headers,
+});
+
+export const getVisitingCarInfo = (category, carId) => axios({
+  method: 'GET',
+  url: `${basUrl}/visit_car_details?category=${category}&carId=${carId}`,
+  headers,
+});

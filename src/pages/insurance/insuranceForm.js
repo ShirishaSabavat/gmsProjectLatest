@@ -19,6 +19,7 @@ const insurancePage = () => {
   const [DriverContact, setDriverContact] = useState('');
   const [DriverManagerName, setDriverManagerName] = useState('');
   const [DriverNameError, setDriverNameError] = useState('');
+  const [DriverManagerNameError, setDriverManagerNameError] = useState('');
   const [DriverContactError, setDriverContactError] = useState('');
   const [DriverSelectedCarNumberError, setDriverSelectedCarNumberError] = useState('');
   const [SelectedCarID, setSelectedCarID] = useState(0);
@@ -45,9 +46,15 @@ const insurancePage = () => {
   const getCarDetails = (carId) => {
     getCarDetailsList(carId).then((resp) => {
       if (resp?.data.length > 0) {
-        setDriverManagerName(resp?.data[0]?.team?.name);
-        // setSelectedDriverID(resp?.data[0].driver_id);
-        setSelectedDriverManagerID(resp?.data[0]?.team?.id);
+        if (resp?.data[0]?.team !== null) {
+          setDriverManagerName(resp?.data[0]?.team?.name);
+          // setSelectedDriverID(resp?.data[0].driver_id);
+          setSelectedDriverManagerID(resp?.data[0]?.team?.id);
+        } else {
+          notification.error({
+            message: 'No Team Allocated',
+          });
+        }
       } else {
         setDriverName('');
         setDriverContact('');
@@ -101,6 +108,7 @@ const insurancePage = () => {
     const driverNameError = {};
     const selectedcarnumbererror = {};
     // const driverVisitCategoryError = {};
+    const driverManagerError = {};
     const mobileErr = {};
     const numCheck = /^[0-9\b]+$/;
     let isValid = true;
@@ -143,9 +151,14 @@ const insurancePage = () => {
           isValid = false;
         }
       }
+      if (DriverManagerName.trim().length === 0) {
+        driverManagerError.pinErr = 'This field can not be empty';
+        isValid = false;
+      }
 
       setDriverContactError(mobileErr);
       setDriverNameError(driverNameError);
+      setDriverManagerNameError(driverManagerError);
     }
 
     return isValid;
@@ -154,7 +167,6 @@ const insurancePage = () => {
   const onSave = (event) => {
     event.preventDefault();
     const resp = validateFormData();
-
     if (resp) {
       const insuranceData = {
         carId: SelectedCarID,
@@ -167,7 +179,7 @@ const insurancePage = () => {
         is_with_driver: carWithDriver,
         towing_required: false,
         status: 1,
-        addBreakdown: 7,
+        visit_category: 7,
         employee_id: etmId,
       };
       if (insuranceId === -1) {
@@ -275,7 +287,11 @@ const insurancePage = () => {
         </div>
         <div className="bg-white p-4">
           <p className="font-quicksand-bold text-sm">Car Details</p>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Number</p>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+            Car Number
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
           <Select
             onChange={(e) => {
               handleOnHover(e);
@@ -312,7 +328,11 @@ const insurancePage = () => {
           {carWithDriver === true
             ? (
               <div>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>ETM Id</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  ETM Id
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <Select
                   onChange={(e) => {
                     handleOnEtmChange(e);
@@ -333,7 +353,11 @@ const insurancePage = () => {
                     </Select.Option>
                   ))}
                 </Select>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Name</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  Driver Name
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverName}
@@ -350,14 +374,18 @@ const insurancePage = () => {
                     </div>
                   ))}
                 </div>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Contact Number</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  Contact Number
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverContact}
                     onChange={(e) => setDriverContact(e.target.value)}
                     placeholder="Enter Contact Here..."
                     style={{
-                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                      padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
                     }}
                   />
                   {Object.keys(DriverContactError).map((key) => (
@@ -366,21 +394,29 @@ const insurancePage = () => {
                     </div>
                   ))}
                 </div>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Team</p>
-                <div className="flex flex-nonwrap bg-white">
-                  <Input
-                    value={DriverManagerName}
-                    placeholder="Enter Name Here..."
-                    readOnly
-                    style={{
-                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-                    }}
-                  />
-
-                </div>
               </div>
             )
             : <div />}
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+            Team
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
+          <div className="flex flex-nonwrap bg-white">
+            <Input
+              value={DriverManagerName}
+              placeholder="Enter Name Here..."
+              readOnly
+              style={{
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              }}
+            />
+          </div>
+          {Object.keys(DriverManagerNameError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {DriverManagerNameError[key]}
+            </div>
+          ))}
         </div>
         <div className="col-12 flex flex-row justify-center">
           <Button

@@ -21,6 +21,7 @@ const breakdownPage = () => {
   const [DriverContact, setDriverContact] = useState('');
   const [DriverManagerName, setDriverManagerName] = useState('');
   const [DriverNameError, setDriverNameError] = useState('');
+  const [DriverManagerNameError, setDriverManagerNameError] = useState('');
   const [DriverContactError, setDriverContactError] = useState('');
   const [DriverSelectedCarNumberError, setDriverSelectedCarNumberError] = useState('');
   const [SelectedCarID, setSelectedCarID] = useState(0);
@@ -51,14 +52,21 @@ const breakdownPage = () => {
     setSelectedDriverID(0);
     setSelectedDriverManagerID(0);
     setEtmId('');
+    setLocationName('');
   };
 
   const getCarDetails = (carId) => {
     getCarDetailsList(carId).then((resp) => {
       if (resp?.data.length > 0) {
-        setDriverManagerName(resp?.data[0]?.team?.name);
-        // setSelectedDriverID(resp?.data[0].driver_id);
-        setSelectedDriverManagerID(resp?.data[0]?.team?.id);
+        if (resp?.data[0]?.team !== null) {
+          setDriverManagerName(resp?.data[0]?.team?.name);
+          // setSelectedDriverID(resp?.data[0].driver_id);
+          setSelectedDriverManagerID(resp?.data[0]?.team?.id);
+        } else {
+          notification.error({
+            message: 'No Team Allocated',
+          });
+        }
       } else {
         setDriverName('');
         setDriverContact('');
@@ -116,6 +124,7 @@ const breakdownPage = () => {
     const driverVisitCategoryError = {};
     const locationError = {};
     const mobileErr = {};
+    const driverManagerError = {};
     const numCheck = /^[0-9\b]+$/;
     let isValid = true;
 
@@ -153,16 +162,20 @@ const breakdownPage = () => {
           driverNameError.pinErr = 'This field can not be empty';
           isValid = false;
         }
-        if (locationName.trim().length === 0) {
-          locationError.Err = 'This field can not be empty';
-          isValid = false;
-        }
+      }
+      if (locationName.trim().length === 0) {
+        locationError.Err = 'This field can not be empty';
+        isValid = false;
+      }
+      if (DriverManagerName.trim().length === 0) {
+        driverManagerError.pinErr = 'This field can not be empty';
+        isValid = false;
       }
 
-      setDriverVisitCategoryError(driverVisitCategoryError);
       setDriverContactError(mobileErr);
       setDriverNameError(driverNameError);
       setLocationNameError(locationError);
+      setDriverManagerNameError(driverManagerError);
     }
 
     return isValid;
@@ -186,7 +199,7 @@ const breakdownPage = () => {
         breakdown_recovery_location: locationName,
         towing_required: false,
         status: 1,
-        addBreakdown: 6,
+        visit_category: 6,
         employee_id: etmId,
       };
       console.log('breakdownData', breakdownData);
@@ -196,6 +209,7 @@ const breakdownPage = () => {
             notification.success({
               message: 'Breakdown Added successfully',
             });
+            resetData();
             // window.location.href = '#/breakdown/breakdownHome';
           })
           .catch((err) => {
@@ -224,7 +238,6 @@ const breakdownPage = () => {
     getCarDetails(result);
     checkExistingBreakdownCarDetails(result)
       .then((resp) => {
-        console.log(resp);
         if (resp.data.car_status === 2) {
           setSelectedCarID(result);
           const temp = CarsList.filter((item) => item.id === result);
@@ -297,7 +310,11 @@ const breakdownPage = () => {
         </div>
         <div className="bg-white p-4">
           <p className="font-quicksand-bold text-sm">Car Details</p>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Number</p>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+            Car Number
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
           <div className="bg-white">
             <Select
               onChange={(e) => {
@@ -336,7 +353,11 @@ const breakdownPage = () => {
           {carWithDriver === true
             ? (
               <div>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>ETM Id</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  ETM Id
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <Select
                   onChange={(e) => {
                     handleOnEtmChange(e);
@@ -357,7 +378,11 @@ const breakdownPage = () => {
                     </Select.Option>
                   ))}
                 </Select>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Name</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  Driver Name
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverName}
@@ -374,14 +399,18 @@ const breakdownPage = () => {
                     </div>
                   ))}
                 </div>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Contact Number</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  Contact Number
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverContact}
                     onChange={(e) => setDriverContact(e.target.value)}
                     placeholder="Enter Contact Here..."
                     style={{
-                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                      padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
                     }}
                   />
                   {Object.keys(DriverContactError).map((key) => (
@@ -390,24 +419,36 @@ const breakdownPage = () => {
                     </div>
                   ))}
                 </div>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Team</p>
-                <div className="flex flex-nonwrap bg-white">
-                  <Input
-                    value={DriverManagerName}
-                    placeholder="Enter Team Name Here..."
-                    readOnly
-                    style={{
-                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-                    }}
-                  />
-
-                </div>
               </div>
             )
             : <div />}
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+            Team
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
+          <div className="flex flex-nonwrap bg-white">
+            <Input
+              value={DriverManagerName}
+              placeholder="Enter Team Name Here..."
+              readOnly
+              style={{
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              }}
+            />
+          </div>
+          {Object.keys(DriverManagerNameError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {DriverManagerNameError[key]}
+            </div>
+          ))}
         </div>
         <div className="bg-white p-4">
-          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Location of Breakdown</p>
+          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>
+            Location of Breakdown
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <TextArea
               rows={4}
@@ -415,7 +456,7 @@ const breakdownPage = () => {
               value={locationName}
               onChange={(e) => setLocationName(e.target.value)}
               style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
               }}
             />
             {Object.keys(locationNameError).map((key) => (

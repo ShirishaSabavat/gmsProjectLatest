@@ -120,7 +120,11 @@ const breakdownDetails = () => {
         </div>
       </div>
       <div className="bg-white p-4 mx-2">
-        <h6 className="text-sm text-[#53565A]">Status</h6>
+        <h6 className="text-sm text-[#53565A]">
+          Status
+          {' '}
+          <span style={{ color: 'red' }}>*</span>
+        </h6>
         <Radio.Group onChange={handleReject} value={rejectValue}>
           <Radio style={{ color: '#9193A2' }} value>Accept</Radio>
           <Radio style={{ color: '#9193A2' }} value={false}>Reject</Radio>
@@ -134,7 +138,7 @@ const breakdownDetails = () => {
                 value={rejectReason}
                 onChange={(e) => setRejectReason(e.target.value)}
                 style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                  padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
                 }}
               />
 

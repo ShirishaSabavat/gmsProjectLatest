@@ -56,7 +56,7 @@ const carsQueue = () => {
           </span>
         </div>
         <div>
-          {CarsList.map((item) => (
+          {CarsList.length !== 0 ? (CarsList.map((item) => (
             <div
               className="px-2 py-0 my-3 max-w-sm bg-white rounded-lg border shadow-md sm:p-6"
               onClick={() => {
@@ -110,7 +110,12 @@ const carsQueue = () => {
                 </div>
               </div>
             </div>
-          ))}
+          )))
+            : (
+              <div className="px-2 py-0 my-6 mt-48 max-w-sm sm:p-6">
+                <p className="font-quicksand-semi-bold text-4xl text-red-500 text-center">No cars in queue</p>
+              </div>
+            )}
         </div>
       </div>
     </>

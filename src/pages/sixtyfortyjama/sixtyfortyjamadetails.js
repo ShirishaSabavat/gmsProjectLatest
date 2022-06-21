@@ -90,7 +90,10 @@ const sixtyfortyjamadetails = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Reason for Returning Car*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Reason for Returning Car
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group
             onChange={(e) => setCarReturnReason({ carReturnReasonValue: e.target.value })}

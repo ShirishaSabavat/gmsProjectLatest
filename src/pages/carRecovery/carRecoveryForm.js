@@ -12,6 +12,8 @@ import {
   addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getEmployeeList, checkExistingBreakdownCarDetails, getBreakdownDetails,
 } from 'services/axios';
 
+const { TextArea } = Input;
+
 const carRecoveryPage = () => {
   const [carWithDriver, setCarWithDriver] = useState(true);
   const [CarsList, setCarsList] = useState([]);
@@ -19,6 +21,7 @@ const carRecoveryPage = () => {
   const [DriverContact, setDriverContact] = useState('');
   const [DriverManagerName, setDriverManagerName] = useState('');
   const [DriverNameError, setDriverNameError] = useState('');
+  const [DriverManagerNameError, setDriverManagerNameError] = useState('');
   const [DriverContactError, setDriverContactError] = useState('');
   const [DriverSelectedCarNumberError, setDriverSelectedCarNumberError] = useState('');
   const [SelectedCarID, setSelectedCarID] = useState(0);
@@ -30,6 +33,8 @@ const carRecoveryPage = () => {
   const [recoveryId, setRecoveryId] = useState(-1);
   const [recovery, setRecovery] = useState('Pilot Escaped');
   const [cityID] = useState(localStorage.getItem('cityid'));
+  const [locationName, setLocationName] = useState('');
+  const [locationNameError, setLocationNameError] = useState([]);
 
   const resetData = () => {
     setCarWithDriver(true);
@@ -48,9 +53,15 @@ const carRecoveryPage = () => {
     getCarDetailsList(carId)
       .then((resp) => {
         if (resp?.data.length > 0) {
-          setDriverManagerName(resp?.data[0]?.team?.name);
-          // setSelectedDriverID(resp?.data[0].driver_id);
-          setSelectedDriverManagerID(resp?.data[0]?.team?.id);
+          if (resp?.data[0]?.team !== null) {
+            setDriverManagerName(resp?.data[0]?.team?.name);
+            // setSelectedDriverID(resp?.data[0].driver_id);
+            setSelectedDriverManagerID(resp?.data[0]?.team?.id);
+          } else {
+            notification.error({
+              message: 'No Team Allocated',
+            });
+          }
         } else {
           setDriverName('');
           setDriverContact('');
@@ -103,7 +114,9 @@ const carRecoveryPage = () => {
   const validateFormData = () => {
     const driverNameError = {};
     const selectedcarnumbererror = {};
+    const driverManagerError = {};
     const mobileErr = {};
+    const locationError = {};
     const numCheck = /^[0-9\b]+$/;
     let isValid = true;
 
@@ -136,9 +149,19 @@ const carRecoveryPage = () => {
           isValid = false;
         }
       }
+      if (DriverManagerName.trim().length === 0) {
+        driverManagerError.pinErr = 'This field can not be empty';
+        isValid = false;
+      }
+      if (locationName.trim().length === 0) {
+        locationError.Err = 'This field can not be empty';
+        isValid = false;
+      }
 
       setDriverContactError(mobileErr);
       setDriverNameError(driverNameError);
+      setDriverManagerNameError(driverManagerError);
+      setLocationNameError(locationError);
     }
 
     return isValid;
@@ -160,11 +183,11 @@ const carRecoveryPage = () => {
         is_with_driver: carWithDriver,
         towing_required: false,
         status: 1,
+        breakdown_recovery_location: locationName,
         recovery_reason: recovery,
         visit_category: 8,
         employee_id: etmId,
       };
-      console.log(recoveryData);
       if (recoveryId === -1) {
         addBreakdown(recoveryData)
           .then(() => {
@@ -223,6 +246,7 @@ const carRecoveryPage = () => {
                 setDriverManagerName(respData?.driver_manager_name);
                 setSelectedCarID(respData?.carId_id);
                 setEtmId(respData?.employee_id);
+                setLocationName(respData?.breakdown_recovery_location);
                 setRecovery(respData?.recovery_reason);
               }
             })
@@ -279,7 +303,11 @@ const carRecoveryPage = () => {
         </div>
         <div className="bg-white p-4">
           <p className="font-quicksand-bold text-sm">Car Details</p>
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Number</p>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+            Car Number
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
           <Select
             onChange={(e) => {
               handleOnHover(e);
@@ -316,7 +344,11 @@ const carRecoveryPage = () => {
           {carWithDriver === true
             ? (
               <div>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>ETM Id</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  ETM Id
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <Select
                   onChange={(e) => {
                     handleOnEtmChange(e);
@@ -337,7 +369,11 @@ const carRecoveryPage = () => {
                     </Select.Option>
                   ))}
                 </Select>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Name</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  Driver Name
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverName}
@@ -354,14 +390,18 @@ const carRecoveryPage = () => {
                     </div>
                   ))}
                 </div>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Contact Number</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  Contact Number
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverContact}
                     onChange={(e) => setDriverContact(e.target.value)}
                     placeholder="Enter Contact Here..."
                     style={{
-                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                      padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
                     }}
                   />
                   {Object.keys(DriverContactError).map((key) => (
@@ -370,24 +410,36 @@ const carRecoveryPage = () => {
                     </div>
                   ))}
                 </div>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Team</p>
-                <div className="flex flex-nonwrap bg-white">
-                  <Input
-                    value={DriverManagerName}
-                    placeholder="Enter Name Here..."
-                    readOnly
-                    style={{
-                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-                    }}
-                  />
-
-                </div>
               </div>
             )
             : <div />}
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+            Team
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
+          <div className="flex flex-nonwrap bg-white">
+            <Input
+              value={DriverManagerName}
+              placeholder="Enter Name Here..."
+              readOnly
+              style={{
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              }}
+            />
+          </div>
+          {Object.keys(DriverManagerNameError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {DriverManagerNameError[key]}
+            </div>
+          ))}
         </div>
         <div className="bg-white p-4">
-          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Car Recovery Reasons</p>
+          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>
+            Car Recovery Reasons
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
           <div className="col-12 py-3 px-4 bg-[#FFFFFF] mb-4">
             <h6 className="text-sm text-[#53565A]">Status</h6>
             <Radio.Group onChange={handleRecoveryChange} value={recovery}>
@@ -399,6 +451,29 @@ const carRecoveryPage = () => {
               <Radio style={{ color: '#9193A2' }} value="Driver Behavior Issue">Driver Behavior Issue</Radio>
               <Radio style={{ color: '#9193A2' }} value="Vehicle Misuse">Vehicle Misuse</Radio>
             </Radio.Group>
+          </div>
+        </div>
+        <div className="bg-white p-4">
+          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>
+            Location of Recovery
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
+          <div className="flex flex-row flex-nonwrap bg-white">
+            <TextArea
+              rows={4}
+              placeholder="Location Name"
+              value={locationName}
+              onChange={(e) => setLocationName(e.target.value)}
+              style={{
+                padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
+              }}
+            />
+            {Object.keys(locationNameError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {locationNameError[key]}
+              </div>
+            ))}
           </div>
         </div>
         <div className="col-12 flex flex-row justify-center">

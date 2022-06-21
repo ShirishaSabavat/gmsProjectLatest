@@ -276,7 +276,7 @@ const RepairSubmit = () => {
               value={remarks}
               onChange={(e) => setRemarks(e.target.value)}
               style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
               }}
             />
 

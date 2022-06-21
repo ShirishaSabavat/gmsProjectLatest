@@ -178,7 +178,11 @@ const LeasingJamaDetails = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Team Name</p>
+        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>
+          Team Name
+          {' '}
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             placeholder="Enter Team Name Here..."
@@ -196,7 +200,11 @@ const LeasingJamaDetails = () => {
             </div>
           ))}
         </div>
-        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>ETM Id</p>
+        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>
+          ETM Id
+          {' '}
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         {/* <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             placeholder="Enter Name Here..."
@@ -238,19 +246,23 @@ const LeasingJamaDetails = () => {
           <Input
             readOnly
             value={driverName.driverNameValue}
+            placeholder="Driver Name"
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
           />
         </div>
-        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Driver Ola Balance</p>
+        <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>
+          Driver Ola Balance
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             onChange={(e) => setDriverBal({ driverBalValue: e.target.value })}
             value={driverBal.driverBalValue}
             placeholder="Enter Ola Balance Here..."
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
             }}
           />
         </div>

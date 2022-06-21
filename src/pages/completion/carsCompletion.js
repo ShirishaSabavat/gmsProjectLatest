@@ -268,7 +268,11 @@ const carslistrta = () => {
           </div>
         </div>
         <div className="bg-white p-4">
-          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Transfer To</p>
+          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>
+            Transfer To
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
           <div className="flex flex-row flex-nonwrap">
             <Button
               onClick={() => setTransfer(7)}

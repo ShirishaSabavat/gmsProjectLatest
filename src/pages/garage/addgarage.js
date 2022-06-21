@@ -145,14 +145,18 @@ const addgarage = () => {
           </span>
         </div>
         <div className="bg-white p-5">
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Garage Title</p>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+            Garage Title
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <Input
               placeholder="Enter Garage Name Here..."
               value={garageTitle}
               onChange={(e) => setGarageTitle(e.target.value)}
               style={{
-                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
               }}
             />
           </div>
@@ -180,7 +184,11 @@ const addgarage = () => {
           ))} */}
         </div>
         <div className="bg-white p-5">
-          <p>Select City</p>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+            Select City
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
           <div className="flex flex-row flex-nonwrap bg-white">
             <Dropdown overlay={menu}>
               <Button

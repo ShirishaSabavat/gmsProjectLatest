@@ -44,6 +44,7 @@ const carformpage = () => {
   const [etmId, setEtmId] = useState('');
   const [employeeList, setEmployeeList] = useState([]);
   const [visitId, setVisitId] = useState('-1');
+  const [revenueType, setRevenueType] = useState(1);
 
   const resetData = () => {
     setRadioValue(true);
@@ -64,9 +65,16 @@ const carformpage = () => {
   const getCarDetails = (carId) => {
     getCarDetailsList(carId).then((resp) => {
       if (resp?.data.length > 0) {
-        setDriverManagerName(resp?.data[0]?.team?.name);
-        // setSelectedDriverID(resp?.data[0].driver_id);
-        setSelectedDriverManagerID(resp?.data[0]?.team?.id);
+        if (resp?.data[0]?.team !== null) {
+          setDriverManagerName(resp?.data[0]?.team?.name);
+          setRevenueType(resp?.data[0]?.team?.revenue_type);
+          // setSelectedDriverID(resp?.data[0].driver_id);
+          setSelectedDriverManagerID(resp?.data[0]?.team?.id);
+        } else {
+          notification.error({
+            message: 'No Team Allocated',
+          });
+        }
       } else {
         setDriverName('');
         setDriverContact('');
@@ -79,24 +87,6 @@ const carformpage = () => {
         console.log('err', err);
       });
   };
-
-  // useEffect(() => {
-  //   getVisitingCarDetails(id)
-  //     .then((res) => {
-  //       const respData = res?.data?.results[0];
-  //       setcarNumber(respData?.car_number);
-  //       setRadioValue(respData?.is_with_driver);
-  //       setDriverName(respData?.driver_name);
-  //       setDriverContact(respData?.drive_contact_number);
-  //       setSelectedDriverManagerID(respData?.driverManagerId);
-  //       setDriverManagerName(respData?.driver_manager_name);
-  //       setVisitCategory(respData?.visit_category);
-  //       setSelectedCarID(respData?.carId);
-  //     })
-  //     .catch((err) => {
-  //       console.log('err1', err);
-  //     });
-  // }, []);
 
   useEffect(() => {
     const tempcityID = localStorage.getItem('cityid');
@@ -175,10 +165,15 @@ const carformpage = () => {
           isValid = false;
         }
       }
+      if (DriverManagerName.trim().length === 0) {
+        driverManagerError.pinErr = 'This field can not be empty';
+        isValid = false;
+      }
 
       setDriverVisitCategoryError(driverVisitCategoryError);
       setDriverContactError(mobileErr);
       setDriverNameError(driverNameError);
+      setDriverManagerNameError(driverManagerError);
     }
 
     return isValid;
@@ -209,7 +204,10 @@ const carformpage = () => {
               message: 'Visit Added successfully',
             });
             resetData();
-            setSelectedCarID(0);
+            setTimeout(() => {
+              window.scrollTo(0, 0);
+              window.location.reload();
+            }, 1000);
             // window.location.href = '#/gatekeeper/carformpage';
           })
           .catch((err) => {
@@ -324,7 +322,11 @@ const carformpage = () => {
           </span>
         </div>
         <div className="bg-white p-4">
-          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Number</p>
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+            Car Number
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
           <div className="bg-white">
             <Select
               onChange={(e) => {
@@ -363,7 +365,11 @@ const carformpage = () => {
           {radioValue === true
             ? (
               <div>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>ETM Id</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  ETM Id
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <Select
                   onChange={(e) => {
                     handleOnEtmChange(e);
@@ -384,7 +390,12 @@ const carformpage = () => {
                     </Select.Option>
                   ))}
                 </Select>
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Driver Name</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  Driver Name
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                  {' '}
+                </p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverName}
@@ -401,14 +412,18 @@ const carformpage = () => {
                     {DriverNameError[key]}
                   </div>
                 ))}
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Contact Number</p>
+                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+                  Contact Number
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </p>
                 <div className="flex flex-nonwrap bg-white">
                   <Input
                     value={DriverContact}
                     onChange={(e) => setDriverContact(e.target.value)}
                     placeholder="Enter Contact Here..."
                     style={{
-                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                      padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
                     }}
                   />
                 </div>
@@ -417,24 +432,36 @@ const carformpage = () => {
                     {DriverContactError[key]}
                   </div>
                 ))}
-                <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Team</p>
-                <div className="flex flex-nonwrap bg-white">
-                  <Input
-                    value={DriverManagerName}
-                    placeholder="Enter Team Name Here..."
-                    readOnly
-                    style={{
-                      padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
-                    }}
-                  />
-
-                </div>
               </div>
             )
             : <div />}
+          <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+            Team
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
+          <div className="flex flex-nonwrap bg-white">
+            <Input
+              value={DriverManagerName}
+              placeholder="Enter Team Name Here..."
+              readOnly
+              style={{
+                padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              }}
+            />
+          </div>
+          {Object.keys(DriverManagerNameError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {DriverManagerNameError[key]}
+            </div>
+          ))}
         </div>
         <div className="bg-white p-4">
-          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Reason for Visit</p>
+          <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>
+            Reason for Visit
+            {' '}
+            <span style={{ color: 'red' }}>*</span>
+          </p>
           <div className="flex flex-row flex-nonwrap">
             <Button
               onClick={() => setVisitCategory(4)}
@@ -459,22 +486,26 @@ const carformpage = () => {
             >
               Regular Audit
             </Button>
-            <Button
-              onClick={() => setVisitCategory(1)}
-              className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 1 ? 'aqua' : 'white' }}
-            >
-              60:40 Jama
-            </Button>
+            {revenueType === 1 ? (
+              <Button
+                onClick={() => setVisitCategory(1)}
+                className="font-quicksand-medium"
+                style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 1 ? 'aqua' : 'white' }}
+              >
+                60:40 Jama
+              </Button>
+            ) : ''}
           </div>
           <div className="flex flex-row flex-nonwrap">
-            <Button
-              onClick={() => setVisitCategory(2)}
-              className="font-quicksand-medium"
-              style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 2 ? 'aqua' : 'white' }}
-            >
-              Leasing Car Jama
-            </Button>
+            {revenueType === 2 ? (
+              <Button
+                onClick={() => setVisitCategory(2)}
+                className="font-quicksand-medium"
+                style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 2 ? 'aqua' : 'white' }}
+              >
+                Leasing Car Jama
+              </Button>
+            ) : ''}
           </div>
           {Object.keys(DriverVisitCategoryError).map((key) => (
             <div style={{ color: 'red' }}>

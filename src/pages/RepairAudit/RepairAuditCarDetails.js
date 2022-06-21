@@ -88,7 +88,11 @@ const RepairAuditCarDetails = () => {
         </div>
       </div>
       <div className="bg-white p-5 m-2">
-        <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Driver Reported Vehicle Issue*</p>
+        <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>
+          Driver Reported Vehicle Issue
+          {' '}
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Enter Issue Here</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
@@ -96,7 +100,7 @@ const RepairAuditCarDetails = () => {
             onChange={(e) => setdriverReportedIssue({ driverReportedIssueValue: e.target.value })}
             placeholder="Enter Issue Here..."
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
             }}
           />
         </div>

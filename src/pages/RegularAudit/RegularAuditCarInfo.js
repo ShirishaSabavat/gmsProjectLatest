@@ -47,6 +47,7 @@ const RegularAuditCarInfo = () => {
   const [backMainSticker, setBackMainSticker] = useState(false);
   const [backRightSticker, setBackRightSticker] = useState(false);
   const [backLeftSticker, setBackLeftSticker] = useState(false);
+  const [cngError, setCngError] = useState({});
   const history = useHistory();
   const goToTyreAudit = () => {
     history.push('/LeasingJama/AcceptLeasingJama');
@@ -57,6 +58,7 @@ const RegularAuditCarInfo = () => {
     // const descriptionNameError = {};
     const carcurretnkmerror = {};
     const fastagerror = {};
+    const cngErr = {};
     let isValid = true;
 
     if (carKms.toString().trim().length === 0) {
@@ -79,11 +81,16 @@ const RegularAuditCarInfo = () => {
     //   fastagerror.err = 'Fastag Balance can not be empty';
     //   isValid = false;
     // }
+    if (!cng.cngValue) {
+      cngErr.err = 'This field cannot be empty';
+      isValid = false;
+    }
 
     setCarKmsError(carkmerror);
     // setDescriptionError(descriptionNameError);
     setcurrentCarKmsError(carcurretnkmerror);
     setfasttagBalanceError(fastagerror);
+    setCngError(cngErr);
     return isValid;
   };
 
@@ -126,7 +133,7 @@ const RegularAuditCarInfo = () => {
             front_right_tyre_pressure: null,
             front_right_tyre_worn_out: null,
             fuel_indicator_petrol: fuelIndicatorPetrolBar,
-            fuel_indicator_cng: cng === 'Full' ? 1 : cng === 'Empty' ? 2 : cng === 'Half full and Above' ? 3 : 4,
+            fuel_indicator_cng: cng.cngValue,
             horn: horn === 'Okay',
             jack: jackStat === 'Yes',
             panna: panaStat === 'Yes',
@@ -143,10 +150,10 @@ const RegularAuditCarInfo = () => {
             stephney_tyre_pressure: null,
             stephney_tyre_brand: null,
             stephney_tyre_number: null,
-            sticker_back_left: backLeftSticker,
-            sticker_back_main: backMainSticker,
-            sticker_back_right: backRightSticker,
-            sticker_front_main: frontMainSticker,
+            sticker_back_left: backLeftSticker.backLeftStickerValue !== undefined,
+            sticker_back_main: backMainSticker.backMainStickerValue !== undefined,
+            sticker_back_right: backRightSticker.backRightStickerValue !== undefined,
+            sticker_front_main: frontMainSticker.frontMainStickerValue !== undefined,
             tommy: tommyStat === 'Yes',
           };
           addOtherAuditDetails(auditdetails)
@@ -219,14 +226,17 @@ const RegularAuditCarInfo = () => {
       </div>
       <div className="bg-white p-3 m-3">
         <p className="font-quicksand-bold text-sm">Car Details</p>
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Kms*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Car Kms
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={carKms}
             onChange={(e) => setCarKms(e.target.value)}
             placeholder="Enter Car Here..."
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
             }}
           />
         </div>
@@ -235,14 +245,17 @@ const RegularAuditCarInfo = () => {
             {carKmsError[key]}
           </div>
         ))}
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Current Kms*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Current Kms
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={currentCarKms}
             onChange={(e) => setcurrentCarKms(e.target.value)}
             placeholder="Enter Current KMs Here..."
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
             }}
           />
         </div>
@@ -251,7 +264,10 @@ const RegularAuditCarInfo = () => {
             {currentCarKmsError[key]}
           </div>
         ))}
-        <p className="font-quicksand-semi-bold mt-2" style={{ fontSize: '12px' }}>Fuel Indicator Petrol (1 bar)*</p>
+        <p className="font-quicksand-semi-bold mt-2" style={{ fontSize: '12px' }}>
+          Fuel Indicator Petrol (1 bar)
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group
             onChange={(e) => setfuelIndicatorPetrolBar(e.target.value)}
@@ -283,18 +299,36 @@ const RegularAuditCarInfo = () => {
         ))}
       </div> */}
       <div className="bg-white p-3 m-3">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>CNG*</p>
-        <div className="bg-white">
-          <Radio.Group onChange={(e) => setCng(e.target.value)} value={cng}>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Full">Full</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Empty">Empty</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Half full and Above">Half full and Above</Radio>
-            <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Below Half">Below Half</Radio>
-          </Radio.Group>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          CNG (Only 1 digit)
+          <span style={{ color: 'red' }}>*</span>
+        </p>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          <Input
+            value={cng.cngValue}
+            onChange={(e) => setCng({
+              cngValue: e.target.value.replace(
+                /\D/g,
+                '',
+              ),
+            })}
+            maxLength={1}
+            placeholder="Enter CNG Indicator Value Here..."
+            style={{
+              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
+            }}
+          />
+        </div>
+        <div className="flex flex-row flex-nonwrap bg-white">
+          {Object.keys(cngError).map((key) => (
+            <div style={{ color: 'red' }}>
+              {cngError[key]}
+            </div>
+          ))}
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Number Plate Sticker Status*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Number Plate Sticker Status</p>
         <div className="bg-white">
           <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setFrontMainSticker({ frontMainStickerValue: !frontMainSticker.frontMainStickerValue })}>Front Main</Checkbox>
           <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setBackMainSticker({ backMainStickerValue: !backMainSticker.backMainStickerValue })}>Back Main</Checkbox>
@@ -305,7 +339,10 @@ const RegularAuditCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-3">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Jack Status*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Jack Status
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setJackStat(e.target.value)} value={jackStat}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
@@ -314,7 +351,10 @@ const RegularAuditCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-3">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Pana Status*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Pana Status
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setPanaStat(e.target.value)} value={panaStat}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
@@ -323,7 +363,10 @@ const RegularAuditCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-3">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Tommy Status*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Tommy Status
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setTommyStat(e.target.value)} value={tommyStat}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
@@ -332,7 +375,10 @@ const RegularAuditCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-3">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Engine Oil*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Engine Oil
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setEngineOil(e.target.value)} value={engineoil}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Sufficient">Sufficient</Radio>
@@ -341,7 +387,10 @@ const RegularAuditCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-3">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brake Oil*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Brake Oil
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setBrakeOil(e.target.value)} value={brakeoil}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Sufficient">Sufficient</Radio>
@@ -350,7 +399,10 @@ const RegularAuditCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-3">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Coolant*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Coolant
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setCoolant(e.target.value)} value={coolant}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Sufficient">Sufficient</Radio>
@@ -359,7 +411,10 @@ const RegularAuditCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-3">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Charge*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Battery Charge
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setBatteryCharge(e.target.value)} value={batteryCharge}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Okay">Okay</Radio>
@@ -368,7 +423,10 @@ const RegularAuditCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-3">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Horn*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Horn
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setHorn(e.target.value)} value={horn}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Okay">Okay</Radio>

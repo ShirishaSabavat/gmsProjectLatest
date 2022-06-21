@@ -93,7 +93,10 @@ const LeasingBatteryAudit = () => {
       </div>
       <div className="bg-white p-3 m-2">
         <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Battery Audit</p>
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Number</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Battery Number (Only 5 digits)
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={batteryName.batteryNameValue}
@@ -101,7 +104,7 @@ const LeasingBatteryAudit = () => {
             placeholder="Enter Battery Number Here..."
             maxLength={5}
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
             }}
           />
         </div>
@@ -112,7 +115,11 @@ const LeasingBatteryAudit = () => {
             </div>
           ))}
         </div>
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Brand</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Battery Brand
+          {' '}
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group
             onChange={(e) => setBatteryBrand({ batteryBrandValue: e.target.value })}

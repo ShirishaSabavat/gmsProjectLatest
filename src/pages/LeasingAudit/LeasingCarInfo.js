@@ -166,14 +166,17 @@ const LeasingCarInfo = () => {
       </div>
       <div className="bg-white p-3 m-2">
         <p className="font-quicksand-bold text-sm">Car Details</p>
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Car Kms*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Car Kms
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={carKms.carKmsValue}
             onChange={(e) => setCarKms({ carKmsValue: e.target.value })}
             placeholder="Enter Car KMs Here..."
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
             }}
           />
         </div>
@@ -184,14 +187,17 @@ const LeasingCarInfo = () => {
             </div>
           ))}
         </div>
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Current Kms*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Current Kms
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={currentCarKms.currentCarKmsValue}
             onChange={(e) => setcurrentCarKms({ currentCarKmsValue: e.target.value })}
             placeholder="Enter Current KMs Here..."
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
             }}
           />
         </div>
@@ -202,7 +208,10 @@ const LeasingCarInfo = () => {
             </div>
           ))}
         </div>
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Fuel Indicator Petrol (1 bar)*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Fuel Indicator Petrol (1 bar)
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setfuelIndicatorPetrolBar({ fuelIndicatorPetrolBarValue: e.target.value })} value={fuelIndicatorPetrolBar.fuelIndicatorPetrolBarValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value={0}>0</Radio>
@@ -213,14 +222,17 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Fastag Balance*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Fastag Balance
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={fasttagBalance.fasttagBalanceValue}
             onChange={(e) => setfasttagBalance({ fasttagBalanceValue: e.target.value })}
             placeholder="Enter Fast tag Balance Here..."
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
             }}
           />
         </div>
@@ -233,7 +245,11 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>CNG*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          CNG(Only 1 digit)
+          {' '}
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={cng.cngValue}
@@ -246,7 +262,7 @@ const LeasingCarInfo = () => {
             maxLength={1}
             placeholder="Enter CNG Indicator Value Here..."
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
             }}
           />
         </div>
@@ -259,7 +275,7 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Number Plate Sticker Status*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Number Plate Sticker Status</p>
         <div className="bg-white">
           <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setFrontMainSticker({ frontMainStickerValue: !frontMainSticker.frontMainStickerValue })}>Front Main</Checkbox>
           <Checkbox style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" onChange={() => setBackMainSticker({ backMainStickerValue: !backMainSticker.backMainStickerValue })}>Back Main</Checkbox>
@@ -270,7 +286,10 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Jack Status*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Jack Status
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setJackStat({ jackStatValue: e.target.value })} value={jackStat.jackStatValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
@@ -279,7 +298,10 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Pana Status*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Pana Status
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setPanaStat({ panaStatValue: e.target.value })} value={panaStat.panaStatValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
@@ -288,7 +310,10 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Tommy Status*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Tommy Status
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setTommyStat({ tommyStatValue: e.target.value })} value={tommyStat.tommyStatValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Yes">Yes</Radio>
@@ -297,7 +322,10 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Engine Oil*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Engine Oil
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setEngineOil({ engineoilValue: e.target.value })} value={engineoil.engineoilValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Sufficient">Sufficient</Radio>
@@ -306,7 +334,10 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Brake Oil*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Brake Oil
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setBrakeOil({ brakeoilValue: e.target.value })} value={brakeoil.brakeoilValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Sufficient">Sufficient</Radio>
@@ -315,7 +346,10 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Coolant*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Coolant
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setCoolant({ coolantValue: e.target.value })} value={coolant.coolantValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Sufficient">Sufficient</Radio>
@@ -324,7 +358,10 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Battery Charge*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Battery Charge
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setBatteryCharge({ batteryChargeValue: e.target.value })} value={batteryCharge.batteryChargeValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Okay">Okay</Radio>
@@ -333,7 +370,10 @@ const LeasingCarInfo = () => {
         </div>
       </div>
       <div className="bg-white p-3 m-2">
-        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>Horn*</p>
+        <p className="font-quicksand-semi-bold" style={{ fontSize: '12px' }}>
+          Horn
+          <span style={{ color: 'red' }}>*</span>
+        </p>
         <div className="bg-white">
           <Radio.Group onChange={(e) => setHorn({ hornValue: e.target.value })} value={horn.hornValue}>
             <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold mr-48 mt-2" value="Okay">Okay</Radio>

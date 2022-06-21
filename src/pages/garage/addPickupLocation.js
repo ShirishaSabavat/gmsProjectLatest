@@ -79,8 +79,16 @@ const createModules = () => {
         </span>
       </div>
       <div className="col-12 py-3 px-4 bg-[#FFFFFF] mb-4">
-        <h6 className="text-sm text-[#53565A] font-quicksand-semi-bold">Location</h6>
-        <Input placeholder="Location Name" value={pickupLocationName} onChange={(e) => setPickupLocationName(e.target.value)} style={{ backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', padding: '8px' }} />
+        <h6 className="text-sm text-[#53565A] font-quicksand-semi-bold">
+          Location
+          <span style={{ color: 'red' }}>*</span>
+        </h6>
+        <Input
+          placeholder="Location Name"
+          value={pickupLocationName}
+          onChange={(e) => setPickupLocationName(e.target.value)}
+          style={{ backgroundColor: '#fff', borderColor: '#74D1D8', padding: '8px' }}
+        />
         {Object.keys(pickupLocationError).map((key) => (
           <div style={{ color: 'red' }}>
             {pickupLocationError[key]}

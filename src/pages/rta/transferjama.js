@@ -80,7 +80,11 @@ const transferjama = () => {
         </div>
         <div>
           <div className="bg-white p-4">
-            <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>Select Reject Option</p>
+            <p className="font-quicksand-bold text-5xl" style={{ fontSize: '12px' }}>
+              Select Reject Option
+              {' '}
+              <span style={{ color: 'red' }}>*</span>
+            </p>
             <div className="flex flex-row flex-nonwrap">
               <Button
                 onClick={() => { setrejectfor(5), setrejectforRemark('Transfer to Repair'); }}
