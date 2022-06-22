@@ -3,15 +3,13 @@
 // import Breadcrumb from 'components/layouts/breadcrumb';
 import { Helmet } from 'react-helmet';
 import {
-  Radio, Button, Input, notification,
+  Radio, Button, notification,
 } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useQueueContext } from 'context/QueueContext';
 import { editBreakdown } from 'services/axios';
 import moment from 'moment';
-
-const { TextArea } = Input;
 
 const breakdownDetails = () => {
   const {
@@ -20,20 +18,20 @@ const breakdownDetails = () => {
 
   const history = useHistory();
 
-  const [rejectReason, setRejectReason] = useState('');
+  const [rejectReason, setRejectReason] = useState('Incorrect Car Number');
   const [rejectValue, setRejectValue] = useState(true);
-  const [remarksError, setReasonError] = useState({});
+  // const [remarksError, setReasonError] = useState({});
 
   const validateFormData = () => {
-    const RemarkError = {};
-    let isValid = true;
-    if (!rejectValue) {
-      if (rejectReason.trim().length === 0) {
-        RemarkError.err = 'This field can not be empty.';
-        isValid = false;
-      }
-    }
-    setReasonError(RemarkError);
+    // const RemarkError = {};
+    const isValid = true;
+    // if (!rejectValue) {
+    //   if (rejectReason.trim().length === 0) {
+    //     RemarkError.err = 'This field can not be empty.';
+    //     isValid = false;
+    //   }
+    // }
+    // setReasonError(RemarkError);
     return isValid;
   };
 
@@ -42,7 +40,7 @@ const breakdownDetails = () => {
     if (resp) {
       const recoveryData = {
         accept_reject: rejectValue,
-        reject_reason: rejectValue === true ? '' : rejectReason,
+        reject_reason: rejectValue === true ? null : rejectReason,
         status: 3,
       };
       editBreakdown(cardObject?.id, recoveryData)
@@ -61,8 +59,11 @@ const breakdownDetails = () => {
   };
 
   const handleReject = (e) => {
-    setRejectReason('');
+    setRejectReason('Incorrect Car Number');
     setRejectValue(e.target.value);
+  };
+  const handleRejectReason = (e) => {
+    setRejectReason(e.target.value);
   };
 
   return (
@@ -132,22 +133,18 @@ const breakdownDetails = () => {
         {rejectValue === false ? (
           <div className="bg-white mt-2">
             <div className="flex flex-nonwrap bg-white">
-              <TextArea
-                rows={4}
-                placeholder="Enter Reason Here..."
-                value={rejectReason}
-                onChange={(e) => setRejectReason(e.target.value)}
-                style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
-                }}
-              />
-
-            </div>
-            {Object.keys(remarksError).map((key) => (
-              <div style={{ color: 'red' }}>
-                {remarksError[key]}
+              <div className="bg-white py-2">
+                <h6 className="text-sm text-[#53565A]">
+                  Reject Reason
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </h6>
+                <Radio.Group onChange={handleRejectReason} value={rejectReason}>
+                  <Radio style={{ color: '#9193A2' }} value="Incorrect Car Number">Incorrect Car Number</Radio>
+                  <Radio style={{ color: '#9193A2' }} value="Incorrect Location">Incorrect Location</Radio>
+                </Radio.Group>
               </div>
-            ))}
+            </div>
           </div>
         ) : null}
       </div>

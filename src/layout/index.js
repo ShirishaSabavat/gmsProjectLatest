@@ -45,7 +45,7 @@ const Layout = ({
 
   return (
     <>
-      <Helmet titleTemplate="Template | %s" />
+      <Helmet titleTemplate="GMS | %s" />
       {SelectedLayout()}
     </>
   );

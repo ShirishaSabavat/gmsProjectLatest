@@ -8,7 +8,7 @@ import {
   Input, Radio, Button, notification, Select,
 } from 'antd';
 import {
-  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getBreakdownDetails, getEmployeeList, checkExistingBreakdownCarDetails,
+  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getBreakdownDetails, getEmployeeList, checkExistingCarDetails,
 } from 'services/axios';
 
 const { TextArea } = Input;
@@ -210,6 +210,10 @@ const breakdownPage = () => {
               message: 'Breakdown Added successfully',
             });
             resetData();
+            setTimeout(() => {
+              window.scrollTo(0, 0);
+              window.location.reload();
+            }, 1000);
             // window.location.href = '#/breakdown/breakdownHome';
           })
           .catch((err) => {
@@ -236,7 +240,7 @@ const breakdownPage = () => {
     // the item hovered
     resetData();
     getCarDetails(result);
-    checkExistingBreakdownCarDetails(result)
+    checkExistingCarDetails(result)
       .then((resp) => {
         if (resp.data.car_status === 2) {
           setSelectedCarID(result);

@@ -73,6 +73,7 @@ const carformpage = () => {
         } else {
           notification.error({
             message: 'No Team Allocated',
+            duration: 0,
           });
         }
       } else {
@@ -202,6 +203,7 @@ const carformpage = () => {
           .then((res) => {
             notification.success({
               message: 'Visit Added successfully',
+              duration: 0,
             });
             resetData();
             setTimeout(() => {
@@ -213,6 +215,7 @@ const carformpage = () => {
           .catch((err) => {
             notification.error({
               message: err.response.data.message,
+              duration: 0,
             });
           });
       } else {
@@ -234,6 +237,7 @@ const carformpage = () => {
           .then((res) => {
             notification.success({
               message: 'Visit Edited successfully',
+              duration: 0,
             });
             resetData();
             setSelectedCarID(0);
@@ -251,6 +255,7 @@ const carformpage = () => {
     resetData();
     checkExistingCarDetails(result)
       .then((resp) => {
+        console.log(resp.data.car_status);
         if (resp.data.car_status === 2) {
           setSelectedCarID(result);
           const temp = CarsList.filter((item) => item.id === result);
@@ -274,10 +279,6 @@ const carformpage = () => {
             .catch((err) => {
               console.log('err1', err);
             });
-          // notification.error({
-          //   message: 'Car is already in the Audit Queue',
-          // });
-        } else {
           let visitQueue = '';
           if (resp.data.visit_category === 1) {
             visitQueue = '60:40 Jama';
@@ -298,6 +299,30 @@ const carformpage = () => {
           }
           notification.error({
             message: `Car is already in the ${visitQueue} Queue`,
+            duration: 0,
+          });
+        } else {
+          let visitQueue = '';
+          if (resp.data.visit_category === 1) {
+            visitQueue = '60:40 Jama';
+          } else if (resp.data.visit_category === 2) {
+            visitQueue = 'Leasing Jama';
+          } else if (resp.data.visit_category === 3) {
+            visitQueue = 'Regular Audit';
+          } else if (resp.data.visit_category === 4) {
+            visitQueue = 'Serciving';
+          } else if (resp.data.visit_category === 5) {
+            visitQueue = 'Repair';
+          } else if (resp.data.visit_category === 6) {
+            visitQueue = 'Breakdown';
+          } else if (resp.data.visit_category === 7) {
+            visitQueue = 'Insurance';
+          } else if (resp.data.visit_category === 8) {
+            visitQueue = 'Car Recovery';
+          }
+          notification.error({
+            message: `Car is already in the ${visitQueue} Completion Queue`,
+            duration: 0,
           });
         }
       })

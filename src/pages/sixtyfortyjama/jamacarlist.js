@@ -3,6 +3,7 @@
 /* eslint-disable no-unused-vars */
 import { Helmet } from 'react-helmet';
 import { Input } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { getQueueCarsList } from 'services/axios';
@@ -18,8 +19,16 @@ const jamacarlist = () => {
     setCardObject,
     ResetContextValues,
   } = useJamaContext();
-  const [CarsList, setCarsList] = useState([]);
   const history = useHistory();
+  const [CarsList, setCarsList] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [searchLoading, setSearchLoading] = useState(false);
+  const globalSearch = (value) => {
+    setSearchLoading(true);
+    setSearchValue(value);
+    setTimeout(() => setSearchLoading(false), 1500);
+  };
+
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     const tempLocationID = localStorage.getItem('locationid');
@@ -39,9 +48,30 @@ const jamacarlist = () => {
             Cars: in 60:40 Jama
           </span>
         </div>
+        <div className="bg-white m-1 mt-4">
+          <div className="flex flex-nonwrap bg-white">
+            <Input
+              size="medium"
+              placeholder="Search Car Number"
+              prefix={(
+                <img
+                  className="mr-3"
+                  src="/assets/images/general/loupe.svg"
+                  alt="search"
+                  width="10"
+                />
+              )}
+              style={{
+                padding: '8px', backgroundColor: '#fff', borderColor: '#013453', width: '150%',
+              }}
+              suffix={searchLoading && <LoadingOutlined />}
+              onChange={({ target: { value } }) => globalSearch(value)}
+            />
+          </div>
+        </div>
         <div>
           {
-            CarsList.length !== 0 ? (CarsList.map((item) => (
+            CarsList.length !== 0 ? (CarsList.filter((el) => el.car_number.toLowerCase().includes(searchValue.toLowerCase())).map((item) => (
               <div
                 className="p-2 my-3 max-w-sm bg-white rounded-lg border shadow-md sm:p-6"
                 onClick={() => {

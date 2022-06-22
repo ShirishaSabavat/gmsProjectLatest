@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
 /* eslint-disable global-require */
 /* eslint-disable no-unused-vars */
@@ -5,26 +6,15 @@ import { Helmet } from 'react-helmet';
 import { Input, Button, notification } from 'antd';
 import { useState, useEffect } from 'react';
 import {
-  addCompletion, rejectRTAList, editCarVisit, addCarVisit, editBreakdown,
+  addCompletion, rejectRTAList, editCarVisit, addCarVisit, editBreakdown, getCarDetailsList,
 } from 'services/axios';
 import { useHistory, useParams } from 'react-router-dom';
 import { useCompletionContext } from 'context/CompletionContext';
 import moment from 'moment';
 
-const { TextArea } = Input;
-
 const carslistrta = () => {
-  const { id } = useParams();
   const history = useHistory();
   const {
-    selectedCarId,
-    selectedCarNumber,
-    selectedDriverName,
-    selectedVisitId,
-    selectedVisitCategory,
-    remarks,
-    setRemarks,
-    // operator,
     cardObject,
     ResetContextValues,
   } = useCompletionContext();
@@ -33,12 +23,29 @@ const carslistrta = () => {
   const [locationId, setLocationId] = useState('');
   const [driverVisitCategoryError, setDriverVisitCategoryError] = useState({});
   const [transfer, setTransfer] = useState(10);
+  const [carId, setCarId] = useState(0);
+  const [revenueType, setRevenueType] = useState(1);
+
   useEffect(() => {
     const tempGarageID = localStorage.getItem('garageid');
     setGarageID(tempGarageID);
     const tempLocationId = localStorage.getItem('locationid');
     setLocationId(tempLocationId);
+    setCarId(cardObject?.carId?.id);
   }, []);
+
+  useEffect(() => {
+    if (carId !== 0) {
+      getCarDetailsList(carId)
+        .then((resp) => {
+          console.log(resp?.data[0]?.team?.revenue_type);
+          setRevenueType(resp?.data[0]?.team?.revenue_type);
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
+    }
+  }, [carId]);
 
   const validateFormData = () => {
     const driverVisitCategoryErr = {};
@@ -319,24 +326,26 @@ const carslistrta = () => {
             )}
           </div>
           <div className="flex flex-row flex-nonwrap">
-            {cardObject.visit_category === 1 ? '' : (
-              <Button
-                onClick={() => setTransfer(1)}
-                className="font-quicksand-medium"
-                style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: transfer === 1 ? 'aqua' : 'white' }}
-              >
-                60:40
-              </Button>
-            )}
-            {cardObject.visit_category === 2 ? '' : (
-              <Button
-                onClick={() => setTransfer(2)}
-                className="font-quicksand-medium"
-                style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: transfer === 2 ? 'aqua' : 'white' }}
-              >
-                Leasing
-              </Button>
-            )}
+            {revenueType === 1
+              ? cardObject.visit_category === 1 ? '' : (
+                <Button
+                  onClick={() => setTransfer(1)}
+                  className="font-quicksand-medium"
+                  style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: transfer === 1 ? 'aqua' : 'white' }}
+                >
+                  60:40
+                </Button>
+              ) : ''}
+            {revenueType === 2
+              ? cardObject.visit_category === 2 ? '' : (
+                <Button
+                  onClick={() => setTransfer(2)}
+                  className="font-quicksand-medium"
+                  style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: transfer === 2 ? 'aqua' : 'white' }}
+                >
+                  Leasing
+                </Button>
+              ) : ''}
           </div>
           {/* <div className="flex flex-row flex-nonwrap">
             <Button

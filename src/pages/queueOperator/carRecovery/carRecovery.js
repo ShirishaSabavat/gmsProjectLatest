@@ -11,8 +11,6 @@ import { useQueueContext } from 'context/QueueContext';
 import { editBreakdown } from 'services/axios';
 import moment from 'moment';
 
-const { TextArea } = Input;
-
 const carRecoveryDetails = () => {
   const {
     cardObject,
@@ -20,20 +18,30 @@ const carRecoveryDetails = () => {
 
   const history = useHistory();
 
-  const [rejectReason, setRejectReason] = useState('');
+  const [rejectReason, setRejectReason] = useState('Driver returned the Car');
   const [rejectValue, setRejectValue] = useState(true);
+  const [bikerName, setBikerName] = useState('');
   const [remarksError, setReasonError] = useState({});
+  const [bikerNameError, setBikerNameError] = useState({});
+  const [keyReceived, setKeyReceived] = useState(true);
 
   const validateFormData = () => {
     const RemarkError = {};
+    const BikerError = {};
     let isValid = true;
     if (!rejectValue) {
       if (rejectReason.trim().length === 0) {
         RemarkError.err = 'This field can not be empty.';
         isValid = false;
       }
+    } if (rejectValue) {
+      if (bikerName.trim().length === 0) {
+        BikerError.err = 'This field can not be empty.';
+        isValid = false;
+      }
     }
     setReasonError(RemarkError);
+    setBikerNameError(BikerError);
     return isValid;
   };
 
@@ -42,7 +50,10 @@ const carRecoveryDetails = () => {
     if (resp) {
       const recoveryData = {
         accept_reject: rejectValue,
-        reject_reason: rejectValue === true ? '' : rejectReason,
+        recovery_biker_assigned: rejectValue === false ? null : rejectValue,
+        recovery_key_received: rejectValue === false ? null : keyReceived,
+        biker_name: rejectValue === false ? null : bikerName,
+        reject_reason: rejectValue === true ? null : rejectReason,
         status: 3,
       };
       editBreakdown(cardObject?.id, recoveryData)
@@ -61,8 +72,16 @@ const carRecoveryDetails = () => {
   };
 
   const handleReject = (e) => {
-    setRejectReason('');
+    setRejectReason('Driver returned the Car');
     setRejectValue(e.target.value);
+    setBikerName('');
+    setKeyReceived(true);
+  };
+  const handleRejectReason = (e) => {
+    setRejectReason(e.target.value);
+  };
+  const handleKeyReceived = (e) => {
+    setKeyReceived(e.target.value);
   };
 
   return (
@@ -103,7 +122,7 @@ const carRecoveryDetails = () => {
                 Mobile:
                 {' '}
                 <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
-                  {cardObject.drive_contact_number || 'mobile'}
+                  {cardObject.drive_contact_number}
                 </p>
               </p>
               <p className="text-sm font-bold font-quicksand-medium text-gray-900 truncate mt-1 mb-0">
@@ -132,16 +151,18 @@ const carRecoveryDetails = () => {
         {rejectValue === false ? (
           <div className="bg-white mt-2">
             <div className="flex flex-nonwrap bg-white">
-              <TextArea
-                rows={4}
-                placeholder="Enter Reason Here..."
-                value={rejectReason}
-                onChange={(e) => setRejectReason(e.target.value)}
-                style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
-                }}
-              />
-
+              <div className="bg-white py-2">
+                <h6 className="text-sm text-[#53565A]">
+                  Reject Reason
+                  {' '}
+                  <span style={{ color: 'red' }}>*</span>
+                </h6>
+                <Radio.Group onChange={handleRejectReason} value={rejectReason}>
+                  <Radio style={{ color: '#9193A2' }} value="Driver returned the Car">Driver returned the Car</Radio>
+                  <Radio style={{ color: '#9193A2' }} value="Incorrect Car Number">Incorrect Car Number</Radio>
+                  <Radio style={{ color: '#9193A2' }} value="Incorrect Location">Incorrect Location</Radio>
+                </Radio.Group>
+              </div>
             </div>
             {Object.keys(remarksError).map((key) => (
               <div style={{ color: 'red' }}>
@@ -149,7 +170,43 @@ const carRecoveryDetails = () => {
               </div>
             ))}
           </div>
-        ) : null}
+        ) : (
+          <div className="bg-white mt-4">
+            <h6 className="text-sm text-[#53565A]">
+              Biker Name
+              {' '}
+              <span style={{ color: 'red' }}>*</span>
+              {' '}
+            </h6>
+            <div className="flex flex-nonwrap bg-white">
+              <Input
+                value={bikerName}
+                onChange={(e) => setBikerName(e.target.value)}
+                placeholder="Enter Biker Name Here..."
+                style={{
+                  padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
+                }}
+              />
+
+            </div>
+            {Object.keys(bikerNameError).map((key) => (
+              <div style={{ color: 'red' }}>
+                {bikerNameError[key]}
+              </div>
+            ))}
+            <div className="bg-white mt-2">
+              <h6 className="text-sm text-[#53565A]">
+                Key Received?
+                {' '}
+                <span style={{ color: 'red' }}>*</span>
+              </h6>
+              <Radio.Group onChange={handleKeyReceived} value={keyReceived}>
+                <Radio style={{ color: '#9193A2' }} value>Yes</Radio>
+                <Radio style={{ color: '#9193A2' }} value={false}>No</Radio>
+              </Radio.Group>
+            </div>
+          </div>
+        )}
       </div>
       <div className="col-12 flex flex-row justify-between my-3">
         <Button

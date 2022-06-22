@@ -9,7 +9,7 @@ import {
   Input, Radio, Button, notification, Select,
 } from 'antd';
 import {
-  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getEmployeeList, checkExistingBreakdownCarDetails, getBreakdownDetails,
+  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getEmployeeList, checkExistingCarDetails, getBreakdownDetails,
 } from 'services/axios';
 
 const { TextArea } = Input;
@@ -195,6 +195,10 @@ const carRecoveryPage = () => {
               message: 'Visit Added successfully',
             });
             resetData();
+            setTimeout(() => {
+              window.scrollTo(0, 0);
+              window.location.reload();
+            }, 1000);
             // window.location.href = '#/gatekeeper/homepage';
           })
           .catch((err) => {
@@ -225,7 +229,7 @@ const carRecoveryPage = () => {
     // getCarDetails(result.id);
     resetData();
     getCarDetails(result);
-    checkExistingBreakdownCarDetails(result)
+    checkExistingCarDetails(result)
       .then((resp) => {
         setSelectedCarID(result);
         const temp = CarsList.filter((item) => item.id === result);
