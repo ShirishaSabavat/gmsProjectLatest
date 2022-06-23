@@ -67,7 +67,7 @@ const RepairCarInfo = () => {
     // const fasttagBalanceErr = {};
     const cngErr = {};
 
-    if (!carKms.carKmsValue) {
+    if (carKms.carKmsValue === null) {
       carKmsErr.err = 'This field cannot be empty';
       isValid = false;
     }

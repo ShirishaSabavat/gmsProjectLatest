@@ -26,7 +26,7 @@ const RepairAuditContext = createContext(
     stepnyPresentValue: 1,
     stepnyBrandValue: 1,
     stepnyTyreNumberValue: '',
-    carKmsValue: '',
+    carKmsValue: 0,
     currentCarKmsValue: '',
     fasttagBalanceValue: '',
     fuelIndicatorPetrolBarValue: 'Yes',
@@ -114,7 +114,7 @@ const RepairProvider = ({ children }) => {
     stepnyTyreNumberValue: '',
   });
   const [carKms, setCarKms] = useState({
-    carKmsValue: '',
+    carKmsValue: 0,
   });
   const [currentCarKms, setcurrentCarKms] = useState({
     currentCarKmsValue: '',

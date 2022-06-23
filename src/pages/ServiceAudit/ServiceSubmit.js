@@ -140,7 +140,7 @@ const ServiceSubmit = () => {
     setStepnyPresent({ stepnyPresentValue: 1 });
     setStepnyBrand({ stepnyBrandValue: 1 });
     setStepnyTyreNumber({ stepnyTyreNumberValue: '' });
-    setCarKms({ carKmsValue: '' });
+    setCarKms({ carKmsValue: 0 });
     setcurrentCarKms({ currentCarKmsValue: '' });
     setfasttagBalance({ fasttagBalanceValue: '' });
     setfuelIndicatorPetrolBar({ fuelIndicatorPetrolBarValue: 'Yes' });

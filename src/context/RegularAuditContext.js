@@ -19,7 +19,7 @@ const RegularAuditProvider = ({ children }) => {
     visitIdValue: '',
   });
   const [carKms, setCarKms] = useState({
-    carKmsValue: '',
+    carKmsValue: 0,
   });
   const [currentCarKms, setcurrentCarKms] = useState({
     currentCarKmsValue: '',

@@ -31,7 +31,7 @@ const JamaContext = createContext(
     stepnyTyreNumberValue: '',
     stepnyWornOutValue: 3,
     stepnyPressureValue: '',
-    carKmsValue: '',
+    carKmsValue: 0,
     currentCarKmsValue: '',
     fasttagBalanceValue: '',
     fuelIndicatorPetrolBarValue: 0,
@@ -140,7 +140,7 @@ const JamaProvider = ({ children }) => {
     stepnyPressureValue: '',
   });
   const [carKms, setCarKms] = useState({
-    carKmsValue: '',
+    carKmsValue: 0,
   });
   const [currentCarKms, setcurrentCarKms] = useState({
     currentCarKmsValue: '',
@@ -242,7 +242,7 @@ const JamaProvider = ({ children }) => {
     setStepnyPresent({ stepnyPresentValue: 1 });
     setStepnyBrand({ stepnyBrandValue: 1 });
     setStepnyTyreNumber({ stepnyTyreNumberValue: '' });
-    setCarKms({ carKmsValue: '' });
+    setCarKms({ carKmsValue: 0 });
     setcurrentCarKms({ currentCarKmsValue: '' });
     setfasttagBalance({ fasttagBalanceValue: '' });
     setfuelIndicatorPetrolBar({ fuelIndicatorPetrolBarValue: 0 });
