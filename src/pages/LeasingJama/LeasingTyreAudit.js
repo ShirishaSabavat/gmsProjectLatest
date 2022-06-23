@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 import { Helmet } from 'react-helmet';
@@ -129,7 +130,7 @@ const LeasingTyreAudit = () => {
     }
     if (
       stepnyPresent.stepnyPresentValue === 1
-      && (!stepnyPresent.stepnyPresentValue || stepnyPresent.stepnyPresentValue.length < 4)) {
+      && (!stepnyTyreNumber.stepnyTyreNumberValue || stepnyTyreNumber.stepnyTyreNumberValue.length < 4)) {
       stepnyTyreNumberErr.err = 'Tyre Number must be of 4 digits';
       isValid = false;
     }
@@ -558,7 +559,7 @@ const LeasingTyreAudit = () => {
                 onChange={(e) => setStepnyPressure({ stepnyPressureValue: e.target.value })}
                 placeholder="Enter Tyre Pressure Here..."
                 style={{
-                  padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
+                  padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
                 }}
               />
             </div>

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable global-require */
 import { Helmet } from 'react-helmet';
@@ -129,7 +130,7 @@ const LeasingTyreAudit = () => {
     }
     if (
       stepnyPresent.stepnyPresentValue === 1
-      && (!stepnyPresent.stepnyPresentValue || stepnyPresent.stepnyPresentValue.length < 4)) {
+      && (!stepnyTyreNumber.stepnyTyreNumberValue.length || stepnyTyreNumber.stepnyTyreNumberValue.length.length < 4)) {
       stepnyTyreNumberErr.err = 'Tyre Number must be of 4 digits';
       isValid = false;
     }

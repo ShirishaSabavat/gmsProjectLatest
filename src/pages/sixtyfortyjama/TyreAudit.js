@@ -132,7 +132,7 @@ const TyreAudit = () => {
       isValid = false;
     }
     if (stepnyPresent.stepnyPresentValue === 1
-      && (!stepnyPresent.stepnyPresentValue || stepnyPresent.stepnyPresentValue.length < 4)) {
+      && (!stepnyTyreNumber.stepnyTyreNumberValue || stepnyTyreNumber.stepnyTyreNumberValue.length < 4)) {
       stepnyTyreNumberErr.err = 'Tyre Number must be of 4 digits';
       isValid = false;
     }
