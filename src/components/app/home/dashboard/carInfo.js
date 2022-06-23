@@ -15,6 +15,9 @@ const CarInfo = (props) => {
               <div className="row">
                 <div className="col-6">
                   <h6 className="text-[#333333] text-base font-quicksand-semi-bold m-0">{carNumber}</h6>
+                  <h6 className="text-[#333333] font-quicksand-semi-bold text-sm mb-0">
+                    Celerio
+                  </h6>
                 </div>
                 <hr className="mt-0 text-[#86A1A4]" />
                 <div style={{ fontSize: '14px' }} className="col-12 font-quicksand-semi-bold grid grid-cols-4 my-3">

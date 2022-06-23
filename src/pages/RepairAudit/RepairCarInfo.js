@@ -135,7 +135,7 @@ const RepairCarInfo = () => {
               Mobile:
               {' '}
               <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
-                {cardObject.drive_contact_number || 'mobile'}
+                {cardObject.drive_contact_number}
               </p>
             </p>
             <p className="text-sm font-bold font-quicksand-medium text-gray-900 truncate mt-1 mb-0">
@@ -159,10 +159,10 @@ const RepairCarInfo = () => {
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
             value={carKms.carKmsValue}
+            readOnly
             onChange={(e) => setCarKms({ carKmsValue: e.target.value })}
-            placeholder="Enter Car KMs Here..."
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
           />
         </div>
@@ -181,7 +181,7 @@ const RepairCarInfo = () => {
           <Input
             value={currentCarKms.currentCarKmsValue}
             onChange={(e) => setcurrentCarKms({ currentCarKmsValue: e.target.value })}
-            placeholder="Enter Current KMs Here..."
+            placeholder="Enter Current KMs"
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
             }}

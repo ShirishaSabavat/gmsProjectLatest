@@ -198,7 +198,7 @@ const RepairTyreAudit = () => {
               Mobile:
               {' '}
               <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
-                {cardObject.drive_contact_number || 'mobile'}
+                {cardObject.drive_contact_number}
               </p>
             </p>
             <p className="text-sm font-bold font-quicksand-medium text-gray-900 truncate mt-1 mb-0">

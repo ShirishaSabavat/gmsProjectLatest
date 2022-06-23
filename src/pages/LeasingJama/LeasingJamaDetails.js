@@ -185,7 +185,6 @@ const LeasingJamaDetails = () => {
         </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
-            placeholder="Enter Team Name Here..."
             value={memberName.memberNameValue}
             readOnly
             style={{
@@ -246,7 +245,6 @@ const LeasingJamaDetails = () => {
           <Input
             readOnly
             value={driverName.driverNameValue}
-            placeholder="Driver Name"
             style={{
               padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}

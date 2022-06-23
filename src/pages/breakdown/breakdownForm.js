@@ -366,7 +366,7 @@ const breakdownPage = () => {
                   onChange={(e) => {
                     handleOnEtmChange(e);
                   }}
-                  style={{ width: '100%', backgroundColor: '#F5F8FC' }}
+                  style={{ width: '100%', backgroundColor: '#F5F8FC', marginBottom: '8px' }}
                   placeholder="Search Employee"
                   value={etmId || undefined}
                   showSearch
@@ -392,7 +392,6 @@ const breakdownPage = () => {
                     value={DriverName}
                     onChange={(e) => setDriverName(e.target.value)}
                     readOnly
-                    placeholder="Enter Driver Name Here..."
                     style={{
                       padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
                     }}
@@ -434,7 +433,6 @@ const breakdownPage = () => {
           <div className="flex flex-nonwrap bg-white">
             <Input
               value={DriverManagerName}
-              placeholder="Enter Team Name Here..."
               readOnly
               style={{
                 padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',

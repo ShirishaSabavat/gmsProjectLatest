@@ -146,7 +146,7 @@ const LeasingJamaDetails = () => {
                 Mobile:
                 {' '}
                 <p className="inline-flex text-sm font-quicksand-medium text-teal-300 truncate my-1">
-                  {cardObject.drive_contact_number || 'mobile'}
+                  {cardObject.drive_contact_number}
                 </p>
               </p>
               <p className="text-sm font-bold font-quicksand-medium text-gray-900 truncate mt-1 mb-0">
@@ -166,7 +166,6 @@ const LeasingJamaDetails = () => {
         <p className="font-quicksand-semi-bold mt-4" style={{ fontSize: '12px' }}>Team Name</p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
-            placeholder="Enter Team Name Here..."
             value={memberName.memberNameValue}
             readOnly
             style={{
