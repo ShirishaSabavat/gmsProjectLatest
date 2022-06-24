@@ -825,3 +825,9 @@ export const getVisitingCarInfo = (category, carId) => axios({
   url: `${basUrl}/visit_car_details?category=${category}&carId=${carId}`,
   headers,
 });
+
+export const getCarKms = (carId) => axios({
+  method: 'GET',
+  url: `${basUrl}/car_km?carId=${carId}`,
+  headers,
+});

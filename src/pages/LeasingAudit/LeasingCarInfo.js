@@ -5,9 +5,10 @@ import { Helmet } from 'react-helmet';
 import {
   Radio, Button, Input, Checkbox,
 } from 'antd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useJamaContext } from 'context/sixtyFortyJamaContext';
+import { getCarKms } from 'services/axios';
 import moment from 'moment';
 
 const LeasingCarInfo = () => {
@@ -56,6 +57,19 @@ const LeasingCarInfo = () => {
     setBackLeftSticker,
     setfasttagBalance,
   } = useJamaContext();
+
+  useEffect(() => {
+    const tempCarId = cardObject?.carId?.id;
+    getCarKms(tempCarId)
+      .then((resp) => {
+        console.log(resp?.data?.results?.car_km);
+        setCarKms({ carKmsValue: resp?.data?.results?.car_km || 0 });
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }, []);
+
   const validateFormData = () => {
     let isValid = true;
     const carKmsErr = {};
