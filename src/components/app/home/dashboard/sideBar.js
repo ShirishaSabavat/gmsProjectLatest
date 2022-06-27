@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Layout, Menu } from 'antd';
 import CarInfo from './carInfo';
 
@@ -13,11 +13,18 @@ const SideBar = (props) => {
 
   const [visitingCarInfo, setVisitingCarInfo] = useState([]);
   const [carNumber, setCarNumber] = useState('');
+  const [showCard, setShowCard] = useState(false);
 
   const handleClick = (carInfo) => {
     setCarNumber(carInfo.car_number);
     setVisitingCarInfo(carInfo);
+    setShowCard(true);
   };
+
+  useEffect(() => {
+    // console.log(carList.length);
+    // console.log(visitingCarInfo);
+  }, [visitingCarInfo, carList]);
 
   return (
     <div className="font-quicksand-bold text-lg">
@@ -59,12 +66,19 @@ const SideBar = (props) => {
               )
             </span>
           </Header>
-          <Content className="ml-0 mr-6 mt-4">
+          <Content className="ml-0">
             <div className="site-layout-background">
-              <CarInfo
-                visitingCarInfo={visitingCarInfo}
-                carNumber={carNumber}
-              />
+              {carList.length === 0 ? (
+                <div className="px-2 py-0 my-6 mt-10 max-w-sm">
+                  <p className="font-quicksand-semi-bold text-4xl text-red-500 text-center">No cars in list</p>
+                </div>
+              ) : (
+                <CarInfo
+                  visitingCarInfo={visitingCarInfo}
+                  carNumber={carNumber}
+                  showCard={showCard}
+                />
+              )}
             </div>
           </Content>
         </Layout>
