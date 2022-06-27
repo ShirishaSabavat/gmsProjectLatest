@@ -1,12 +1,11 @@
 /* eslint-disable max-len */
 import { useState } from 'react';
 import { Layout, Menu } from 'antd';
-import { getVisitingCarInfo } from 'services/axios';
 import CarInfo from './carInfo';
 
 const SideBar = (props) => {
   const {
-    carList, carCount, headers, category,
+    carList, carCount, headers,
   } = props;
   const {
     Header, Content, Sider,
@@ -15,15 +14,9 @@ const SideBar = (props) => {
   const [visitingCarInfo, setVisitingCarInfo] = useState([]);
   const [carNumber, setCarNumber] = useState('');
 
-  const handleClick = (carId, carNo) => {
-    setCarNumber(carNo);
-    getVisitingCarInfo(category, carId)
-      .then((res) => {
-        setVisitingCarInfo(res?.data?.results[0]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const handleClick = (carInfo) => {
+    setCarNumber(carInfo.car_number);
+    setVisitingCarInfo(carInfo);
   };
 
   return (
@@ -45,7 +38,7 @@ const SideBar = (props) => {
             {carList.map((item, index) => (
               <Menu.Item
                 key={index.toString()}
-                onClick={() => handleClick(item?.carId_id, item?.car_number)}
+                onClick={() => handleClick(item)}
               >
                 {' '}
                 {/* <div className="flex place-content-center flex-row text-base"> */}

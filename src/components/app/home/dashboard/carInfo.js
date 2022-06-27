@@ -16,7 +16,7 @@ const CarInfo = (props) => {
                 <div className="col-6">
                   <h6 className="text-[#333333] text-base font-quicksand-semi-bold m-0">{carNumber}</h6>
                   <h6 className="text-[#333333] font-quicksand-semi-bold text-sm mb-0">
-                    Celerio
+                    {visitingCarInfo.name}
                   </h6>
                 </div>
                 <hr className="mt-0 text-[#86A1A4]" />
@@ -25,42 +25,49 @@ const CarInfo = (props) => {
                     <p className="text-[#86A1A4] mb-0">Team</p>
                     <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
                       {' '}
-                      Pranay Rental
+                      {visitingCarInfo.driver_manager_name}
                     </p>
                   </div>
                   <div className="text-center border-solid border-r-2 border-slate-400 px-3 my-3">
                     <p className="text-[#86A1A4] mb-0">Driver</p>
                     <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
                       {' '}
-                      Firoz Ahmed
+                      {visitingCarInfo.driver_name}
                     </p>
                   </div>
                   <div className="text-center border-solid border-r-2 border-slate-400 px-3 my-3">
                     <p className="text-[#86A1A4] mb-0">Mobile</p>
                     <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
                       {' '}
-                      9876543211
+                      {visitingCarInfo.drive_contact_number}
                     </p>
                   </div>
                   <div className="text-center border-solid border-slate-400 px-3 my-3">
-                    <p className="text-[#86A1A4] mb-0">Trips per Hour</p>
+                    <p className="text-[#86A1A4] mb-0">In Time</p>
                     <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
                       {' '}
-                      13-06-2022, 3:29:53 pm
+                      {visitingCarInfo.in_time}
+                    </p>
+                  </div>
+                  <div className="text-center border-solid border-r-2 border-[#86A1A4] px-3 my-3">
+                    <p className="text-[#86A1A4] mb-0">Gate Keeper</p>
+                    <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
+                      {' '}
+                      {visitingCarInfo.gate_keeper}
                     </p>
                   </div>
                   <div className="text-center border-solid border-r-2 border-[#86A1A4] px-3 my-3">
                     <p className="text-[#86A1A4] mb-0">Auditor Name</p>
                     <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
                       {' '}
-                      Ashish Pandey
+                      {visitingCarInfo.auditor}
                     </p>
                   </div>
                   <div className="text-center border-solid border-slate-400 px-3 my-3">
                     <p className="text-[#86A1A4] mb-0">Auditor Role</p>
                     <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
                       {' '}
-                      60:40 Jama Queue Auditor
+                      {visitingCarInfo.auditor_role}
                     </p>
                   </div>
                 </div>
