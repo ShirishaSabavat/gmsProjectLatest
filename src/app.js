@@ -8,6 +8,7 @@ import RegularAuditProvider from 'context/RegularAuditContext';
 import RTAProvider from 'context/rtaContext';
 import CompletionProvider from 'context/CompletionContext';
 import QueueProvider from 'context/QueueContext';
+import AudioContext from 'context/AuditContext';
 
 import 'global.scss';
 import 'components/kit/vendors/antd/mixins.less';
@@ -26,7 +27,9 @@ const App = () => (
           <RegularAuditProvider>
             <RTAProvider>
               <QueueProvider>
-                <Router history={history} />
+                <AudioContext>
+                  <Router history={history} />
+                </AudioContext>
               </QueueProvider>
             </RTAProvider>
           </RegularAuditProvider>

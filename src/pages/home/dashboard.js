@@ -2,13 +2,22 @@ import { Helmet } from 'react-helmet';
 import Dashboard from 'components/app/home/dashboard';
 import { useEffect, useState } from 'react';
 import { getAuditCount } from 'services/axios';
+import { useAuditContext } from 'context/AuditContext';
 
 const DashboardPage = () => {
   const [auditCount, setAuditCount] = useState(0);
+
+  const {
+    setSelectedCar,
+    setShowCard,
+  } = useAuditContext();
+
   useEffect(() => {
     getAuditCount()
       .then((res) => {
         setAuditCount(res.data.results[0]);
+        setSelectedCar({ selectedCarValue: '0' });
+        setShowCard({ cardValue: true });
       })
       .catch((err) => {
         console.log(err);

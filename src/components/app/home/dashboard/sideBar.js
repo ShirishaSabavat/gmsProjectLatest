@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from 'react';
 import { Layout, Menu } from 'antd';
+import { useAuditContext } from 'context/AuditContext';
 import CarInfo from './carInfo';
 
 const SideBar = (props) => {
@@ -11,20 +12,28 @@ const SideBar = (props) => {
     Header, Content, Sider,
   } = Layout;
 
+  const {
+    selectedCar,
+    setSelectedCar,
+    showCard,
+    setShowCard,
+  } = useAuditContext();
+
   const [visitingCarInfo, setVisitingCarInfo] = useState([]);
   const [carNumber, setCarNumber] = useState('');
-  const [showCard, setShowCard] = useState(false);
 
-  const handleClick = (carInfo) => {
-    setCarNumber(carInfo.car_number);
+  const handleClick = (carInfo, index) => {
+    setCarNumber(carInfo?.car_number);
     setVisitingCarInfo(carInfo);
-    setShowCard(true);
+    setSelectedCar({ selectedCarValue: index.toString() });
+    setShowCard({ cardValue: true });
   };
 
   useEffect(() => {
     // console.log(carList.length);
-    // console.log(visitingCarInfo);
-  }, [visitingCarInfo, carList]);
+    // console.log(carList);
+    handleClick(carList[0], 0);
+  }, [carList]);
 
   return (
     <div className="font-quicksand-bold text-lg">
@@ -34,7 +43,7 @@ const SideBar = (props) => {
           collapsedWidth="0"
         >
           <div className="logo" />
-          <Menu style={{ color: '#86A1A4', fontWeight: 'regular' }} theme="light">
+          <Menu style={{ color: '#86A1A4', fontWeight: 'regular' }} theme="light" selectedKeys={[selectedCar.selectedCarValue]}>
             <div className="px-3 pt-3 pb-2.5">
               <h3 className="font-quicksand-bold text-sm">
                 {headers}
@@ -45,13 +54,9 @@ const SideBar = (props) => {
             {carList.map((item, index) => (
               <Menu.Item
                 key={index.toString()}
-                onClick={() => handleClick(item)}
+                onClick={() => handleClick(item, index)}
               >
-                {' '}
-                {/* <div className="flex place-content-center flex-row text-base"> */}
-                {/* <img alt="car" height="40px" width="50px" src="/assets/images/general/bgRemovedCarImg.png" /> */}
                 {item?.car_number}
-                {/* </div> */}
               </Menu.Item>
             ))}
           </Menu>
