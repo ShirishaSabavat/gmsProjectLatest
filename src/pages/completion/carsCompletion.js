@@ -187,6 +187,10 @@ const carslistrta = () => {
         rejectRTAList(cardObject.id, cardObject.visit_category, transfer, rejectReason, isBreakdown)
           .then((res) => {
             if (cardObject.visit_category === 6 || cardObject.visit_category === 7 || cardObject.visit_category === 8) {
+              let status = 1;
+              if (transfer === 1 || transfer === 2) {
+                status = 2;
+              }
               addCarVisit(
                 transfer,
                 cardObject.carId_id,
@@ -200,6 +204,7 @@ const carslistrta = () => {
                 cardObject.driver_manager_name,
                 locationId,
                 cardObject.employee_id,
+                status,
               )
                 .then(() => {
                   notification.success({
@@ -333,7 +338,7 @@ const carslistrta = () => {
                   className="font-quicksand-medium"
                   style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: transfer === 1 ? 'aqua' : 'white' }}
                 >
-                  Allotment Jama(Jama Desk)
+                  Allotment(Jama Desk)
                 </Button>
               ) : ''}
             {revenueType === 2
