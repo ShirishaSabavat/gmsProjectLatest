@@ -6,9 +6,9 @@ import { Helmet } from 'react-helmet';
 import {
   Radio, Button, Input, notification, Checkbox,
 } from 'antd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
-import { addOtherAuditMaster, addOtherAuditDetails } from 'services/axios';
+import { addOtherAuditMaster, addOtherAuditDetails, getCarKms } from 'services/axios';
 import { useRegularAuditContext } from 'context/RegularAuditContext';
 import moment from 'moment';
 
@@ -53,6 +53,18 @@ const RegularAuditCarInfo = () => {
     history.push('/LeasingJama/AcceptLeasingJama');
   };
 
+  useEffect(() => {
+    const tempCarId = cardObject?.carId?.id;
+    getCarKms(tempCarId)
+      .then((resp) => {
+        console.log(resp?.data?.results?.car_km);
+        setCarKms({ carKmsValue: resp?.data?.results?.car_km || 0 });
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }, []);
+
   const validateFormData = () => {
     const carkmerror = {};
     // const descriptionNameError = {};
@@ -61,8 +73,8 @@ const RegularAuditCarInfo = () => {
     const cngErr = {};
     let isValid = true;
 
-    if (carKms.toString().trim().length === 0) {
-      carkmerror.err = 'Car Kms can not be empty.';
+    if (carKms.carKmsValue === null) {
+      carkmerror.err = 'This field cannot be empty';
       isValid = false;
     }
     // if (description.trim().length === 0) {
@@ -232,11 +244,11 @@ const RegularAuditCarInfo = () => {
         </p>
         <div className="flex flex-row flex-nonwrap bg-white">
           <Input
-            value={carKms}
-            onChange={(e) => setCarKms(e.target.value)}
-            placeholder="Enter Car Here..."
+            value={carKms.carKmsValue}
+            readOnly
+            onChange={(e) => setCarKms({ carKmsValue: e.target.value })}
             style={{
-              padding: '8px', marginBottom: '8px', backgroundColor: '#fff', borderColor: '#74D1D8', width: '150%',
+              padding: '8px', marginBottom: '8px', backgroundColor: '#F5F8FC', borderColor: '#F5F8FC', width: '150%',
             }}
           />
         </div>

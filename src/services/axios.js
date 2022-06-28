@@ -551,7 +551,7 @@ export const getVisitingCarDetails = (id) => axios({
   headers,
 });
 
-export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId, etmId) => {
+export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithcar, driverId, driverName, drivercontactnumber, drivermanagerid, drivermanagername, locationId, etmId, status) => {
   const data = JSON.stringify({
     visit_category: visitcat,
     carId: carid,
@@ -565,7 +565,7 @@ export const addCarVisit = (visitcat, carid, carnumber, garageid, isdriverwithca
     driverManagerId: drivermanagerid,
     driver_manager_name: drivermanagername,
     employee_id: etmId,
-    status: 1,
+    status,
   });
   return axios({
     method: 'POST',

@@ -288,16 +288,16 @@ const carslistrta = () => {
             >
               Driver
             </Button>
-            <Button
+            {/* <Button
               onClick={() => setTransfer(8)}
               className="font-quicksand-medium"
               style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: transfer === 8 ? 'aqua' : 'white' }}
             >
               Parking
-            </Button>
+            </Button> */}
           </div>
           <div className="flex flex-row flex-nonwrap">
-            {cardObject.visit_category === 3 ? '' : (
+            {/* {cardObject.visit_category === 3 ? '' : (
               <Button
                 onClick={() => setTransfer(3)}
                 className="font-quicksand-medium"
@@ -305,7 +305,7 @@ const carslistrta = () => {
               >
                 Regular Audit
               </Button>
-            )}
+            )} */}
             {cardObject.visit_category === 4 ? '' : (
               <Button
                 onClick={() => setTransfer(4)}
@@ -333,7 +333,7 @@ const carslistrta = () => {
                   className="font-quicksand-medium"
                   style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: transfer === 1 ? 'aqua' : 'white' }}
                 >
-                  60:40
+                  Allotment Jama(Jama Desk)
                 </Button>
               ) : ''}
             {revenueType === 2
@@ -343,7 +343,7 @@ const carslistrta = () => {
                   className="font-quicksand-medium"
                   style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: transfer === 2 ? 'aqua' : 'white' }}
                 >
-                  Leasing
+                  Allotment(Jama Desk)
                 </Button>
               ) : ''}
           </div>

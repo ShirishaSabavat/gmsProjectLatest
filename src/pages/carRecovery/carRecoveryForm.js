@@ -9,7 +9,7 @@ import {
   Input, Radio, Button, notification, Select,
 } from 'antd';
 import {
-  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getEmployeeList, checkExistingCarDetails, getBreakdownDetails,
+  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getEmployeeList, checkExistingBreakdownCarDetails, getBreakdownDetails,
 } from 'services/axios';
 
 const { TextArea } = Input;
@@ -74,23 +74,6 @@ const carRecoveryPage = () => {
         console.log('err', err);
       });
   };
-
-  // useEffect(() => {
-  //   getVisitingCarDetails(id)
-  //     .then((res) => {
-  //       setSelectedCarNumber(res?.data?.results?.car_number);
-  //       setCarWithDriver(res?.data?.results?.is_with_driver);
-  //       setDriverName(res?.data?.results?.driver_name);
-  //       setDriverContact(res?.data?.results?.drive_contact_number);
-  //       setSelectedDriverManagerID(res?.data?.results?.driverManagerId);
-  //       setDriverManagerName(res?.data?.results?.driver_manager_name);
-  //       setVisitCategory(res?.data?.results?.visit_category);
-  //       setSelectedCarID(res?.data?.results?.carId);
-  //     })
-  //     .catch((err) => {
-  //       console.log('err1', err);
-  //     });
-  // }, []);
 
   useEffect(() => {
     getCarsListEverest(cityID)
@@ -197,7 +180,7 @@ const carRecoveryPage = () => {
             resetData();
             setTimeout(() => {
               window.scrollTo(0, 0);
-              window.location.reload();
+              // window.location.reload();
             }, 1000);
             // window.location.href = '#/gatekeeper/homepage';
           })
@@ -229,7 +212,7 @@ const carRecoveryPage = () => {
     // getCarDetails(result.id);
     resetData();
     getCarDetails(result);
-    checkExistingCarDetails(result)
+    checkExistingBreakdownCarDetails(result)
       .then((resp) => {
         setSelectedCarID(result);
         const temp = CarsList.filter((item) => item.id === result);
@@ -260,7 +243,7 @@ const carRecoveryPage = () => {
         } else {
           let visitQueue = '';
           if (resp.data.visit_category === 1) {
-            visitQueue = '60:40 Jama';
+            visitQueue = 'Car Jama';
           } else if (resp.data.visit_category === 2) {
             visitQueue = 'Leasing Jama';
           } else if (resp.data.visit_category === 3) {
@@ -341,7 +324,7 @@ const carRecoveryPage = () => {
             <div className="flex flex-row flex-nonwrap bg-white">
               <Radio.Group onChange={(e) => setCarWithDriver(e.target.value)} value={carWithDriver}>
                 <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value>Yes</Radio>
-                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>No</Radio>
+                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>New Car</Radio>
               </Radio.Group>
             </div>
           </div>

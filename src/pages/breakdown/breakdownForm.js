@@ -8,7 +8,7 @@ import {
   Input, Radio, Button, notification, Select,
 } from 'antd';
 import {
-  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getBreakdownDetails, getEmployeeList, checkExistingCarDetails,
+  addBreakdown, editBreakdown, getCarDetailsList, getCarsListEverest, getBreakdownDetails, getEmployeeList, checkExistingBreakdownCarDetails,
 } from 'services/axios';
 
 const { TextArea } = Input;
@@ -79,25 +79,6 @@ const breakdownPage = () => {
         console.log('err', err);
       });
   };
-
-  // useEffect(() => {
-  //   getBreakdownDetails(id)
-  //     .then((res) => {
-  //       setSelectedCarNumber(res?.data?.results?.car_number);
-  //       setCarWithDriver(res?.data?.results?.is_with_driver);
-  //       setDriverName(res?.data?.results?.driver_name);
-  //       setDriverContact(res?.data?.results?.driver_contact_number || '');
-  //       setSelectedDriverManagerID(res?.data?.results?.driverManagerId);
-  //       setDriverManagerName(res?.data?.results?.driver_manager_name);
-  //       setVisitCategory(res?.data?.results?.visit_category);
-  //       setSelectedCarID(res?.data?.results?.carId);
-  //       setLocationName(res?.data?.results?.breakdown_location);
-  //       setBreakdownType(res?.data?.results?.breakdown_type === 1);
-  //     })
-  //     .catch((err) => {
-  //       console.log('err1', err);
-  //     });
-  // }, []);
 
   useEffect(() => {
     getCarsListEverest(cityID)
@@ -240,7 +221,7 @@ const breakdownPage = () => {
     // the item hovered
     resetData();
     getCarDetails(result);
-    checkExistingCarDetails(result)
+    checkExistingBreakdownCarDetails(result)
       .then((resp) => {
         if (resp.data.car_status === 2) {
           setSelectedCarID(result);
@@ -271,7 +252,7 @@ const breakdownPage = () => {
         } else {
           let visitQueue = '';
           if (resp.data.visit_category === 1) {
-            visitQueue = '60:40 Jama';
+            visitQueue = 'Car Jama';
           } else if (resp.data.visit_category === 2) {
             visitQueue = 'Leasing Jama';
           } else if (resp.data.visit_category === 3) {
@@ -287,8 +268,8 @@ const breakdownPage = () => {
           } else if (resp.data.visit_category === 8) {
             visitQueue = 'Car Recovery';
           }
-          notification.error({
-            message: `Car is already in the ${visitQueue} Queue`,
+          notification.info({
+            message: `Car is already in the ${visitQueue} Queue, You can modify it`,
           });
         }
       })
@@ -350,7 +331,7 @@ const breakdownPage = () => {
             <div className="flex flex-row flex-nonwrap bg-white">
               <Radio.Group onChange={(e) => setCarWithDriver(e.target.value)} value={carWithDriver}>
                 <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value>Yes</Radio>
-                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>No</Radio>
+                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>New Car</Radio>
               </Radio.Group>
             </div>
           </div>

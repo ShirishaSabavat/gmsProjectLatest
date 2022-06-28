@@ -186,6 +186,10 @@ const carformpage = () => {
 
     if (resp) {
       if (visitId === '-1') {
+        let status = 1;
+        if (VisitCategory === 3) {
+          status = 7;
+        }
         addCarVisit(
           VisitCategory,
           SelectedCarID,
@@ -199,6 +203,7 @@ const carformpage = () => {
           DriverManagerName,
           LocationID,
           etmId,
+          status,
         )
           .then((res) => {
             notification.success({
@@ -208,7 +213,7 @@ const carformpage = () => {
             resetData();
             setTimeout(() => {
               window.scrollTo(0, 0);
-              window.location.reload();
+              // window.location.reload();
             }, 1000);
             // window.location.href = '#/gatekeeper/carformpage';
           })
@@ -297,8 +302,8 @@ const carformpage = () => {
           } else if (resp.data.visit_category === 8) {
             visitQueue = 'Car Recovery';
           }
-          notification.error({
-            message: `Car is already in the ${visitQueue} Queue`,
+          notification.info({
+            message: `Car is already in the ${visitQueue} Queue, You can modify it`,
             duration: 0,
           });
         } else {
@@ -383,7 +388,7 @@ const carformpage = () => {
             <div className="flex flex-row flex-nonwrap bg-white">
               <Radio.Group onChange={(e) => setRadioValue(e.target.value)} value={radioValue}>
                 <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value>Yes</Radio>
-                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>No</Radio>
+                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>New Car</Radio>
               </Radio.Group>
             </div>
           </div>
@@ -515,7 +520,7 @@ const carformpage = () => {
                 className="font-quicksand-medium"
                 style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 1 ? 'aqua' : 'white' }}
               >
-                60:40 Jama
+                Car Jama
               </Button>
             ) : ''}
           </div>
@@ -526,7 +531,7 @@ const carformpage = () => {
                 className="font-quicksand-medium"
                 style={{ marginTop: '10px', marginLeft: '10px', backgroundColor: VisitCategory === 2 ? 'aqua' : 'white' }}
               >
-                Leasing Car Jama
+                Car Jama
               </Button>
             ) : ''}
           </div>

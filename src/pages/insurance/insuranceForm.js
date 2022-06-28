@@ -249,7 +249,7 @@ const insurancePage = () => {
         } else {
           let visitQueue = '';
           if (resp.data.visit_category === 1) {
-            visitQueue = '60:40 Jama';
+            visitQueue = 'Car Jama';
           } else if (resp.data.visit_category === 2) {
             visitQueue = 'Leasing Jama';
           } else if (resp.data.visit_category === 3) {
@@ -326,7 +326,7 @@ const insurancePage = () => {
             <div className="flex flex-row flex-nonwrap bg-white">
               <Radio.Group onChange={(e) => setCarWithDriver(e.target.value)} value={carWithDriver}>
                 <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value>Yes</Radio>
-                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>No</Radio>
+                <Radio style={{ color: '#9193A2' }} className="font-quicksand-semi-bold" value={false}>New Car</Radio>
               </Radio.Group>
             </div>
           </div>
