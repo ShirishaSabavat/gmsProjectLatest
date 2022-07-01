@@ -183,30 +183,32 @@ const carslistrta = () => {
           }
         }
         // alert(rejectReason);
-        history.push(`/completion/CarsQueue/${cardObject.visit_category}`);
-        rejectRTAList(cardObject.id, cardObject.visit_category, transfer, rejectReason, isBreakdown)
-          .then((res) => {
-            if (cardObject.visit_category === 6 || cardObject.visit_category === 7 || cardObject.visit_category === 8) {
-              let status = 1;
-              if (transfer === 1 || transfer === 2) {
-                status = 2;
-              }
-              addCarVisit(
-                transfer,
-                cardObject.carId_id,
-                cardObject.car_number,
-                GarageID,
-                cardObject.is_with_driver,
-                cardObject.driverId,
-                cardObject.driver_name,
-                cardObject.drive_contact_number,
-                cardObject.driverManagerId,
-                cardObject.driver_manager_name,
-                locationId,
-                cardObject.employee_id,
-                status,
-              )
-                .then(() => {
+        // history.push(`/completion/CarsQueue/${cardObject.visit_category}`);
+        if (cardObject.visit_category === 6 || cardObject.visit_category === 7 || cardObject.visit_category === 8) {
+          let status = 1;
+          if (transfer === 1 || transfer === 2) {
+            status = 2;
+          }
+          addCarVisit(
+            transfer,
+            cardObject.carId?.id,
+            cardObject.car_number,
+            GarageID,
+            cardObject.is_with_driver,
+            cardObject.driverId,
+            cardObject.driver_name,
+            cardObject.drive_contact_number,
+            cardObject.driverManagerId,
+            cardObject.driver_manager_name,
+            locationId,
+            cardObject.employee_id,
+            status,
+          )
+            .then((response) => {
+              console.log(isBreakdown);
+              console.log(response);
+              rejectRTAList(response?.data?.results?.id, cardObject.visit_category, transfer, rejectReason, isBreakdown, cardObject.id)
+                .then((res) => {
                   notification.success({
                     message: 'Transferred successfully',
                   });
@@ -215,16 +217,16 @@ const carslistrta = () => {
                 .catch((err) => {
                   console.log('err', err);
                 });
-            } else {
-              notification.success({
-                message: 'Transferred successfully',
-              });
-              history.push(`/completion/CarsQueue/${cardObject.visit_category}`);
-            }
-          })
-          .catch((err) => {
-            console.log('err', err);
+            })
+            .catch((err) => {
+              console.log('err', err);
+            });
+        } else {
+          notification.success({
+            message: 'Transferred successfully',
           });
+          history.push(`/completion/CarsQueue/${cardObject.visit_category}`);
+        }
       }
     }
   };

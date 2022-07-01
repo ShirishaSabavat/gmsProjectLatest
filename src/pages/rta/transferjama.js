@@ -53,7 +53,7 @@ const transferjama = () => {
       }
       addRTAList(id, GarageID, isLeasing, remarks.remarksValue, 2)
         .then((res) => {
-          rejectRTAList(id, cardObject.visit_category, rejectfor, 'roadtest_reject', false)
+          rejectRTAList(id, cardObject.visit_category, rejectfor, 'roadtest_reject', false, -1)
             .then((innerRes) => {
               notification.success({
                 message: 'Jama Rejected successfully',

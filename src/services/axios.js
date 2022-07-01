@@ -601,13 +601,14 @@ export const addRTAList = (visitid, garageid, isleasing, roadtestcomment, jamaSt
   });
 };
 
-export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason, isBreakdown) => {
+export const rejectRTAList = (visitid, visitcategory, rejectid, rejectreason, isBreakdown, breakdownId) => {
   const data = JSON.stringify({
     visit: visitid,
     previousAudit: visitcategory,
     currentAudit: rejectid,
     transfer_reason: rejectreason,
     is_breakdown: isBreakdown,
+    breakdown_id: breakdownId,
   });
   return axios({
     method: 'POST',
@@ -796,9 +797,9 @@ export const getQueueOperator = (category, status) => axios({
   headers,
 });
 
-export const getAuditCount = () => axios({
+export const getAuditCount = (cityId) => axios({
   method: 'GET',
-  url: `${basUrl}/audit_count`,
+  url: `${basUrl}/audit_count?city_id=${cityId}`,
   headers,
 });
 
@@ -808,15 +809,15 @@ export const checkExistingBreakdownCarDetails = (carId) => axios({
   headers,
 });
 
-export const getVisitCarNumber = (category) => axios({
+export const getVisitCarNumber = (category, cityId) => axios({
   method: 'GET',
-  url: `${basUrl}/visit_car_number?category=${category}`,
+  url: `${basUrl}/visit_car_number?category=${category}&city_id=${cityId}`,
   headers,
 });
 
-export const getBreakdownCarNumber = (category) => axios({
+export const getBreakdownCarNumber = (category, cityId) => axios({
   method: 'GET',
-  url: `${basUrl}/breakdown_car_number?category=${category}`,
+  url: `${basUrl}/breakdown_car_number?category=${category}&city_id=${cityId}`,
   headers,
 });
 
@@ -829,5 +830,17 @@ export const getVisitingCarInfo = (category, carId) => axios({
 export const getCarKms = (carId) => axios({
   method: 'GET',
   url: `${basUrl}/car_km?carId=${carId}`,
+  headers,
+});
+
+export const cityList = () => axios({
+  method: 'GET',
+  url: `${basUrl}/city`,
+  headers,
+});
+
+export const getRTACarNumber = (cityId) => axios({
+  method: 'GET',
+  url: `${basUrl}/visit_rta?city_id=${cityId}`,
   headers,
 });

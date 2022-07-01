@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import WithPageHandler from 'components/layouts/pageHandler';
 import { Tabs } from 'antd';
-import { getVisitCarNumber, getBreakdownCarNumber } from 'services/axios';
+import { getVisitCarNumber, getBreakdownCarNumber, getRTACarNumber } from 'services/axios';
+import { useAuditContext } from 'context/AuditContext';
 import SideBar from './sideBar';
 
 const { TabPane } = Tabs;
@@ -16,6 +17,10 @@ const Dashboard = (props) => {
     setPageState,
     auditCount = {},
   } = props;
+
+  const {
+    currentCity,
+  } = useAuditContext();
 
   const [tabKey, setTabKey] = useState('0');
   const [category, setCategory] = useState(1);
@@ -51,12 +56,24 @@ const Dashboard = (props) => {
       setCategory(7);
     } else if (tabKey === '7') {
       setCategory(8);
+    } else if (tabKey === '8') {
+      setCategory(9);
     }
   }, [tabKey]);
 
   useEffect(() => {
-    if (category === 6 || category === 7 || category === 8) {
-      getBreakdownCarNumber(category)
+    if (category === 9) {
+      getRTACarNumber(currentCity)
+        .then((res) => {
+          const response = res?.data?.results;
+          console.log(response);
+          setCarList(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (category === 6 || category === 7 || category === 8) {
+      getBreakdownCarNumber(category, currentCity)
         .then((res) => {
           const response = res?.data?.results;
           setCarList(response);
@@ -65,7 +82,7 @@ const Dashboard = (props) => {
           console.log(err);
         });
     } else {
-      getVisitCarNumber(category)
+      getVisitCarNumber(category, currentCity)
         .then((res) => {
           const response = res?.data?.results;
           setCarList(response);
@@ -74,7 +91,7 @@ const Dashboard = (props) => {
           console.log(err);
         });
     }
-  }, [category]);
+  }, [category, currentCity]);
 
   const handleChange = (activeKey) => {
     setTabKey(activeKey);
@@ -128,7 +145,7 @@ const Dashboard = (props) => {
             headers="Repair"
           />
         </TabPane>
-        <TabPane tab={`Breakdown (${auditCount?.Breakdown})`} key="5">
+        <TabPane tab={`Breakdown (${auditCount?.Breakdown || 0})`} key="5">
           <SideBar
             carList={carList}
             category={6}
@@ -136,7 +153,7 @@ const Dashboard = (props) => {
             headers="Breakdown"
           />
         </TabPane>
-        <TabPane tab={`Insurance (${auditCount?.Insurance})`} key="6">
+        <TabPane tab={`Insurance (${auditCount?.Insurance || 0})`} key="6">
           <SideBar
             carList={carList}
             category={7}
@@ -144,12 +161,20 @@ const Dashboard = (props) => {
             headers="Insurance"
           />
         </TabPane>
-        <TabPane tab={`Car Recovery (${auditCount?.Car_Recovery})`} key="7">
+        <TabPane tab={`Car Recovery (${auditCount?.Car_Recovery || 0})`} key="7">
           <SideBar
             carList={carList}
             category={8}
             carCount={auditCount?.Car_Recovery}
             headers="Car Recovery"
+          />
+        </TabPane>
+        <TabPane tab={`RTA (${auditCount?.RTA})`} key="8">
+          <SideBar
+            carList={carList}
+            category={9}
+            carCount={auditCount?.RTA}
+            headers="RTA"
           />
         </TabPane>
       </Tabs>

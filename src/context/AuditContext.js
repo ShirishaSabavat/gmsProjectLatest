@@ -15,6 +15,7 @@ const AuditProvider = ({ children }) => {
   const [showCard, setShowCard] = useState({
     cardValue: false,
   });
+  const [currentCity, setCurrentCity] = useState(0);
 
   return (
     <AuditContext.Provider value={{
@@ -22,6 +23,8 @@ const AuditProvider = ({ children }) => {
       setSelectedCar,
       showCard,
       setShowCard,
+      currentCity,
+      setCurrentCity,
     }}
     >
       {children}
