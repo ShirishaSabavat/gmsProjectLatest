@@ -180,7 +180,7 @@ const carRecoveryPage = () => {
             resetData();
             setTimeout(() => {
               window.scrollTo(0, 0);
-              // window.location.reload();
+              window.location.reload();
             }, 1000);
             // window.location.href = '#/gatekeeper/homepage';
           })
