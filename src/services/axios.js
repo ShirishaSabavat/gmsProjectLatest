@@ -9,7 +9,8 @@ let headers = {
 };
 
 const baseUrl = 'http://13.126.183.78:8086/api/v1';
-const basUrl = 'https://staging.everestfleet.com/api/gms';
+// const basUrl = 'https://staging.everestfleet.com/api/gms'; // staging server url
+const basUrl = 'https://jarvis.everestfleet.com/api/gms'; // live server url
 
 export const loginApi = async (userData) => {
   const { variables: { userName, password } } = userData;
