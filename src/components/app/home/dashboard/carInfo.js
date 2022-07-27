@@ -95,17 +95,17 @@ const CarInfo = (props) => {
                       <p className="text-[#86A1A4] mb-0">Auditor Name</p>
                       <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
                         {' '}
-                        {visitingCarInfo?.auditor}
-                      </p>
-                    </div>
-                    <div className="text-center border-solid border-r-2 border-slate-400 px-3 my-3">
-                      <p className="text-[#86A1A4] mb-0">Auditor Role</p>
-                      <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
-                        {' '}
                         {visitingCarInfo?.auditor_role}
                       </p>
                     </div>
-                    <div className="text-center border-solid border-slate-400 px-3 my-3">
+                    {/* <div className="text-center border-solid border-r-2 border-slate-400 px-3 my-3">
+                      <p className="text-[#86A1A4] mb-0">Auditor Role</p>
+                      <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
+                        {' '}
+                        {visitingCarInfo?.auditor}
+                      </p>
+                    </div> */}
+                    <div className="text-center border-solid border-r-2 border-slate-400 px-3 my-3">
                       <p className="text-[#86A1A4] mb-0">Status</p>
                       <p className="text-[#333333] mb-1" style={{ fontSize: '16px' }}>
                         {' '}
